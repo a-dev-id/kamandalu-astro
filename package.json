@@ -10,11 +10,13 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.8",
-    "astro": "^5.8.1"
+    "astro": "^5.8.1",
+    "astro-carousel": "^3.0.2"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.21",
     "postcss": "^8.5.4",
+    "sass-embedded": "^1.89.2",
     "tailwindcss": "^4.1.8"
   }
 }
