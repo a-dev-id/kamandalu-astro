@@ -58,8 +58,15 @@
       <a href="#" class="block text-base">Villas</a>
       <a href="#" class="block text-base">Wellness</a>
       <div>
-        <button id="dining-mobile-toggle" class="block text-base w-full text-left">Dining</button>
-        <div id="dining-mobile-dropdown" class="pl-4 space-y-2 hidden">
+        <button id="dining-mobile-toggle" class="block text-base w-full text-left flex items-center gap-1 justify-between">
+          <span class="flex items-center">
+            Dining
+            <svg class="w-4 h-4 ml-1 inline-block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </span>
+        </button>
+        <div id="dining-mobile-dropdown" class="pl-4 space-y-2 hidden mt-3">
           <a href="#" class="block text-base">Petulu</a>
           <a href="#" class="block text-base">Aira</a>
           <a href="#" class="block text-base">Awana</a>
@@ -71,8 +78,15 @@
       <a href="#" class="block text-base">Activities</a>
       <a href="#" class="block text-base">Our Story</a>
       <div>
-        <button id="more-mobile-toggle" class="block text-base w-full text-left">More</button>
-        <div id="more-mobile-dropdown" class="pl-4 space-y-2 hidden">
+        <button id="more-mobile-toggle" class="block text-base w-full text-left flex items-center gap-1 justify-between">
+          <span class="flex items-center">
+            More
+            <svg class="w-4 h-4 ml-1 inline-block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </span>
+        </button>
+        <div id="more-mobile-dropdown" class="pl-4 space-y-2 hidden mt-3">
           <a href="#" class="block text-base">Member</a>
           <a href="#" class="block text-base">Contact</a>
         </div>
@@ -93,8 +107,8 @@
   <!-- More Dropdown -->
 <div id="more-dropdown" class="hidden absolute left-0 right-0 top-[100%] bg-white text-black z-40 shadow-md transition-all duration-200 opacity-0 group-hover:opacity-100">
   <div class="max-w-screen-xl mx-auto px-2 flex justify-center space-x-6 py-3 font-normal text-base">
-    <a href="#" class="hover:underline text-base">Contact Us</a>
-    <a href="#" class="hover:underline text-base">Membership</a>
+    <a href="#" class="hover:underline text-base">Member</a>
+    <a href="#" class="hover:underline text-base">Contact</a>
   </div>
 </div>
 
@@ -221,15 +235,20 @@
         moreMobileDropdown.classList.toggle("hidden");
       });
   
-      // Close offcanvas on all item click except dropdown toggles
+      // Close offcanvas on all item click except dropdown toggles and dropdown links
       const offcanvasItems = offcanvas.querySelectorAll("a, button");
       offcanvasItems.forEach((item) => {
         item.addEventListener("click", (e) => {
+          // Prevent closing if clicking dropdown toggles or any descendant of the dropdowns
           if (
-            e.target.id === "dining-mobile-toggle" ||
-            e.target.id === "more-mobile-toggle"
-          )
+            e.target.closest("#dining-mobile-toggle") ||
+            e.target.closest("#more-mobile-toggle") ||
+            e.target.closest("#dining-mobile-dropdown") ||
+            e.target.closest("#more-mobile-dropdown")
+          ) {
+            e.stopPropagation();
             return;
+          }
           offcanvas.classList.add("-translate-x-full");
         });
       });

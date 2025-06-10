@@ -102,10 +102,8 @@ import Layout from '../layouts/Base.astro';
     </div>
   </div>
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+  
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
-
   <script is:inline>
     document.addEventListener('DOMContentLoaded', () => {
       // Flatpickr init
@@ -223,9 +221,45 @@ import Layout from '../layouts/Base.astro';
     });
   </script>
   
-  
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Carousel logic
+      const slides = document.querySelectorAll('.carousel-slide');
+      let currentSlide = 0;
 
+      function showSlide(index) {
+        slides.forEach((slide, i) => {
+          if (i === index) {
+            slide.classList.remove('opacity-0', 'z-0');
+            slide.classList.add('opacity-100', 'z-10');
+          } else {
+            slide.classList.remove('opacity-100', 'z-10');
+            slide.classList.add('opacity-0', 'z-0');
+          }
+        });
+      }
 
+      document.getElementById('prevSlide').addEventListener('click', (e) => {
+        e.stopPropagation();
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        showSlide(currentSlide);
+      });
 
+      document.getElementById('nextSlide').addEventListener('click', (e) => {
+        e.stopPropagation();
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+      });
+
+      // Optional: Auto-slide every 5 seconds
+      setInterval(() => {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+      }, 5000);
+
+      // Initialize first slide
+      showSlide(currentSlide);
+    });
+  </script>
 </section>
 </Layout>
