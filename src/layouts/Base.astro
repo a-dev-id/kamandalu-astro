@@ -2,6 +2,7 @@
 import "../styles/global.css";
 import Navbar from '../components/Navbar.astro';
 import SpeedInsights from "@vercel/speed-insights/astro"
+import Analytics from '@vercel/analytics/astro'
 
 const { title, description, children } = Astro.props;
 ---
@@ -14,6 +15,7 @@ const { title, description, children } = Astro.props;
     <title>{title}</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
     <SpeedInsights/>
+    <Analytics/>
   </head>
   <body class="font-sans bg-gray-100 text-gray-900">
     <Navbar />
