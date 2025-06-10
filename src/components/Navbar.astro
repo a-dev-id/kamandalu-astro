@@ -1,0 +1,251 @@
+<header id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-transparent text-white overflow-visible">
+  <!-- Top Section -->
+  <div class="flex justify-between items-top px-6 py-1">
+    <div>
+      <select id="languageSelect" class="bg-transparent text-white focus:outline-none">
+        <option class="text-black text-base">EN</option>
+        <option class="text-black text-base">ID</option>
+      </select>
+    </div>
+    <div>
+      <img id="navbar-logo" src="https://www.kamandaluresort.com/images/kamandalu-logo.png" alt="Kamandalu Logo" class="h-20 transition-all duration-300 mt-2" />
+    </div>
+    <div class="w-10"></div>
+  </div>
+
+  <!-- Bottom Section -->
+  <div class="flex justify-between items-center px-6 py-3 border-b border-white/50">
+    <button id="hamburger">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+
+    <!-- Desktop Menu -->
+    <nav class="hidden md:flex space-x-6 text-base font-normal w-full justify-center overflow-visible relative">
+      <a href="#">Offers</a>
+      <a href="#">Villas</a>
+      <a href="#">Wellness</a>
+      <div id="dining-trigger" class="relative group">
+        <a href="#" class="inline-block px-2">Dining</a>
+      </div>
+      <a href="#">Unique Experiences</a>
+      <a href="#">Wedding & Events</a>
+      <a href="#">Activities</a>
+      <a href="#">Our Story</a>
+      <div id="more-trigger" class="relative group">
+        <a href="#" class="inline-block px-2">More</a>
+      </div>
+    </nav>
+
+    <a href="https://www.book-secure.com/index.php?s=results&property=idbal31692&locale=en_GB&currency=IDR&stid=986w12cwy" id="reserveBtn" class="bg-white text-black px-4 py-2 text-base font-bold transition-colors duration-300 border border-white">
+      RESERVE
+    </a>
+  </div>
+
+  <!-- Off-Canvas Menu -->
+  <div id="offcanvas" class="fixed top-0 left-0 h-full w-64 bg-white text-black shadow-lg transform -translate-x-full transition-transform duration-300 z-40 flex flex-col">
+    <div class="flex justify-end p-4">
+      <button id="closeOffcanvas" aria-label="Close menu">
+        <svg class="w-6 h-6 text-black hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <nav class="flex-1 px-6 pb-6 space-y-4 overflow-y-auto font-normal">
+      <a href="#" class="block text-base">Offers</a>
+      <a href="#" class="block text-base">Villas</a>
+      <a href="#" class="block text-base">Wellness</a>
+      <div>
+        <button id="dining-mobile-toggle" class="block text-base w-full text-left">Dining</button>
+        <div id="dining-mobile-dropdown" class="pl-4 space-y-2 hidden">
+          <a href="#" class="block text-base">Petulu</a>
+          <a href="#" class="block text-base">Aira</a>
+          <a href="#" class="block text-base">Awana</a>
+          <a href="#" class="block text-base">Vana Dining</a>
+        </div>
+      </div>
+      <a href="#" class="block text-base">Unique Experiences</a>
+      <a href="#" class="block text-base">Wedding & Events</a>
+      <a href="#" class="block text-base">Activities</a>
+      <a href="#" class="block text-base">Our Story</a>
+      <div>
+        <button id="more-mobile-toggle" class="block text-base w-full text-left">More</button>
+        <div id="more-mobile-dropdown" class="pl-4 space-y-2 hidden">
+          <a href="#" class="block text-base">Member</a>
+          <a href="#" class="block text-base">Contact</a>
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Dropdown Outside nav -->
+  <div id="dining-dropdown" class="hidden absolute left-0 right-0 top-[100%] bg-white text-black z-40 shadow-md transition-all duration-200 opacity-0 group-hover:opacity-100">
+    <div class="max-w-screen-xl mx-auto px-2 flex justify-center space-x-6 py-3 font-normal text-base">
+      <a href="#" class="hover:underline text-base">Petulu</a>
+      <a href="#" class="hover:underline text-base">Aira</a>
+      <a href="#" class="hover:underline text-base">Awana</a>
+      <a href="#" class="hover:underline text-base">Vana Dining</a>
+    </div>
+  </div>
+
+  <!-- More Dropdown -->
+<div id="more-dropdown" class="hidden absolute left-0 right-0 top-[100%] bg-white text-black z-40 shadow-md transition-all duration-200 opacity-0 group-hover:opacity-100">
+  <div class="max-w-screen-xl mx-auto px-2 flex justify-center space-x-6 py-3 font-normal text-base">
+    <a href="#" class="hover:underline text-base">Contact Us</a>
+    <a href="#" class="hover:underline text-base">Membership</a>
+  </div>
+</div>
+
+  <!-- Script -->
+  <script is:inline>
+    const dropdown = document.querySelector('#dining-dropdown');
+    const trigger = document.querySelector('#dining-trigger');
+    const moreDropdown = document.querySelector('#more-dropdown');
+    const moreTrigger = document.querySelector('#more-trigger');
+    const navbar = document.querySelector('#navbar');
+  
+    function updateDropdownPosition(element, dropdown) {
+      const navRect = element.getBoundingClientRect();
+      dropdown.style.top = navRect.bottom + 'px';
+    }
+  
+    window.addEventListener('scroll', () => {
+      const languageSelect = document.querySelector("#languageSelect");
+      const reserveBtn = document.querySelector("#reserveBtn");
+      const logo = document.querySelector("#navbar-logo");
+  
+      if (window.scrollY > 50) {
+        navbar.classList.add("bg-white", "text-black", "shadow-md");
+        navbar.classList.remove("bg-transparent", "text-white");
+        languageSelect.classList.remove("text-white");
+        languageSelect.classList.add("text-black");
+        reserveBtn.classList.remove("bg-white", "text-black", "border-white");
+        reserveBtn.classList.add("bg-[#916B2C]", "text-white", "border-transparent");
+        logo.classList.remove("h-20");
+        logo.classList.add("h-10");
+      } else {
+        navbar.classList.remove("bg-white", "text-black", "shadow-md");
+        navbar.classList.add("bg-transparent", "text-white");
+        languageSelect.classList.remove("text-black");
+        languageSelect.classList.add("text-white");
+        reserveBtn.classList.remove("bg-[#916B2C]", "text-white", "border-transparent");
+        reserveBtn.classList.add("bg-white", "text-black", "border-white");
+        logo.classList.remove("h-10");
+        logo.classList.add("h-20");
+      }
+  
+      if (!dropdown.classList.contains("hidden")) updateDropdownPosition(navbar, dropdown);
+      if (!moreDropdown.classList.contains("hidden")) updateDropdownPosition(navbar, moreDropdown);
+    });
+  
+    document.addEventListener("DOMContentLoaded", () => {
+      const hamburger = document.getElementById("hamburger");
+      const offcanvas = document.getElementById("offcanvas");
+      const closeBtn = document.getElementById("closeOffcanvas");
+  
+      const diningMobileToggle = document.getElementById("dining-mobile-toggle");
+      const diningMobileDropdown = document.getElementById("dining-mobile-dropdown");
+  
+      const moreMobileToggle = document.getElementById("more-mobile-toggle");
+      const moreMobileDropdown = document.getElementById("more-mobile-dropdown");
+  
+      // Desktop Dining Dropdown
+      trigger.addEventListener("mouseenter", () => {
+        updateDropdownPosition(navbar, dropdown);
+        dropdown.classList.remove("hidden", "opacity-0");
+        dropdown.classList.add("opacity-100", "block");
+      });
+      trigger.addEventListener("mouseleave", () => {
+        setTimeout(() => {
+          if (!dropdown.matches(":hover")) {
+            dropdown.classList.add("opacity-0");
+            dropdown.classList.remove("opacity-100");
+            dropdown.classList.add("hidden");
+          }
+        }, 100);
+      });
+      dropdown.addEventListener("mouseenter", () => {
+        dropdown.classList.remove("hidden", "opacity-0");
+        dropdown.classList.add("opacity-100");
+      });
+      dropdown.addEventListener("mouseleave", () => {
+        dropdown.classList.add("opacity-0");
+        dropdown.classList.remove("opacity-100");
+        dropdown.classList.add("hidden");
+      });
+  
+      // Desktop More Dropdown
+      moreTrigger.addEventListener("mouseenter", () => {
+        updateDropdownPosition(navbar, moreDropdown);
+        moreDropdown.classList.remove("hidden", "opacity-0");
+        moreDropdown.classList.add("opacity-100", "block");
+      });
+      moreTrigger.addEventListener("mouseleave", () => {
+        setTimeout(() => {
+          if (!moreDropdown.matches(":hover")) {
+            moreDropdown.classList.add("opacity-0");
+            moreDropdown.classList.remove("opacity-100");
+            moreDropdown.classList.add("hidden");
+          }
+        }, 100);
+      });
+      moreDropdown.addEventListener("mouseenter", () => {
+        moreDropdown.classList.remove("hidden", "opacity-0");
+        moreDropdown.classList.add("opacity-100");
+      });
+      moreDropdown.addEventListener("mouseleave", () => {
+        moreDropdown.classList.add("opacity-0");
+        moreDropdown.classList.remove("opacity-100");
+        moreDropdown.classList.add("hidden");
+      });
+  
+      // Offcanvas open/close
+      hamburger.addEventListener("click", () => {
+        offcanvas.classList.toggle("-translate-x-full");
+      });
+      closeBtn.addEventListener("click", () => {
+        offcanvas.classList.add("-translate-x-full");
+      });
+  
+      // Offcanvas dropdown toggle (Dining)
+      diningMobileToggle.addEventListener("click", (e) => {
+        e.stopPropagation();
+        diningMobileDropdown.classList.toggle("hidden");
+      });
+  
+      // Offcanvas dropdown toggle (More)
+      moreMobileToggle.addEventListener("click", (e) => {
+        e.stopPropagation();
+        moreMobileDropdown.classList.toggle("hidden");
+      });
+  
+      // Close offcanvas on all item click except dropdown toggles
+      const offcanvasItems = offcanvas.querySelectorAll("a, button");
+      offcanvasItems.forEach((item) => {
+        item.addEventListener("click", (e) => {
+          if (
+            e.target.id === "dining-mobile-toggle" ||
+            e.target.id === "more-mobile-toggle"
+          )
+            return;
+          offcanvas.classList.add("-translate-x-full");
+        });
+      });
+    });
+  
+    // Close offcanvas if clicked outside
+    document.addEventListener("click", (e) => {
+      const offcanvas = document.getElementById("offcanvas");
+      const hamburger = document.getElementById("hamburger");
+  
+      const isClickInside = offcanvas.contains(e.target) || hamburger.contains(e.target);
+  
+      if (!isClickInside && !offcanvas.classList.contains("-translate-x-full")) {
+        offcanvas.classList.add("-translate-x-full");
+      }
+    });
+  </script>
+  
+</header>

@@ -1,16 +1,231 @@
 ---
-
+import Layout from '../layouts/Base.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout>
+<section class="relative w-full h-screen overflow-hidden">
+  <div id="carousel" class="w-full h-full relative">
+    <div class="carousel-slide w-full h-full absolute inset-0 transition-opacity duration-1000 opacity-100 z-10">
+      <img src="https://picsum.photos/id/1015/1600/900" class="w-full h-full object-cover" />
+    </div>
+    <div class="carousel-slide w-full h-full absolute inset-0 transition-opacity duration-1000 opacity-0 z-0">
+      <img src="https://picsum.photos/id/1018/1600/900" class="w-full h-full object-cover" />
+    </div>
+    <div class="carousel-slide w-full h-full absolute inset-0 transition-opacity duration-1000 opacity-0 z-0">
+      <img src="https://picsum.photos/id/1020/1600/900" class="w-full h-full object-cover" />
+    </div>
+    <button id="prevSlide" class="absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-3xl z-20">❮</button>
+    <button id="nextSlide" class="absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-3xl z-20">❯</button>
+  </div>
+
+  <div class="absolute bottom-24 left-1/2 transform -translate-x-1/2 z-30 w-full max-w-4xl px-4">
+    <form class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 text-sm md:text-base text-white w-full">
+      <div class="flex flex-col w-full md:w-auto">
+        <label class="uppercase text-base tracking-wide mb-1">Check In – Check Out</label>
+        <div class="border border-white px-4 py-2 flex items-center h-[44px] w-full">
+          <input
+            id="flatpickr-date"
+            type="text"
+            class="flatpickr-input bg-transparent text-white w-full outline-none placeholder-white"
+            readonly placeholder="Select dates"
+          />
+        </div>
+      </div>
+
+      <div class="flex flex-col w-full md:w-auto relative">
+        <label class="uppercase text-base tracking-wide mb-1">Guests & Rooms</label>
+        <div id="guests-field" class="border border-white px-4 py-2 flex items-center h-[44px] cursor-pointer">
+          <input id="guests-input" type="text" readonly value="1 Adult, 1 Room" class="bg-transparent text-white w-full outline-none" />
+        </div>
+      </div>
+
+      <div class="flex flex-col w-full md:w-auto">
+        <label class="uppercase text-base tracking-wide mb-1">&nbsp;</label>
+        <div class="border border-white flex items-center justify-center h-[44px]">
+          <button type="submit" class="text-white uppercase tracking-widest text-base hover:bg-white hover:text-black w-full h-full px-4 py-2">
+            Check Rates
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div id="guests-modal" class="absolute bottom-[120px] left-1/2 transform -translate-x-1/2 bg-white text-black w-[360px] md:w-[640px] p-6 rounded shadow-xl z-40 hidden">
+    <div class="flex justify-between items-start mb-4">
+      <div class="text-center w-full font-semibold uppercase text-sm">Guests & Rooms</div>
+      <button id="close-guests" type="button">✕</button>
+    </div>
+    <div class="grid grid-cols-3 gap-4 text-base mb-4">
+      <div class="flex flex-col">
+        <label class="uppercase text-base mb-1">Adults</label>
+        <select id="adults" class="border px-2 py-1"><option>1</option><option>2</option><option>3</option><option>4</option></select>
+      </div>
+      <div class="flex flex-col">
+        <label class="uppercase text-base mb-1">Children</label>
+        <select id="children" class="border px-2 py-1"><option>0</option><option>1</option><option>2</option><option>3</option></select>
+      </div>
+      <div class="flex flex-col">
+        <label class="uppercase text-base mb-1">Rooms</label>
+        <select id="rooms" class="border px-2 py-1"><option value="1" selected>1</option><option value="2">2</option><option value="3">3</option></select>
+      </div>
+    </div>
+
+    <div id="child-ages-container" class="bg-gray-100 p-4 mb-4 hidden">
+      <div id="child-ages" class="flex flex-wrap gap-4"></div>
+    </div>
+
+    <div class="flex justify-center mb-4">
+      <button id="confirm-guests" type="button" class="bg-[#12263A] text-white uppercase text-base px-8 py-2 tracking-wider hover:bg-black">
+        Confirm
+      </button>
+    </div>
+
+    <div class="flex items-center justify-end mb-2">
+      <button id="toggle-promo" type="button" class="flex items-center text-sm text-black gap-2 hover:underline">
+        <span class="text-xl">+</span> Promo Code
+      </button>
+    </div>
+
+    <div id="promo-fields" class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm hidden">
+      <div>
+        <label class="block text-base mb-1">Promo/Corporate Code</label>
+        <input type="text" class="w-full border px-3 py-2" />
+      </div>
+      <div>
+        <label class="block text-base mb-1">IATA</label>
+        <input type="text" class="w-full border px-3 py-2" />
+      </div>
+      <div>
+        <label class="block text-base mb-1">Group Code</label>
+        <input type="text" class="w-full border px-3 py-2" />
+      </div>
+    </div>
+  </div>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Flatpickr init
+      flatpickr("#flatpickr-date", {
+        mode: "range",
+        minDate: "today",
+        dateFormat: "Y-m-d",
+        altInput: true,
+        altFormat: "M j",
+        showMonths: 2,
+      });
+  
+      const guestsField = document.getElementById('guests-field');
+      const guestsModal = document.getElementById('guests-modal');
+      const guestsInput = document.getElementById('guests-input');
+      const closeGuests = document.getElementById('close-guests');
+      const confirmGuests = document.getElementById('confirm-guests');
+      const childrenSelect = document.getElementById('children');
+      const childAgesContainer = document.getElementById('child-ages-container');
+      const childAges = document.getElementById('child-ages');
+      const promoToggle = document.getElementById('toggle-promo');
+      const promoFields = document.getElementById('promo-fields');
+      const form = document.querySelector('form');
+  
+      guestsField.addEventListener('click', (e) => {
+        e.stopPropagation();
+        guestsModal.classList.remove('hidden');
+      });
+  
+      closeGuests.addEventListener('click', () => guestsModal.classList.add('hidden'));
+  
+      confirmGuests.addEventListener('click', () => {
+        const adults = document.getElementById('adults').value;
+        const children = childrenSelect.value;
+        const rooms = document.getElementById('rooms').value;
+  
+        let summary = `${adults} Adult${adults > 1 ? 's' : ''}`;
+        if (children > 0) summary += `, ${children} Child${children > 1 ? 'ren' : ''}`;
+        summary += `, ${rooms} Room${rooms > 1 ? 's' : ''}`;
+  
+        guestsInput.value = summary;
+        guestsModal.classList.add('hidden');
+      });
+  
+      document.addEventListener('click', (e) => {
+        if (!guestsModal.contains(e.target) && !guestsField.contains(e.target)) {
+          guestsModal.classList.add('hidden');
+        }
+      });
+  
+      childrenSelect.addEventListener('change', () => {
+        const count = parseInt(childrenSelect.value);
+        childAges.innerHTML = '';
+        if (count > 0) {
+          childAgesContainer.classList.remove('hidden');
+          for (let i = 1; i <= count; i++) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'flex flex-col';
+            wrapper.innerHTML = `
+              <label class="text-xs mb-1">Child ${i} Age</label>
+              <select class="border px-2 py-1">
+                ${Array.from({ length: 18 }, (_, j) => `<option>${j + 1}</option>`).join('')}
+              </select>`;
+            childAges.appendChild(wrapper);
+          }
+        } else {
+          childAgesContainer.classList.add('hidden');
+        }
+      });
+  
+      promoToggle.addEventListener('click', () => {
+        promoFields.classList.toggle('hidden');
+        promoToggle.innerHTML = promoFields.classList.contains('hidden')
+          ? `<span class="text-xl">+</span> Promo Code`
+          : `<span class="text-xl">−</span> Promo Code`;
+      });
+  
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+  
+        const dateRange = document.querySelector("#flatpickr-date")._flatpickr.selectedDates;
+        if (!dateRange || dateRange.length < 2) return alert("Please select check-in and check-out dates");
+  
+        const arrival = dateRange[0].toISOString().split("T")[0];
+        const departure = dateRange[1].toISOString().split("T")[0];
+  
+        const adults = parseInt(document.getElementById("adults").value);
+        const children = parseInt(document.getElementById("children").value);
+        const rooms = parseInt(document.getElementById("rooms").value);
+  
+        const promoCode = promoFields.querySelector("input")?.value?.trim();
+  
+        const baseUrl = "https://www.book-secure.com/index.php?s=results";
+        const params = new URLSearchParams();
+        params.set("property", "idbal31692");
+        params.set("arrival", arrival);
+        params.set("departure", departure);
+        params.set("locale", "en_GB");
+        params.set("currency", "IDR");
+        params.set("stid", "986w12cwy");
+  
+        if (promoFields && !promoFields.classList.contains("hidden")) {
+          const code = promoFields.querySelectorAll("input")[0]?.value.trim();
+          if (code) params.set("code", code);
+        }
+  
+        for (let i = 1; i <= rooms; i++) {
+          params.set(`adults${i}`, adults);
+          params.set(`children${i}`, children);
+        }
+  
+        const fullUrl = `${baseUrl}&${params.toString()}`;
+        window.location.href = fullUrl;
+      });
+    });
+  </script>
+  
+  
+
+
+
+</section>
+</Layout>
