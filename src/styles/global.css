@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "@splidejs/splide/dist/css/splide.min.css";
 
 /* Font-face rules */
 @font-face {

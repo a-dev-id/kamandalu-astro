@@ -399,7 +399,8 @@ import Layout from '../layouts/Base.astro';
   </script>
 
 <script type="module" is:inline>
-  import Splide from "@splidejs/splide";
+    import "@splidejs/splide/css";
+    import Splide from "@splidejs/splide";
 
   document.addEventListener("DOMContentLoaded", () => {
     const splide = new Splide("#card-carousel", {
