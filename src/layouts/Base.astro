@@ -3,9 +3,10 @@ import "../styles/global.css";
 import Navbar from '../components/Navbar.astro';
 import SpeedInsights from "@vercel/speed-insights/astro"
 import Analytics from '@vercel/analytics/astro'
+import "@splidejs/splide/dist/css/splide.min.css";
 
 
-const { title, description} = Astro.props;
+const { title, description, children } = Astro.props;
 ---
 
 <html lang="en">
