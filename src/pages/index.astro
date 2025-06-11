@@ -3,246 +3,298 @@ import Layout from '../layouts/Base.astro';
 ---
 
 <Layout>
-<section class="relative w-full h-screen overflow-hidden">
-  <div id="carousel" class="w-full h-full relative">
-    <div class="carousel-slide w-full h-full absolute inset-0 transition-opacity duration-1000 opacity-100 z-10">
-      <img src="https://picsum.photos/id/1015/1600/900" class="w-full h-full object-cover" />
-    </div>
-    <div class="carousel-slide w-full h-full absolute inset-0 transition-opacity duration-1000 opacity-0 z-0">
-      <img src="https://picsum.photos/id/1018/1600/900" class="w-full h-full object-cover" />
-    </div>
-    <div class="carousel-slide w-full h-full absolute inset-0 transition-opacity duration-1000 opacity-0 z-0">
-      <img src="https://picsum.photos/id/1020/1600/900" class="w-full h-full object-cover" />
+  <!-- HERO CAROUSEL SECTION -->
+  <section class="relative w-full h-screen overflow-hidden">
+    <div id="carousel" class="w-full h-full relative">
+      {/** Slides */}
+      <div class="carousel-slide w-full h-full absolute inset-0 transition-opacity duration-1000 opacity-100 z-10">
+        <img src="https://picsum.photos/id/1015/1600/900" class="w-full h-full object-cover" />
+      </div>
+      <div class="carousel-slide w-full h-full absolute inset-0 transition-opacity duration-1000 opacity-0 z-0">
+        <img src="https://picsum.photos/id/1018/1600/900" class="w-full h-full object-cover" />
+      </div>
+      <div class="carousel-slide w-full h-full absolute inset-0 transition-opacity duration-1000 opacity-0 z-0">
+        <img src="https://picsum.photos/id/1020/1600/900" class="w-full h-full object-cover" />
+      </div>
+      <div class="absolute inset-0 bg-black/25 z-20"></div>
+      <button id="prevSlide" class="absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-3xl z-20">❮</button>
+      <button id="nextSlide" class="absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-3xl z-20">❯</button>
     </div>
 
-    <div class="absolute inset-0 bg-black/25 z-20"></div>
+    {/** Booking Form */}
+    <div class="absolute bottom-24 left-1/2 transform -translate-x-1/2 z-30 w-full max-w-4xl px-4">
+      <form class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 text-sm md:text-base text-white w-full">
+        <div class="flex flex-col w-full md:w-auto">
+          <label class="uppercase text-base tracking-wide mb-1">Check In – Check Out</label>
+          <div class="border border-white px-4 py-2 flex items-center h-[44px] w-full">
+            <input
+              id="flatpickr-date"
+              type="text"
+              class="flatpickr-input bg-transparent text-white w-full outline-none placeholder-white"
+              readonly placeholder="Select dates"
+            />
+          </div>
+        </div>
+        <div class="flex flex-col w-full md:w-auto relative">
+          <label class="uppercase text-base tracking-wide mb-1">Guests & Rooms</label>
+          <div id="guests-field" class="border border-white px-4 py-2 flex items-center h-[44px] cursor-pointer">
+            <input id="guests-input" type="text" readonly value="1 Adult, 1 Room" class="bg-transparent text-white w-full outline-none" />
+          </div>
+        </div>
+        <div class="flex flex-col w-full md:w-auto">
+          <label class="uppercase text-base tracking-wide mb-1">&nbsp;</label>
+          <div class="border border-white flex items-center justify-center h-[44px]">
+            <button type="submit" class="text-white uppercase tracking-widest font-title text-base hover:bg-white hover:text-black w-full h-full px-4 py-2">
+              Check Rates
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
 
-    <button id="prevSlide" class="absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-3xl z-20">❮</button>
-    <button id="nextSlide" class="absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-3xl z-20">❯</button>
-  </div>
-
-  <div class="absolute bottom-24 left-1/2 transform -translate-x-1/2 z-30 w-full max-w-4xl px-4">
-    <form class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 text-sm md:text-base text-white w-full">
-      <div class="flex flex-col w-full md:w-auto">
-        <label class="uppercase text-base tracking-wide mb-1">Check In – Check Out</label>
-        <div class="border border-white px-4 py-2 flex items-center h-[44px] w-full">
-          <input
-            id="flatpickr-date"
-            type="text"
-            class="flatpickr-input bg-transparent text-white w-full outline-none placeholder-white"
-            readonly placeholder="Select dates"
-          />
+    {/** Guests Modal */}
+    <div id="guests-modal" class="absolute bottom-[120px] left-1/2 transform -translate-x-1/2 bg-white text-black w-[360px] md:w-[640px] p-6 shadow-xl z-40 hidden">
+      <div class="flex justify-between items-start mb-4">
+        <div class="text-center w-full font-semibold uppercase text-sm">Guests & Rooms</div>
+        <button id="close-guests" type="button">✕</button>
+      </div>
+      <div class="grid grid-cols-3 gap-4 text-base mb-4">
+        <div class="flex flex-col">
+          <label class="uppercase text-base mb-1">Adults</label>
+          <select id="adults" class="border px-2 py-1">
+            <option>1</option><option>2</option><option>3</option><option>4</option>
+          </select>
+        </div>
+        <div class="flex flex-col">
+          <label class="uppercase text-base mb-1">Children</label>
+          <select id="children" class="border px-2 py-1">
+            <option>0</option><option>1</option><option>2</option><option>3</option>
+          </select>
+        </div>
+        <div class="flex flex-col">
+          <label class="uppercase text-base mb-1">Rooms</label>
+          <select id="rooms" class="border px-2 py-1">
+            <option value="1" selected>1</option><option value="2">2</option><option value="3">3</option>
+          </select>
         </div>
       </div>
-
-      <div class="flex flex-col w-full md:w-auto relative">
-        <label class="uppercase text-base tracking-wide mb-1">Guests & Rooms</label>
-        <div id="guests-field" class="border border-white px-4 py-2 flex items-center h-[44px] cursor-pointer">
-          <input id="guests-input" type="text" readonly value="1 Adult, 1 Room" class="bg-transparent text-white w-full outline-none" />
+      <div id="child-ages-container" class="bg-gray-100 p-4 mb-5 hidden">
+        <div id="child-ages" class="flex flex-wrap gap-4"></div>
+      </div>
+      <div class="flex justify-center mb-5">
+        <button id="confirm-guests" type="button" class="hover:bg-white hover:text-black px-6 py-3 text-sm font-title tracking-widest transition-colors duration-300 border hover:border-black bg-[#916B2C] text-white border-transparent">
+          Confirm
+        </button>
+      </div>
+      <div class="flex items-center justify-end mb-2">
+        <button id="toggle-promo" type="button" class="flex items-center text-sm text-black gap-2 hover:underline">
+          <span class="text-xl">+</span> Promo Code
+        </button>
+      </div>
+      <div id="promo-fields" class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm hidden">
+        <div>
+          <label class="block text-base mb-1">Promo/Corporate Code</label>
+          <input type="text" class="w-full border px-3 py-2" />
+        </div>
+        <div>
+          <label class="block text-base mb-1">IATA</label>
+          <input type="text" class="w-full border px-3 py-2" />
+        </div>
+        <div>
+          <label class="block text-base mb-1">Group Code</label>
+          <input type="text" class="w-full border px-3 py-2" />
         </div>
       </div>
-
-      <div class="flex flex-col w-full md:w-auto">
-        <label class="uppercase text-base tracking-wide mb-1">&nbsp;</label>
-        <div class="border border-white flex items-center justify-center h-[44px]">
-          <button type="submit" class="text-white uppercase tracking-widest font-title text-base hover:bg-white hover:text-black w-full h-full px-4 py-2">
-            Check Rates
-          </button>
-        </div>
-      </div>
-    </form>
-  </div>
-
-  <div id="guests-modal" class="absolute bottom-[120px] left-1/2 transform -translate-x-1/2 bg-white text-black w-[360px] md:w-[640px] p-6 shadow-xl z-40 hidden">
-    <div class="flex justify-between items-start mb-4">
-      <div class="text-center w-full font-semibold uppercase text-sm">Guests & Rooms</div>
-      <button id="close-guests" type="button">✕</button>
     </div>
-    <div class="grid grid-cols-3 gap-4 text-base mb-4">
-      <div class="flex flex-col">
-        <label class="uppercase text-base mb-1">Adults</label>
-        <select id="adults" class="border px-2 py-1"><option>1</option><option>2</option><option>3</option><option>4</option></select>
-      </div>
-      <div class="flex flex-col">
-        <label class="uppercase text-base mb-1">Children</label>
-        <select id="children" class="border px-2 py-1"><option>0</option><option>1</option><option>2</option><option>3</option></select>
-      </div>
-      <div class="flex flex-col">
-        <label class="uppercase text-base mb-1">Rooms</label>
-        <select id="rooms" class="border px-2 py-1"><option value="1" selected>1</option><option value="2">2</option><option value="3">3</option></select>
+  </section>
+
+  <!-- PAGE DESCRIPTION -->
+  <section class="container mx-auto px-4 py-24">
+    <div class="text-center px-8 mx-auto">
+      <h1 class="font-title text-5xl uppercase mb-6 tracking-widest font-light">Kamandalu Ubud</h1>
+      <p class="text-3xl mb-12">Experience the Heritage of Serenity - Bali's Most Enchanting Luxury Resort. <br />The Soul of Bali Awaits You</p>
+      <p class="mb-36">
+        Nestled in the heart of Ubud, Kamandalu Luxury Resort isn't just a destination - it's an immersion into the soul of Bali. As you step into our sanctuary, the whispers of ancient traditions merge with the tranquility of nature. Towering banyan trees, emerald rice terraces, and the sacred Petanu River Valley embrace you, setting the stage for a journey where Balinese heritage and unparalleled luxury coexist in perfect harmony. Here, every moment is a tribute to "The Serenity of Heritage."
+      </p>
+      <a href="https://www.book-secure.com/index.php?s=results&property=idbal31692&locale=en_GB&currency=IDR&stid=986w12cwy" class="bg-white text-black px-6 py-4 text-sm font-title tracking-widest transition-colors duration-300 border border-black hover:bg-[#916B2C] hover:text-white hover:border-transparent">
+        CHECK RATES
+      </a>
+    </div>
+  </section>
+
+  <!-- VILLA CAROUSEL -->
+  <section class="container mx-auto px-4 pt-52">
+    <div class="text-center px-8 mx-auto">
+      <h2 class="font-title text-4xl uppercase mb-6 tracking-widest font-light">DISCOVER OUR VILLAS</h2>
+      <p class="mb-20">Kamandalu Ubud is a five-star sanctuary in Bali's lush highlands, designed as a modern homage to a traditional village. With private villas, scenic rice terraces, and world-class amenities, it offers an enchanting blend of nature, culture, and refined indulgence.</p>
+    </div>
+    <div id="villa-carousel" class="splide mb-12">
+      <div class="splide__track">
+        <ul class="splide__list">
+          {/** Slides */}
+          <li class="splide__slide transition-transform duration-500 ease-in-out">
+            <div class="bg-white overflow-hidden flex flex-col h-full">
+              <img src="https://picsum.photos/id/1018/800/600" width="800" height="600" alt="Cliffside Ocean View" loading="lazy" class="w-full h-auto object-cover aspect-[4/3] transition duration-500" />
+              <div class="p-6 flex flex-col flex-1">
+                <h3 class="text-lg tracking-widest uppercase font-title">Cliffside Ocean View</h3>
+                <p class="mt-2 text-base">Breathe in the salty air as waves crash beside this secluded luxury retreat. An experience designed for peace and introspection amid nature's power. An experience designed for peace and introspection amid nature's power. An experience designed for peace and introspection amid nature's power.</p>
+                <div class="flex-grow"></div>
+                <a href="#" class="text-lg mt-4 inline-block text-black uppercase">Explore</a>
+              </div>
+            </div>
+          </li>
+          <li class="splide__slide transition-transform duration-500 ease-in-out">
+            <div class="bg-white overflow-hidden flex flex-col h-full">
+              <img src="https://picsum.photos/id/1024/800/600" width="800" height="600" alt="Forest Hideaway" loading="lazy" class="w-full h-auto object-cover aspect-[4/3] transition duration-500" />
+              <div class="p-6 flex flex-col flex-1">
+                <h3 class="text-lg tracking-widest uppercase font-title">Forest Hideaway</h3>
+                <p class="mt-2 text-base">A peaceful escape nestled in the forest, perfect for recharging your soul. Surrounded by lush greenery and birdsong, it's a haven of balance and calm.</p>
+                <div class="flex-grow"></div>
+                <a href="#" class="text-lg mt-4 inline-block text-black uppercase">Explore</a>
+              </div>
+            </div>
+          </li>
+          <li class="splide__slide transition-transform duration-500 ease-in-out">
+            <div class="bg-white overflow-hidden flex flex-col h-full">
+              <img src="https://picsum.photos/id/1035/800/600" width="800" height="600" alt="Mountain Serenity" loading="lazy" class="w-full h-auto object-cover aspect-[4/3] transition duration-500" />
+              <div class="p-6 flex flex-col flex-1">
+                <h3 class="text-lg tracking-widest uppercase font-title">Mountain Serenity</h3>
+                <p class="mt-2 text-base">Wake up to misty mountain views and cool alpine breezes. This secluded location offers breathtaking hiking trails and peaceful stargazing at night.</p>
+                <div class="flex-grow"></div>
+                <a href="#" class="text-lg mt-4 inline-block text-black uppercase">Explore</a>
+              </div>
+            </div>
+          </li>
+          <li class="splide__slide transition-transform duration-500 ease-in-out">
+            <div class="bg-white overflow-hidden flex flex-col h-full">
+              <img src="https://picsum.photos/id/1045/800/600" width="800" height="600" alt="Desert Mirage" loading="lazy" class="w-full h-auto object-cover aspect-[4/3] transition duration-500" />
+              <div class="p-6 flex flex-col flex-1">
+                <h3 class="text-lg tracking-widest uppercase font-title">Desert Mirage</h3>
+                <p class="mt-2 text-base">Experience an oasis of luxury surrounded by golden dunes and silence. Refresh yourself in a tranquil pool under the stars of the open desert sky.</p>
+                <div class="flex-grow"></div>
+                <a href="#" class="text-lg mt-4 inline-block text-black uppercase">Explore</a>
+              </div>
+            </div>
+          </li>
+          <li class="splide__slide transition-transform duration-500 ease-in-out">
+            <div class="bg-white overflow-hidden flex flex-col h-full">
+              <img src="https://picsum.photos/id/1055/800/600" width="800" height="600" alt="Island Tranquility" loading="lazy" class="w-full h-auto object-cover aspect-[4/3] transition duration-500" />
+              <div class="p-6 flex flex-col flex-1">
+                <h3 class="text-lg tracking-widest uppercase font-title">Island Tranquility</h3>
+                <p class="mt-2 text-base">Unwind with tropical breezes, crystal waters, and private island luxury. A perfect retreat with sunrise yoga and oceanfront dining at your doorstep.</p>
+                <div class="flex-grow"></div>
+                <a href="#" class="text-lg mt-4 inline-block text-black uppercase">Explore</a>
+              </div>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
-
-    <div id="child-ages-container" class="bg-gray-100 p-4 mb-4 hidden">
-      <div id="child-ages" class="flex flex-wrap gap-4"></div>
-    </div>
-
-    <div class="flex justify-center mb-4">
-      <button id="confirm-guests" type="button" class="bg-[#12263A] text-white uppercase text-base px-8 py-2 tracking-wider hover:bg-black">
-        Confirm
+    <div class="flex items-center gap-6 mt-8">
+      <button id="villa-prev" class="w-12 h-12 flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="24" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="44" y1="12" x2="4" y2="12" />
+          <polyline points="12 20 4 12 12 4" />
+        </svg>
+      </button>
+      <button id="villa-next" class="w-12 h-12 flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="24" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="4" y1="12" x2="44" y2="12" />
+          <polyline points="36 4 44 12 36 20" />
+        </svg>
       </button>
     </div>
+  </section>
 
-    <div class="flex items-center justify-end mb-2">
-      <button id="toggle-promo" type="button" class="flex items-center text-sm text-black gap-2 hover:underline">
-        <span class="text-xl">+</span> Promo Code
+  <!-- OFFERS CAROUSEL -->
+  <section class="container mx-auto px-4 pt-52">
+    <div class="text-center px-8 mx-auto">
+      <h2 class="font-title text-3xl uppercase mb-6 tracking-widest font-light">EXCLUSIVE OFFERS</h2>
+      <p class="mb-20">Enhance your escape with our curated special offers, from romantic villa packages to serene wellness retreats. Discover exceptional value without compromising on the elegance and experience of Kamandalu Ubud.</p>
+    </div>
+    <div id="offer-carousel" class="splide mb-12">
+      <div class="splide__track">
+        <ul class="splide__list">
+          {/** Slides (same as villa, for brevity) */}
+          <li class="splide__slide transition-transform duration-500 ease-in-out">
+            <div class="bg-white overflow-hidden flex flex-col h-full">
+              <img src="https://picsum.photos/id/1018/800/600" width="800" height="600" alt="Cliffside Ocean View" loading="lazy" class="w-full h-auto object-cover aspect-[4/3] transition duration-500" />
+              <div class="p-6 flex flex-col flex-1">
+                <h3 class="text-lg tracking-widest uppercase font-title">Cliffside Ocean View</h3>
+                <p class="mt-2 text-base">Breathe in the salty air as waves crash beside this secluded luxury retreat. An experience designed for peace and introspection amid nature's power. An experience designed for peace and introspection amid nature's power. An experience designed for peace and introspection amid nature's power.</p>
+                <div class="flex-grow"></div>
+                <a href="#" class="text-lg mt-4 inline-block text-black uppercase">Explore</a>
+              </div>
+            </div>
+          </li>
+          <li class="splide__slide transition-transform duration-500 ease-in-out">
+            <div class="bg-white overflow-hidden flex flex-col h-full">
+              <img src="https://picsum.photos/id/1024/800/600" width="800" height="600" alt="Forest Hideaway" loading="lazy" class="w-full h-auto object-cover aspect-[4/3] transition duration-500" />
+              <div class="p-6 flex flex-col flex-1">
+                <h3 class="text-lg tracking-widest uppercase font-title">Forest Hideaway</h3>
+                <p class="mt-2 text-base">A peaceful escape nestled in the forest, perfect for recharging your soul. Surrounded by lush greenery and birdsong, it's a haven of balance and calm.</p>
+                <div class="flex-grow"></div>
+                <a href="#" class="text-lg mt-4 inline-block text-black uppercase">Explore</a>
+              </div>
+            </div>
+          </li>
+          <li class="splide__slide transition-transform duration-500 ease-in-out">
+            <div class="bg-white overflow-hidden flex flex-col h-full">
+              <img src="https://picsum.photos/id/1035/800/600" width="800" height="600" alt="Mountain Serenity" loading="lazy" class="w-full h-auto object-cover aspect-[4/3] transition duration-500" />
+              <div class="p-6 flex flex-col flex-1">
+                <h3 class="text-lg tracking-widest uppercase font-title">Mountain Serenity</h3>
+                <p class="mt-2 text-base">Wake up to misty mountain views and cool alpine breezes. This secluded location offers breathtaking hiking trails and peaceful stargazing at night.</p>
+                <div class="flex-grow"></div>
+                <a href="#" class="text-lg mt-4 inline-block text-black uppercase">Explore</a>
+              </div>
+            </div>
+          </li>
+          <li class="splide__slide transition-transform duration-500 ease-in-out">
+            <div class="bg-white overflow-hidden flex flex-col h-full">
+              <img src="https://picsum.photos/id/1045/800/600" width="800" height="600" alt="Desert Mirage" loading="lazy" class="w-full h-auto object-cover aspect-[4/3] transition duration-500" />
+              <div class="p-6 flex flex-col flex-1">
+                <h3 class="text-lg tracking-widest uppercase font-title">Desert Mirage</h3>
+                <p class="mt-2 text-base">Experience an oasis of luxury surrounded by golden dunes and silence. Refresh yourself in a tranquil pool under the stars of the open desert sky.</p>
+                <div class="flex-grow"></div>
+                <a href="#" class="text-lg mt-4 inline-block text-black uppercase">Explore</a>
+              </div>
+            </div>
+          </li>
+          <li class="splide__slide transition-transform duration-500 ease-in-out">
+            <div class="bg-white overflow-hidden flex flex-col h-full">
+              <img src="https://picsum.photos/id/1055/800/600" width="800" height="600" alt="Island Tranquility" loading="lazy" class="w-full h-auto object-cover aspect-[4/3] transition duration-500" />
+              <div class="p-6 flex flex-col flex-1">
+                <h3 class="text-lg tracking-widest uppercase font-title">Island Tranquility</h3>
+                <p class="mt-2 text-base">Unwind with tropical breezes, crystal waters, and private island luxury. A perfect retreat with sunrise yoga and oceanfront dining at your doorstep.</p>
+                <div class="flex-grow"></div>
+                <a href="#" class="text-lg mt-4 inline-block text-black uppercase">Explore</a>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="flex items-center gap-6 mt-8">
+      <button id="offer-prev" class="w-12 h-12 flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="24" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="44" y1="12" x2="4" y2="12" />
+          <polyline points="12 20 4 12 12 4" />
+        </svg>
+      </button>
+      <button id="offer-next" class="w-12 h-12 flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="24" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="4" y1="12" x2="44" y2="12" />
+          <polyline points="36 4 44 12 36 20" />
+        </svg>
       </button>
     </div>
+  </section>
 
-    <div id="promo-fields" class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm hidden">
-      <div>
-        <label class="block text-base mb-1">Promo/Corporate Code</label>
-        <input type="text" class="w-full border px-3 py-2" />
-      </div>
-      <div>
-        <label class="block text-base mb-1">IATA</label>
-        <input type="text" class="w-full border px-3 py-2" />
-      </div>
-      <div>
-        <label class="block text-base mb-1">Group Code</label>
-        <input type="text" class="w-full border px-3 py-2" />
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="container mx-auto px-4 py-24">
-  <div class="text-center px-6 mx-auto">
-    <h1 class="font-title text-5xl uppercase mb-6 tracking-widest font-light">Kamandalu Ubud</h1>
-    <h2 class="text-3xl mb-12">Experience the Heritage of Serenity - Bali's Most Enchanting Luxury Resort. <br>The Soul of Bali Awaits You</h2>
-    <p class="mb-36">Nestled in the heart of Ubud, Kamandalu Luxury Resort isn't just a destination - it's an immersion into the soul of Bali. As you step into our sanctuary, the whispers of ancient traditions merge with the tranquility of nature. Towering banyan trees, emerald rice terraces, and the sacred Petanu River Valley embrace you, setting the stage for a journey where Balinese heritage and unparalleled luxury coexist in perfect harmony. Here, every moment is a tribute to "The Serenity of Heritage."</p>
-    <a href="https://www.book-secure.com/index.php?s=results&property=idbal31692&locale=en_GB&currency=IDR&stid=986w12cwy" class="bg-white text-black px-6 py-3 text-sm font-title tracking-widest transition-colors duration-300 border border-black hover:bg-[#916B2C] hover:text-white hover:border-transparent">
-      CHECK RATES
-    </a>
-  </div>
-</section>
-<section class="container mx-auto px-4 py-24">
-  <div id="card-carousel" class="splide my-12">
-    <div class="splide__track">
-      <ul class="splide__list">
-  
-        <li class="splide__slide transition-transform duration-500 ease-in-out">
-          <div class="bg-white overflow-hidden flex flex-col h-full">
-            <img src="https://picsum.photos/id/1018/800/600"
-                 width="800" height="600"
-                 alt="Cliffside Ocean View"
-                 loading="lazy"
-                 class="w-full h-auto object-cover aspect-[4/3] transition duration-500" />
-            <div class="p-6 flex flex-col flex-1">
-              <h3 class="text-lg tracking-widest uppercase font-title">Cliffside Ocean View</h3>
-              <p class="mt-2 text-base">
-                Breathe in the salty air as waves crash beside this secluded luxury retreat. An experience designed for peace and introspection amid nature's power. An experience designed for peace and introspection amid nature's power. An experience designed for peace and introspection amid nature's power.
-              </p>
-              <div class="flex-grow"></div>
-              <a href="#" class="text-lg mt-4 inline-block text-black uppercase">Explore</a>
-            </div>
-          </div>
-        </li>
-        
-        <li class="splide__slide transition-transform duration-500 ease-in-out">
-          <div class="bg-white overflow-hidden flex flex-col h-full">
-            <img src="https://picsum.photos/id/1024/800/600"
-                 width="800" height="600"
-                 alt="Forest Hideaway"
-                 loading="lazy"
-                 class="w-full h-auto object-cover aspect-[4/3] transition duration-500" />
-            <div class="p-6 flex flex-col flex-1">
-              <h3 class="text-lg tracking-widest uppercase font-title">Forest Hideaway</h3>
-              <p class="mt-2 text-base">
-                A peaceful escape nestled in the forest, perfect for recharging your soul. Surrounded by lush greenery and birdsong, it's a haven of balance and calm.
-              </p>
-              <div class="flex-grow"></div>
-              <a href="#" class="text-lg mt-4 inline-block text-black uppercase">Explore</a>
-            </div>
-          </div>
-        </li>
-        
-        <li class="splide__slide transition-transform duration-500 ease-in-out">
-          <div class="bg-white overflow-hidden flex flex-col h-full">
-            <img src="https://picsum.photos/id/1035/800/600"
-                 width="800" height="600"
-                 alt="Mountain Serenity"
-                 loading="lazy"
-                 class="w-full h-auto object-cover aspect-[4/3] transition duration-500" />
-            <div class="p-6 flex flex-col flex-1">
-              <h3 class="text-lg tracking-widest uppercase font-title">Mountain Serenity</h3>
-              <p class="mt-2 text-base">
-                Wake up to misty mountain views and cool alpine breezes. This secluded location offers breathtaking hiking trails and peaceful stargazing at night.
-              </p>
-              <div class="flex-grow"></div>
-              <a href="#" class="text-lg mt-4 inline-block text-black uppercase">Explore</a>
-            </div>
-          </div>
-        </li>
-        
-        <li class="splide__slide transition-transform duration-500 ease-in-out">
-          <div class="bg-white overflow-hidden flex flex-col h-full">
-            <img src="https://picsum.photos/id/1045/800/600"
-                 width="800" height="600"
-                 alt="Desert Mirage"
-                 loading="lazy"
-                 class="w-full h-auto object-cover aspect-[4/3] transition duration-500" />
-            <div class="p-6 flex flex-col flex-1">
-              <h3 class="text-lg tracking-widest uppercase font-title">Desert Mirage</h3>
-              <p class="mt-2 text-base">
-                Experience an oasis of luxury surrounded by golden dunes and silence. Refresh yourself in a tranquil pool under the stars of the open desert sky.
-              </p>
-              <div class="flex-grow"></div>
-              <a href="#" class="text-lg mt-4 inline-block text-black uppercase">Explore</a>
-            </div>
-          </div>
-        </li>
-        
-        <li class="splide__slide transition-transform duration-500 ease-in-out">
-          <div class="bg-white overflow-hidden flex flex-col h-full">
-            <img src="https://picsum.photos/id/1055/800/600"
-                 width="800" height="600"
-                 alt="Island Tranquility"
-                 loading="lazy"
-                 class="w-full h-auto object-cover aspect-[4/3] transition duration-500" />
-            <div class="p-6 flex flex-col flex-1">
-              <h3 class="text-lg tracking-widest uppercase font-title">Island Tranquility</h3>
-              <p class="mt-2 text-base">
-                Unwind with tropical breezes, crystal waters, and private island luxury. A perfect retreat with sunrise yoga and oceanfront dining at your doorstep.
-              </p>
-              <div class="flex-grow"></div>
-              <a href="#" class="text-lg mt-4 inline-block text-black uppercase">Explore</a>
-            </div>
-          </div>
-        </li>
-        
-  
-      </ul>
-    </div>
-  </div>
-  
-<!-- Arrow Controls -->
-<div class="flex items-center gap-6 mt-8">
-  <!-- Prev (Extra long tail) -->
-  <button id="custom-prev" class="w-12 h-12 flex items-center justify-center">
-    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="24" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <line x1="44" y1="12" x2="4" y2="12" />
-      <polyline points="12 20 4 12 12 4" />
-    </svg>
-  </button>
-
-  <!-- Next (Extra long tail) -->
-  <button id="custom-next" class="w-12 h-12 flex items-center justify-center">
-    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="24" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <line x1="4" y1="12" x2="44" y2="12" />
-      <polyline points="36 4 44 12 36 20" />
-    </svg>
-  </button>
-</div>
-
-
-
-</section>
-
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <!-- SCRIPTS -->
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script is:inline>
     document.addEventListener('DOMContentLoaded', () => {
-      // Flatpickr init
+      // Flatpickr
       flatpickr("#flatpickr-date", {
         mode: "range",
         minDate: "today",
@@ -251,7 +303,8 @@ import Layout from '../layouts/Base.astro';
         altFormat: "M j",
         showMonths: 2,
       });
-  
+
+      // Guests Modal Logic
       const guestsField = document.getElementById('guests-field');
       const guestsModal = document.getElementById('guests-modal');
       const guestsInput = document.getElementById('guests-input');
@@ -263,33 +316,27 @@ import Layout from '../layouts/Base.astro';
       const promoToggle = document.getElementById('toggle-promo');
       const promoFields = document.getElementById('promo-fields');
       const form = document.querySelector('form');
-  
+
       guestsField.addEventListener('click', (e) => {
         e.stopPropagation();
         guestsModal.classList.remove('hidden');
       });
-  
       closeGuests.addEventListener('click', () => guestsModal.classList.add('hidden'));
-  
       confirmGuests.addEventListener('click', () => {
         const adults = document.getElementById('adults').value;
         const children = childrenSelect.value;
         const rooms = document.getElementById('rooms').value;
-  
         let summary = `${adults} Adult${adults > 1 ? 's' : ''}`;
         if (children > 0) summary += `, ${children} Child${children > 1 ? 'ren' : ''}`;
         summary += `, ${rooms} Room${rooms > 1 ? 's' : ''}`;
-  
         guestsInput.value = summary;
         guestsModal.classList.add('hidden');
       });
-  
       document.addEventListener('click', (e) => {
         if (!guestsModal.contains(e.target) && !guestsField.contains(e.target)) {
           guestsModal.classList.add('hidden');
         }
       });
-  
       childrenSelect.addEventListener('change', () => {
         const count = parseInt(childrenSelect.value);
         childAges.innerHTML = '';
@@ -309,29 +356,21 @@ import Layout from '../layouts/Base.astro';
           childAgesContainer.classList.add('hidden');
         }
       });
-  
       promoToggle.addEventListener('click', () => {
         promoFields.classList.toggle('hidden');
         promoToggle.innerHTML = promoFields.classList.contains('hidden')
           ? `<span class="text-xl">+</span> Promo Code`
           : `<span class="text-xl">−</span> Promo Code`;
       });
-  
       form.addEventListener('submit', (e) => {
         e.preventDefault();
-  
         const dateRange = document.querySelector("#flatpickr-date")._flatpickr.selectedDates;
         if (!dateRange || dateRange.length < 2) return alert("Please select check-in and check-out dates");
-  
         const arrival = dateRange[0].toISOString().split("T")[0];
         const departure = dateRange[1].toISOString().split("T")[0];
-  
         const adults = parseInt(document.getElementById("adults").value);
         const children = parseInt(document.getElementById("children").value);
         const rooms = parseInt(document.getElementById("rooms").value);
-  
-        const promoCode = promoFields.querySelector("input")?.value?.trim();
-  
         const baseUrl = "https://www.book-secure.com/index.php?s=results";
         const params = new URLSearchParams();
         params.set("property", "idbal31692");
@@ -340,29 +379,24 @@ import Layout from '../layouts/Base.astro';
         params.set("locale", "en_GB");
         params.set("currency", "IDR");
         params.set("stid", "986w12cwy");
-  
         if (promoFields && !promoFields.classList.contains("hidden")) {
           const code = promoFields.querySelectorAll("input")[0]?.value.trim();
           if (code) params.set("code", code);
         }
-  
         for (let i = 1; i <= rooms; i++) {
           params.set(`adults${i}`, adults);
           params.set(`children${i}`, children);
         }
-  
         const fullUrl = `${baseUrl}&${params.toString()}`;
         window.location.href = fullUrl;
       });
     });
   </script>
-  
   <script is:inline>
     document.addEventListener('DOMContentLoaded', () => {
-      // Carousel logic
+      // Hero Carousel
       const slides = document.querySelectorAll('.carousel-slide');
       let currentSlide = 0;
-
       function showSlide(index) {
         slides.forEach((slide, i) => {
           if (i === index) {
@@ -374,59 +408,73 @@ import Layout from '../layouts/Base.astro';
           }
         });
       }
-
       document.getElementById('prevSlide').addEventListener('click', (e) => {
         e.stopPropagation();
         currentSlide = (currentSlide - 1 + slides.length) % slides.length;
         showSlide(currentSlide);
       });
-
       document.getElementById('nextSlide').addEventListener('click', (e) => {
         e.stopPropagation();
         currentSlide = (currentSlide + 1) % slides.length;
         showSlide(currentSlide);
       });
-
-      // Optional: Auto-slide every 5 seconds
       setInterval(() => {
         currentSlide = (currentSlide + 1) % slides.length;
         showSlide(currentSlide);
       }, 5000);
-
-      // Initialize first slide
       showSlide(currentSlide);
     });
   </script>
-
-<script>
+  <script>
     import "@splidejs/splide/css";
     import Splide from "@splidejs/splide";
-
-  
-    const splide = new Splide("#card-carousel", {
-      type: "loop",
+    // Villa Carousel
+    const villa = new Splide("#villa-carousel", {
+      type: "slide",
       perPage: 2,
       gap: "4rem",
       speed: 800,
       easing: "ease-in-out",
       arrows: false,
       pagination: false,
-      breakpoints: {
-        768: {
-          perPage: 1,
-        },
-      },
+      breakpoints: { 768: { perPage: 1 } },
     });
-
-    splide.mount();
-
-    const prev = document.getElementById("custom-prev");
-    const next = document.getElementById("custom-next");
-
-    if (prev && next) {
-      prev.addEventListener("click", () => splide.go("<"));
-      next.addEventListener("click", () => splide.go(">"));
-    }
-  
-</script>
+    villa.on('mounted move', () => {
+      const villaPrevBtn = document.getElementById('villa-prev');
+      const villaNextBtn = document.getElementById('villa-next');
+      villaPrevBtn.disabled = villa.index === 0;
+      villaPrevBtn.classList.toggle('opacity-30', villa.index === 0);
+      villaPrevBtn.classList.toggle('cursor-not-allowed', villa.index === 0);
+      villaNextBtn.disabled = villa.index >= villa.length - villa.options.perPage;
+      villaNextBtn.classList.toggle('opacity-30', villa.index >= villa.length - villa.options.perPage);
+      villaNextBtn.classList.toggle('cursor-not-allowed', villa.index >= villa.length - villa.options.perPage);
+    });
+    villa.mount();
+    document.getElementById("villa-prev").addEventListener("click", () => villa.go("<"));
+    document.getElementById("villa-next").addEventListener("click", () => villa.go(">"));
+    // Offer Carousel
+    const offer = new Splide("#offer-carousel", {
+      type: "slide",
+      perPage: 3,
+      gap: "4rem",
+      speed: 800,
+      easing: "ease-in-out",
+      arrows: false,
+      pagination: false,
+      breakpoints: { 768: { perPage: 2 } },
+    });
+    offer.on('mounted move', () => {
+      const offerPrevBtn = document.getElementById('offer-prev');
+      const offerNextBtn = document.getElementById('offer-next');
+      offerPrevBtn.disabled = offer.index === 0;
+      offerPrevBtn.classList.toggle('opacity-30', offer.index === 0);
+      offerPrevBtn.classList.toggle('cursor-not-allowed', offer.index === 0);
+      offerNextBtn.disabled = offer.index >= offer.length - offer.options.perPage;
+      offerNextBtn.classList.toggle('opacity-30', offer.index >= offer.length - offer.options.perPage);
+      offerNextBtn.classList.toggle('cursor-not-allowed', offer.index >= offer.length - offer.options.perPage);
+    });
+    offer.mount();
+    document.getElementById("offer-prev").addEventListener("click", () => offer.go("<"));
+    document.getElementById("offer-next").addEventListener("click", () => offer.go(">"));
+  </script>
 </Layout>

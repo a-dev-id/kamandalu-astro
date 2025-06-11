@@ -9,7 +9,7 @@
       </select>
     </div>
     <div>
-      <img id="navbar-logo" src="https://www.kamandaluresort.com/images/kamandalu-logo.png" alt="Kamandalu Logo" width="139" height="80" class="h-20 transition-all duration-300 mt-2 logo brightness-0 invert-[1]" />
+      <img id="navbar-logo" src="https://www.kamandaluresort.com/images/kamandalu-logo.png" alt="Kamandalu Logo" class="w-36 w- h-20 transition-all duration-300 mt-2 logo brightness-0 invert-[1]" />
     </div>
     <div class="w-10"></div>
   </div>
@@ -120,7 +120,6 @@
     const moreDropdown = document.querySelector('#more-dropdown');
     const moreTrigger = document.querySelector('#more-trigger');
     const navbar = document.querySelector('#navbar');
-    const logo = document.querySelector("#navbar-logo");
   
     function updateDropdownPosition(element, dropdown) {
       const navRect = element.getBoundingClientRect();
@@ -140,6 +139,8 @@
         reserveBtn.classList.remove("bg-white", "text-black", "border-white");
         reserveBtn.classList.add("bg-[#916B2C]", "text-white", "border-transparent");
         logo.classList.remove("h-20");
+        logo.classList.remove("w-36");
+        logo.classList.add("w-16");
         logo.classList.add("h-10");
         logo.classList.remove("brightness-0", "invert-[1]");
       } else {
@@ -150,7 +151,9 @@
         reserveBtn.classList.remove("bg-[#916B2C]", "text-white", "border-transparent");
         reserveBtn.classList.add("bg-white", "text-black", "border-white");
         logo.classList.remove("h-10");
+        logo.classList.remove("w-16");
         logo.classList.add("h-20");
+        logo.classList.add("w-36");
         logo.classList.add("brightness-0", "invert-[1]");
       }
   
