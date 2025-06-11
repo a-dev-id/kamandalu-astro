@@ -398,11 +398,11 @@ import Layout from '../layouts/Base.astro';
     });
   </script>
 
-<script type="module" is:inline>
+<script>
     import "@splidejs/splide/css";
     import Splide from "@splidejs/splide";
 
-  document.addEventListener("DOMContentLoaded", () => {
+  
     const splide = new Splide("#card-carousel", {
       type: "loop",
       perPage: 2,
@@ -427,6 +427,6 @@ import Layout from '../layouts/Base.astro';
       prev.addEventListener("click", () => splide.go("<"));
       next.addEventListener("click", () => splide.go(">"));
     }
-  });
+  
 </script>
 </Layout>
