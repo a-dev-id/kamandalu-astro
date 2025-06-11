@@ -5,6 +5,7 @@ import SpeedInsights from "@vercel/speed-insights/astro"
 import Analytics from '@vercel/analytics/astro'
 import "@splidejs/splide/dist/css/splide.min.css";
 
+
 const { title, description, children } = Astro.props;
 ---
 
@@ -15,6 +16,8 @@ const { title, description, children } = Astro.props;
     <meta name="description" content={description} />
     <title>{title}</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+    <script type="module" src="/src/scripts/splide-init.js"></script>
+    <script type="module" src="/js/splide-init.js"></script>
     <SpeedInsights/>
     <Analytics/>
   </head>
@@ -29,6 +32,6 @@ const { title, description, children } = Astro.props;
       <p>&copy; 2025 Our Luxury Hotel. All Rights Reserved.</p>
     </footer>
 
-    <script type="module" src="/src/scripts/splide-init.js"></script>
+    <!-- <script type="module" src="/src/scripts/splide-init.js"></script> -->
   </body>
 </html>
