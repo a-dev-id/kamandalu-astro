@@ -1,1 +1,43 @@
 @import "tailwindcss";
+
+/* Font-face rules */
+@font-face {
+  font-family: "Plantin";
+  src: url("/fonts/Plantin.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "PlantinLight";
+  src: url("/fonts/PlantinLight.ttf") format("truetype");
+  font-weight: lighter;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "MrEavesMod";
+  src: url("/fonts/MrEavesModOTReg.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "MrEavesModBold";
+  src: url("/fonts/MrEavesModOTBold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-body {
+  font-family: "MrEavesMod", sans-serif;
+  letter-spacing: 1px;
+}
+
+.font-title {
+  font-family: "PlantinLight", sans-serif;
+}

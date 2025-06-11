@@ -17,7 +17,7 @@ const { title, description, children } = Astro.props;
     <SpeedInsights/>
     <Analytics/>
   </head>
-  <body class="font-sans bg-gray-100 text-gray-900">
+  <body class="font-body text-xl">
     <Navbar />
 
     <main>
@@ -27,5 +27,7 @@ const { title, description, children } = Astro.props;
     <footer class="bg-gray-800 text-white py-4 text-center">
       <p>&copy; 2025 Our Luxury Hotel. All Rights Reserved.</p>
     </footer>
+
+    <script type="module" src="/src/scripts/splide-init.js"></script>
   </body>
 </html>

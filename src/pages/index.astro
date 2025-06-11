@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Base.astro';
+import '@splidejs/splide/dist/css/splide.min.css';
 ---
 
 <Layout>
@@ -14,6 +15,9 @@ import Layout from '../layouts/Base.astro';
     <div class="carousel-slide w-full h-full absolute inset-0 transition-opacity duration-1000 opacity-0 z-0">
       <img src="https://picsum.photos/id/1020/1600/900" class="w-full h-full object-cover" />
     </div>
+
+    <div class="absolute inset-0 bg-black/25 z-20"></div>
+
     <button id="prevSlide" class="absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-3xl z-20">❮</button>
     <button id="nextSlide" class="absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-3xl z-20">❯</button>
   </div>
@@ -42,7 +46,7 @@ import Layout from '../layouts/Base.astro';
       <div class="flex flex-col w-full md:w-auto">
         <label class="uppercase text-base tracking-wide mb-1">&nbsp;</label>
         <div class="border border-white flex items-center justify-center h-[44px]">
-          <button type="submit" class="text-white uppercase tracking-widest text-base hover:bg-white hover:text-black w-full h-full px-4 py-2">
+          <button type="submit" class="text-white uppercase tracking-widest font-title text-base hover:bg-white hover:text-black w-full h-full px-4 py-2">
             Check Rates
           </button>
         </div>
@@ -50,7 +54,7 @@ import Layout from '../layouts/Base.astro';
     </form>
   </div>
 
-  <div id="guests-modal" class="absolute bottom-[120px] left-1/2 transform -translate-x-1/2 bg-white text-black w-[360px] md:w-[640px] p-6 rounded shadow-xl z-40 hidden">
+  <div id="guests-modal" class="absolute bottom-[120px] left-1/2 transform -translate-x-1/2 bg-white text-black w-[360px] md:w-[640px] p-6 shadow-xl z-40 hidden">
     <div class="flex justify-between items-start mb-4">
       <div class="text-center w-full font-semibold uppercase text-sm">Guests & Rooms</div>
       <button id="close-guests" type="button">✕</button>
@@ -101,9 +105,142 @@ import Layout from '../layouts/Base.astro';
       </div>
     </div>
   </div>
+</section>
 
+<section class="container mx-auto px-4 py-24">
+  <div class="text-center px-6 mx-auto">
+    <h1 class="font-title text-5xl uppercase mb-6 tracking-widest font-light">Kamandalu Ubud</h1>
+    <h2 class="text-3xl mb-12">Experience the Heritage of Serenity - Bali's Most Enchanting Luxury Resort. <br>The Soul of Bali Awaits You</h2>
+    <p class="mb-36">Nestled in the heart of Ubud, Kamandalu Luxury Resort isn't just a destination - it's an immersion into the soul of Bali. As you step into our sanctuary, the whispers of ancient traditions merge with the tranquility of nature. Towering banyan trees, emerald rice terraces, and the sacred Petanu River Valley embrace you, setting the stage for a journey where Balinese heritage and unparalleled luxury coexist in perfect harmony. Here, every moment is a tribute to "The Serenity of Heritage."</p>
+    <a href="https://www.book-secure.com/index.php?s=results&property=idbal31692&locale=en_GB&currency=IDR&stid=986w12cwy" class="bg-white text-black px-6 py-3 text-sm font-title tracking-widest transition-colors duration-300 border border-black hover:bg-[#916B2C] hover:text-white hover:border-transparent">
+      CHECK RATES
+    </a>
+  </div>
+</section>
+<section class="container mx-auto px-4 py-24">
+  <div id="card-carousel" class="splide my-12">
+    <div class="splide__track">
+      <ul class="splide__list">
   
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+        <li class="splide__slide transition-transform duration-500 ease-in-out">
+          <div class="bg-white overflow-hidden flex flex-col h-full">
+            <img src="https://picsum.photos/id/1018/800/600"
+                 width="800" height="600"
+                 alt="Cliffside Ocean View"
+                 loading="lazy"
+                 class="w-full h-auto object-cover aspect-[4/3] transition duration-500" />
+            <div class="p-6 flex flex-col flex-1">
+              <h3 class="text-lg tracking-widest uppercase font-title">Cliffside Ocean View</h3>
+              <p class="mt-2 text-base">
+                Breathe in the salty air as waves crash beside this secluded luxury retreat. An experience designed for peace and introspection amid nature's power. An experience designed for peace and introspection amid nature's power. An experience designed for peace and introspection amid nature's power.
+              </p>
+              <div class="flex-grow"></div>
+              <a href="#" class="text-lg mt-4 inline-block text-black uppercase">Explore</a>
+            </div>
+          </div>
+        </li>
+        
+        <li class="splide__slide transition-transform duration-500 ease-in-out">
+          <div class="bg-white overflow-hidden flex flex-col h-full">
+            <img src="https://picsum.photos/id/1024/800/600"
+                 width="800" height="600"
+                 alt="Forest Hideaway"
+                 loading="lazy"
+                 class="w-full h-auto object-cover aspect-[4/3] transition duration-500" />
+            <div class="p-6 flex flex-col flex-1">
+              <h3 class="text-lg tracking-widest uppercase font-title">Forest Hideaway</h3>
+              <p class="mt-2 text-base">
+                A peaceful escape nestled in the forest, perfect for recharging your soul. Surrounded by lush greenery and birdsong, it's a haven of balance and calm.
+              </p>
+              <div class="flex-grow"></div>
+              <a href="#" class="text-lg mt-4 inline-block text-black uppercase">Explore</a>
+            </div>
+          </div>
+        </li>
+        
+        <li class="splide__slide transition-transform duration-500 ease-in-out">
+          <div class="bg-white overflow-hidden flex flex-col h-full">
+            <img src="https://picsum.photos/id/1035/800/600"
+                 width="800" height="600"
+                 alt="Mountain Serenity"
+                 loading="lazy"
+                 class="w-full h-auto object-cover aspect-[4/3] transition duration-500" />
+            <div class="p-6 flex flex-col flex-1">
+              <h3 class="text-lg tracking-widest uppercase font-title">Mountain Serenity</h3>
+              <p class="mt-2 text-base">
+                Wake up to misty mountain views and cool alpine breezes. This secluded location offers breathtaking hiking trails and peaceful stargazing at night.
+              </p>
+              <div class="flex-grow"></div>
+              <a href="#" class="text-lg mt-4 inline-block text-black uppercase">Explore</a>
+            </div>
+          </div>
+        </li>
+        
+        <li class="splide__slide transition-transform duration-500 ease-in-out">
+          <div class="bg-white overflow-hidden flex flex-col h-full">
+            <img src="https://picsum.photos/id/1045/800/600"
+                 width="800" height="600"
+                 alt="Desert Mirage"
+                 loading="lazy"
+                 class="w-full h-auto object-cover aspect-[4/3] transition duration-500" />
+            <div class="p-6 flex flex-col flex-1">
+              <h3 class="text-lg tracking-widest uppercase font-title">Desert Mirage</h3>
+              <p class="mt-2 text-base">
+                Experience an oasis of luxury surrounded by golden dunes and silence. Refresh yourself in a tranquil pool under the stars of the open desert sky.
+              </p>
+              <div class="flex-grow"></div>
+              <a href="#" class="text-lg mt-4 inline-block text-black uppercase">Explore</a>
+            </div>
+          </div>
+        </li>
+        
+        <li class="splide__slide transition-transform duration-500 ease-in-out">
+          <div class="bg-white overflow-hidden flex flex-col h-full">
+            <img src="https://picsum.photos/id/1055/800/600"
+                 width="800" height="600"
+                 alt="Island Tranquility"
+                 loading="lazy"
+                 class="w-full h-auto object-cover aspect-[4/3] transition duration-500" />
+            <div class="p-6 flex flex-col flex-1">
+              <h3 class="text-lg tracking-widest uppercase font-title">Island Tranquility</h3>
+              <p class="mt-2 text-base">
+                Unwind with tropical breezes, crystal waters, and private island luxury. A perfect retreat with sunrise yoga and oceanfront dining at your doorstep.
+              </p>
+              <div class="flex-grow"></div>
+              <a href="#" class="text-lg mt-4 inline-block text-black uppercase">Explore</a>
+            </div>
+          </div>
+        </li>
+        
+  
+      </ul>
+    </div>
+  </div>
+  
+<!-- Arrow Controls -->
+<div class="flex items-center gap-6 mt-8">
+  <!-- Prev (Extra long tail) -->
+  <button id="custom-prev" class="w-12 h-12 flex items-center justify-center">
+    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="24" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="44" y1="12" x2="4" y2="12" />
+      <polyline points="12 20 4 12 12 4" />
+    </svg>
+  </button>
+
+  <!-- Next (Extra long tail) -->
+  <button id="custom-next" class="w-12 h-12 flex items-center justify-center">
+    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="24" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="4" y1="12" x2="44" y2="12" />
+      <polyline points="36 4 44 12 36 20" />
+    </svg>
+  </button>
+</div>
+
+
+
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script is:inline>
     document.addEventListener('DOMContentLoaded', () => {
       // Flatpickr init
@@ -261,8 +398,4 @@ import Layout from '../layouts/Base.astro';
       showSlide(currentSlide);
     });
   </script>
-</section>
-
-
-
 </Layout>

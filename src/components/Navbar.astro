@@ -2,13 +2,14 @@
   <!-- Top Section -->
   <div class="flex justify-between items-top px-6 py-1">
     <div>
-      <select id="languageSelect" class="bg-transparent text-white focus:outline-none">
-        <option class="text-black text-base">EN</option>
-        <option class="text-black text-base">ID</option>
+      <select id="languageSelect" class="bg-transparent text-white focus:outline-none text-sm">
+        <option class="text-black">ENGLISH</option>
+        <option class="text-black">CHINESE</option>
+        <option class="text-black">KOREAN</option>
       </select>
     </div>
     <div>
-      <img id="navbar-logo" src="https://www.kamandaluresort.com/images/kamandalu-logo.png" alt="Kamandalu Logo" class="h-20 transition-all duration-300 mt-2" />
+      <img id="navbar-logo" src="https://www.kamandaluresort.com/images/kamandalu-logo.png" alt="Kamandalu Logo" class="h-20 transition-all duration-300 mt-2 logo brightness-0 invert-[1]" />
     </div>
     <div class="w-10"></div>
   </div>
@@ -23,22 +24,22 @@
 
     <!-- Desktop Menu -->
     <nav class="hidden md:flex space-x-6 text-base font-normal w-full justify-center overflow-visible relative">
-      <a href="#">Offers</a>
-      <a href="#">Villas</a>
-      <a href="#">Wellness</a>
+      <a href="#" class="uppercase">Offers</a>
+      <a href="#" class="uppercase">Villas</a>
+      <a href="#" class="uppercase">Wellness</a>
       <div id="dining-trigger" class="relative group">
-        <a href="#" class="inline-block px-2">Dining</a>
+        <a href="#" class="inline-block px-2 uppercase">Dining</a>
       </div>
-      <a href="#">Unique Experiences</a>
-      <a href="#">Wedding & Events</a>
-      <a href="#">Activities</a>
-      <a href="#">Our Story</a>
+      <a href="#" class="uppercase">Unique Experiences</a>
+      <a href="#" class="uppercase">Wedding & Events</a>
+      <a href="#" class="uppercase">Activities</a>
+      <a href="#" class="uppercase">Our Story</a>
       <div id="more-trigger" class="relative group">
-        <a href="#" class="inline-block px-2">More</a>
+        <a href="#" class="inline-block px-2 uppercase">More</a>
       </div>
     </nav>
 
-    <a href="https://www.book-secure.com/index.php?s=results&property=idbal31692&locale=en_GB&currency=IDR&stid=986w12cwy" id="reserveBtn" class="bg-white text-black px-4 py-2 text-base font-bold transition-colors duration-300 border border-white">
+    <a href="https://www.book-secure.com/index.php?s=results&property=idbal31692&locale=en_GB&currency=IDR&stid=986w12cwy" id="reserveBtn" class="bg-white text-black px-6 py-3 text-sm font-title tracking-widest transition-colors duration-300 border border-white">
       RESERVE
     </a>
   </div>
@@ -54,11 +55,11 @@
     </div>
 
     <nav class="flex-1 px-6 pb-6 space-y-4 overflow-y-auto font-normal">
-      <a href="#" class="block text-base">Offers</a>
-      <a href="#" class="block text-base">Villas</a>
-      <a href="#" class="block text-base">Wellness</a>
+      <a href="#" class="block text-xl">Offers</a>
+      <a href="#" class="block text-xl">Villas</a>
+      <a href="#" class="block text-xl">Wellness</a>
       <div>
-        <button id="dining-mobile-toggle" class="block text-base w-full text-left flex items-center gap-1 justify-between">
+        <button id="dining-mobile-toggle" class="block text-xl w-full text-left flex items-center gap-1 justify-between">
           <span class="flex items-center">
             Dining
             <svg class="w-4 h-4 ml-1 inline-block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -67,18 +68,18 @@
           </span>
         </button>
         <div id="dining-mobile-dropdown" class="pl-4 space-y-2 hidden mt-3">
-          <a href="#" class="block text-base">Petulu</a>
-          <a href="#" class="block text-base">Aira</a>
-          <a href="#" class="block text-base">Awana</a>
-          <a href="#" class="block text-base">Vana Dining</a>
+          <a href="#" class="block text-xl">Petulu</a>
+          <a href="#" class="block text-xl">Aira</a>
+          <a href="#" class="block text-xl">Awana</a>
+          <a href="#" class="block text-xl">Vana Dining</a>
         </div>
       </div>
-      <a href="#" class="block text-base">Unique Experiences</a>
-      <a href="#" class="block text-base">Wedding & Events</a>
-      <a href="#" class="block text-base">Activities</a>
-      <a href="#" class="block text-base">Our Story</a>
+      <a href="#" class="block text-xl">Unique Experiences</a>
+      <a href="#" class="block text-xl">Wedding & Events</a>
+      <a href="#" class="block text-xl">Activities</a>
+      <a href="#" class="block text-xl">Our Story</a>
       <div>
-        <button id="more-mobile-toggle" class="block text-base w-full text-left flex items-center gap-1 justify-between">
+        <button id="more-mobile-toggle" class="block text-xl w-full text-left flex items-center gap-1 justify-between">
           <span class="flex items-center">
             More
             <svg class="w-4 h-4 ml-1 inline-block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -87,8 +88,8 @@
           </span>
         </button>
         <div id="more-mobile-dropdown" class="pl-4 space-y-2 hidden mt-3">
-          <a href="#" class="block text-base">Member</a>
-          <a href="#" class="block text-base">Contact</a>
+          <a href="#" class="block text-xl">Member</a>
+          <a href="#" class="block text-xl">Contact</a>
         </div>
       </div>
     </nav>
@@ -96,19 +97,19 @@
 
   <!-- Dropdown Outside nav -->
   <div id="dining-dropdown" class="hidden absolute left-0 right-0 top-[100%] bg-white text-black z-40 shadow-md transition-all duration-200 opacity-0 group-hover:opacity-100">
-    <div class="max-w-screen-xl mx-auto px-2 flex justify-center space-x-6 py-3 font-normal text-base">
-      <a href="#" class="hover:underline text-base">Petulu</a>
-      <a href="#" class="hover:underline text-base">Aira</a>
-      <a href="#" class="hover:underline text-base">Awana</a>
-      <a href="#" class="hover:underline text-base">Vana Dining</a>
+    <div class="max-w-screen-xl mx-auto px-2 flex justify-center space-x-6 py-3 font-normal text-xl">
+      <a href="#" class="hover:underline uppercase text-base">Petulu</a>
+      <a href="#" class="hover:underline uppercase text-base">Aira</a>
+      <a href="#" class="hover:underline uppercase text-base">Awana</a>
+      <a href="#" class="hover:underline uppercase text-base">Vana Dining</a>
     </div>
   </div>
 
   <!-- More Dropdown -->
 <div id="more-dropdown" class="hidden absolute left-0 right-0 top-[100%] bg-white text-black z-40 shadow-md transition-all duration-200 opacity-0 group-hover:opacity-100">
-  <div class="max-w-screen-xl mx-auto px-2 flex justify-center space-x-6 py-3 font-normal text-base">
-    <a href="#" class="hover:underline text-base">Member</a>
-    <a href="#" class="hover:underline text-base">Contact</a>
+  <div class="max-w-screen-xl mx-auto px-2 flex justify-center space-x-6 py-3 font-normal text-xl">
+    <a href="#" class="hover:underline uppercase text-base">Member</a>
+    <a href="#" class="hover:underline uppercase text-base">Contact</a>
   </div>
 </div>
 
@@ -119,6 +120,7 @@
     const moreDropdown = document.querySelector('#more-dropdown');
     const moreTrigger = document.querySelector('#more-trigger');
     const navbar = document.querySelector('#navbar');
+    const logo = document.querySelector("#navbar-logo");
   
     function updateDropdownPosition(element, dropdown) {
       const navRect = element.getBoundingClientRect();
@@ -139,6 +141,7 @@
         reserveBtn.classList.add("bg-[#916B2C]", "text-white", "border-transparent");
         logo.classList.remove("h-20");
         logo.classList.add("h-10");
+        logo.classList.remove("brightness-0", "invert-[1]");
       } else {
         navbar.classList.remove("bg-white", "text-black", "shadow-md");
         navbar.classList.add("bg-transparent", "text-white");
@@ -148,6 +151,7 @@
         reserveBtn.classList.add("bg-white", "text-black", "border-white");
         logo.classList.remove("h-10");
         logo.classList.add("h-20");
+        logo.classList.add("brightness-0", "invert-[1]");
       }
   
       if (!dropdown.classList.contains("hidden")) updateDropdownPosition(navbar, dropdown);
