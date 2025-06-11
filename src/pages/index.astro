@@ -398,4 +398,26 @@ import '@splidejs/splide/dist/css/splide.min.css';
       showSlide(currentSlide);
     });
   </script>
+
+<script>
+  import "@splidejs/splide/css";
+  import Splide from "@splidejs/splide";
+
+  const splide = new Splide("#card-carousel", {
+    type: "loop",
+    perPage: 2,
+    gap: "4rem",
+    speed: 800,
+    easing: "ease-in-out",
+    arrows: false,
+    pagination: false,
+    breakpoints: {
+      768: {
+        perPage: 1,
+      },
+    },
+  });
+
+  splide.mount();
+</script>
 </Layout>

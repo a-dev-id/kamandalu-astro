@@ -1,14 +1,7 @@
 import Splide from "@splidejs/splide";
 
 document.addEventListener("DOMContentLoaded", () => {
-  const carousel = document.getElementById("card-carousel");
-
-  if (!carousel) {
-    console.warn("Splide: #card-carousel not found");
-    return;
-  }
-
-  const splide = new Splide(carousel, {
+  const splide = new Splide("#card-carousel", {
     type: "loop",
     perPage: 2,
     gap: "4rem",
@@ -25,12 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   splide.mount();
 
-  // Optional: guard against missing custom arrows
-  const prevBtn = document.getElementById("custom-prev");
-  const nextBtn = document.getElementById("custom-next");
-
-  if (prevBtn && nextBtn) {
-    prevBtn.addEventListener("click", () => splide.go("<"));
-    nextBtn.addEventListener("click", () => splide.go(">"));
-  }
+  // ✅ Link bottom buttons to the slider
+  document.getElementById("custom-prev").addEventListener("click", () => splide.go("<"));
+  document.getElementById("custom-next").addEventListener("click", () => splide.go(">"));
 });
