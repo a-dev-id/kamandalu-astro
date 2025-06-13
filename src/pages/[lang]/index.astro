@@ -21,7 +21,7 @@ const villas = await client.fetch(`*[_type == "villa"] | order(order asc){
   "slug": slug.current,
   title,
   excerpt,
-  mainImage {
+  secondImage {
     asset-> {
       url
     }
