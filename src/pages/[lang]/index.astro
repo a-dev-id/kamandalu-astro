@@ -21,6 +21,7 @@ const villas = await client.fetch(`*[_type == "villa"] | order(order asc){
   "slug": slug.current,
   title,
   excerpt,
+  secondImageAlt,
   secondImage {
     asset-> {
       url
@@ -176,7 +177,7 @@ const description = "Experience the heritage of serenity in the heart of Ubud. K
               <div class="bg-white overflow-hidden flex flex-col h-full">
                 <img
                   src={villa.secondImage?.asset?.url}
-                  alt={villa.title?.[locale] || 'Villa'}
+                  alt={villa.secondImageAlt?.[locale]}
                   loading="lazy"
                   width="800"
                   height="600"
