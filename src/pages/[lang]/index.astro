@@ -40,8 +40,23 @@ const homeSliders = await client.fetch(`*[_type == "homeSlider"] | order(order a
   }
 }`);
 
-const title = "Kamandalu Ubud - Luxury Resort in Bali";
-const description = "Experience the heritage of serenity in the heart of Ubud. Kamandalu Ubud offers tranquil villas, stunning nature, and timeless Balinese culture. Explore our exclusive offers and peaceful retreat.";
+// Fetch one page details
+const pageDetails = await client.fetch(`*[_type == "page" && slug.current == "home-page"][0]{
+  title,
+  subtitle,
+  description,
+  metaTitle,
+  metaDescription,
+  image {
+    asset-> {
+      url
+    }
+  }
+}`);
+
+
+const title = pageDetails?.metaTitle?.[locale] ?? '';
+const description = pageDetails?.metaDescription?.[locale] ?? '';
 ---
 
 <Layout {title} {description}>
@@ -162,10 +177,10 @@ const description = "Experience the heritage of serenity in the heart of Ubud. K
   <!-- PAGE DESCRIPTION -->
   <section class="container mx-auto px-4 py-24">
     <div class="text-center px-8 mx-auto">
-      <h1 class="font-title text-5xl uppercase mb-6 tracking-widest font-light">Kamandalu Ubud</h1>
-      <p class="text-3xl mb-12">Experience the Heritage of Serenity - Bali's Most Enchanting Luxury Resort. <br />The Soul of Bali Awaits You</p>
+      <h1 class="font-title text-5xl uppercase mb-6 tracking-widest font-light">{pageDetails?.title?.[locale] ?? ''}</h1>
+      <p class="text-3xl mb-12">{pageDetails?.subtitle?.[locale] ?? ''}</p>
       <p class="mb-36">
-        Nestled in the heart of Ubud, Kamandalu Luxury Resort isn't just a destination - it's an immersion into the soul of Bali. As you step into our sanctuary, the whispers of ancient traditions merge with the tranquility of nature. Towering banyan trees, emerald rice terraces, and the sacred Petanu River Valley embrace you, setting the stage for a journey where Balinese heritage and unparalleled luxury coexist in perfect harmony. Here, every moment is a tribute to "The Serenity of Heritage."
+        {pageDetails?.description?.[locale] ?? ''}
       </p>
       <a href="https://www.book-secure.com/index.php?s=results&property=idbal31692&locale=en_GB&currency=IDR&stid=986w12cwy" class="bg-white text-black px-6 py-4 text-sm font-title tracking-widest transition-colors duration-300 border border-black hover:bg-[#916B2C] hover:text-white hover:border-transparent">
         CHECK RATES
