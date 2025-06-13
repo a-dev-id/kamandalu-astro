@@ -1,37 +1,52 @@
 ---
 import Layout from '../../../layouts/Base.astro';
 import client from '../../../lib/sanityClient';
-import { getLocale } from '../../../utils/getLocale';
-import { translations } from '../../../i18n/translations.js';
+import { getLocale } from '../../../utils/getLocale.js';
 
-// Required for dynamic routes
+// Static paths: generate /en/villas/slug, /ko/villas/slug, /zh/villas/slug
 export async function getStaticPaths() {
-  return ['en', 'ko', 'zh'].map(lang => ({
-    params: { lang }
-  }));
+  const supportedLangs = ['en', 'ko', 'zh'];
+
+  const villas = await client.fetch(`*[_type == "villa"]{ "slug": slug.current }`);
+
+  return supportedLangs.flatMap(lang => {
+    return villas.map(villa => ({
+      params: {
+        lang,
+        slug: villa.slug
+      }
+    }));
+  });
 }
 
-// Get locale from URL param
-const { lang } = Astro.params;
+// Get route parameters
+const { lang, slug } = Astro.params;
 const locale = getLocale(lang);
 
-// Fetch villas
-const villas = await client.fetch(`*[_type == "villa"]{
-  _id,
-  "slug": slug.current,
+// Fetch villa by slug
+const villa = await client.fetch(`*[_type == "villa" && slug.current == $slug][0]{
   title,
-  excerpt,
+  description,
   mainImage {
-    asset-> {
-      url
-    }
+    asset->{ url }
   }
-}`);
-
-const title = "Kamandalu Ubud - Luxury Resort in Bali";
-const description = "Experience the heritage of serenity in the heart of Ubud. Kamandalu Ubud offers tranquil villas, stunning nature, and timeless Balinese culture. Explore our exclusive offers and peaceful retreat.";
+}`, { slug });
 ---
 
-<Layout {title} {description}>
-  <h2>This is villa detail page</h2>
+<Layout title={villa.title?.[locale]} description={villa.description?.[locale]}>
+  <section class="container mx-auto px-4 py-24">
+    <div class="text-center mb-10">
+      <h1 class="text-4xl font-bold uppercase">{villa.title?.[locale] ?? villa.title?.en}</h1>
+    </div>
+
+    {villa.mainImage?.asset?.url && (
+      <div class="mb-10">
+        <img src={villa.mainImage.asset.url} alt={villa.title?.[locale] ?? 'Villa'} class="w-full h-auto rounded-lg shadow" />
+      </div>
+    )}
+
+    <div class="max-w-3xl mx-auto text-lg leading-relaxed">
+      <p>{villa.description?.[locale] ?? villa.description?.en}</p>
+    </div>
+  </section>
 </Layout>
