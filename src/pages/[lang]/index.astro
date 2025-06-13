@@ -3,6 +3,7 @@ import Layout from '../../layouts/Base.astro';
 import client from '../../lib/sanityClient';
 import { getLocale } from '../../utils/getLocale';
 import { translations } from '../../i18n/translations.js';
+import OptimizedImage from '../../components/OptimizedImage.astro';
 
 // Required for dynamic routes
 export async function getStaticPaths() {
@@ -49,18 +50,22 @@ const description = "Experience the heritage of serenity in the heart of Ubud. K
     <div id="carousel" class="w-full h-full relative">
       <!-- Slides -->
       {homeSliders.map((homeSlider, index) => (
-        <picture>
-  <source srcset={homeSlider.image.asset.url + "?fm=webp"} type="image/webp" />
-  <img 
-    src={homeSlider.image.asset.url}
-    alt={homeSlider.title}
-    width="1600"
-    height="900"
-    class="w-full h-full object-cover"
-    loading={index === 0 ? 'eager' : 'lazy'}
-    fetchpriority={index === 0 ? 'high' : 'auto'}
-  />
-</picture>
+        <div
+          class={`carousel-slide w-full h-full absolute inset-0 transition-opacity duration-1000 ${
+            index === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'
+          }`}
+        >
+          <OptimizedImage
+            src={homeSlider.image.asset.url}
+            alt={homeSlider.title}
+            width={1600}
+            height={900}
+            quality={75}
+            className="w-full h-full"
+            fetchpriority={index === 0 ? 'high' : 'auto'}
+            loading={index === 0 ? 'eager' : 'lazy'}
+          />
+        </div>
       ))}
       <div class="absolute inset-0 bg-black/25 z-20"></div>
       <button id="prevSlide" class="absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-3xl z-20">❮</button>
@@ -184,17 +189,15 @@ const description = "Experience the heritage of serenity in the heart of Ubud. K
           {villas.map(villa => (
             <li class="splide__slide transition-transform duration-500 ease-in-out">
               <div class="bg-white overflow-hidden flex flex-col h-full">
-                <picture>
-  <source srcset={villa.secondImage?.asset?.url + "?fm=webp"} type="image/webp" />
-  <img
-    src={villa.secondImage?.asset?.url}
-    alt={villa.secondImageAlt?.[locale]}
-    width="800"
-    height="600"
-    loading="lazy"
-    class="w-full h-auto object-cover aspect-[4/3] transition duration-500"
-  />
-</picture>
+
+<OptimizedImage
+  src={villa.secondImage.asset.url}
+  alt={villa.secondImageAlt?.[locale]}
+  width={800}
+  height={600}
+  quality={75}
+  className="w-full h-auto aspect-[4/3] transition duration-500"
+/>
                 <div class="p-6 flex flex-col flex-1">
                   <h3 class="text-lg tracking-widest uppercase font-title">
                     {villa.title?.[locale] ?? villa.title?.en}

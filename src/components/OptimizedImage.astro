@@ -1,0 +1,28 @@
+---
+const { src, alt = '', width = 800, height = 600, quality = 75, className = '', fetchpriority = 'auto', loading = 'lazy' } = Astro.props;
+
+function getOptimizedUrl(url: string, options: { w?: number; h?: number; q?: number; fm?: string } = {}) {
+  const params = new URLSearchParams();
+  if (options.w) params.set('w', String(options.w));
+  if (options.h) params.set('h', String(options.h));
+  if (options.q) params.set('q', String(options.q));
+  if (options.fm) params.set('fm', options.fm);
+  return `${url}?${params.toString()}`;
+}
+
+const webpUrl = getOptimizedUrl(src, { w: width, h: height, q: quality, fm: 'webp' });
+const fallbackUrl = getOptimizedUrl(src, { w: width, h: height, q: quality });
+---
+
+<picture>
+  <source srcset={webpUrl} type="image/webp" />
+  <img
+    src={fallbackUrl}
+    alt={alt}
+    width={width}
+    height={height}
+    loading={loading}
+    fetchpriority={fetchpriority}
+    class={`object-cover ${className}`}
+  />
+</picture>
