@@ -16,7 +16,7 @@ const { lang } = Astro.params;
 const locale = getLocale(lang);
 
 // Fetch villas
-const villas = await client.fetch(`*[_type == "villa"]{
+const villas = await client.fetch(`*[_type == "villa"] | order(order asc){
   _id,
   "slug": slug.current,
   title,
