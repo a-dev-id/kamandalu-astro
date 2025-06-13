@@ -1,5 +1,31 @@
 ---
-import Layout from '../layouts/Base.astro';
+import Layout from '../../layouts/Base.astro';
+import client from '../../lib/sanityClient';
+import { getLocale } from '../../utils/getLocale';
+import { translations } from '../../i18n/translations.js';
+
+const { lang } = Astro.params;
+const locale = getLocale(lang);
+
+export async function getStaticPaths() {
+  const supportedLangs = ['en', 'ko', 'zh'];
+
+  return supportedLangs.map(lang => ({
+    params: { lang }
+  }));
+}
+
+const villas = await client.fetch(`*[_type == "villa"]{
+  _id,
+  "slug": slug.current,
+  title,
+  excerpt,
+  mainImage {
+    asset-> {
+      url
+    }
+  }
+}`);
 
 const title = "Kamandalu Ubud - Luxury Resort in Bali";
 const description = "Experience the heritage of serenity in the heart of Ubud. Kamandalu Ubud offers tranquil villas, stunning nature, and timeless Balinese culture. Explore our exclusive offers and peaceful retreat.";
@@ -128,71 +154,47 @@ const description = "Experience the heritage of serenity in the heart of Ubud. K
   <!-- VILLA CAROUSEL -->
   <section class="container mx-auto px-4 pt-52">
     <div class="text-center px-8 mx-auto">
-      <h2 class="font-title text-4xl uppercase mb-6 tracking-widest font-light">DISCOVER OUR VILLAS</h2>
-      <p class="mb-20">Kamandalu Ubud is a five-star sanctuary in Bali's lush highlands, designed as a modern homage to a traditional village. With private villas, scenic rice terraces, and world-class amenities, it offers an enchanting blend of nature, culture, and refined indulgence.</p>
+      <h2 class="font-title text-4xl uppercase mb-6 tracking-widest font-light">
+        {translations.villaTitle[locale]}
+      </h2>
+      <p class="mb-20">
+        {translations.villaDescription[locale]}
+      </p>
     </div>
+  
     <div id="villa-carousel" class="splide mb-12">
       <div class="splide__track">
         <ul class="splide__list">
-          {/** Slides */}
-          <li class="splide__slide transition-transform duration-500 ease-in-out">
-            <div class="bg-white overflow-hidden flex flex-col h-full">
-              <img src="https://picsum.photos/id/1018/800/600" width="800" height="600" alt="Cliffside Ocean View" loading="lazy" class="w-full h-auto object-cover aspect-[4/3] transition duration-500" />
-              <div class="p-6 flex flex-col flex-1">
-                <h3 class="text-lg tracking-widest uppercase font-title">Cliffside Ocean View</h3>
-                <p class="mt-2 text-base">Breathe in the salty air as waves crash beside this secluded luxury retreat. An experience designed for peace and introspection amid nature's power. An experience designed for peace and introspection amid nature's power. An experience designed for peace and introspection amid nature's power.</p>
-                <div class="flex-grow"></div>
-                <a href="#" class="text-lg mt-4 inline-block text-black uppercase">Explore</a>
+          {villas.map(villa => (
+            <li class="splide__slide transition-transform duration-500 ease-in-out">
+              <div class="bg-white overflow-hidden flex flex-col h-full">
+                <img
+                  src={villa.mainImage?.asset?.url}
+                  alt={villa.title?.[locale] || 'Villa'}
+                  loading="lazy"
+                  width="800"
+                  height="600"
+                  class="w-full h-auto object-cover aspect-[4/3] transition duration-500"
+                />
+                <div class="p-6 flex flex-col flex-1">
+                  <h3 class="text-lg tracking-widest uppercase font-title">
+                    {villa.title?.[locale] ?? villa.title?.en}
+                  </h3>
+                  <p class="mt-2 text-base">
+                    {villa.excerpt?.[locale] ?? villa.excerpt?.en}
+                  </p>
+                  <div class="flex-grow"></div>
+                  <a href={`/${locale}/villas/${villa.slug}`} class="text-lg mt-4 inline-block text-black uppercase">
+                    {translations.btnexplore[locale]}
+                  </a>
+                </div>
               </div>
-            </div>
-          </li>
-          <li class="splide__slide transition-transform duration-500 ease-in-out">
-            <div class="bg-white overflow-hidden flex flex-col h-full">
-              <img src="https://picsum.photos/id/1024/800/600" width="800" height="600" alt="Forest Hideaway" loading="lazy" class="w-full h-auto object-cover aspect-[4/3] transition duration-500" />
-              <div class="p-6 flex flex-col flex-1">
-                <h3 class="text-lg tracking-widest uppercase font-title">Forest Hideaway</h3>
-                <p class="mt-2 text-base">A peaceful escape nestled in the forest, perfect for recharging your soul. Surrounded by lush greenery and birdsong, it's a haven of balance and calm.</p>
-                <div class="flex-grow"></div>
-                <a href="#" class="text-lg mt-4 inline-block text-black uppercase">Explore</a>
-              </div>
-            </div>
-          </li>
-          <li class="splide__slide transition-transform duration-500 ease-in-out">
-            <div class="bg-white overflow-hidden flex flex-col h-full">
-              <img src="https://picsum.photos/id/1035/800/600" width="800" height="600" alt="Mountain Serenity" loading="lazy" class="w-full h-auto object-cover aspect-[4/3] transition duration-500" />
-              <div class="p-6 flex flex-col flex-1">
-                <h3 class="text-lg tracking-widest uppercase font-title">Mountain Serenity</h3>
-                <p class="mt-2 text-base">Wake up to misty mountain views and cool alpine breezes. This secluded location offers breathtaking hiking trails and peaceful stargazing at night.</p>
-                <div class="flex-grow"></div>
-                <a href="#" class="text-lg mt-4 inline-block text-black uppercase">Explore</a>
-              </div>
-            </div>
-          </li>
-          <li class="splide__slide transition-transform duration-500 ease-in-out">
-            <div class="bg-white overflow-hidden flex flex-col h-full">
-              <img src="https://picsum.photos/id/1045/800/600" width="800" height="600" alt="Desert Mirage" loading="lazy" class="w-full h-auto object-cover aspect-[4/3] transition duration-500" />
-              <div class="p-6 flex flex-col flex-1">
-                <h3 class="text-lg tracking-widest uppercase font-title">Desert Mirage</h3>
-                <p class="mt-2 text-base">Experience an oasis of luxury surrounded by golden dunes and silence. Refresh yourself in a tranquil pool under the stars of the open desert sky.</p>
-                <div class="flex-grow"></div>
-                <a href="#" class="text-lg mt-4 inline-block text-black uppercase">Explore</a>
-              </div>
-            </div>
-          </li>
-          <li class="splide__slide transition-transform duration-500 ease-in-out">
-            <div class="bg-white overflow-hidden flex flex-col h-full">
-              <img src="https://picsum.photos/id/1055/800/600" width="800" height="600" alt="Island Tranquility" loading="lazy" class="w-full h-auto object-cover aspect-[4/3] transition duration-500" />
-              <div class="p-6 flex flex-col flex-1">
-                <h3 class="text-lg tracking-widest uppercase font-title">Island Tranquility</h3>
-                <p class="mt-2 text-base">Unwind with tropical breezes, crystal waters, and private island luxury. A perfect retreat with sunrise yoga and oceanfront dining at your doorstep.</p>
-                <div class="flex-grow"></div>
-                <a href="#" class="text-lg mt-4 inline-block text-black uppercase">Explore</a>
-              </div>
-            </div>
-          </li>
+            </li>
+          ))}
         </ul>
       </div>
     </div>
+  
     <div class="flex items-center gap-6 mt-8">
       <button id="villa-prev" class="w-12 h-12 flex items-center justify-center">
         <svg xmlns="http://www.w3.org/2000/svg" width="48" height="24" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -208,6 +210,7 @@ const description = "Experience the heritage of serenity in the heart of Ubud. K
       </button>
     </div>
   </section>
+  
 
   <!-- OFFERS CAROUSEL -->
   <section class="container mx-auto px-4 pt-52">
