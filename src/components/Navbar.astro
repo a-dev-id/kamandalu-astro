@@ -1,3 +1,6 @@
+---
+import OptimizedImage from '../components/OptimizedImage.astro';
+---
 <header id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-transparent text-white overflow-visible">
   <!-- Top Section: Language Selector & Logo -->
   <div class="flex justify-between items-top px-6 py-1">
@@ -13,9 +16,11 @@
     <div>
       <img
         id="navbar-logo"
-        src="https://www.kamandaluresort.com/images/kamandalu-logo.png"
+        src="/images/kamandalu-logo.png"
         alt="Kamandalu Logo"
         class="w-36 h-20 transition-all duration-300 mt-2 logo brightness-0 invert-[1]"
+         fetchpriority="high"
+  loading="eager"
       />
     </div>
     <div class="w-10"></div>
