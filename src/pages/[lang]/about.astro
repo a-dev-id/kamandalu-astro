@@ -1,11 +1,37 @@
 ---
-// src/pages/index.astro
-import BaseLayout from '../../layouts/Base.astro';
+import Layout from '../../layouts/Base.astro';
+import client from '../../lib/sanityClient';
+import { getLocale } from '../../utils/getLocale';
+import { translations } from '../../i18n/translations.js';
 
-const title = "Welcome to Our Luxury Hotel";
-const description = "Experience luxury like never before.";
+// Required for dynamic routes
+export async function getStaticPaths() {
+  return ['en', 'ko', 'zh'].map(lang => ({
+    params: { lang }
+  }));
+}
+
+// Get locale from URL param
+const { lang } = Astro.params;
+const locale = getLocale(lang);
+
+// Fetch villas
+const villas = await client.fetch(`*[_type == "villa"]{
+  _id,
+  "slug": slug.current,
+  title,
+  excerpt,
+  mainImage {
+    asset-> {
+      url
+    }
+  }
+}`);
+
+const title = "Kamandalu Ubud - Luxury Resort in Bali";
+const description = "Experience the heritage of serenity in the heart of Ubud. Kamandalu Ubud offers tranquil villas, stunning nature, and timeless Balinese culture. Explore our exclusive offers and peaceful retreat.";
 ---
 
-<BaseLayout title={title} description={description}>
+<Layout {title} {description}>
   <h2>This is about page</h2>
-</BaseLayout>
+</Layout>
