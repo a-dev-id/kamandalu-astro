@@ -44,9 +44,73 @@ const { title, description } = Astro.props;
       <slot />
     </main>
 
-    <footer class="bg-gray-800 text-white py-4 text-center">
-      <p>&copy; 2025 Our Luxury Hotel. All Rights Reserved.</p>
+    <footer class="bg-[#FAF7EF] text-black pt-20 pb-10 text-sm mt-52">
+      <!-- Logo -->
+      <div class="container mx-auto px-4 text-center">
+        <img src="https://www.kamandaluresort.com/images/kamandalu-logo.png" alt="Kamandalu Logo" class="w-52 mx-auto mb-20" />
+      </div>
+    
+      <!-- Newsletter + Links -->
+      <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-12 text-left mt-10">
+        <!-- Newsletter -->
+        <div>
+          <h3 class="uppercase tracking-widest font-title text-lg mb-6">Get Notified On Our Offers</h3>
+          <form class="flex flex-col gap-4">
+            <input type="text" placeholder="Your Name*" class="border-b border-black bg-transparent focus:outline-none py-2 w-full max-w-xs md:max-w-62" />
+            <input type="email" placeholder="Your Email*" class="border-b border-black bg-transparent focus:outline-none py-2 w-full max-w-xs md:max-w-62" />
+            <button type="submit" class="uppercase mt-4 tracking-widest text-left border-b border-black w-fit">Submit</button>
+          </form>
+        </div>
+    
+        <!-- Explore + Connect -->
+        <div class="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-12">
+          <!-- Explore -->
+          <div>
+            <h3 class="uppercase tracking-widest font-title text-lg mb-4">Explore</h3>
+            <div class="flex flex-col sm:flex-row">
+              <ul class="space-y-2">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Villa</a></li>
+                <li><a href="#">Dining</a></li>
+                <li><a href="#">Spa</a></li>
+                <li><a href="#">Experiences</a></li>
+              </ul>
+              <ul class="sm:ml-8 mt-4 sm:mt-0 space-y-2 md:ml-36">
+                <li><a href="#">Gallery</a></li>
+                <li><a href="#">Facilities</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Videos</a></li>
+                <li><a href="#">Contact Us</a></li>
+              </ul>
+            </div>
+          </div>
+    
+          <!-- Connect -->
+          <div>
+            <h3 class="uppercase tracking-widest font-title text-lg mb-4">Connect</h3>
+            <ul class="space-y-2">
+              <li><a href="#">Whatsapp</a></li>
+              <li><a href="#">Facebook</a></li>
+              <li><a href="#">Instagram</a></li>
+              <li><a href="#">TikTok</a></li>
+              <li><a href="#">Direction</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    
+      <!-- Bottom -->
+      <div class="container mx-auto px-4 mt-12 flex flex-col sm:flex-row justify-between gap-4 text-xs text-center sm:text-left">
+        <div class="flex justify-center sm:justify-start gap-4">
+          <a href="#">Terms</a>
+          <a href="#">Privacy</a>
+        </div>
+        <p class="text-center sm:text-right">&copy; 2025 Kamandalu Ubud. All Rights Reserved</p>
+      </div>
     </footer>
+    
+    
+    
 
     <script type="module" src="/src/scripts/splide-init.js"></script>
   </body>
