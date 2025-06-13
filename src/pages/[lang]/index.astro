@@ -28,6 +28,16 @@ const villas = await client.fetch(`*[_type == "villa"] | order(order asc){
   }
 }`);
 
+// Fetch home slider
+const homeSliders = await client.fetch(`*[_type == "homeSlider"] | order(order asc){
+  title,
+  image {
+    asset-> {
+      url
+    }
+  }
+}`);
+
 const title = "Kamandalu Ubud - Luxury Resort in Bali";
 const description = "Experience the heritage of serenity in the heart of Ubud. Kamandalu Ubud offers tranquil villas, stunning nature, and timeless Balinese culture. Explore our exclusive offers and peaceful retreat.";
 ---
@@ -37,15 +47,11 @@ const description = "Experience the heritage of serenity in the heart of Ubud. K
   <section class="relative w-full h-screen overflow-hidden">
     <div id="carousel" class="w-full h-full relative">
       <!-- Slides -->
-      <div class="carousel-slide w-full h-full absolute inset-0 transition-opacity duration-1000 opacity-100 z-10">
-        <img src="https://picsum.photos/id/1015/1600/900" class="w-full h-full object-cover" />
-      </div>
-      <div class="carousel-slide w-full h-full absolute inset-0 transition-opacity duration-1000 opacity-0 z-0">
-        <img src="https://picsum.photos/id/1018/1600/900" class="w-full h-full object-cover" />
-      </div>
-      <div class="carousel-slide w-full h-full absolute inset-0 transition-opacity duration-1000 opacity-0 z-0">
-        <img src="https://picsum.photos/id/1020/1600/900" class="w-full h-full object-cover" />
-      </div>
+      {homeSliders.map((homeSlider, index) => (
+        <div key={index} class={`carousel-slide w-full h-full absolute inset-0 transition-opacity duration-1000 opacity-${index === 0 ? 100 : 0} z-${index === 0 ? 10 : 0}`}>
+          <img src={homeSlider.image.asset.url} class="w-full h-full object-cover" alt={homeSlider.title} />
+        </div>
+      ))}
       <div class="absolute inset-0 bg-black/25 z-20"></div>
       <button id="prevSlide" class="absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-3xl z-20">❮</button>
       <button id="nextSlide" class="absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-3xl z-20">❯</button>
