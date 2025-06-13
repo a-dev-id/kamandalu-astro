@@ -49,9 +49,18 @@ const description = "Experience the heritage of serenity in the heart of Ubud. K
     <div id="carousel" class="w-full h-full relative">
       <!-- Slides -->
       {homeSliders.map((homeSlider, index) => (
-        <div key={index} class={`carousel-slide w-full h-full absolute inset-0 transition-opacity duration-1000 opacity-${index === 0 ? 100 : 0} z-${index === 0 ? 10 : 0}`}>
-          <img src={homeSlider.image.asset.url} class="w-full h-full object-cover" alt={homeSlider.title} />
-        </div>
+        <picture>
+  <source srcset={homeSlider.image.asset.url + "?fm=webp"} type="image/webp" />
+  <img 
+    src={homeSlider.image.asset.url}
+    alt={homeSlider.title}
+    width="1600"
+    height="900"
+    class="w-full h-full object-cover"
+    loading={index === 0 ? 'eager' : 'lazy'}
+    fetchpriority={index === 0 ? 'high' : 'auto'}
+  />
+</picture>
       ))}
       <div class="absolute inset-0 bg-black/25 z-20"></div>
       <button id="prevSlide" class="absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-3xl z-20">❮</button>
@@ -175,14 +184,17 @@ const description = "Experience the heritage of serenity in the heart of Ubud. K
           {villas.map(villa => (
             <li class="splide__slide transition-transform duration-500 ease-in-out">
               <div class="bg-white overflow-hidden flex flex-col h-full">
-                <img
-                  src={villa.secondImage?.asset?.url}
-                  alt={villa.secondImageAlt?.[locale]}
-                  loading="lazy"
-                  width="800"
-                  height="600"
-                  class="w-full h-auto object-cover aspect-[4/3] transition duration-500"
-                />
+                <picture>
+  <source srcset={villa.secondImage?.asset?.url + "?fm=webp"} type="image/webp" />
+  <img
+    src={villa.secondImage?.asset?.url}
+    alt={villa.secondImageAlt?.[locale]}
+    width="800"
+    height="600"
+    loading="lazy"
+    class="w-full h-auto object-cover aspect-[4/3] transition duration-500"
+  />
+</picture>
                 <div class="p-6 flex flex-col flex-1">
                   <h3 class="text-lg tracking-widest uppercase font-title">
                     {villa.title?.[locale] ?? villa.title?.en}
