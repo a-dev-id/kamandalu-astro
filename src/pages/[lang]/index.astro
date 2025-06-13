@@ -18,12 +18,24 @@ const locale = getLocale(lang);
 
 // Fetch villas
 const villas = await client.fetch(`*[_type == "villa"] | order(order asc){
-  _id,
   "slug": slug.current,
   title,
   excerpt,
   secondImageAlt,
   secondImage {
+    asset-> {
+      url
+    }
+  }
+}`);
+
+// Fetch offers
+const offers = await client.fetch(`*[_type == "offer"] | order(order asc){
+  "slug": slug.current,
+  title,
+  excerpt,
+  mainImageAlt,
+  mainImage {
     asset-> {
       url
     }
@@ -40,8 +52,8 @@ const homeSliders = await client.fetch(`*[_type == "homeSlider"] | order(order a
   }
 }`);
 
-// Fetch one page details
-const pageDetails = await client.fetch(`*[_type == "page" && slug.current == "home-page"][0]{
+// Fetch home page details
+const pageDetails = await client.fetch(`*[_type == "page" && _id == "6b81d880-cd1c-4993-a985-a74eda7f419e"][0]{
   title,
   subtitle,
   description,
@@ -54,6 +66,53 @@ const pageDetails = await client.fetch(`*[_type == "page" && slug.current == "ho
   }
 }`);
 
+// Fetch villa page details
+const villaDetails = await client.fetch(`*[_type == "settingHome" && _id == "203dafa9-65fe-4791-9bfa-713d49300733"][0]{
+  title,
+  description,
+}`);
+
+// Fetch offer page details
+const offerDetails = await client.fetch(`*[_type == "settingHome" && _id == "d005d37f-034b-4a80-9cf3-1886e310e5e3"][0]{
+  title,
+  description,
+}`);
+
+// Fetch wellness page details
+const wellnessDetails = await client.fetch(`*[_type == "settingHome" && _id == "3e45dc06-f49d-48fc-abdc-7601afce5048"][0]{
+  title,
+  description,
+  mainImageAlt,
+  mainImage {
+    asset-> {
+      url
+    }
+  }
+}`);
+
+// Fetch culinary page details
+const culinaryDetails = await client.fetch(`*[_type == "settingHome" && _id == "d4f9bd9f-4038-40ad-9c56-201d19869720"][0]{
+  title,
+  description,
+  mainImageAlt,
+  mainImage {
+    asset-> {
+      url
+    }
+  }
+}`);
+
+// Fetch experience page details
+const experienceDetails = await client.fetch(`*[_type == "settingHome" && _id == "279d6034-3f91-4da3-bf88-8a9090afc556"][0]{
+  title,
+  description,
+  mainImageAlt,
+  mainImage {
+    asset-> {
+      url
+    }
+  }
+}`);
 
 const title = pageDetails?.metaTitle?.[locale] ?? '';
 const description = pageDetails?.metaDescription?.[locale] ?? '';
@@ -192,10 +251,10 @@ const description = pageDetails?.metaDescription?.[locale] ?? '';
   <section class="container mx-auto px-4 pt-52">
     <div class="text-center px-8 mx-auto">
       <h2 class="font-title text-4xl uppercase mb-6 tracking-widest font-light">
-        {translations.villaTitle[locale]}
+        {villaDetails?.title?.[locale] ?? ''}
       </h2>
       <p class="mb-20">
-        {translations.villaDescription[locale]}
+        {villaDetails?.description?.[locale] ?? ''}
       </p>
     </div>
     <div id="villa-carousel" class="splide mb-12">
@@ -204,15 +263,14 @@ const description = pageDetails?.metaDescription?.[locale] ?? '';
           {villas.map(villa => (
             <li class="splide__slide transition-transform duration-500 ease-in-out">
               <div class="bg-white overflow-hidden flex flex-col h-full">
-
-<OptimizedImage
-  src={villa.secondImage.asset.url}
-  alt={villa.secondImageAlt?.[locale]}
-  width={800}
-  height={600}
-  quality={30}
-  className="w-full h-auto aspect-[4/3] transition duration-500"
-/>
+                <OptimizedImage
+                  src={villa.secondImage.asset.url}
+                  alt={villa.secondImageAlt?.[locale]}
+                  width={800}
+                  height={600}
+                  quality={30}
+                  className="w-full h-auto aspect-[4/3] transition duration-500"
+                />
                 <div class="p-6 flex flex-col flex-1">
                   <h3 class="text-lg tracking-widest uppercase font-title">
                     {villa.title?.[locale] ?? villa.title?.en}
@@ -221,7 +279,10 @@ const description = pageDetails?.metaDescription?.[locale] ?? '';
                     {villa.excerpt?.[locale] ?? villa.excerpt?.en}
                   </p>
                   <div class="flex-grow"></div>
-                  <a href={`/${locale}/villas/${villa.slug}`} class="text-lg mt-4 inline-block text-black uppercase">
+                  <a
+                    href={`/${locale}/villas/${villa.slug}`}
+                    class="text-lg mt-4 inline-block text-black uppercase"
+                  >
                     {translations.btnexplore[locale]}
                   </a>
                 </div>
@@ -233,14 +294,12 @@ const description = pageDetails?.metaDescription?.[locale] ?? '';
     </div>
     <div class="flex items-center gap-6 mt-8">
       <button id="villa-prev" class="w-12 h-12 flex items-center justify-center">
-        <!-- Prev Arrow SVG -->
         <svg xmlns="http://www.w3.org/2000/svg" width="48" height="24" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="44" y1="12" x2="4" y2="12" />
           <polyline points="12 20 4 12 12 4" />
         </svg>
       </button>
       <button id="villa-next" class="w-12 h-12 flex items-center justify-center">
-        <!-- Next Arrow SVG -->
         <svg xmlns="http://www.w3.org/2000/svg" width="48" height="24" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="4" y1="12" x2="44" y2="12" />
           <polyline points="36 4 44 12 36 20" />
@@ -250,71 +309,34 @@ const description = pageDetails?.metaDescription?.[locale] ?? '';
   </section>
 
   <!-- OFFERS CAROUSEL -->
-  <!-- OFFERS CAROUSEL -->
   <section class="container mx-auto px-4 pt-52">
     <div class="text-center px-8 mx-auto">
-      <h2 class="font-title text-3xl uppercase mb-6 tracking-widest font-light">EXCLUSIVE OFFERS</h2>
-      <p class="mb-20">Enhance your escape with our curated special offers, from romantic villa packages to serene wellness retreats. Discover exceptional value without compromising on the elegance and experience of Kamandalu Ubud.</p>
+      <h2 class="font-title text-3xl uppercase mb-6 tracking-widest font-light">{offerDetails?.title?.[locale] ?? ''}</h2>
+      <p class="mb-20">{offerDetails?.description?.[locale] ?? ''}</p>
     </div>
     <div id="offer-carousel" class="splide mb-12">
       <div class="splide__track">
         <ul class="splide__list">
-          {/** Slides (same as villa, for brevity) */}
+          
+          {offers.map(offer => (
           <li class="splide__slide transition-transform duration-500 ease-in-out">
             <div class="bg-white overflow-hidden flex flex-col h-full">
-              <img src="https://picsum.photos/id/1018/800/600" width="800" height="600" alt="Cliffside Ocean View" loading="lazy" class="w-full h-auto object-cover aspect-[4/3] transition duration-500" />
+              <img src={offer.mainImage.asset.url} width={800} height={600} alt={offer.mainImageAlt?.[locale]} loading="lazy" class="w-full h-auto object-cover aspect-[4/3] transition duration-500" />
               <div class="p-6 flex flex-col flex-1">
-                <h3 class="text-lg tracking-widest uppercase font-title">Cliffside Ocean View</h3>
-                <p class="mt-2 text-base">Breathe in the salty air as waves crash beside this secluded luxury retreat. An experience designed for peace and introspection amid nature's power. An experience designed for peace and introspection amid nature's power. An experience designed for peace and introspection amid nature's power.</p>
+                <h3 class="text-lg tracking-widest uppercase font-title">{offer.title?.[locale] ?? offer.title?.en}</h3>
+                <p class="mt-2 text-base">{offer.excerpt?.[locale] ?? offer.excerpt?.en}</p>
                 <div class="flex-grow"></div>
-                <a href="#" class="text-lg mt-4 inline-block text-black uppercase">Explore</a>
+                <a
+                    href={`/${locale}/offers/${offer.slug}`}
+                    class="text-lg mt-4 inline-block text-black uppercase"
+                  >
+                    {translations.btnexplore[locale]}
+                  </a>
               </div>
             </div>
           </li>
-          <li class="splide__slide transition-transform duration-500 ease-in-out">
-            <div class="bg-white overflow-hidden flex flex-col h-full">
-              <img src="https://picsum.photos/id/1024/800/600" width="800" height="600" alt="Forest Hideaway" loading="lazy" class="w-full h-auto object-cover aspect-[4/3] transition duration-500" />
-              <div class="p-6 flex flex-col flex-1">
-                <h3 class="text-lg tracking-widest uppercase font-title">Forest Hideaway</h3>
-                <p class="mt-2 text-base">A peaceful escape nestled in the forest, perfect for recharging your soul. Surrounded by lush greenery and birdsong, it's a haven of balance and calm.</p>
-                <div class="flex-grow"></div>
-                <a href="#" class="text-lg mt-4 inline-block text-black uppercase">Explore</a>
-              </div>
-            </div>
-          </li>
-          <li class="splide__slide transition-transform duration-500 ease-in-out">
-            <div class="bg-white overflow-hidden flex flex-col h-full">
-              <img src="https://picsum.photos/id/1035/800/600" width="800" height="600" alt="Mountain Serenity" loading="lazy" class="w-full h-auto object-cover aspect-[4/3] transition duration-500" />
-              <div class="p-6 flex flex-col flex-1">
-                <h3 class="text-lg tracking-widest uppercase font-title">Mountain Serenity</h3>
-                <p class="mt-2 text-base">Wake up to misty mountain views and cool alpine breezes. This secluded location offers breathtaking hiking trails and peaceful stargazing at night.</p>
-                <div class="flex-grow"></div>
-                <a href="#" class="text-lg mt-4 inline-block text-black uppercase">Explore</a>
-              </div>
-            </div>
-          </li>
-          <li class="splide__slide transition-transform duration-500 ease-in-out">
-            <div class="bg-white overflow-hidden flex flex-col h-full">
-              <img src="https://picsum.photos/id/1045/800/600" width="800" height="600" alt="Desert Mirage" loading="lazy" class="w-full h-auto object-cover aspect-[4/3] transition duration-500" />
-              <div class="p-6 flex flex-col flex-1">
-                <h3 class="text-lg tracking-widest uppercase font-title">Desert Mirage</h3>
-                <p class="mt-2 text-base">Experience an oasis of luxury surrounded by golden dunes and silence. Refresh yourself in a tranquil pool under the stars of the open desert sky.</p>
-                <div class="flex-grow"></div>
-                <a href="#" class="text-lg mt-4 inline-block text-black uppercase">Explore</a>
-              </div>
-            </div>
-          </li>
-          <li class="splide__slide transition-transform duration-500 ease-in-out">
-            <div class="bg-white overflow-hidden flex flex-col h-full">
-              <img src="https://picsum.photos/id/1055/800/600" width="800" height="600" alt="Island Tranquility" loading="lazy" class="w-full h-auto object-cover aspect-[4/3] transition duration-500" />
-              <div class="p-6 flex flex-col flex-1">
-                <h3 class="text-lg tracking-widest uppercase font-title">Island Tranquility</h3>
-                <p class="mt-2 text-base">Unwind with tropical breezes, crystal waters, and private island luxury. A perfect retreat with sunrise yoga and oceanfront dining at your doorstep.</p>
-                <div class="flex-grow"></div>
-                <a href="#" class="text-lg mt-4 inline-block text-black uppercase">Explore</a>
-              </div>
-            </div>
-          </li>
+          ))}
+          
         </ul>
       </div>
     </div>
@@ -336,10 +358,16 @@ const description = pageDetails?.metaDescription?.[locale] ?? '';
 
   <!-- WELLNESS CAROUSEL -->
   <section class="container mx-auto px-4 pt-52">
-    <img src="https://picsum.photos/id/1018/1920/1080" width="800" height="450" alt="Cliffside Ocean View" loading="lazy" class="w-full h-auto object-cover lg:aspect-[16/8] aspect-[4/3] mb-20" />
+    
+    <img src={wellnessDetails?.mainImage?.asset?.url} width="800" height="450" alt={wellnessDetails?.mainImageAlt?.[locale] ?? ''} loading="lazy" class="w-full h-auto object-cover lg:aspect-[16/8] aspect-[4/3] mb-20" />
     <div class="text-center px-8 mx-auto">
-      <h2 class="font-title text-3xl uppercase mb-6 tracking-widest font-light">WELLNESS EXPERIENCES</h2>
-      <p class="mb-20">Rejuvenate your body, mind, and soul with our curated wellness journeys, inspired by Balinese healing traditions and nature’s tranquility.</p>
+      <h2 class="font-title text-3xl uppercase mb-6 tracking-widest font-light">
+        {wellnessDetails?.title?.[locale] ?? ''}
+      </h2>
+      <p class="mb-20">
+        {wellnessDetails?.description?.[locale] ?? ''}
+      </p>
+    </div>
     </div>
     <div id="wellness-carousel" class="splide mb-12">
       <div class="splide__track">
@@ -387,10 +415,10 @@ const description = pageDetails?.metaDescription?.[locale] ?? '';
 
   <!-- CULINARY CAROUSEL -->
   <section class="container mx-auto px-4 pt-52">
-    <img src="https://picsum.photos/id/1018/1920/1080" width="800" height="450" alt="Cliffside Ocean View" loading="lazy" class="w-full h-auto object-cover lg:aspect-[16/8] aspect-[4/3] mb-20" />
+    <img src={culinaryDetails?.mainImage?.asset?.url} width="800" height="450" alt={culinaryDetails?.mainImageAlt?.[locale] ?? ''} loading="lazy" class="w-full h-auto object-cover lg:aspect-[16/8] aspect-[4/3] mb-20" />
     <div class="text-center px-8 mx-auto">
-      <h2 class="font-title text-3xl uppercase mb-6 tracking-widest font-light">CULINARY JOURNEY</h2>
-      <p class="mb-20">Delight in a rich tapestry of flavors with our signature dining experiences, where fresh local ingredients and timeless recipes celebrate the essence of Balinese and international cuisine.</p>
+      <h2 class="font-title text-3xl uppercase mb-6 tracking-widest font-light">{culinaryDetails?.title?.[locale] ?? ''}</h2>
+      <p class="mb-20">{culinaryDetails?.description?.[locale] ?? ''}</p>
     </div>
     <div id="culinary-carousel" class="splide mb-12">
       <div class="splide__track">
@@ -471,10 +499,10 @@ const description = pageDetails?.metaDescription?.[locale] ?? '';
 
   <!-- EXPERIENCE CAROUSEL -->
   <section class="container mx-auto px-4 pt-52">
-    <img src="https://picsum.photos/id/1018/1920/1080" width="800" height="450" alt="Cliffside Ocean View" loading="lazy" class="w-full h-auto object-cover lg:aspect-[16/8] aspect-[4/3] mb-20" />
+    <img src={experienceDetails?.mainImage?.asset?.url} width="800" height="450" alt={experienceDetails?.mainImageAlt?.[locale] ?? ''} loading="lazy" class="w-full h-auto object-cover lg:aspect-[16/8] aspect-[4/3] mb-20" />
     <div class="text-center px-8 mx-auto">
-      <h2 class="font-title text-3xl uppercase mb-6 tracking-widest font-light">RARE EXPERIENCES</h2>
-      <p class="mb-20">Discover extraordinary moments crafted for the curious soul — from private jungle dinners to floating breakfasts, each experience is uniquely Kamandalu and truly unforgettable.</p>
+      <h2 class="font-title text-3xl uppercase mb-6 tracking-widest font-light">{experienceDetails?.title?.[locale] ?? ''}</h2>
+      <p class="mb-20">{experienceDetails?.description?.[locale] ?? ''}</p>
     </div>
     <div id="experience-carousel" class="splide mb-12">
       <div class="splide__track">
