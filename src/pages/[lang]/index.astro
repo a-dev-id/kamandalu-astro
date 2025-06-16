@@ -554,13 +554,25 @@ const description = pageDetails?.metaDescription?.[locale] ?? '';
   <script is:inline>
     // Booking form and guests modal logic
     document.addEventListener('DOMContentLoaded', () => {
+      function getMonthsToShow() {
+        return window.innerWidth < 640 ? 1 : 2;
+      }
       flatpickr("#flatpickr-date", {
         mode: "range",
         minDate: "today",
         dateFormat: "Y-m-d",
         altInput: true,
         altFormat: "M j",
-        showMonths: 2,
+        showMonths: getMonthsToShow(),
+      });
+      window.addEventListener("resize", () => {
+        const fp = document.querySelector("#flatpickr-date")._flatpickr;
+        if (fp) {
+          const months = getMonthsToShow();
+          if (fp.config.showMonths !== months) {
+        fp.set("showMonths", months);
+          }
+        }
       });
 
       const guestsField = document.getElementById('guests-field');
