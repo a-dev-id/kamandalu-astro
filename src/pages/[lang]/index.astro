@@ -42,6 +42,32 @@ const offers = await client.fetch(`*[_type == "offer"] | order(order asc){
   }
 }`);
 
+// Fetch wellness venues
+const wellnessVenue = await client.fetch(`*[_type == "wellnessVenue"] | order(order asc){
+  "slug": slug.current,
+  title,
+  excerpt,
+  secondImageAlt,
+  secondImage {
+    asset-> {
+      url
+    }
+  }
+}`);
+
+// Fetch experiences
+const diningExperience = await client.fetch(`*[_type == "diningExperience"] | order(order asc){
+  "slug": slug.current,
+  title,
+  excerpt,
+  secondImageAlt,
+  secondImage {
+    asset-> {
+      url
+    }
+  }
+}`);
+
 // Fetch home slider
 const homeSliders = await client.fetch(`*[_type == "homeSlider"] | order(order asc){
   title,
@@ -234,30 +260,37 @@ const description = pageDetails?.metaDescription?.[locale] ?? '';
   </section>
 
   <!-- PAGE DESCRIPTION -->
-  <section class="container mx-auto px-4 py-24">
-    <div class="text-center px-8 mx-auto">
-      <h1 class="font-title text-5xl uppercase mb-6 tracking-widest font-light">{pageDetails?.title?.[locale] ?? ''}</h1>
-      <p class="text-3xl mb-12">{pageDetails?.subtitle?.[locale] ?? ''}</p>
-      <p class="mb-36">
+  <section class="container mx-auto px-4 py-16 md:py-24">
+    <div class="text-center px-2 sm:px-6 md:px-8 mx-auto max-w-4xl">
+      <h1 class="font-title text-3xl sm:text-4xl md:text-5xl uppercase mb-4 md:mb-6 tracking-widest font-light">
+        {pageDetails?.title?.[locale] ?? ''}
+      </h1>
+      <p class="text-xl sm:text-2xl md:text-3xl mb-6 md:mb-12">
+        {pageDetails?.subtitle?.[locale] ?? ''}
+      </p>
+      <p class="mb-12 md:mb-36 text-base md:text-lg">
         {pageDetails?.description?.[locale] ?? ''}
       </p>
-      <a href="https://www.book-secure.com/index.php?s=results&property=idbal31692&locale=en_GB&currency=IDR&stid=986w12cwy" class="bg-white text-black px-6 py-4 text-sm font-title tracking-widest transition-colors duration-300 border border-black hover:bg-[#916B2C] hover:text-white hover:border-transparent">
+      <a
+        href="https://www.book-secure.com/index.php?s=results&property=idbal31692&locale=en_GB&currency=IDR&stid=986w12cwy"
+        class="bg-white text-black px-4 py-3 md:px-6 md:py-4 text-xs md:text-sm font-title tracking-widest transition-colors duration-300 border border-black hover:bg-[#916B2C] hover:text-white hover:border-transparent inline-block"
+      >
         CHECK RATES
       </a>
     </div>
   </section>
 
   <!-- VILLA CAROUSEL -->
-  <section class="container mx-auto px-4 pt-52">
-    <div class="text-center px-8 mx-auto">
-      <h2 class="font-title text-4xl uppercase mb-6 tracking-widest font-light">
+  <section class="container mx-auto px-4 pt-24 md:pt-52">
+    <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
+      <h2 class="font-title text-2xl md:text-4xl uppercase mb-4 md:mb-6 tracking-widest font-light">
         {villaDetails?.title?.[locale] ?? ''}
       </h2>
-      <p class="mb-20">
+      <p class="mb-10 md:mb-20 text-base md:text-lg">
         {villaDetails?.description?.[locale] ?? ''}
       </p>
     </div>
-    <div id="villa-carousel" class="splide mb-12">
+    <div id="villa-carousel" class="splide mb-8 md:mb-12">
       <div class="splide__track">
         <ul class="splide__list">
           {villas.map(villa => (
@@ -271,17 +304,17 @@ const description = pageDetails?.metaDescription?.[locale] ?? '';
                   quality={30}
                   className="w-full h-auto aspect-[4/3] transition duration-500"
                 />
-                <div class="p-6 flex flex-col flex-1">
-                  <h3 class="text-lg tracking-widest uppercase font-title">
+                <div class="p-4 md:p-6 flex flex-col flex-1">
+                  <h3 class="text-base md:text-lg tracking-widest uppercase font-title">
                     {villa.title?.[locale] ?? villa.title?.en}
                   </h3>
-                  <p class="mt-2 text-base">
+                  <p class="mt-2 text-sm md:text-base">
                     {villa.excerpt?.[locale] ?? villa.excerpt?.en}
                   </p>
                   <div class="flex-grow"></div>
                   <a
                     href={`/${locale}/villas/${villa.slug}`}
-                    class="text-lg mt-4 inline-block text-black uppercase"
+                    class="text-base md:text-lg mt-4 inline-block text-black uppercase"
                   >
                     {translations.btnexplore[locale]}
                   </a>
@@ -292,15 +325,15 @@ const description = pageDetails?.metaDescription?.[locale] ?? '';
         </ul>
       </div>
     </div>
-    <div class="flex items-center gap-6 mt-8">
-      <button id="villa-prev" class="w-12 h-12 flex items-center justify-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="24" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <div class="flex items-center gap-4 md:gap-6 mt-4 md:mt-8 justify-start">
+      <button id="villa-prev" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="44" y1="12" x2="4" y2="12" />
           <polyline points="12 20 4 12 12 4" />
         </svg>
       </button>
-      <button id="villa-next" class="w-12 h-12 flex items-center justify-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="24" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <button id="villa-next" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="4" y1="12" x2="44" y2="12" />
           <polyline points="36 4 44 12 36 20" />
         </svg>
@@ -309,26 +342,33 @@ const description = pageDetails?.metaDescription?.[locale] ?? '';
   </section>
 
   <!-- OFFERS CAROUSEL -->
-  <section class="container mx-auto px-4 pt-52">
-    <div class="text-center px-8 mx-auto">
-      <h2 class="font-title text-3xl uppercase mb-6 tracking-widest font-light">{offerDetails?.title?.[locale] ?? ''}</h2>
-      <p class="mb-20">{offerDetails?.description?.[locale] ?? ''}</p>
+  <section class="container mx-auto px-4 pt-24 md:pt-52">
+    <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
+      <h2 class="font-title text-2xl md:text-3xl uppercase mb-4 md:mb-6 tracking-widest font-light">{offerDetails?.title?.[locale] ?? ''}</h2>
+      <p class="mb-10 md:mb-20 text-base md:text-lg">{offerDetails?.description?.[locale] ?? ''}</p>
     </div>
-    <div id="offer-carousel" class="splide mb-12">
+    <div id="offer-carousel" class="splide mb-8 md:mb-12">
       <div class="splide__track">
         <ul class="splide__list">
-          
           {offers.map(offer => (
           <li class="splide__slide transition-transform duration-500 ease-in-out">
             <div class="bg-white overflow-hidden flex flex-col h-full">
-              <img src={offer.mainImage.asset.url} width={800} height={600} alt={offer.mainImageAlt?.[locale]} loading="lazy" class="w-full h-auto object-cover aspect-[4/3] transition duration-500" />
-              <div class="p-6 flex flex-col flex-1">
-                <h3 class="text-lg tracking-widest uppercase font-title">{offer.title?.[locale] ?? offer.title?.en}</h3>
-                <p class="mt-2 text-base">{offer.excerpt?.[locale] ?? offer.excerpt?.en}</p>
+              <OptimizedImage
+                  src={offer.mainImage.asset.url}
+                  alt={offer.mainImageAlt?.[locale]}
+                  width={800}
+                  height={600}
+                  quality={75}
+                  loading="lazy"
+                  className="w-full h-auto aspect-[4/3] transition duration-500"
+                />
+              <div class="p-4 md:p-6 flex flex-col flex-1">
+                <h3 class="text-base md:text-lg tracking-widest uppercase font-title">{offer.title?.[locale] ?? offer.title?.en}</h3>
+                <p class="mt-2 text-sm md:text-base">{offer.excerpt?.[locale] ?? offer.excerpt?.en}</p>
                 <div class="flex-grow"></div>
                 <a
                     href={`/${locale}/offers/${offer.slug}`}
-                    class="text-lg mt-4 inline-block text-black uppercase"
+                    class="text-base md:text-lg mt-4 inline-block text-black uppercase"
                   >
                     {translations.btnexplore[locale]}
                   </a>
@@ -336,19 +376,18 @@ const description = pageDetails?.metaDescription?.[locale] ?? '';
             </div>
           </li>
           ))}
-          
         </ul>
       </div>
     </div>
-    <div class="flex items-center gap-6 mt-8">
-      <button id="offer-prev" class="w-12 h-12 flex items-center justify-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="24" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <div class="flex items-center gap-4 md:gap-6 mt-4 md:mt-8 justify-start">
+      <button id="offer-prev" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="44" y1="12" x2="4" y2="12" />
           <polyline points="12 20 4 12 12 4" />
         </svg>
       </button>
-      <button id="offer-next" class="w-12 h-12 flex items-center justify-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="24" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <button id="offer-next" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="4" y1="12" x2="44" y2="12" />
           <polyline points="36 4 44 12 36 20" />
         </svg>
@@ -357,55 +396,52 @@ const description = pageDetails?.metaDescription?.[locale] ?? '';
   </section>
 
   <!-- WELLNESS CAROUSEL -->
-  <section class="container mx-auto px-4 pt-52">
-    
-    <img src={wellnessDetails?.mainImage?.asset?.url} width="800" height="450" alt={wellnessDetails?.mainImageAlt?.[locale] ?? ''} loading="lazy" class="w-full h-auto object-cover lg:aspect-[16/8] aspect-[4/3] mb-20" />
-    <div class="text-center px-8 mx-auto">
-      <h2 class="font-title text-3xl uppercase mb-6 tracking-widest font-light">
+  <section class="container mx-auto px-4 pt-24 md:pt-52">
+    <img src={wellnessDetails?.mainImage?.asset?.url} width="800" height="450" alt={wellnessDetails?.mainImageAlt?.[locale] ?? ''} loading="lazy" class="w-full h-auto object-cover lg:aspect-[16/8] aspect-[4/3] mb-10 md:mb-20" />
+    <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
+      <h2 class="font-title text-2xl md:text-3xl uppercase mb-4 md:mb-6 tracking-widest font-light">
         {wellnessDetails?.title?.[locale] ?? ''}
       </h2>
-      <p class="mb-20">
+      <p class="mb-10 md:mb-20 text-base md:text-lg">
         {wellnessDetails?.description?.[locale] ?? ''}
       </p>
     </div>
-    </div>
-    <div id="wellness-carousel" class="splide mb-12">
+    <div id="wellness-carousel" class="splide mb-8 md:mb-12">
       <div class="splide__track">
         <ul class="splide__list">
+          {wellnessVenue.map(venue => (
           <li class="splide__slide transition-transform duration-500 ease-in-out">
             <div class="bg-white overflow-hidden flex flex-col h-full">
-              <img src="https://picsum.photos/id/1045/800/600" width="800" height="600" alt="Desert Mirage" loading="lazy" class="w-full h-auto object-cover aspect-[4/3] transition duration-500" />
-              <div class="p-6 flex flex-col flex-1">
-                <h3 class="text-lg tracking-widest uppercase font-title">Desert Mirage</h3>
-                <p class="mt-2 text-base">Experience an oasis of luxury surrounded by golden dunes and silence. Refresh yourself in a tranquil pool under the stars of the open desert sky.</p>
+              <OptimizedImage
+                  src={venue.secondImage.asset.url}
+                  alt={venue.secondImageAlt?.[locale]}
+                  width={800}
+                  height={600}
+                  quality={75}
+                  loading="lazy"
+                  className="w-full h-auto aspect-[4/3] transition duration-500"
+                />
+              <div class="p-4 md:p-6 flex flex-col flex-1">
+                <h3 class="text-base md:text-lg tracking-widest uppercase font-title">{venue?.title?.[locale] ?? ''}</h3>
+                <p class="mt-2 text-sm md:text-base">{venue?.excerpt?.[locale] ?? ''}</p>
                 <div class="flex-grow"></div>
-                <a href="#" class="text-lg mt-4 inline-block text-black uppercase">Explore</a>
+                <a href="#" class="text-base md:text-lg mt-4 inline-block text-black uppercase">Explore</a>
               </div>
             </div>
           </li>
-          <li class="splide__slide transition-transform duration-500 ease-in-out">
-            <div class="bg-white overflow-hidden flex flex-col h-full">
-              <img src="https://picsum.photos/id/1055/800/600" width="800" height="600" alt="Island Tranquility" loading="lazy" class="w-full h-auto object-cover aspect-[4/3] transition duration-500" />
-              <div class="p-6 flex flex-col flex-1">
-                <h3 class="text-lg tracking-widest uppercase font-title">Island Tranquility</h3>
-                <p class="mt-2 text-base">Unwind with tropical breezes, crystal waters, and private island luxury. A perfect retreat with sunrise yoga and oceanfront dining at your doorstep.</p>
-                <div class="flex-grow"></div>
-                <a href="#" class="text-lg mt-4 inline-block text-black uppercase">Explore</a>
-              </div>
-            </div>
-          </li>
+          ))}
         </ul>
       </div>
     </div>
-    <div class="flex items-center gap-6 mt-8 md:hidden">
-      <button id="wellness-prev" class="w-12 h-12 flex items-center justify-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="24" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <div class="flex items-center gap-4 md:gap-6 mt-4 md:mt-8 justify-center md:hidden">
+      <button id="wellness-prev" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="44" y1="12" x2="4" y2="12" />
           <polyline points="12 20 4 12 12 4" />
         </svg>
       </button>
-      <button id="wellness-next" class="w-12 h-12 flex items-center justify-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="24" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <button id="wellness-next" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="4" y1="12" x2="44" y2="12" />
           <polyline points="36 4 44 12 36 20" />
         </svg>
@@ -414,82 +450,48 @@ const description = pageDetails?.metaDescription?.[locale] ?? '';
   </section>
 
   <!-- CULINARY CAROUSEL -->
-  <section class="container mx-auto px-4 pt-52">
-    <img src={culinaryDetails?.mainImage?.asset?.url} width="800" height="450" alt={culinaryDetails?.mainImageAlt?.[locale] ?? ''} loading="lazy" class="w-full h-auto object-cover lg:aspect-[16/8] aspect-[4/3] mb-20" />
-    <div class="text-center px-8 mx-auto">
-      <h2 class="font-title text-3xl uppercase mb-6 tracking-widest font-light">{culinaryDetails?.title?.[locale] ?? ''}</h2>
-      <p class="mb-20">{culinaryDetails?.description?.[locale] ?? ''}</p>
+  <section class="container mx-auto px-4 pt-24 md:pt-52">
+    <img src={culinaryDetails?.mainImage?.asset?.url} width="800" height="450" alt={culinaryDetails?.mainImageAlt?.[locale] ?? ''} loading="lazy" class="w-full h-auto object-cover lg:aspect-[16/8] aspect-[4/3] mb-10 md:mb-20" />
+    <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
+      <h2 class="font-title text-2xl md:text-3xl uppercase mb-4 md:mb-6 tracking-widest font-light">{culinaryDetails?.title?.[locale] ?? ''}</h2>
+      <p class="mb-10 md:mb-20 text-base md:text-lg">{culinaryDetails?.description?.[locale] ?? ''}</p>
     </div>
-    <div id="culinary-carousel" class="splide mb-12">
+    <div id="culinary-carousel" class="splide mb-8 md:mb-12">
       <div class="splide__track">
         <ul class="splide__list">
+          {diningExperience.map(dining => (
           <li class="splide__slide transition-transform duration-500 ease-in-out">
             <div class="bg-white overflow-hidden flex flex-col h-full">
-              <img src="https://picsum.photos/id/1018/800/600" width="800" height="600" alt="Cliffside Ocean View" loading="lazy" class="w-full h-auto object-cover aspect-[4/3] transition duration-500" />
-              <div class="p-6 flex flex-col flex-1">
-                <h3 class="text-lg tracking-widest uppercase font-title">Cliffside Ocean View</h3>
-                <p class="mt-2 text-base">Breathe in the salty air as waves crash beside this secluded luxury retreat. An experience designed for peace and introspection amid nature's power. An experience designed for peace and introspection amid nature's power. An experience designed for peace and introspection amid nature's power.</p>
+              <OptimizedImage
+                  src={dining.secondImage.asset.url}
+                  alt={dining.secondImageAlt?.[locale]}
+                  width={800}
+                  height={600}
+                  quality={75}
+                  loading="lazy"
+                  className="w-full h-auto aspect-[4/3] transition duration-500"
+                />
+              <div class="p-4 md:p-6 flex flex-col flex-1">
+                <h3 class="text-base md:text-lg tracking-widest uppercase font-title">{dining.title?.[locale] ?? ''}</h3>
+                <p class="mt-2 text-sm md:text-base">{dining.excerpt?.[locale] ?? ''}</p>
                 <div class="flex-grow"></div>
-                <a href="#" class="text-lg mt-4 inline-block text-black uppercase">Explore</a>
+                <a href="#" class="text-base md:text-lg mt-4 inline-block text-black uppercase">Explore</a>
               </div>
             </div>
           </li>
-          <li class="splide__slide transition-transform duration-500 ease-in-out">
-            <div class="bg-white overflow-hidden flex flex-col h-full">
-              <img src="https://picsum.photos/id/1024/800/600" width="800" height="600" alt="Forest Hideaway" loading="lazy" class="w-full h-auto object-cover aspect-[4/3] transition duration-500" />
-              <div class="p-6 flex flex-col flex-1">
-                <h3 class="text-lg tracking-widest uppercase font-title">Forest Hideaway</h3>
-                <p class="mt-2 text-base">A peaceful escape nestled in the forest, perfect for recharging your soul. Surrounded by lush greenery and birdsong, it's a haven of balance and calm.</p>
-                <div class="flex-grow"></div>
-                <a href="#" class="text-lg mt-4 inline-block text-black uppercase">Explore</a>
-              </div>
-            </div>
-          </li>
-          <li class="splide__slide transition-transform duration-500 ease-in-out">
-            <div class="bg-white overflow-hidden flex flex-col h-full">
-              <img src="https://picsum.photos/id/1035/800/600" width="800" height="600" alt="Mountain Serenity" loading="lazy" class="w-full h-auto object-cover aspect-[4/3] transition duration-500" />
-              <div class="p-6 flex flex-col flex-1">
-                <h3 class="text-lg tracking-widest uppercase font-title">Mountain Serenity</h3>
-                <p class="mt-2 text-base">Wake up to misty mountain views and cool alpine breezes. This secluded location offers breathtaking hiking trails and peaceful stargazing at night.</p>
-                <div class="flex-grow"></div>
-                <a href="#" class="text-lg mt-4 inline-block text-black uppercase">Explore</a>
-              </div>
-            </div>
-          </li>
-          <li class="splide__slide transition-transform duration-500 ease-in-out">
-            <div class="bg-white overflow-hidden flex flex-col h-full">
-              <img src="https://picsum.photos/id/1045/800/600" width="800" height="600" alt="Desert Mirage" loading="lazy" class="w-full h-auto object-cover aspect-[4/3] transition duration-500" />
-              <div class="p-6 flex flex-col flex-1">
-                <h3 class="text-lg tracking-widest uppercase font-title">Desert Mirage</h3>
-                <p class="mt-2 text-base">Experience an oasis of luxury surrounded by golden dunes and silence. Refresh yourself in a tranquil pool under the stars of the open desert sky.</p>
-                <div class="flex-grow"></div>
-                <a href="#" class="text-lg mt-4 inline-block text-black uppercase">Explore</a>
-              </div>
-            </div>
-          </li>
-          <li class="splide__slide transition-transform duration-500 ease-in-out">
-            <div class="bg-white overflow-hidden flex flex-col h-full">
-              <img src="https://picsum.photos/id/1055/800/600" width="800" height="600" alt="Island Tranquility" loading="lazy" class="w-full h-auto object-cover aspect-[4/3] transition duration-500" />
-              <div class="p-6 flex flex-col flex-1">
-                <h3 class="text-lg tracking-widest uppercase font-title">Island Tranquility</h3>
-                <p class="mt-2 text-base">Unwind with tropical breezes, crystal waters, and private island luxury. A perfect retreat with sunrise yoga and oceanfront dining at your doorstep.</p>
-                <div class="flex-grow"></div>
-                <a href="#" class="text-lg mt-4 inline-block text-black uppercase">Explore</a>
-              </div>
-            </div>
-          </li>
+          ))}
         </ul>
       </div>
     </div>
-    <div class="flex items-center gap-6 mt-8">
-      <button id="culinary-prev" class="w-12 h-12 flex items-center justify-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="24" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <div class="flex items-center gap-4 md:gap-6 mt-4 md:mt-8 justify-start">
+      <button id="culinary-prev" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="44" y1="12" x2="4" y2="12" />
           <polyline points="12 20 4 12 12 4" />
         </svg>
       </button>
-      <button id="culinary-next" class="w-12 h-12 flex items-center justify-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="24" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <button id="culinary-next" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="4" y1="12" x2="44" y2="12" />
           <polyline points="36 4 44 12 36 20" />
         </svg>
@@ -498,82 +500,48 @@ const description = pageDetails?.metaDescription?.[locale] ?? '';
   </section>
 
   <!-- EXPERIENCE CAROUSEL -->
-  <section class="container mx-auto px-4 pt-52">
-    <img src={experienceDetails?.mainImage?.asset?.url} width="800" height="450" alt={experienceDetails?.mainImageAlt?.[locale] ?? ''} loading="lazy" class="w-full h-auto object-cover lg:aspect-[16/8] aspect-[4/3] mb-20" />
-    <div class="text-center px-8 mx-auto">
-      <h2 class="font-title text-3xl uppercase mb-6 tracking-widest font-light">{experienceDetails?.title?.[locale] ?? ''}</h2>
-      <p class="mb-20">{experienceDetails?.description?.[locale] ?? ''}</p>
+  <section class="container mx-auto px-4 pt-24 md:pt-52">
+    <img src={experienceDetails?.mainImage?.asset?.url} width="800" height="450" alt={experienceDetails?.mainImageAlt?.[locale] ?? ''} loading="lazy" class="w-full h-auto object-cover lg:aspect-[16/8] aspect-[4/3] mb-10 md:mb-20" />
+    <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
+      <h2 class="font-title text-2xl md:text-3xl uppercase mb-4 md:mb-6 tracking-widest font-light">{experienceDetails?.title?.[locale] ?? ''}</h2>
+      <p class="mb-10 md:mb-20 text-base md:text-lg">{experienceDetails?.description?.[locale] ?? ''}</p>
     </div>
-    <div id="experience-carousel" class="splide mb-12">
+    <div id="experience-carousel" class="splide mb-8 md:mb-12">
       <div class="splide__track">
         <ul class="splide__list">
+          {diningExperience.map(dining => (
           <li class="splide__slide transition-transform duration-500 ease-in-out">
             <div class="bg-white overflow-hidden flex flex-col h-full">
-              <img src="https://picsum.photos/id/1018/800/600" width="800" height="600" alt="Cliffside Ocean View" loading="lazy" class="w-full h-auto object-cover aspect-[4/3] transition duration-500" />
-              <div class="p-6 flex flex-col flex-1">
-                <h3 class="text-lg tracking-widest uppercase font-title">Cliffside Ocean View</h3>
-                <p class="mt-2 text-base">Breathe in the salty air as waves crash beside this secluded luxury retreat. An experience designed for peace and introspection amid nature's power. An experience designed for peace and introspection amid nature's power. An experience designed for peace and introspection amid nature's power.</p>
+              <OptimizedImage
+                  src={dining.secondImage.asset.url}
+                  alt={dining.secondImageAlt?.[locale]}
+                  width={800}
+                  height={600}
+                  quality={75}
+                  loading="lazy"
+                  className="w-full h-auto aspect-[4/3] transition duration-500"
+                />
+              <div class="p-4 md:p-6 flex flex-col flex-1">
+                <h3 class="text-base md:text-lg tracking-widest uppercase font-title">{dining.title?.[locale] ?? ''}</h3>
+                <p class="mt-2 text-sm md:text-base">{dining.excerpt?.[locale] ?? ''}</p>
                 <div class="flex-grow"></div>
-                <a href="#" class="text-lg mt-4 inline-block text-black uppercase">Explore</a>
+                <a href="#" class="text-base md:text-lg mt-4 inline-block text-black uppercase">Explore</a>
               </div>
             </div>
           </li>
-          <li class="splide__slide transition-transform duration-500 ease-in-out">
-            <div class="bg-white overflow-hidden flex flex-col h-full">
-              <img src="https://picsum.photos/id/1024/800/600" width="800" height="600" alt="Forest Hideaway" loading="lazy" class="w-full h-auto object-cover aspect-[4/3] transition duration-500" />
-              <div class="p-6 flex flex-col flex-1">
-                <h3 class="text-lg tracking-widest uppercase font-title">Forest Hideaway</h3>
-                <p class="mt-2 text-base">A peaceful escape nestled in the forest, perfect for recharging your soul. Surrounded by lush greenery and birdsong, it's a haven of balance and calm.</p>
-                <div class="flex-grow"></div>
-                <a href="#" class="text-lg mt-4 inline-block text-black uppercase">Explore</a>
-              </div>
-            </div>
-          </li>
-          <li class="splide__slide transition-transform duration-500 ease-in-out">
-            <div class="bg-white overflow-hidden flex flex-col h-full">
-              <img src="https://picsum.photos/id/1035/800/600" width="800" height="600" alt="Mountain Serenity" loading="lazy" class="w-full h-auto object-cover aspect-[4/3] transition duration-500" />
-              <div class="p-6 flex flex-col flex-1">
-                <h3 class="text-lg tracking-widest uppercase font-title">Mountain Serenity</h3>
-                <p class="mt-2 text-base">Wake up to misty mountain views and cool alpine breezes. This secluded location offers breathtaking hiking trails and peaceful stargazing at night.</p>
-                <div class="flex-grow"></div>
-                <a href="#" class="text-lg mt-4 inline-block text-black uppercase">Explore</a>
-              </div>
-            </div>
-          </li>
-          <li class="splide__slide transition-transform duration-500 ease-in-out">
-            <div class="bg-white overflow-hidden flex flex-col h-full">
-              <img src="https://picsum.photos/id/1045/800/600" width="800" height="600" alt="Desert Mirage" loading="lazy" class="w-full h-auto object-cover aspect-[4/3] transition duration-500" />
-              <div class="p-6 flex flex-col flex-1">
-                <h3 class="text-lg tracking-widest uppercase font-title">Desert Mirage</h3>
-                <p class="mt-2 text-base">Experience an oasis of luxury surrounded by golden dunes and silence. Refresh yourself in a tranquil pool under the stars of the open desert sky.</p>
-                <div class="flex-grow"></div>
-                <a href="#" class="text-lg mt-4 inline-block text-black uppercase">Explore</a>
-              </div>
-            </div>
-          </li>
-          <li class="splide__slide transition-transform duration-500 ease-in-out">
-            <div class="bg-white overflow-hidden flex flex-col h-full">
-              <img src="https://picsum.photos/id/1055/800/600" width="800" height="600" alt="Island Tranquility" loading="lazy" class="w-full h-auto object-cover aspect-[4/3] transition duration-500" />
-              <div class="p-6 flex flex-col flex-1">
-                <h3 class="text-lg tracking-widest uppercase font-title">Island Tranquility</h3>
-                <p class="mt-2 text-base">Unwind with tropical breezes, crystal waters, and private island luxury. A perfect retreat with sunrise yoga and oceanfront dining at your doorstep.</p>
-                <div class="flex-grow"></div>
-                <a href="#" class="text-lg mt-4 inline-block text-black uppercase">Explore</a>
-              </div>
-            </div>
-          </li>
+          ))}
         </ul>
       </div>
     </div>
-    <div class="flex items-center gap-6 mt-8">
-      <button id="experience-prev" class="w-12 h-12 flex items-center justify-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="24" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <div class="flex items-center gap-4 md:gap-6 mt-4 md:mt-8 justify-start">
+      <button id="experience-prev" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="44" y1="12" x2="4" y2="12" />
           <polyline points="12 20 4 12 12 4" />
         </svg>
       </button>
-      <button id="experience-next" class="w-12 h-12 flex items-center justify-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="24" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <button id="experience-next" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="4" y1="12" x2="44" y2="12" />
           <polyline points="36 4 44 12 36 20" />
         </svg>
