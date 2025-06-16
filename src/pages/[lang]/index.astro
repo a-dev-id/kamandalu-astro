@@ -697,7 +697,7 @@ const description = pageDetails?.metaDescription?.[locale] ?? '';
       easing: "ease-in-out",
       arrows: false,
       pagination: false,
-      breakpoints: { 768: { perPage: 1 } },
+      breakpoints: { 1366: { gap: "2rem"}, 1024: { gap: "2rem", perPage: 2 }, 768: { perPage: 1 } },
     });
     villa.on('mounted move', () => {
       const villaPrevBtn = document.getElementById('villa-prev');
@@ -722,7 +722,7 @@ const description = pageDetails?.metaDescription?.[locale] ?? '';
       easing: "ease-in-out",
       arrows: false,
       pagination: false,
-      breakpoints: { 768: { perPage: 2 }, 640: { perPage: 1 } },
+      breakpoints: { 1366: { gap: "2rem"}, 1024: { gap: "2rem",perPage: 2 }, 768: { perPage: 1, gap: "2rem", }, 640: { perPage: 1 } },
     });
     offer.on('mounted move', () => {
       const offerPrevBtn = document.getElementById('offer-prev');
@@ -747,7 +747,7 @@ const description = pageDetails?.metaDescription?.[locale] ?? '';
       easing: "ease-in-out",
       arrows: false,
       pagination: false,
-      breakpoints: { 768: { perPage: 2 }, 640: { perPage: 1 } },
+      breakpoints: { 1366: { gap: "2rem"}, 1024: { gap: "2rem",perPage: 2 }, 768: { perPage: 1, gap: "2rem", }, 640: { perPage: 1 } },
     });
     wellness.on('mounted move', () => {
       const wellnessPrevBtn = document.getElementById('wellness-prev');
@@ -772,7 +772,7 @@ const description = pageDetails?.metaDescription?.[locale] ?? '';
       easing: "ease-in-out",
       arrows: false,
       pagination: false,
-      breakpoints: { 768: { perPage: 2 }, 640: { perPage: 1 } },
+      breakpoints: { 1366: { gap: "2rem"}, 1024: { gap: "2rem",perPage: 2 }, 768: { perPage: 1, gap: "2rem", }, 640: { perPage: 1 } },
     });
     culinary.on('mounted move', () => {
       const culinaryPrevBtn = document.getElementById('culinary-prev');
@@ -797,7 +797,7 @@ const description = pageDetails?.metaDescription?.[locale] ?? '';
       easing: "ease-in-out",
       arrows: false,
       pagination: false,
-      breakpoints: { 768: { perPage: 2 }, 640: { perPage: 1 } },
+      breakpoints: { 1366: { gap: "2rem"}, 1024: { gap: "2rem",perPage: 2 }, 768: { perPage: 1, gap: "2rem", }, 640: { perPage: 1 } },
     });
     experience.on('mounted move', () => {
       const experiencePrevBtn = document.getElementById('experience-prev');
