@@ -7,9 +7,7 @@ import { toHTML } from '@portabletext/to-html';
 
 // Generate all static paths for villas and languages
 export async function getStaticPaths() {
-  const slugs = await client.fetch(`*[_type == "villa" && defined(slug.current)]{
-    "slug": slug.current
-  }`);
+  const slugs = await client.fetch(`*[_type == "villa" && defined(slug.current)]{ "slug": slug.current }`);
   const languages = ['en', 'ko', 'zh'];
   return languages.flatMap(lang =>
     slugs.map(villa => ({
@@ -21,6 +19,9 @@ export async function getStaticPaths() {
 // Get route params and locale
 const { lang, slug } = Astro.params;
 const locale = getLocale(lang);
+
+// Helper to safely handle Portable Text arrays
+const safeArray = (arr) => Array.isArray(arr) ? arr : [];
 
 // Fetch villa detail from Sanity
 const villa = await client.fetch(`*[_type == "villa" && slug.current == $slug][0]{
@@ -38,14 +39,14 @@ const villa = await client.fetch(`*[_type == "villa" && slug.current == $slug][0
   others
 }`, { slug });
 
-// Convert Portable Text to HTML strings safely
+// Convert Portable Text to HTML strings safely with fallback
 const htmlFields = {
-  villaFeatures: toHTML(villa?.villaFeatures?.[locale] ?? []),
-  inVillaEntertainment: toHTML(villa?.inVillaEntertainment?.[locale] ?? []),
-  complimentaries: toHTML(villa?.complimentaries?.[locale] ?? []),
-  area: toHTML(villa?.area?.[locale] ?? []),
-  maximumOccupancy: toHTML(villa?.maximumOccupancy?.[locale] ?? []),
-  others: toHTML(villa?.others?.[locale] ?? []),
+  villaFeatures: toHTML(safeArray(villa?.villaFeatures?.[locale])),
+  inVillaEntertainment: toHTML(safeArray(villa?.inVillaEntertainment?.[locale])),
+  complimentaries: toHTML(safeArray(villa?.complimentaries?.[locale])),
+  area: toHTML(safeArray(villa?.area?.[locale])),
+  maximumOccupancy: toHTML(safeArray(villa?.maximumOccupancy?.[locale])),
+  others: toHTML(safeArray(villa?.others?.[locale])),
 };
 
 const title = villa?.title?.[locale] ?? '';
@@ -71,7 +72,7 @@ const description = villa?.excerpt?.[locale] ?? '';
   <section class="container mx-auto px-4 xl:px-10 2xl:px-0 py-16 md:py-24">
     <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
       <h1 class="font-title text-3xl sm:text-4xl md:text-5xl uppercase mb-4 md:mb-6 tracking-widest font-light">
-        {villa?.title?.[locale] ?? ''}
+        {title}
       </h1>
       <p class="mb-12 md:mb-18 text-base md:text-lg">
         {villa?.description?.[locale] ?? ''}
@@ -88,22 +89,20 @@ const description = villa?.excerpt?.[locale] ?? '';
   <!-- Image Gallery -->
   <section class="container mx-auto px-4 xl:px-10 2xl:px-0 pb-12">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-      <!-- Left: 4 images (2x2 grid on md+, stacked on mobile) -->
       <div class="grid grid-cols-2 gap-4 md:col-span-2">
-        {villa.villaGallery.slice(0, 4).map((image, index) => (
+        {(villa?.villaGallery ?? []).slice(0, 4).map((image, index) => (
           <img
             src={image.asset.url}
-            alt={`${villa?.title?.[locale] ?? ''} - Image ${index + 1}`}
+            alt={`${title} - Image ${index + 1}`}
             class="w-full h-auto object-cover aspect-[16/9] 2xl:aspect-[4/3]"
             loading="lazy"
           />
         ))}
       </div>
-      <!-- Right: single image aligned with left block -->
       <div class="relative h-full">
         <img
-          src={villa.villaGallery[4]?.asset.url ?? villa.villaGallery[0]?.asset.url}
-          alt={`${villa?.title?.[locale] ?? ''} - Image 5`}
+          src={villa.villaGallery?.[4]?.asset.url ?? villa.villaGallery?.[0]?.asset.url ?? ''}
+          alt={`${title} - Image 5`}
           class="w-full h-full object-cover aspect-[16/9] md:aspect-auto 2xl:aspect-[4/3]"
           loading="lazy"
         />
@@ -111,36 +110,34 @@ const description = villa?.excerpt?.[locale] ?? '';
           id="openGallery"
           href="#"
           class="absolute bottom-3 right-3 bg-[#916B2C] text-white px-4 py-2 text-xs uppercase tracking-wide flex items-center gap-2"
+          aria-label="Open image gallery"
         >
-          <img src="/images/villas/expand-window.png" alt="Gallery Icon" class="w-4 h-4 brightness-0 invert-[1]" />
+          <img src="/images/villas/expand-window.png" alt="" class="w-4 h-4 brightness-0 invert-[1]" aria-hidden="true" />
           Gallery
         </a>
       </div>
     </div>
   </section>
 
-  <!-- Gallery Modal (hidden by default) -->
-  {villa?.villaGallery?.length > 0 && (
-    <div id="galleryModal" class="fixed inset-0 bg-black/90 z-50 hidden flex flex-col items-center justify-center px-4 py-8">
-      <!-- Close Button -->
-      <button id="closeGallery" class="absolute top-4 right-4 text-white text-3xl hover:scale-110 transition">×</button>
+  <!-- Gallery Modal -->
+  {(villa?.villaGallery ?? []).length > 0 && (
+    <div id="galleryModal" class="fixed inset-0 bg-black/90 z-50 hidden flex flex-col items-center justify-center px-4 py-8" role="dialog" aria-modal="true" aria-labelledby="galleryLabel" tabindex="-1">
+      <button id="closeGallery" class="absolute top-4 right-4 text-white text-3xl hover:scale-110 transition" aria-label="Close gallery modal">×</button>
       <div class="flex items-center gap-6 max-w-5xl w-full">
-        <!-- Left Arrow -->
         <button id="galleryPrev" class="text-white hover:scale-110 transition" aria-label="Previous Slide">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
           </svg>
         </button>
-        <!-- Carousel -->
         <div class="flex-1 flex flex-col items-center">
-          <div id="galleryCarousel" class="splide w-full">
+          <div id="galleryCarousel" class="splide w-full" aria-labelledby="galleryLabel" role="region" tabindex="0">
             <div class="splide__track mb-4">
               <ul class="splide__list">
-                {villa.villaGallery.map((image, index) => (
+                {(villa.villaGallery ?? []).map((image, index) => (
                   <li class="splide__slide">
                     <img
                       src={image.asset.url}
-                      alt={`${villa?.title?.[locale] ?? ''} - Image ${index + 1}`}
+                      alt={`${title} - Image ${index + 1}`}
                       class="w-full h-auto object-cover max-h-[80vh] mx-auto rounded"
                       loading="lazy"
                     />
@@ -148,11 +145,9 @@ const description = villa?.excerpt?.[locale] ?? '';
                 ))}
               </ul>
             </div>
-            {/* Pagination */}
             <div class="splide__pagination mt-6 !relative !bottom-0 flex justify-center" />
           </div>
         </div>
-        <!-- Right Arrow -->
         <button id="galleryNext" class="text-white hover:scale-110 transition" aria-label="Next Slide">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -164,19 +159,20 @@ const description = villa?.excerpt?.[locale] ?? '';
 
   <!-- Services & Amenities Accordion -->
   <section class="container mx-auto px-4 xl:px-10 2xl:px-0 py-12">
-    <!-- Services & Amenities Accordion -->
     <div class="border-t border-gray-300">
       <button
         type="button"
         class="w-full flex justify-between items-center py-4 font-title text-left text-lg uppercase toggle-btn"
         data-target="accordion-1"
+        aria-expanded="false"
+        aria-controls="accordion-1"
       >
         Services & Amenities
         <svg class="w-5 h-5 transition-transform duration-300" data-icon data-target="accordion-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
         </svg>
       </button>
-      <div id="accordion-1" class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 hidden">
+      <div id="accordion-1" class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 hidden" role="region" aria-labelledby="accordion-1">
         <div>
           <h4 class="font-semibold mb-2">Villa Features</h4>
           <div class="custom-list" set:html={htmlFields.villaFeatures} />
@@ -191,20 +187,21 @@ const description = villa?.excerpt?.[locale] ?? '';
         </div>
       </div>
     </div>
-  
-    <!-- Others Accordion -->
+
     <div class="border-t border-b border-gray-300">
       <button
         type="button"
         class="w-full flex justify-between items-center py-4 font-title text-left text-lg uppercase toggle-btn"
         data-target="accordion-2"
+        aria-expanded="false"
+        aria-controls="accordion-2"
       >
         More Information
         <svg class="w-5 h-5 transition-transform duration-300" data-icon data-target="accordion-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
         </svg>
       </button>
-      <div id="accordion-2" class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 hidden">
+      <div id="accordion-2" class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 hidden" role="region" aria-labelledby="accordion-2">
         <div>
           <h4 class="font-semibold mb-2">Maximum Occupancy</h4>
           <div class="custom-list" set:html={htmlFields.maximumOccupancy} />
@@ -223,13 +220,19 @@ const description = villa?.excerpt?.[locale] ?? '';
 
   <!-- Accordion Toggle Script -->
   <script is:inline>
-    document.querySelectorAll('.toggle-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const targetId = btn.dataset.target;
-        const panel = document.getElementById(targetId);
-        const icon = document.querySelector(`svg[data-icon][data-target="${targetId}"]`);
-        panel.classList.toggle('hidden');
-        icon.classList.toggle('rotate-180');
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.toggle-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const targetId = btn.dataset.target;
+          const panel = document.getElementById(targetId);
+          const icon = document.querySelector(`svg[data-icon][data-target="${targetId}"]`);
+
+          const expanded = btn.getAttribute('aria-expanded') === 'true';
+          btn.setAttribute('aria-expanded', String(!expanded));
+
+          panel.classList.toggle('hidden');
+          icon.classList.toggle('rotate-180');
+        });
       });
     });
   </script>
