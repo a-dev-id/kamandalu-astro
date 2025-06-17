@@ -5,7 +5,7 @@ import { getLocale } from '../../../utils/getLocale';
 import OptimizedImage from '../../../components/OptimizedImage.astro';
 import { toHTML } from '@portabletext/to-html';
 
-// Generate all static paths for all villas and languages
+// Generate all static paths for villas and languages
 export async function getStaticPaths() {
   const slugs = await client.fetch(`*[_type == "villa" && defined(slug.current)]{
     "slug": slug.current
@@ -38,6 +38,7 @@ const villa = await client.fetch(`*[_type == "villa" && slug.current == $slug][0
   others
 }`, { slug });
 
+// Convert Portable Text to HTML strings safely
 const htmlFields = {
   villaFeatures: toHTML(villa?.villaFeatures?.[locale] ?? []),
   inVillaEntertainment: toHTML(villa?.inVillaEntertainment?.[locale] ?? []),
@@ -50,8 +51,10 @@ const htmlFields = {
 const title = villa?.title?.[locale] ?? '';
 const description = villa?.excerpt?.[locale] ?? '';
 ---
+
 <Layout title={title} description={description}>
-  {/* Hero Section */}
+
+  <!-- Hero Section -->
   <section class="relative w-full h-[50vh] md:h-[60vh] lg:h-[75vh] overflow-hidden">
     <OptimizedImage
       src={villa.mainImage.asset.url}
@@ -59,12 +62,12 @@ const description = villa?.excerpt?.[locale] ?? '';
       width={1600}
       height={900}
       quality={75}
-      className="w-full h-full object-cover"
+      class="w-full h-full object-cover"
     />
     <div class="absolute inset-0 bg-black/25 z-20"></div>
   </section>
 
-  {/* Page Title & Description */}
+  <!-- Page Title & Description -->
   <section class="container mx-auto px-4 xl:px-10 2xl:px-0 py-16 md:py-24">
     <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
       <h1 class="font-title text-3xl sm:text-4xl md:text-5xl uppercase mb-4 md:mb-6 tracking-widest font-light">
@@ -82,10 +85,10 @@ const description = villa?.excerpt?.[locale] ?? '';
     </div>
   </section>
 
-  {/* Image Gallery */}
+  <!-- Image Gallery -->
   <section class="container mx-auto px-4 xl:px-10 2xl:px-0 pb-12">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-      {/* Left: 4 images (2x2 grid on md+, stacked on mobile) */}
+      <!-- Left: 4 images (2x2 grid on md+, stacked on mobile) -->
       <div class="grid grid-cols-2 gap-4 md:col-span-2">
         {villa.villaGallery.slice(0, 4).map((image, index) => (
           <img
@@ -96,7 +99,7 @@ const description = villa?.excerpt?.[locale] ?? '';
           />
         ))}
       </div>
-      {/* Right: single image aligned with left block */}
+      <!-- Right: single image aligned with left block -->
       <div class="relative h-full">
         <img
           src={villa.villaGallery[4]?.asset.url ?? villa.villaGallery[0]?.asset.url}
@@ -109,7 +112,6 @@ const description = villa?.excerpt?.[locale] ?? '';
           href="#"
           class="absolute bottom-3 right-3 bg-[#916B2C] text-white px-4 py-2 text-xs uppercase tracking-wide flex items-center gap-2"
         >
-          {/* Gallery Icon */}
           <img src="/images/villas/expand-window.png" alt="Gallery Icon" class="w-4 h-4 brightness-0 invert-[1]" />
           Gallery
         </a>
@@ -117,19 +119,19 @@ const description = villa?.excerpt?.[locale] ?? '';
     </div>
   </section>
 
-  {/* Gallery Modal (hidden by default) */}
+  <!-- Gallery Modal (hidden by default) -->
   {villa?.villaGallery?.length > 0 && (
     <div id="galleryModal" class="fixed inset-0 bg-black/90 z-50 hidden flex flex-col items-center justify-center px-4 py-8">
-      {/* Close Button */}
+      <!-- Close Button -->
       <button id="closeGallery" class="absolute top-4 right-4 text-white text-3xl hover:scale-110 transition">×</button>
       <div class="flex items-center gap-6 max-w-5xl w-full">
-        {/* Left Arrow */}
-        <button id="galleryPrev" class="text-white hover:scale-110 transition">
+        <!-- Left Arrow -->
+        <button id="galleryPrev" class="text-white hover:scale-110 transition" aria-label="Previous Slide">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
           </svg>
         </button>
-        {/* Carousel */}
+        <!-- Carousel -->
         <div class="flex-1 flex flex-col items-center">
           <div id="galleryCarousel" class="splide w-full">
             <div class="splide__track mb-4">
@@ -150,8 +152,8 @@ const description = villa?.excerpt?.[locale] ?? '';
             <div class="splide__pagination mt-6 !relative !bottom-0 flex justify-center" />
           </div>
         </div>
-        {/* Right Arrow */}
-        <button id="galleryNext" class="text-white hover:scale-110 transition">
+        <!-- Right Arrow -->
+        <button id="galleryNext" class="text-white hover:scale-110 transition" aria-label="Next Slide">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
           </svg>
@@ -160,7 +162,7 @@ const description = villa?.excerpt?.[locale] ?? '';
     </div>
   )}
 
-  {/* Services & Amenities Accordion */}
+  <!-- Services & Amenities Accordion -->
   <section class="container mx-auto px-4 xl:px-10 2xl:px-0 py-12">
     <!-- Services & Amenities Accordion -->
     <div class="border-t border-gray-300">
@@ -219,9 +221,8 @@ const description = villa?.excerpt?.[locale] ?? '';
     </div>
   </section>
 
-  {/* Accordion Toggle Script */}
+  <!-- Accordion Toggle Script -->
   <script is:inline>
-    // Toggle accordion panels and rotate icons
     document.querySelectorAll('.toggle-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const targetId = btn.dataset.target;
@@ -233,9 +234,8 @@ const description = villa?.excerpt?.[locale] ?? '';
     });
   </script>
 
-  {/* Gallery Modal Script */}
+  <!-- Gallery Modal Script -->
   <script is:inline>
-    // Handle gallery modal open/close and Splide carousel
     document.addEventListener("DOMContentLoaded", () => {
       const openBtn = document.getElementById("openGallery");
       const modal = document.getElementById("galleryModal");
@@ -268,7 +268,6 @@ const description = villa?.excerpt?.[locale] ?? '';
         document.body.classList.remove("overflow-hidden");
       });
 
-      // Close modal when clicking outside the carousel
       modal.addEventListener("click", (e) => {
         if (e.target === modal) {
           modal.classList.add("hidden");
@@ -278,13 +277,14 @@ const description = villa?.excerpt?.[locale] ?? '';
     });
   </script>
 
-<style>
-  .custom-list ul {
-    list-style-type: disc;
-    padding-left: 1.25rem;
-  }
-  .custom-list li {
-    margin-bottom: 0.25rem;
-  }
-</style>
+  <style>
+    .custom-list ul {
+      list-style-type: disc;
+      padding-left: 1.25rem;
+    }
+    .custom-list li {
+      margin-bottom: 0.25rem;
+    }
+  </style>
+
 </Layout>
