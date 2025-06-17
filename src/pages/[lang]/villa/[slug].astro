@@ -1,0 +1,130 @@
+---
+import Layout from '../../../layouts/Base.astro';
+import client from '../../../lib/sanityClient';
+import { getLocale } from '../../../utils/getLocale';
+import OptimizedImage from '../../../components/OptimizedImage.astro';
+
+// Generate all static paths for all villas and languages
+export async function getStaticPaths() {
+  const slugs = await client.fetch(`*[_type == "villa" && defined(slug.current)]{
+    "slug": slug.current
+  }`);
+
+  const languages = ['en', 'ko', 'zh'];
+
+  return languages.flatMap(lang =>
+    slugs.map(villa => ({
+      params: {
+        lang,
+        slug: villa.slug
+      }
+    }))
+  );
+}
+
+// Get route params
+const { lang, slug } = Astro.params;
+const locale = getLocale(lang);
+
+// Fetch villa detail
+const villa = await client.fetch(`*[_type == "villa" && slug.current == $slug][0]{
+  title,
+  excerpt,
+  description,
+  mainImage {
+    asset->{url}
+  },
+  mainImageAlt
+}`, { slug });
+
+const title = villa?.title?.[locale] ?? '';
+const description = villa?.excerpt?.[locale] ?? '';
+---
+
+<Layout title={title} description={description}>
+  {/* Hero Section */}
+  <section class="relative w-full h-[50vh] md:h-[60vh] lg:h-[75vh] overflow-hidden">
+    <OptimizedImage
+      src={villa.mainImage.asset.url}
+      alt={villa.mainImageAlt?.[locale] ?? ''}
+      width={1600}
+      height={900}
+      quality={75}
+      className="w-full h-full object-cover"
+    />
+    <div class="absolute inset-0 bg-black/25 z-20"></div>
+  </section>
+
+  {/* Villa Content */}
+  <section class="container mx-auto px-4 py-16 md:py-24 max-w-4xl">
+    <h1 class="text-3xl sm:text-4xl md:text-5xl font-title tracking-widest uppercase mb-6">
+      {title}
+    </h1>
+    <p class="text-lg text-gray-700 mb-10">
+      {description}
+    </p>
+    <div class="prose max-w-none text-base leading-relaxed">
+      {villa?.description?.[locale] ?? ''}
+    </div>
+  </section>
+
+
+
+  <!-- Image Gallery -->
+<section class="container mx-auto px-4 py-12">
+  <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+    {villa.images?.slice(0, 5).map(image => (
+      <img
+        src={image.asset.url}
+        alt=""
+        class="w-full h-auto object-cover aspect-[4/3] rounded"
+        loading="lazy"
+      />
+    ))}
+    <div class="relative">
+      <img
+        src={villa.images?.[5]?.asset.url ?? villa.images?.[0]?.asset.url}
+        alt="All Images"
+        class="w-full h-auto object-cover aspect-[4/3] rounded opacity-75"
+        loading="lazy"
+      />
+      <a
+        href="#"
+        class="absolute bottom-2 right-2 bg-[#916B2C] text-white px-4 py-2 text-xs uppercase tracking-wide font-semibold"
+      >
+        All Images ↗
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Services & Amenities -->
+<section class="container mx-auto px-4 py-12 border-t">
+  <h2 class="text-xl uppercase font-semibold tracking-wide mb-6">Services & Amenities</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm text-gray-800">
+    <div>
+      <h3 class="font-semibold mb-3">Villa Features</h3>
+      <ul class="list-disc list-inside space-y-1">
+        
+      </ul>
+    </div>
+    <div>
+      <h3 class="font-semibold mb-3">Others</h3>
+      <ul class="list-disc list-inside space-y-1">
+        
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Sticky Book Now -->
+<div class="w-full bg-[#916B2C] text-center py-4 fixed bottom-0 left-0 z-50">
+  <a
+    href="#"
+    class="text-white uppercase text-sm font-title tracking-widest px-8 py-3 inline-block"
+  >
+    Book Now
+  </a>
+</div>
+
+</Layout>

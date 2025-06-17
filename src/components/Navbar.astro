@@ -1,5 +1,15 @@
 ---
+import { getLocale } from '../utils/getLocale';
+// Required for dynamic routes
+export async function getStaticPaths() {
+  return ['en', 'ko', 'zh'].map(lang => ({
+    params: { lang }
+  }));
+}
 
+// Get locale from URL param
+const { lang } = Astro.params;
+const locale = getLocale(lang);
 ---
 <header id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-transparent text-white overflow-visible">
   <!-- Top Section: Language Selector & Logo -->
@@ -14,6 +24,7 @@
     </div>
     <!-- Logo -->
     <div class="flex-1 flex justify-center">
+      <a href={`/${locale}`}>
       <img
         id="navbar-logo"
         src="/images/kamandalu-logo.png"
@@ -22,6 +33,7 @@
         fetchpriority="high"
         loading="eager"
       />
+    </a>
     </div>
     <div class="w-10 hidden md:block"></div>
   </div>
@@ -38,7 +50,7 @@
     <!-- Desktop Navigation Menu -->
     <nav class="hidden xl:flex space-x-6 text-base font-normal w-full justify-center overflow-visible relative">
       <a href="#" class="uppercase">Offers</a>
-      <a href="#" class="uppercase">Ubud Villas</a>
+      <a href={`/${locale}/villas`} class="uppercase">Ubud Villas</a>
       <!-- Dining Dropdown Trigger -->
       <div id="dining-trigger" class="relative group">
       <a href="#" class="inline-block px-2 uppercase">Dining</a>
@@ -85,7 +97,7 @@
     <!-- Offcanvas Navigation Links -->
     <nav class="flex-1 px-6 pb-6 mt-6 space-y-4 overflow-y-auto font-normal">
       <a href="#" class="block text-xl">Offers</a>
-      <a href="#" class="block text-xl">Ubud Villas</a>
+      <a href={`/${lang}/villas`} class="block text-xl">Ubud Villas</a>
       <!-- Dining Dropdown (Mobile) -->
       <div>
         <button id="dining-mobile-toggle" class="block text-xl w-full text-left flex items-center gap-1 justify-between">
