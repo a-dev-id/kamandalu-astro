@@ -15,130 +15,19 @@ export async function getStaticPaths() {
 // Get locale from URL param
 const { lang } = Astro.params;
 const locale = getLocale(lang);
-
-// Fetch villas
-const villas = await client.fetch(`*[_type == "villa"] | order(order asc){
-  "slug": slug.current,
-  title,
-  excerpt,
-  secondImageAlt,
-  secondImage {
-    asset-> {
-      url
-    }
-  }
-}`);
-
-// Fetch offers
-const offers = await client.fetch(`*[_type == "offer"] | order(order asc){
-  "slug": slug.current,
-  title,
-  excerpt,
-  mainImageAlt,
-  mainImage {
-    asset-> {
-      url
-    }
-  }
-}`);
-
-// Fetch wellness venues
-const wellnessVenue = await client.fetch(`*[_type == "wellnessVenue"] | order(order asc){
-  "slug": slug.current,
-  title,
-  excerpt,
-  secondImageAlt,
-  secondImage {
-    asset-> {
-      url
-    }
-  }
-}`);
-
-// Fetch experiences
-const diningExperience = await client.fetch(`*[_type == "diningExperience"] | order(order asc){
-  "slug": slug.current,
-  title,
-  excerpt,
-  secondImageAlt,
-  secondImage {
-    asset-> {
-      url
-    }
-  }
-}`);
-
-// Fetch home slider
-const homeSliders = await client.fetch(`*[_type == "homeSlider"] | order(order asc){
-  title,
-  image {
-    asset-> {
-      url
-    }
-  }
-}`);
-
-// Fetch home page details
-const pageDetails = await client.fetch(`*[_type == "page" && _id == "6b81d880-cd1c-4993-a985-a74eda7f419e"][0]{
-  title,
-  subtitle,
-  description,
-  metaTitle,
-  metaDescription,
-  image {
-    asset-> {
-      url
-    }
-  }
-}`);
-
-// Fetch villa page details
-const villaDetails = await client.fetch(`*[_type == "settingHome" && _id == "203dafa9-65fe-4791-9bfa-713d49300733"][0]{
-  title,
-  description,
-}`);
-
-// Fetch offer page details
-const offerDetails = await client.fetch(`*[_type == "settingHome" && _id == "d005d37f-034b-4a80-9cf3-1886e310e5e3"][0]{
-  title,
-  description,
-}`);
-
-// Fetch wellness page details
-const wellnessDetails = await client.fetch(`*[_type == "settingHome" && _id == "3e45dc06-f49d-48fc-abdc-7601afce5048"][0]{
-  title,
-  description,
-  mainImageAlt,
-  mainImage {
-    asset-> {
-      url
-    }
-  }
-}`);
-
-// Fetch culinary page details
-const culinaryDetails = await client.fetch(`*[_type == "settingHome" && _id == "d4f9bd9f-4038-40ad-9c56-201d19869720"][0]{
-  title,
-  description,
-  mainImageAlt,
-  mainImage {
-    asset-> {
-      url
-    }
-  }
-}`);
-
-// Fetch experience page details
-const experienceDetails = await client.fetch(`*[_type == "settingHome" && _id == "279d6034-3f91-4da3-bf88-8a9090afc556"][0]{
-  title,
-  description,
-  mainImageAlt,
-  mainImage {
-    asset-> {
-      url
-    }
-  }
-}`);
+const [villas, offers, wellnessVenue, diningExperience, homeSliders, pageDetails, villaDetails, offerDetails, wellnessDetails, culinaryDetails, experienceDetails] = await Promise.all([
+  client.fetch(`*[_type == "villa"] | order(order asc){ "slug": slug.current, title, excerpt, secondImageAlt, secondImage { asset-> { url } } }`),
+  client.fetch(`*[_type == "offer"] | order(order asc){ "slug": slug.current, title, excerpt, mainImageAlt, mainImage { asset-> { url } } }`),
+  client.fetch(`*[_type == "wellnessVenue"] | order(order asc){ "slug": slug.current, title, excerpt, secondImageAlt, secondImage { asset-> { url } } }`),
+  client.fetch(`*[_type == "diningExperience"] | order(order asc){ "slug": slug.current, title, excerpt, secondImageAlt, secondImage { asset-> { url } } }`),
+  client.fetch(`*[_type == "homeSlider"] | order(order asc){ title, image { asset-> { url } } }`),
+  client.fetch(`*[_type == "page" && _id == "6b81d880-cd1c-4993-a985-a74eda7f419e"][0]{ title, subtitle, description, metaTitle, metaDescription, image { asset-> { url } } }`),
+  client.fetch(`*[_type == "settingHome" && _id == "203dafa9-65fe-4791-9bfa-713d49300733"][0]{ title, description, }`),
+  client.fetch(`*[_type == "settingHome" && _id == "d005d37f-034b-4a80-9cf3-1886e310e5e3"][0]{ title, description, }`),
+  client.fetch(`*[_type == "settingHome" && _id == "3e45dc06-f49d-48fc-abdc-7601afce5048"][0]{ title, description, mainImageAlt, mainImage { asset-> { url } } }`),
+  client.fetch(`*[_type == "settingHome" && _id == "d4f9bd9f-4038-40ad-9c56-201d19869720"][0]{ title, description, mainImageAlt, mainImage { asset-> { url } } }`),
+  client.fetch(`*[_type == "settingHome" && _id == "279d6034-3f91-4da3-bf88-8a9090afc556"][0]{ title, description, mainImageAlt, mainImage { asset-> { url } } }`)
+]);
 
 const title = pageDetails?.metaTitle?.[locale] ?? '';
 const description = pageDetails?.metaDescription?.[locale] ?? '';
@@ -150,40 +39,21 @@ const description = pageDetails?.metaDescription?.[locale] ?? '';
     <div id="carousel" class="w-full h-full relative">
       <!-- Slides -->
       {homeSliders.map((homeSlider, index) => (
-        <div
-          class={`carousel-slide w-full h-full absolute inset-0 transition-opacity duration-1000 ${
-            index === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'
-          }`}
-        >
-          <OptimizedImage
-            src={homeSlider.image.asset.url}
-            alt={homeSlider.title}
-            width={1600}
-            height={900}
-            quality={75}
-            className="w-full h-full"
-            fetchpriority={index === 0 ? 'high' : 'auto'}
-            loading={index === 0 ? 'eager' : 'lazy'}
-          />
+        <div class={`carousel-slide w-full h-full absolute inset-0 transition-opacity duration-1000 ${index === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
+          <OptimizedImage src={homeSlider.image.asset.url} alt={homeSlider.title} width={1600} height={900} quality={75} className="w-full h-full" fetchpriority={index === 0 ? 'high' : 'auto'} loading={index === 0 ? 'eager' : 'lazy'} />
         </div>
       ))}
       <div class="absolute inset-0 bg-black/25 z-20"></div>
       <button id="prevSlide" class="absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-3xl z-20">❮</button>
       <button id="nextSlide" class="absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-3xl z-20">❯</button>
     </div>
-
     <!-- Booking Form -->
     <div class="absolute bottom-24 left-1/2 transform -translate-x-1/2 z-30 w-full max-w-4xl px-4">
       <form class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 text-sm md:text-base text-white w-full">
         <div class="flex flex-col w-full md:w-auto">
           <label class="uppercase text-base tracking-wide mb-1">Check In – Check Out</label>
           <div class="border border-white px-4 py-2 flex items-center h-[44px] w-full">
-            <input
-              id="flatpickr-date"
-              type="text"
-              class="flatpickr-input bg-transparent text-white w-full outline-none placeholder-white"
-              readonly placeholder="Select dates"
-            />
+            <input id="flatpickr-date" type="text" class="flatpickr-input bg-transparent text-white w-full outline-none placeholder-white" readonly placeholder="Select dates" />
           </div>
         </div>
         <div class="flex flex-col w-full md:w-auto relative">
@@ -195,14 +65,11 @@ const description = pageDetails?.metaDescription?.[locale] ?? '';
         <div class="flex flex-col w-full md:w-auto">
           <label class="uppercase text-base tracking-wide mb-1">&nbsp;</label>
           <div class="border border-white flex items-center justify-center h-[44px]">
-            <button type="submit" class="text-white uppercase tracking-widest font-title text-base hover:bg-white hover:text-black w-full h-full px-4 py-2">
-              Check Rates
-            </button>
+            <button type="submit" class="text-white uppercase tracking-widest font-title text-xs hover:bg-white hover:text-black w-full h-full px-4 py-2">Check Rates</button>
           </div>
         </div>
       </form>
     </div>
-
     <!-- Guests Modal -->
     <div id="guests-modal" class="absolute bottom-[120px] left-1/2 transform -translate-x-1/2 bg-white text-black w-[360px] md:w-[640px] p-6 shadow-xl z-40 hidden">
       <div class="flex justify-between items-start mb-4">
@@ -212,35 +79,25 @@ const description = pageDetails?.metaDescription?.[locale] ?? '';
       <div class="grid grid-cols-3 gap-4 text-base mb-4">
         <div class="flex flex-col">
           <label class="uppercase text-base mb-1">Adults</label>
-          <select id="adults" class="border px-2 py-1">
-            <option>1</option><option>2</option><option>3</option><option>4</option>
-          </select>
+          <select id="adults" class="border px-2 py-1"><option>1</option><option>2</option><option>3</option><option>4</option></select>
         </div>
         <div class="flex flex-col">
           <label class="uppercase text-base mb-1">Children</label>
-          <select id="children" class="border px-2 py-1">
-            <option>0</option><option>1</option><option>2</option><option>3</option>
-          </select>
+          <select id="children" class="border px-2 py-1"><option>0</option><option>1</option><option>2</option><option>3</option></select>
         </div>
         <div class="flex flex-col">
           <label class="uppercase text-base mb-1">Rooms</label>
-          <select id="rooms" class="border px-2 py-1">
-            <option value="1" selected>1</option><option value="2">2</option><option value="3">3</option>
-          </select>
+          <select id="rooms" class="border px-2 py-1"><option value="1" selected>1</option><option value="2">2</option><option value="3">3</option></select>
         </div>
       </div>
       <div id="child-ages-container" class="bg-gray-100 p-4 mb-5 hidden">
         <div id="child-ages" class="flex flex-wrap gap-4"></div>
       </div>
       <div class="flex justify-center mb-5">
-        <button id="confirm-guests" type="button" class="hover:bg-white hover:text-black px-6 py-3 text-sm font-title tracking-widest transition-colors duration-300 border hover:border-black bg-[#916B2C] text-white border-transparent">
-          Confirm
-        </button>
+        <button id="confirm-guests" type="button" class="hover:bg-white hover:text-black px-6 py-3 text-sm font-title tracking-widest transition-colors duration-300 border hover:border-black bg-[#916B2C] text-white border-transparent">Confirm</button>
       </div>
       <div class="flex items-center justify-end mb-2">
-        <button id="toggle-promo" type="button" class="flex items-center text-sm text-black gap-2 hover:underline">
-          <span class="text-xl">+</span> Promo Code
-        </button>
+        <button id="toggle-promo" type="button" class="flex items-center text-sm text-black gap-2 hover:underline"><span class="text-xl">+</span> Promo Code</button>
       </div>
       <div id="promo-fields" class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm hidden">
         <div>
@@ -260,35 +117,20 @@ const description = pageDetails?.metaDescription?.[locale] ?? '';
   </section>
 
   <!-- PAGE DESCRIPTION -->
-  <section class="container mx-auto px-4 py-16 md:py-24">
+  <section class="container mx-auto px-4 xl:px-10 2xl:px-0 py-16 md:py-24">
     <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
-      <h1 class="font-title text-3xl sm:text-4xl md:text-5xl uppercase mb-4 md:mb-6 tracking-widest font-light">
-        {pageDetails?.title?.[locale] ?? ''}
-      </h1>
-      <p class="text-xl sm:text-2xl md:text-3xl mb-6 md:mb-12">
-        {pageDetails?.subtitle?.[locale] ?? ''}
-      </p>
-      <p class="mb-12 md:mb-36 text-base md:text-lg">
-        {pageDetails?.description?.[locale] ?? ''}
-      </p>
-      <a
-        href="https://www.book-secure.com/index.php?s=results&property=idbal31692&locale=en_GB&currency=IDR&stid=986w12cwy"
-        class="bg-white text-black px-4 py-3 md:px-6 md:py-4 text-xs md:text-sm font-title tracking-widest transition-colors duration-300 border border-black hover:bg-[#916B2C] hover:text-white hover:border-transparent inline-block"
-      >
-        CHECK RATES
-      </a>
+      <h1 class="font-title text-3xl sm:text-4xl md:text-5xl uppercase mb-4 md:mb-6 tracking-widest font-light">{pageDetails?.title?.[locale] ?? ''}</h1>
+      <p class="text-xl sm:text-2xl md:text-3xl mb-6 md:mb-12">{pageDetails?.subtitle?.[locale] ?? ''}</p>
+      <p class="mb-12 md:mb-36 text-base md:text-lg">{pageDetails?.description?.[locale] ?? ''}</p>
+      <a href="https://www.book-secure.com/index.php?s=results&property=idbal31692&locale=en_GB&currency=IDR&stid=986w12cwy" class="bg-white text-black px-4 py-3 md:px-6 md:py-4 text-xs md:text-sm font-title tracking-widest transition-colors duration-300 border border-black hover:bg-[#916B2C] hover:text-white hover:border-transparent inline-block">CHECK RATES</a>
     </div>
   </section>
 
   <!-- VILLA CAROUSEL -->
-  <section class="container mx-auto px-4 pt-24 md:pt-52">
+  <section class="container mx-auto px-4 xl:px-10 2xl:px-0 pt-10 md:pt-10">
     <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
-      <h2 class="font-title text-2xl md:text-4xl uppercase mb-4 md:mb-6 tracking-widest font-light">
-        {villaDetails?.title?.[locale] ?? ''}
-      </h2>
-      <p class="mb-10 md:mb-20 text-base md:text-lg">
-        {villaDetails?.description?.[locale] ?? ''}
-      </p>
+      <h2 class="font-title text-2xl md:text-4xl uppercase mb-4 md:mb-6 tracking-widest font-light">{villaDetails?.title?.[locale] ?? ''}</h2>
+      <p class="mb-10 md:mb-20 text-base md:text-lg">{villaDetails?.description?.[locale] ?? ''}</p>
     </div>
     <div id="villa-carousel" class="splide mb-8 md:mb-12">
       <div class="splide__track">
@@ -296,28 +138,12 @@ const description = pageDetails?.metaDescription?.[locale] ?? '';
           {villas.map(villa => (
             <li class="splide__slide transition-transform duration-500 ease-in-out">
               <div class="bg-white overflow-hidden flex flex-col h-full">
-                <OptimizedImage
-                  src={villa.secondImage.asset.url}
-                  alt={villa.secondImageAlt?.[locale]}
-                  width={800}
-                  height={600}
-                  quality={30}
-                  className="w-full h-auto aspect-[4/3] transition duration-500"
-                />
+                <OptimizedImage src={villa.secondImage.asset.url} alt={villa.secondImageAlt?.[locale]} width={800} height={600} quality={30} className="w-full h-auto aspect-[4/3] md:aspect-[16/9] 2xl:aspect-[4/3] transition duration-500" />
                 <div class="p-4 md:p-6 flex flex-col flex-1">
-                  <h3 class="text-base md:text-lg tracking-widest uppercase font-title">
-                    {villa.title?.[locale] ?? villa.title?.en}
-                  </h3>
-                  <p class="mt-2 text-sm md:text-base">
-                    {villa.excerpt?.[locale] ?? villa.excerpt?.en}
-                  </p>
+                  <h3 class="text-base md:text-lg tracking-widest uppercase font-title">{villa.title?.[locale] ?? villa.title?.en}</h3>
+                  <p class="mt-2 text-sm md:text-base">{villa.excerpt?.[locale] ?? villa.excerpt?.en}</p>
                   <div class="flex-grow"></div>
-                  <a
-                    href={`/${locale}/villas/${villa.slug}`}
-                    class="text-base md:text-lg mt-4 inline-block text-black uppercase"
-                  >
-                    {translations.btnexplore[locale]}
-                  </a>
+                  <a href={`/${locale}/villas/${villa.slug}`} class="text-base md:text-lg mt-4 inline-block text-black uppercase">{translations.btnexplore[locale]}</a>
                 </div>
               </div>
             </li>
@@ -327,22 +153,16 @@ const description = pageDetails?.metaDescription?.[locale] ?? '';
     </div>
     <div class="flex items-center gap-4 md:gap-6 mt-4 md:mt-8 justify-start">
       <button id="villa-prev" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="44" y1="12" x2="4" y2="12" />
-          <polyline points="12 20 4 12 12 4" />
-        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="44" y1="12" x2="4" y2="12" /><polyline points="12 20 4 12 12 4" /></svg>
       </button>
       <button id="villa-next" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="4" y1="12" x2="44" y2="12" />
-          <polyline points="36 4 44 12 36 20" />
-        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="44" y2="12" /><polyline points="36 4 44 12 36 20" /></svg>
       </button>
     </div>
   </section>
 
   <!-- OFFERS CAROUSEL -->
-  <section class="container mx-auto px-4 pt-24 md:pt-52">
+  <section class="container mx-auto px-4 xl:px-10 2xl:px-0 pt-24">
     <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
       <h2 class="font-title text-2xl md:text-3xl uppercase mb-4 md:mb-6 tracking-widest font-light">{offerDetails?.title?.[locale] ?? ''}</h2>
       <p class="mb-10 md:mb-20 text-base md:text-lg">{offerDetails?.description?.[locale] ?? ''}</p>
@@ -353,25 +173,12 @@ const description = pageDetails?.metaDescription?.[locale] ?? '';
           {offers.map(offer => (
           <li class="splide__slide transition-transform duration-500 ease-in-out">
             <div class="bg-white overflow-hidden flex flex-col h-full">
-              <OptimizedImage
-                  src={offer.mainImage.asset.url}
-                  alt={offer.mainImageAlt?.[locale]}
-                  width={800}
-                  height={600}
-                  quality={75}
-                  loading="lazy"
-                  className="w-full h-auto aspect-[4/3] transition duration-500"
-                />
+              <OptimizedImage src={offer.mainImage.asset.url} alt={offer.mainImageAlt?.[locale]} width={800} height={600} quality={75} loading="lazy" className="w-full h-auto aspect-[4/3] transition duration-500" />
               <div class="p-4 md:p-6 flex flex-col flex-1">
                 <h3 class="text-base md:text-lg tracking-widest uppercase font-title">{offer.title?.[locale] ?? offer.title?.en}</h3>
                 <p class="mt-2 text-sm md:text-base">{offer.excerpt?.[locale] ?? offer.excerpt?.en}</p>
                 <div class="flex-grow"></div>
-                <a
-                    href={`/${locale}/offers/${offer.slug}`}
-                    class="text-base md:text-lg mt-4 inline-block text-black uppercase"
-                  >
-                    {translations.btnexplore[locale]}
-                  </a>
+                <a href={`/${locale}/offers/${offer.slug}`} class="text-base md:text-lg mt-4 inline-block text-black uppercase">{translations.btnexplore[locale]}</a>
               </div>
             </div>
           </li>
@@ -381,30 +188,20 @@ const description = pageDetails?.metaDescription?.[locale] ?? '';
     </div>
     <div class="flex items-center gap-4 md:gap-6 mt-4 md:mt-8 justify-start">
       <button id="offer-prev" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="44" y1="12" x2="4" y2="12" />
-          <polyline points="12 20 4 12 12 4" />
-        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="44" y1="12" x2="4" y2="12" /><polyline points="12 20 4 12 12 4" /></svg>
       </button>
       <button id="offer-next" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="4" y1="12" x2="44" y2="12" />
-          <polyline points="36 4 44 12 36 20" />
-        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="44" y2="12" /><polyline points="36 4 44 12 36 20" /></svg>
       </button>
     </div>
   </section>
 
   <!-- WELLNESS CAROUSEL -->
-  <section class="container mx-auto px-4 pt-24 md:pt-52">
-    <img src={wellnessDetails?.mainImage?.asset?.url} width="800" height="450" alt={wellnessDetails?.mainImageAlt?.[locale] ?? ''} loading="lazy" class="w-full h-auto object-cover lg:aspect-[16/8] aspect-[4/3] mb-10 md:mb-20" />
+  <section class="container mx-auto px-4 xl:px-10 2xl:px-0 pt-24">
+    <img src={wellnessDetails?.mainImage?.asset?.url} width="800" height="450" alt={wellnessDetails?.mainImageAlt?.[locale] ?? ''} loading="lazy" class="w-full h-auto object-cover aspect-[4/3] md:aspect-[16/6] 2xl:aspect-[16/7] mb-10 md:mb-20" />
     <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
-      <h2 class="font-title text-2xl md:text-3xl uppercase mb-4 md:mb-6 tracking-widest font-light">
-        {wellnessDetails?.title?.[locale] ?? ''}
-      </h2>
-      <p class="mb-10 md:mb-20 text-base md:text-lg">
-        {wellnessDetails?.description?.[locale] ?? ''}
-      </p>
+      <h2 class="font-title text-2xl md:text-3xl uppercase mb-4 md:mb-6 tracking-widest font-light">{wellnessDetails?.title?.[locale] ?? ''}</h2>
+      <p class="mb-10 md:mb-20 text-base md:text-lg">{wellnessDetails?.description?.[locale] ?? ''}</p>
     </div>
     <div id="wellness-carousel" class="splide mb-8 md:mb-12">
       <div class="splide__track">
@@ -412,15 +209,7 @@ const description = pageDetails?.metaDescription?.[locale] ?? '';
           {wellnessVenue.map(venue => (
           <li class="splide__slide transition-transform duration-500 ease-in-out">
             <div class="bg-white overflow-hidden flex flex-col h-full">
-              <OptimizedImage
-                  src={venue.secondImage.asset.url}
-                  alt={venue.secondImageAlt?.[locale]}
-                  width={800}
-                  height={600}
-                  quality={75}
-                  loading="lazy"
-                  className="w-full h-auto aspect-[4/3] transition duration-500"
-                />
+              <OptimizedImage src={venue.secondImage.asset.url} alt={venue.secondImageAlt?.[locale]} width={800} height={600} quality={75} loading="lazy" className="w-full h-auto aspect-[4/3] md:aspect-[16/9] 2xl:aspect-[4/3]  transition duration-500" />
               <div class="p-4 md:p-6 flex flex-col flex-1">
                 <h3 class="text-base md:text-lg tracking-widest uppercase font-title">{venue?.title?.[locale] ?? ''}</h3>
                 <p class="mt-2 text-sm md:text-base">{venue?.excerpt?.[locale] ?? ''}</p>
@@ -435,23 +224,17 @@ const description = pageDetails?.metaDescription?.[locale] ?? '';
     </div>
     <div class="flex items-center gap-4 md:gap-6 mt-4 md:mt-8 justify-center md:hidden">
       <button id="wellness-prev" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="44" y1="12" x2="4" y2="12" />
-          <polyline points="12 20 4 12 12 4" />
-        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="44" y1="12" x2="4" y2="12" /><polyline points="12 20 4 12 12 4" /></svg>
       </button>
       <button id="wellness-next" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="4" y1="12" x2="44" y2="12" />
-          <polyline points="36 4 44 12 36 20" />
-        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="44" y2="12" /><polyline points="36 4 44 12 36 20" /></svg>
       </button>
     </div>
   </section>
 
   <!-- CULINARY CAROUSEL -->
-  <section class="container mx-auto px-4 pt-24 md:pt-52">
-    <img src={culinaryDetails?.mainImage?.asset?.url} width="800" height="450" alt={culinaryDetails?.mainImageAlt?.[locale] ?? ''} loading="lazy" class="w-full h-auto object-cover lg:aspect-[16/8] aspect-[4/3] mb-10 md:mb-20" />
+  <section class="container mx-auto px-4 xl:px-10 2xl:px-0 pt-24">
+    <img src={culinaryDetails?.mainImage?.asset?.url} width="800" height="450" alt={culinaryDetails?.mainImageAlt?.[locale] ?? ''} loading="lazy" class="w-full h-auto object-cover aspect-[4/3] md:aspect-[16/6] 2xl:aspect-[16/7] mb-10 md:mb-20" />
     <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
       <h2 class="font-title text-2xl md:text-3xl uppercase mb-4 md:mb-6 tracking-widest font-light">{culinaryDetails?.title?.[locale] ?? ''}</h2>
       <p class="mb-10 md:mb-20 text-base md:text-lg">{culinaryDetails?.description?.[locale] ?? ''}</p>
@@ -462,15 +245,7 @@ const description = pageDetails?.metaDescription?.[locale] ?? '';
           {diningExperience.map(dining => (
           <li class="splide__slide transition-transform duration-500 ease-in-out">
             <div class="bg-white overflow-hidden flex flex-col h-full">
-              <OptimizedImage
-                  src={dining.secondImage.asset.url}
-                  alt={dining.secondImageAlt?.[locale]}
-                  width={800}
-                  height={600}
-                  quality={75}
-                  loading="lazy"
-                  className="w-full h-auto aspect-[4/3] transition duration-500"
-                />
+              <OptimizedImage src={dining.secondImage.asset.url} alt={dining.secondImageAlt?.[locale]} width={800} height={600} quality={75} loading="lazy" className="w-full h-auto aspect-[4/3] transition duration-500" />
               <div class="p-4 md:p-6 flex flex-col flex-1">
                 <h3 class="text-base md:text-lg tracking-widest uppercase font-title">{dining.title?.[locale] ?? ''}</h3>
                 <p class="mt-2 text-sm md:text-base">{dining.excerpt?.[locale] ?? ''}</p>
@@ -485,23 +260,17 @@ const description = pageDetails?.metaDescription?.[locale] ?? '';
     </div>
     <div class="flex items-center gap-4 md:gap-6 mt-4 md:mt-8 justify-start">
       <button id="culinary-prev" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="44" y1="12" x2="4" y2="12" />
-          <polyline points="12 20 4 12 12 4" />
-        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="44" y1="12" x2="4" y2="12" /><polyline points="12 20 4 12 12 4" /></svg>
       </button>
       <button id="culinary-next" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="4" y1="12" x2="44" y2="12" />
-          <polyline points="36 4 44 12 36 20" />
-        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="44" y2="12" /><polyline points="36 4 44 12 36 20" /></svg>
       </button>
     </div>
   </section>
 
   <!-- EXPERIENCE CAROUSEL -->
-  <section class="container mx-auto px-4 pt-24 md:pt-52">
-    <img src={experienceDetails?.mainImage?.asset?.url} width="800" height="450" alt={experienceDetails?.mainImageAlt?.[locale] ?? ''} loading="lazy" class="w-full h-auto object-cover lg:aspect-[16/8] aspect-[4/3] mb-10 md:mb-20" />
+  <section class="container mx-auto px-4 xl:px-10 2xl:px-0 pt-24">
+    <img src={experienceDetails?.mainImage?.asset?.url} width="800" height="450" alt={experienceDetails?.mainImageAlt?.[locale] ?? ''} loading="lazy" class="w-full h-auto object-cover aspect-[4/3] md:aspect-[16/6] 2xl:aspect-[16/7] mb-10 md:mb-20" />
     <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
       <h2 class="font-title text-2xl md:text-3xl uppercase mb-4 md:mb-6 tracking-widest font-light">{experienceDetails?.title?.[locale] ?? ''}</h2>
       <p class="mb-10 md:mb-20 text-base md:text-lg">{experienceDetails?.description?.[locale] ?? ''}</p>
@@ -512,15 +281,7 @@ const description = pageDetails?.metaDescription?.[locale] ?? '';
           {diningExperience.map(dining => (
           <li class="splide__slide transition-transform duration-500 ease-in-out">
             <div class="bg-white overflow-hidden flex flex-col h-full">
-              <OptimizedImage
-                  src={dining.secondImage.asset.url}
-                  alt={dining.secondImageAlt?.[locale]}
-                  width={800}
-                  height={600}
-                  quality={75}
-                  loading="lazy"
-                  className="w-full h-auto aspect-[4/3] transition duration-500"
-                />
+              <OptimizedImage src={dining.secondImage.asset.url} alt={dining.secondImageAlt?.[locale]} width={800} height={600} quality={75} loading="lazy" className="w-full h-auto aspect-[4/3] transition duration-500" />
               <div class="p-4 md:p-6 flex flex-col flex-1">
                 <h3 class="text-base md:text-lg tracking-widest uppercase font-title">{dining.title?.[locale] ?? ''}</h3>
                 <p class="mt-2 text-sm md:text-base">{dining.excerpt?.[locale] ?? ''}</p>
@@ -535,16 +296,10 @@ const description = pageDetails?.metaDescription?.[locale] ?? '';
     </div>
     <div class="flex items-center gap-4 md:gap-6 mt-4 md:mt-8 justify-start">
       <button id="experience-prev" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="44" y1="12" x2="4" y2="12" />
-          <polyline points="12 20 4 12 12 4" />
-        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="44" y1="12" x2="4" y2="12" /><polyline points="12 20 4 12 12 4" /></svg>
       </button>
       <button id="experience-next" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="4" y1="12" x2="44" y2="12" />
-          <polyline points="36 4 44 12 36 20" />
-        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="44" y2="12" /><polyline points="36 4 44 12 36 20" /></svg>
       </button>
     </div>
   </section>
@@ -554,27 +309,35 @@ const description = pageDetails?.metaDescription?.[locale] ?? '';
   <script is:inline>
     // Booking form and guests modal logic
     document.addEventListener('DOMContentLoaded', () => {
+      // Flatpickr date picker setup
       function getMonthsToShow() {
         return window.innerWidth < 640 ? 1 : 2;
       }
+      const today = new Date();
+      const tomorrow = new Date();
+      tomorrow.setDate(today.getDate() + 1);
+
       flatpickr("#flatpickr-date", {
         mode: "range",
         minDate: "today",
+        defaultDate: [today, tomorrow],
         dateFormat: "Y-m-d",
         altInput: true,
         altFormat: "M j",
-        showMonths: getMonthsToShow(),
+        showMonths: getMonthsToShow()
       });
+
       window.addEventListener("resize", () => {
         const fp = document.querySelector("#flatpickr-date")._flatpickr;
         if (fp) {
           const months = getMonthsToShow();
           if (fp.config.showMonths !== months) {
-        fp.set("showMonths", months);
+            fp.set("showMonths", months);
           }
         }
       });
 
+      // Guests modal elements
       const guestsField = document.getElementById('guests-field');
       const guestsModal = document.getElementById('guests-modal');
       const guestsInput = document.getElementById('guests-input');
@@ -587,28 +350,39 @@ const description = pageDetails?.metaDescription?.[locale] ?? '';
       const promoFields = document.getElementById('promo-fields');
       const form = document.querySelector('form');
 
+      // Show guests modal
       guestsField.addEventListener('click', (e) => {
         e.stopPropagation();
         guestsModal.classList.remove('hidden');
       });
-      closeGuests.addEventListener('click', () => guestsModal.classList.add('hidden'));
+
+      // Close guests modal
+      closeGuests.addEventListener('click', () => {
+        guestsModal.classList.add('hidden');
+      });
+
+      // Confirm guests selection
       confirmGuests.addEventListener('click', () => {
-        const adults = document.getElementById('adults').value;
-        const children = childrenSelect.value;
-        const rooms = document.getElementById('rooms').value;
+        const adults = parseInt(document.getElementById('adults').value, 10);
+        const children = parseInt(childrenSelect.value, 10);
+        const rooms = parseInt(document.getElementById('rooms').value, 10);
         let summary = `${adults} Adult${adults > 1 ? 's' : ''}`;
         if (children > 0) summary += `, ${children} Child${children > 1 ? 'ren' : ''}`;
         summary += `, ${rooms} Room${rooms > 1 ? 's' : ''}`;
         guestsInput.value = summary;
         guestsModal.classList.add('hidden');
       });
+
+      // Hide modal when clicking outside
       document.addEventListener('click', (e) => {
         if (!guestsModal.contains(e.target) && !guestsField.contains(e.target)) {
           guestsModal.classList.add('hidden');
         }
       });
+
+      // Children age fields
       childrenSelect.addEventListener('change', () => {
-        const count = parseInt(childrenSelect.value);
+        const count = parseInt(childrenSelect.value, 10);
         childAges.innerHTML = '';
         if (count > 0) {
           childAgesContainer.classList.remove('hidden');
@@ -619,28 +393,37 @@ const description = pageDetails?.metaDescription?.[locale] ?? '';
               <label class="text-xs mb-1">Child ${i} Age</label>
               <select class="border px-2 py-1">
                 ${Array.from({ length: 18 }, (_, j) => `<option>${j + 1}</option>`).join('')}
-              </select>`;
+              </select>
+            `;
             childAges.appendChild(wrapper);
           }
         } else {
           childAgesContainer.classList.add('hidden');
         }
       });
+
+      // Promo code toggle
       promoToggle.addEventListener('click', () => {
         promoFields.classList.toggle('hidden');
         promoToggle.innerHTML = promoFields.classList.contains('hidden')
           ? `<span class="text-xl">+</span> Promo Code`
           : `<span class="text-xl">−</span> Promo Code`;
       });
+
+      // Booking form submit
       form.addEventListener('submit', (e) => {
         e.preventDefault();
         const dateRange = document.querySelector("#flatpickr-date")._flatpickr.selectedDates;
-        if (!dateRange || dateRange.length < 2) return alert("Please select check-in and check-out dates");
-        const arrival = dateRange[0].toISOString().split("T")[0];
-        const departure = dateRange[1].toISOString().split("T")[0];
-        const adults = parseInt(document.getElementById("adults").value);
-        const children = parseInt(document.getElementById("children").value);
-        const rooms = parseInt(document.getElementById("rooms").value);
+        if (!dateRange || dateRange.length < 2) {
+          alert("Please select check-in and check-out dates");
+          return;
+        }
+        const arrival = dateRange[0].toLocaleDateString('sv-SE');
+        const departure = dateRange[1].toLocaleDateString('sv-SE');
+        const adults = parseInt(document.getElementById("adults").value, 10);
+        const children = parseInt(document.getElementById("children").value, 10);
+        const rooms = parseInt(document.getElementById("rooms").value, 10);
+
         const baseUrl = "https://www.book-secure.com/index.php?s=results";
         const params = new URLSearchParams();
         params.set("property", "idbal31692");
@@ -649,14 +432,19 @@ const description = pageDetails?.metaDescription?.[locale] ?? '';
         params.set("locale", "en_GB");
         params.set("currency", "IDR");
         params.set("stid", "986w12cwy");
+
+        // Promo code
         if (promoFields && !promoFields.classList.contains("hidden")) {
           const code = promoFields.querySelectorAll("input")[0]?.value.trim();
           if (code) params.set("code", code);
         }
+
+        // Room guests
         for (let i = 1; i <= rooms; i++) {
           params.set(`adults${i}`, adults);
           params.set(`children${i}`, children);
         }
+
         const fullUrl = `${baseUrl}&${params.toString()}`;
         window.location.href = fullUrl;
       });
@@ -669,48 +457,20 @@ const description = pageDetails?.metaDescription?.[locale] ?? '';
       let currentSlide = 0;
       function showSlide(index) {
         slides.forEach((slide, i) => {
-          if (i === index) {
-            slide.classList.remove('opacity-0', 'z-0');
-            slide.classList.add('opacity-100', 'z-10');
-          } else {
-            slide.classList.remove('opacity-100', 'z-10');
-            slide.classList.add('opacity-0', 'z-0');
-          }
+          if (i === index) { slide.classList.remove('opacity-0', 'z-0'); slide.classList.add('opacity-100', 'z-10'); }
+          else { slide.classList.remove('opacity-100', 'z-10'); slide.classList.add('opacity-0', 'z-0'); }
         });
       }
-      document.getElementById('prevSlide').addEventListener('click', (e) => {
-        e.stopPropagation();
-        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-        showSlide(currentSlide);
-      });
-      document.getElementById('nextSlide').addEventListener('click', (e) => {
-        e.stopPropagation();
-        currentSlide = (currentSlide + 1) % slides.length;
-        showSlide(currentSlide);
-      });
-      setInterval(() => {
-        currentSlide = (currentSlide + 1) % slides.length;
-        showSlide(currentSlide);
-      }, 5000);
+      document.getElementById('prevSlide').addEventListener('click', (e) => { e.stopPropagation(); currentSlide = (currentSlide - 1 + slides.length) % slides.length; showSlide(currentSlide); });
+      document.getElementById('nextSlide').addEventListener('click', (e) => { e.stopPropagation(); currentSlide = (currentSlide + 1) % slides.length; showSlide(currentSlide); });
+      setInterval(() => { currentSlide = (currentSlide + 1) % slides.length; showSlide(currentSlide); }, 5000);
       showSlide(currentSlide);
     });
   </script>
   <script>
-    // Splide carousels for each section
     import "@splidejs/splide/css";
     import Splide from "@splidejs/splide";
-
-    // Villa Carousel
-    const villa = new Splide("#villa-carousel", {
-      type: "slide",
-      perPage: 2,
-      gap: "4rem",
-      speed: 800,
-      easing: "ease-in-out",
-      arrows: false,
-      pagination: false,
-      breakpoints: { 1366: { gap: "2rem"}, 1024: { gap: "2rem", perPage: 2 }, 768: { perPage: 1 } },
-    });
+    const villa = new Splide("#villa-carousel", { type: "slide", perPage: 2, gap: "4rem", speed: 800, easing: "ease-in-out", arrows: false, pagination: false, breakpoints: { 1366: { gap: "2rem"}, 1024: { gap: "2rem", perPage: 2 }, 768: { perPage: 1 } } });
     villa.on('mounted move', () => {
       const villaPrevBtn = document.getElementById('villa-prev');
       const villaNextBtn = document.getElementById('villa-next');
@@ -724,18 +484,7 @@ const description = pageDetails?.metaDescription?.[locale] ?? '';
     villa.mount();
     document.getElementById("villa-prev").addEventListener("click", () => villa.go("<"));
     document.getElementById("villa-next").addEventListener("click", () => villa.go(">"));
-
-    // Offer Carousel
-    const offer = new Splide("#offer-carousel", {
-      type: "slide",
-      perPage: 3,
-      gap: "4rem",
-      speed: 800,
-      easing: "ease-in-out",
-      arrows: false,
-      pagination: false,
-      breakpoints: { 1366: { gap: "2rem"}, 1024: { gap: "2rem",perPage: 2 }, 768: { perPage: 1, gap: "2rem", }, 640: { perPage: 1 } },
-    });
+    const offer = new Splide("#offer-carousel", { type: "slide", perPage: 3, gap: "4rem", speed: 800, easing: "ease-in-out", arrows: false, pagination: false, breakpoints: { 1366: { gap: "2rem"}, 1024: { gap: "2rem",perPage: 2 }, 768: { perPage: 1, gap: "2rem", }, 640: { perPage: 1 } } });
     offer.on('mounted move', () => {
       const offerPrevBtn = document.getElementById('offer-prev');
       const offerNextBtn = document.getElementById('offer-next');
@@ -749,18 +498,7 @@ const description = pageDetails?.metaDescription?.[locale] ?? '';
     offer.mount();
     document.getElementById("offer-prev").addEventListener("click", () => offer.go("<"));
     document.getElementById("offer-next").addEventListener("click", () => offer.go(">"));
-
-    // Wellness Carousel
-    const wellness = new Splide("#wellness-carousel", {
-      type: "slide",
-      perPage: 2,
-      gap: "4rem",
-      speed: 800,
-      easing: "ease-in-out",
-      arrows: false,
-      pagination: false,
-      breakpoints: { 1366: { gap: "2rem"}, 1024: { gap: "2rem",perPage: 2 }, 768: { perPage: 1, gap: "2rem", }, 640: { perPage: 1 } },
-    });
+    const wellness = new Splide("#wellness-carousel", { type: "slide", perPage: 2, gap: "4rem", speed: 800, easing: "ease-in-out", arrows: false, pagination: false, breakpoints: { 1366: { gap: "2rem"}, 1024: { gap: "2rem",perPage: 2 }, 768: { perPage: 1, gap: "2rem", }, 640: { perPage: 1 } } });
     wellness.on('mounted move', () => {
       const wellnessPrevBtn = document.getElementById('wellness-prev');
       const wellnessNextBtn = document.getElementById('wellness-next');
@@ -774,18 +512,7 @@ const description = pageDetails?.metaDescription?.[locale] ?? '';
     wellness.mount();
     document.getElementById("wellness-prev").addEventListener("click", () => wellness.go("<"));
     document.getElementById("wellness-next").addEventListener("click", () => wellness.go(">"));
-
-    // Culinary Carousel
-    const culinary = new Splide("#culinary-carousel", {
-      type: "slide",
-      perPage: 3,
-      gap: "4rem",
-      speed: 800,
-      easing: "ease-in-out",
-      arrows: false,
-      pagination: false,
-      breakpoints: { 1366: { gap: "2rem"}, 1024: { gap: "2rem",perPage: 2 }, 768: { perPage: 1, gap: "2rem", }, 640: { perPage: 1 } },
-    });
+    const culinary = new Splide("#culinary-carousel", { type: "slide", perPage: 3, gap: "4rem", speed: 800, easing: "ease-in-out", arrows: false, pagination: false, breakpoints: { 1366: { gap: "2rem"}, 1024: { gap: "2rem",perPage: 2 }, 768: { perPage: 1, gap: "2rem", }, 640: { perPage: 1 } } });
     culinary.on('mounted move', () => {
       const culinaryPrevBtn = document.getElementById('culinary-prev');
       const culinaryNextBtn = document.getElementById('culinary-next');
@@ -799,18 +526,7 @@ const description = pageDetails?.metaDescription?.[locale] ?? '';
     culinary.mount();
     document.getElementById("culinary-prev").addEventListener("click", () => culinary.go("<"));
     document.getElementById("culinary-next").addEventListener("click", () => culinary.go(">"));
-
-    // Experience Carousel
-    const experience = new Splide("#experience-carousel", {
-      type: "slide",
-      perPage: 3,
-      gap: "4rem",
-      speed: 800,
-      easing: "ease-in-out",
-      arrows: false,
-      pagination: false,
-      breakpoints: { 1366: { gap: "2rem"}, 1024: { gap: "2rem",perPage: 2 }, 768: { perPage: 1, gap: "2rem", }, 640: { perPage: 1 } },
-    });
+    const experience = new Splide("#experience-carousel", { type: "slide", perPage: 3, gap: "4rem", speed: 800, easing: "ease-in-out", arrows: false, pagination: false, breakpoints: { 1366: { gap: "2rem"}, 1024: { gap: "2rem",perPage: 2 }, 768: { perPage: 1, gap: "2rem", }, 640: { perPage: 1 } } });
     experience.on('mounted move', () => {
       const experiencePrevBtn = document.getElementById('experience-prev');
       const experienceNextBtn = document.getElementById('experience-next');

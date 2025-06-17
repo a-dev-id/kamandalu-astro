@@ -34,6 +34,9 @@ const villas = await client.fetch(`*[_type == "villa"] | order(order asc){
   "slug": slug.current,
   title,
   excerpt,
+  villaSize,
+  bedSize,
+  view,
   secondImage {
     asset->{url}
   },
@@ -100,15 +103,15 @@ const description = pageDetails?.metaDescription?.[locale] ?? '';
           <div class="flex flex-wrap gap-8 text-sm text-[#1C2A39] mb-8">
             <div class="flex items-center gap-2">
               <img src="/images/villas/area.png" alt="Room size" class="w-5 h-5" loading="lazy" />
-              <span>31 m² / 344 ft²</span>
+              <span>{villa.villaSize?.[locale] ?? ''}</span>
             </div>
             <div class="flex items-center gap-2">
               <img src="/images/villas/bed.png" alt="Bed type" class="w-5 h-5" loading="lazy" />
-              <span>King or 2 Queens</span>
+              <span>{villa.bedSize?.[locale] ?? ''}</span>
             </div>
             <div class="flex items-center gap-2">
               <img src="/images/villas/interface.png" alt="View" class="w-5 h-5" loading="lazy" />
-              <span>Hill View</span>
+              <span>{villa.view?.[locale] ?? ''}</span>
             </div>
           </div>
 
