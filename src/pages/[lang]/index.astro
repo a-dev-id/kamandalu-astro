@@ -143,7 +143,7 @@ const description = pageDetails?.metaDescription?.[locale] ?? '';
                   <h3 class="text-base md:text-lg tracking-widest uppercase font-title">{villa.title?.[locale] ?? villa.title?.en}</h3>
                   <p class="mt-2 text-sm md:text-base">{villa.excerpt?.[locale] ?? villa.excerpt?.en}</p>
                   <div class="flex-grow"></div>
-                  <a href={`/${locale}/villas/${villa.slug}`} class="text-base md:text-lg mt-4 inline-block text-black uppercase">{translations.btnexplore[locale]}</a>
+                  <a href={`/${locale}/villa/${villa.slug}`} class="text-base md:text-lg mt-4 inline-block text-black uppercase">{translations.btnexplore[locale]}</a>
                 </div>
               </div>
             </li>
