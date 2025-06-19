@@ -21,7 +21,7 @@ const [villas, offers, wellnessVenue, diningExperience, homeSliders, pageDetails
   client.fetch(`*[_type == "wellnessVenue"] | order(order asc){ "slug": slug.current, title, excerpt, secondImageAlt, secondImage { asset-> { url } } }`),
   client.fetch(`*[_type == "diningExperience"] | order(order asc){ "slug": slug.current, title, excerpt, secondImageAlt, secondImage { asset-> { url } } }`),
   client.fetch(`*[_type == "homeSlider"] | order(order asc){ title, image { asset-> { url } } }`),
-  client.fetch(`*[_type == "page" && _id == "6b81d880-cd1c-4993-a985-a74eda7f419e"][0]{ title, subtitle, description, metaTitle, metaDescription, image { asset-> { url } } }`),
+  client.fetch(`*[_type == "page" && _id == "6b81d880-cd1c-4993-a985-a74eda7f419e"][0]{ title, subtitle, description, metaTitle, metaDescription, metaKeywords, mainImage { asset-> { url } } }`),
   client.fetch(`*[_type == "settingHome" && _id == "203dafa9-65fe-4791-9bfa-713d49300733"][0]{ title, description, }`),
   client.fetch(`*[_type == "settingHome" && _id == "d005d37f-034b-4a80-9cf3-1886e310e5e3"][0]{ title, description, }`),
   client.fetch(`*[_type == "settingHome" && _id == "3e45dc06-f49d-48fc-abdc-7601afce5048"][0]{ title, description, mainImageAlt, mainImage { asset-> { url } } }`),
@@ -31,9 +31,13 @@ const [villas, offers, wellnessVenue, diningExperience, homeSliders, pageDetails
 
 const title = pageDetails?.metaTitle?.[locale] ?? '';
 const description = pageDetails?.metaDescription?.[locale] ?? '';
+const baseUrl = new URL(Astro.request.url);
+const url = baseUrl.href;
+const ogImage = pageDetails.mainImage?.asset?.url ?? '';
+const keywords = pageDetails.metaKeywords?.[locale] ?? '';
 ---
 
-<Layout {title} {description}>
+<Layout {title} {description} {url} {ogImage} {keywords}>
   <!-- HERO CAROUSEL SECTION -->
   <section class="relative w-full h-screen overflow-hidden">
     <div id="carousel" class="w-full h-full relative">
