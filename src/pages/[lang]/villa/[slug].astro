@@ -36,7 +36,10 @@ const villa = await client.fetch(`*[_type == "villa" && slug.current == $slug][0
   complimentaries,
   area,
   maximumOccupancy,
-  others
+  others,
+  metaTitle,
+  metaDescription,
+  metaKeywords,
 }`, { slug });
 
 // Convert Portable Text to HTML strings safely with fallback
@@ -49,11 +52,15 @@ const htmlFields = {
   others: toHTML(safeArray(villa?.others?.[locale])),
 };
 
-const title = villa?.title?.[locale] ?? '';
-const description = villa?.excerpt?.[locale] ?? '';
+const title = villa?.metaTitle?.[locale] ?? '';
+const description = villa?.metaDescription?.[locale] ?? '';
+const baseUrl = new URL(Astro.request.url);
+const url = baseUrl.href;
+const ogImage = villa.mainImage?.asset?.url ?? '';
+const keywords = villa.metaKeywords?.[locale] ?? '';
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} {url} {ogImage} {keywords}>
 
   <!-- Hero Section -->
   <section class="relative w-full h-[50vh] md:h-[60vh] lg:h-[75vh] overflow-hidden">
