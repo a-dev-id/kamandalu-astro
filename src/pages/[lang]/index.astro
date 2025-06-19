@@ -5,25 +5,48 @@ import { getLocale } from '../../utils/getLocale';
 import { translations } from '../../i18n/translations.js';
 import OptimizedImage from '../../components/OptimizedImage.astro';
 
-// Required for dynamic routes
+// Dynamic routes
 export async function getStaticPaths() {
-  return ['en', 'ko', 'zh'].map(lang => ({
-    params: { lang }
-  }));
+  return ['en', 'ko', 'zh'].map(lang => ({ params: { lang } }));
 }
 
 // Get locale from URL param
 const { lang } = Astro.params;
 const locale = getLocale(lang);
-const [villas, offers, wellnessVenue, diningExperience, homeSliders, pageDetails, villaDetails, offerDetails, wellnessDetails, culinaryDetails, experienceDetails] = await Promise.all([
-  client.fetch(`*[_type == "villa"] | order(order asc){ "slug": slug.current, title, excerpt, secondImageAlt, secondImage { asset-> { url } } }`),
-  client.fetch(`*[_type == "offer"] | order(order asc){ "slug": slug.current, title, excerpt, mainImageAlt, mainImage { asset-> { url } } }`),
-  client.fetch(`*[_type == "wellnessVenue"] | order(order asc){ "slug": slug.current, title, excerpt, secondImageAlt, secondImage { asset-> { url } } }`),
-  client.fetch(`*[_type == "diningExperience"] | order(order asc){ "slug": slug.current, title, excerpt, secondImageAlt, secondImage { asset-> { url } } }`),
-  client.fetch(`*[_type == "homeSlider"] | order(order asc){ title, image { asset-> { url } } }`),
-  client.fetch(`*[_type == "page" && _id == "6b81d880-cd1c-4993-a985-a74eda7f419e"][0]{ title, subtitle, description, metaTitle, metaDescription, metaKeywords, mainImage { asset-> { url } } }`),
-  client.fetch(`*[_type == "settingHome" && _id == "203dafa9-65fe-4791-9bfa-713d49300733"][0]{ title, description, }`),
-  client.fetch(`*[_type == "settingHome" && _id == "d005d37f-034b-4a80-9cf3-1886e310e5e3"][0]{ title, description, }`),
+
+const [
+  villas,
+  offers,
+  wellnessVenue,
+  diningExperience,
+  homeSliders,
+  pageDetails,
+  villaDetails,
+  offerDetails,
+  wellnessDetails,
+  culinaryDetails,
+  experienceDetails
+] = await Promise.all([
+  client.fetch(`*[_type == "villa"] | order(order asc){
+    "slug": slug.current, title, excerpt, secondImageAlt, secondImage { asset-> { url } }
+  }`),
+  client.fetch(`*[_type == "offer"] | order(order asc){
+    "slug": slug.current, title, excerpt, mainImageAlt, mainImage { asset-> { url } }
+  }`),
+  client.fetch(`*[_type == "wellnessVenue"] | order(order asc){
+    "slug": slug.current, title, excerpt, secondImageAlt, secondImage { asset-> { url } }
+  }`),
+  client.fetch(`*[_type == "diningExperience"] | order(order asc){
+    "slug": slug.current, title, excerpt, secondImageAlt, secondImage { asset-> { url } }
+  }`),
+  client.fetch(`*[_type == "homeSlider"] | order(order asc){
+    title, image { asset-> { url } }
+  }`),
+  client.fetch(`*[_type == "page" && _id == "6b81d880-cd1c-4993-a985-a74eda7f419e"][0]{
+    title, subtitle, description, metaTitle, metaDescription, metaKeywords, mainImage { asset-> { url } }
+  }`),
+  client.fetch(`*[_type == "settingHome" && _id == "203dafa9-65fe-4791-9bfa-713d49300733"][0]{ title, description }`),
+  client.fetch(`*[_type == "settingHome" && _id == "d005d37f-034b-4a80-9cf3-1886e310e5e3"][0]{ title, description }`),
   client.fetch(`*[_type == "settingHome" && _id == "3e45dc06-f49d-48fc-abdc-7601afce5048"][0]{ title, description, mainImageAlt, mainImage { asset-> { url } } }`),
   client.fetch(`*[_type == "settingHome" && _id == "d4f9bd9f-4038-40ad-9c56-201d19869720"][0]{ title, description, mainImageAlt, mainImage { asset-> { url } } }`),
   client.fetch(`*[_type == "settingHome" && _id == "279d6034-3f91-4da3-bf88-8a9090afc556"][0]{ title, description, mainImageAlt, mainImage { asset-> { url } } }`)
@@ -41,10 +64,18 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
   <!-- HERO CAROUSEL SECTION -->
   <section class="relative w-full h-screen overflow-hidden">
     <div id="carousel" class="w-full h-full relative">
-      <!-- Slides -->
       {homeSliders.map((homeSlider, index) => (
         <div class={`carousel-slide w-full h-full absolute inset-0 transition-opacity duration-1000 ${index === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
-          <OptimizedImage src={homeSlider.image.asset.url} alt={homeSlider.title} width={1600} height={900} quality={75} className="w-full h-full" fetchpriority={index === 0 ? 'high' : 'auto'} loading={index === 0 ? 'eager' : 'lazy'} />
+          <OptimizedImage
+            src={homeSlider.image.asset.url}
+            alt={homeSlider.title}
+            width={1600}
+            height={900}
+            quality={75}
+            className="w-full h-full"
+            fetchpriority={index === 0 ? 'high' : 'auto'}
+            loading={index === 0 ? 'eager' : 'lazy'}
+          />
         </div>
       ))}
       <div class="absolute inset-0 bg-black/25 z-20"></div>
@@ -83,15 +114,21 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
       <div class="grid grid-cols-3 gap-4 text-base mb-4">
         <div class="flex flex-col">
           <label class="uppercase text-base mb-1">Adults</label>
-          <select id="adults" class="border px-2 py-1"><option>1</option><option>2</option><option>3</option><option>4</option></select>
+          <select id="adults" class="border px-2 py-1">
+            <option>1</option><option>2</option><option>3</option><option>4</option>
+          </select>
         </div>
         <div class="flex flex-col">
           <label class="uppercase text-base mb-1">Children</label>
-          <select id="children" class="border px-2 py-1"><option>0</option><option>1</option><option>2</option><option>3</option></select>
+          <select id="children" class="border px-2 py-1">
+            <option>0</option><option>1</option><option>2</option><option>3</option>
+          </select>
         </div>
         <div class="flex flex-col">
           <label class="uppercase text-base mb-1">Rooms</label>
-          <select id="rooms" class="border px-2 py-1"><option value="1" selected>1</option><option value="2">2</option><option value="3">3</option></select>
+          <select id="rooms" class="border px-2 py-1">
+            <option value="1" selected>1</option><option value="2">2</option><option value="3">3</option>
+          </select>
         </div>
       </div>
       <div id="child-ages-container" class="bg-gray-100 p-4 mb-5 hidden">
@@ -140,17 +177,11 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
         {villaDetails?.description?.[locale] ?? ''}
       </p>
     </div>
-  
     <div id="villa-carousel" class="splide mb-8 md:mb-12" role="region" aria-label="Villa Carousel">
       <div class="splide__track">
         <ul class="splide__list">
           {villas.map((villa, index) => (
-            <li
-              class="splide__slide transition-transform duration-500 ease-in-out"
-              role="group"
-              aria-roledescription="slide"
-              aria-label={`${index + 1} of ${villas.length}`}
-            >
+            <li class="splide__slide transition-transform duration-500 ease-in-out" role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${villas.length}`}>
               <div class="bg-white overflow-hidden flex flex-col h-full">
                 <OptimizedImage
                   src={villa.secondImage?.asset?.url ?? ''}
@@ -168,10 +199,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
                     {villa.excerpt?.[locale] ?? villa.excerpt?.en ?? ''}
                   </p>
                   <div class="flex-grow"></div>
-                  <a
-                    href={`/${locale}/villa/${villa.slug}`}
-                    class="text-base md:text-lg mt-4 inline-block text-black uppercase"
-                  >
+                  <a href={`/${locale}/villa/${villa.slug}`} class="text-base md:text-lg mt-4 inline-block text-black uppercase">
                     {translations.btnexplore?.[locale] ?? 'Explore'}
                   </a>
                 </div>
@@ -181,23 +209,14 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
         </ul>
       </div>
     </div>
-  
     <div class="flex items-center gap-4 md:gap-6 mt-4 md:mt-8 justify-start">
-      <button
-        aria-label="Previous Villa"
-        id="villa-prev"
-        class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center"
-      >
+      <button aria-label="Previous Villa" id="villa-prev" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="44" y1="12" x2="4" y2="12" />
           <polyline points="12 20 4 12 12 4" />
         </svg>
       </button>
-      <button
-        aria-label="Next Villa"
-        id="villa-next"
-        class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center"
-      >
+      <button aria-label="Next Villa" id="villa-next" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="4" y1="12" x2="44" y2="12" />
           <polyline points="36 4 44 12 36 20" />
@@ -205,7 +224,6 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
       </button>
     </div>
   </section>
-  
 
   <!-- OFFERS CAROUSEL -->
   <section class="container mx-auto px-4 xl:px-10 2xl:px-0 pt-24">
@@ -217,17 +235,25 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
       <div class="splide__track">
         <ul class="splide__list">
           {offers.map((offer, index) => (
-          <li class="splide__slide transition-transform duration-500 ease-in-out" role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${offers.length}`}>
-            <div class="bg-white overflow-hidden flex flex-col h-full">
-              <OptimizedImage src={offer.mainImage.asset.url} alt={offer.mainImageAlt?.[locale]} width={800} height={600} quality={75} loading="lazy" className="w-full h-auto aspect-[4/3] transition duration-500" />
-              <div class="p-4 md:p-6 flex flex-col flex-1">
-                <h3 class="text-base md:text-lg tracking-widest uppercase font-title">{offer.title?.[locale] ?? offer.title?.en}</h3>
-                <p class="mt-2 text-sm md:text-base">{offer.excerpt?.[locale] ?? offer.excerpt?.en}</p>
-                <div class="flex-grow"></div>
-                <a href={`/${locale}/offers/${offer.slug}`} class="text-base md:text-lg mt-4 inline-block text-black uppercase">{translations.btnexplore[locale]}</a>
+            <li class="splide__slide transition-transform duration-500 ease-in-out" role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${offers.length}`}>
+              <div class="bg-white overflow-hidden flex flex-col h-full">
+                <OptimizedImage
+                  src={offer.mainImage.asset.url}
+                  alt={offer.mainImageAlt?.[locale]}
+                  width={800}
+                  height={600}
+                  quality={75}
+                  loading="lazy"
+                  className="w-full h-auto aspect-[4/3] transition duration-500"
+                />
+                <div class="p-4 md:p-6 flex flex-col flex-1">
+                  <h3 class="text-base md:text-lg tracking-widest uppercase font-title">{offer.title?.[locale] ?? offer.title?.en}</h3>
+                  <p class="mt-2 text-sm md:text-base">{offer.excerpt?.[locale] ?? offer.excerpt?.en}</p>
+                  <div class="flex-grow"></div>
+                  <a href={`/${locale}/offers/${offer.slug}`} class="text-base md:text-lg mt-4 inline-block text-black uppercase">{translations.btnexplore[locale]}</a>
+                </div>
               </div>
-            </div>
-          </li>
+            </li>
           ))}
         </ul>
       </div>
@@ -249,21 +275,29 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
       <h2 class="font-title text-2xl md:text-3xl uppercase mb-4 md:mb-6 tracking-widest font-light">{wellnessDetails?.title?.[locale] ?? ''}</h2>
       <p class="mb-10 md:mb-20 text-base md:text-lg">{wellnessDetails?.description?.[locale] ?? ''}</p>
     </div>
-    <div id="wellness-carousel" class="splide mb-8 md:mb-12">
+    <div id="wellness-carousel" class="splide mb-8 md:mb-12" role="region" aria-label="Wellness Carousel">
       <div class="splide__track">
         <ul class="splide__list">
-          {wellnessVenue.map(venue => (
-          <li class="splide__slide transition-transform duration-500 ease-in-out">
-            <div class="bg-white overflow-hidden flex flex-col h-full">
-              <OptimizedImage src={venue.secondImage.asset.url} alt={venue.secondImageAlt?.[locale]} width={800} height={600} quality={75} loading="lazy" className="w-full h-auto aspect-[4/3] md:aspect-[16/9] 2xl:aspect-[4/3]  transition duration-500" />
-              <div class="p-4 md:p-6 flex flex-col flex-1">
-                <h3 class="text-base md:text-lg tracking-widest uppercase font-title">{venue?.title?.[locale] ?? ''}</h3>
-                <p class="mt-2 text-sm md:text-base">{venue?.excerpt?.[locale] ?? ''}</p>
-                <div class="flex-grow"></div>
-                <a href="#" class="text-base md:text-lg mt-4 inline-block text-black uppercase">Explore</a>
+          {wellnessVenue.map((venue, index) => (
+            <li class="splide__slide transition-transform duration-500 ease-in-out" role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${wellnessVenue.length}`}>
+              <div class="bg-white overflow-hidden flex flex-col h-full">
+                <OptimizedImage
+                  src={venue.secondImage.asset.url}
+                  alt={venue.secondImageAlt?.[locale]}
+                  width={800}
+                  height={600}
+                  quality={75}
+                  loading="lazy"
+                  className="w-full h-auto aspect-[4/3] md:aspect-[16/9] 2xl:aspect-[4/3] transition duration-500"
+                />
+                <div class="p-4 md:p-6 flex flex-col flex-1">
+                  <h3 class="text-base md:text-lg tracking-widest uppercase font-title">{venue?.title?.[locale] ?? ''}</h3>
+                  <p class="mt-2 text-sm md:text-base">{venue?.excerpt?.[locale] ?? ''}</p>
+                  <div class="flex-grow"></div>
+                  <a href="#" class="text-base md:text-lg mt-4 inline-block text-black uppercase">Explore</a>
+                </div>
               </div>
-            </div>
-          </li>
+            </li>
           ))}
         </ul>
       </div>
@@ -285,21 +319,29 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
       <h2 class="font-title text-2xl md:text-3xl uppercase mb-4 md:mb-6 tracking-widest font-light">{culinaryDetails?.title?.[locale] ?? ''}</h2>
       <p class="mb-10 md:mb-20 text-base md:text-lg">{culinaryDetails?.description?.[locale] ?? ''}</p>
     </div>
-    <div id="culinary-carousel" class="splide mb-8 md:mb-12">
+    <div id="culinary-carousel" class="splide mb-8 md:mb-12" role="region" aria-label="Culinary Carousel">
       <div class="splide__track">
         <ul class="splide__list">
-          {diningExperience.map(dining => (
-          <li class="splide__slide transition-transform duration-500 ease-in-out">
-            <div class="bg-white overflow-hidden flex flex-col h-full">
-              <OptimizedImage src={dining.secondImage.asset.url} alt={dining.secondImageAlt?.[locale]} width={800} height={600} quality={75} loading="lazy" className="w-full h-auto aspect-[4/3] transition duration-500" />
-              <div class="p-4 md:p-6 flex flex-col flex-1">
-                <h3 class="text-base md:text-lg tracking-widest uppercase font-title">{dining.title?.[locale] ?? ''}</h3>
-                <p class="mt-2 text-sm md:text-base">{dining.excerpt?.[locale] ?? ''}</p>
-                <div class="flex-grow"></div>
-                <a href="#" class="text-base md:text-lg mt-4 inline-block text-black uppercase">Explore</a>
+          {diningExperience.map((dining, index) => (
+            <li class="splide__slide transition-transform duration-500 ease-in-out" role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${diningExperience.length}`}>
+              <div class="bg-white overflow-hidden flex flex-col h-full">
+                <OptimizedImage
+                  src={dining.secondImage.asset.url}
+                  alt={dining.secondImageAlt?.[locale]}
+                  width={800}
+                  height={600}
+                  quality={75}
+                  loading="lazy"
+                  className="w-full h-auto aspect-[4/3] transition duration-500"
+                />
+                <div class="p-4 md:p-6 flex flex-col flex-1">
+                  <h3 class="text-base md:text-lg tracking-widest uppercase font-title">{dining.title?.[locale] ?? ''}</h3>
+                  <p class="mt-2 text-sm md:text-base">{dining.excerpt?.[locale] ?? ''}</p>
+                  <div class="flex-grow"></div>
+                  <a href="#" class="text-base md:text-lg mt-4 inline-block text-black uppercase">Explore</a>
+                </div>
               </div>
-            </div>
-          </li>
+            </li>
           ))}
         </ul>
       </div>
@@ -321,21 +363,29 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
       <h2 class="font-title text-2xl md:text-3xl uppercase mb-4 md:mb-6 tracking-widest font-light">{experienceDetails?.title?.[locale] ?? ''}</h2>
       <p class="mb-10 md:mb-20 text-base md:text-lg">{experienceDetails?.description?.[locale] ?? ''}</p>
     </div>
-    <div id="experience-carousel" class="splide mb-8 md:mb-12">
+    <div id="experience-carousel" class="splide mb-8 md:mb-12" role="region" aria-label="Experience Carousel">
       <div class="splide__track">
         <ul class="splide__list">
-          {diningExperience.map(dining => (
-          <li class="splide__slide transition-transform duration-500 ease-in-out">
-            <div class="bg-white overflow-hidden flex flex-col h-full">
-              <OptimizedImage src={dining.secondImage.asset.url} alt={dining.secondImageAlt?.[locale]} width={800} height={600} quality={75} loading="lazy" className="w-full h-auto aspect-[4/3] transition duration-500" />
-              <div class="p-4 md:p-6 flex flex-col flex-1">
-                <h3 class="text-base md:text-lg tracking-widest uppercase font-title">{dining.title?.[locale] ?? ''}</h3>
-                <p class="mt-2 text-sm md:text-base">{dining.excerpt?.[locale] ?? ''}</p>
-                <div class="flex-grow"></div>
-                <a href="#" class="text-base md:text-lg mt-4 inline-block text-black uppercase">Explore</a>
+          {diningExperience.map((dining, index) => (
+            <li class="splide__slide transition-transform duration-500 ease-in-out" role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${diningExperience.length}`}>
+              <div class="bg-white overflow-hidden flex flex-col h-full">
+                <OptimizedImage
+                  src={dining.secondImage.asset.url}
+                  alt={dining.secondImageAlt?.[locale]}
+                  width={800}
+                  height={600}
+                  quality={75}
+                  loading="lazy"
+                  className="w-full h-auto aspect-[4/3] transition duration-500"
+                />
+                <div class="p-4 md:p-6 flex flex-col flex-1">
+                  <h3 class="text-base md:text-lg tracking-widest uppercase font-title">{dining.title?.[locale] ?? ''}</h3>
+                  <p class="mt-2 text-sm md:text-base">{dining.excerpt?.[locale] ?? ''}</p>
+                  <div class="flex-grow"></div>
+                  <a href="#" class="text-base md:text-lg mt-4 inline-block text-black uppercase">Explore</a>
+                </div>
               </div>
-            </div>
-          </li>
+            </li>
           ))}
         </ul>
       </div>
@@ -503,88 +553,82 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
       let currentSlide = 0;
       function showSlide(index) {
         slides.forEach((slide, i) => {
-          if (i === index) { slide.classList.remove('opacity-0', 'z-0'); slide.classList.add('opacity-100', 'z-10'); }
-          else { slide.classList.remove('opacity-100', 'z-10'); slide.classList.add('opacity-0', 'z-0'); }
+          if (i === index) {
+            slide.classList.remove('opacity-0', 'z-0');
+            slide.classList.add('opacity-100', 'z-10');
+          } else {
+            slide.classList.remove('opacity-100', 'z-10');
+            slide.classList.add('opacity-0', 'z-0');
+          }
         });
       }
-      document.getElementById('prevSlide').addEventListener('click', (e) => { e.stopPropagation(); currentSlide = (currentSlide - 1 + slides.length) % slides.length; showSlide(currentSlide); });
-      document.getElementById('nextSlide').addEventListener('click', (e) => { e.stopPropagation(); currentSlide = (currentSlide + 1) % slides.length; showSlide(currentSlide); });
-      setInterval(() => { currentSlide = (currentSlide + 1) % slides.length; showSlide(currentSlide); }, 5000);
+      document.getElementById('prevSlide').addEventListener('click', (e) => {
+        e.stopPropagation();
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        showSlide(currentSlide);
+      });
+      document.getElementById('nextSlide').addEventListener('click', (e) => {
+        e.stopPropagation();
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+      });
+      setInterval(() => {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+      }, 5000);
       showSlide(currentSlide);
     });
   </script>
   <script>
     import "@splidejs/splide/css";
     import Splide from "@splidejs/splide";
-    const villa = new Splide("#villa-carousel", { type: "slide", perPage: 2, gap: "4rem", speed: 800, easing: "ease-in-out", arrows: false, pagination: false, breakpoints: { 1366: { gap: "2rem"}, 1024: { gap: "2rem", perPage: 2 }, 768: { perPage: 1 } } });
-    villa.on('mounted move', () => {
-      const villaPrevBtn = document.getElementById('villa-prev');
-      const villaNextBtn = document.getElementById('villa-next');
-      villaPrevBtn.disabled = villa.index === 0;
-      villaPrevBtn.classList.toggle('opacity-30', villa.index === 0);
-      villaPrevBtn.classList.toggle('cursor-not-allowed', villa.index === 0);
-      villaNextBtn.disabled = villa.index >= villa.length - villa.options.perPage;
-      villaNextBtn.classList.toggle('opacity-30', villa.index >= villa.length - villa.options.perPage);
-      villaNextBtn.classList.toggle('cursor-not-allowed', villa.index >= villa.length - villa.options.perPage);
+    const carousels = [
+      {
+        id: "#villa-carousel",
+        prev: "villa-prev",
+        next: "villa-next",
+        options: { type: "slide", perPage: 2, gap: "4rem", speed: 800, easing: "ease-in-out", arrows: false, pagination: false, breakpoints: { 1366: { gap: "2rem"}, 1024: { gap: "2rem", perPage: 2 }, 768: { perPage: 1 } } }
+      },
+      {
+        id: "#offer-carousel",
+        prev: "offer-prev",
+        next: "offer-next",
+        options: { type: "slide", perPage: 3, gap: "4rem", speed: 800, easing: "ease-in-out", arrows: false, pagination: false, breakpoints: { 1366: { gap: "2rem"}, 1024: { gap: "2rem",perPage: 2 }, 768: { perPage: 1, gap: "2rem", }, 640: { perPage: 1 } } }
+      },
+      {
+        id: "#wellness-carousel",
+        prev: "wellness-prev",
+        next: "wellness-next",
+        options: { type: "slide", perPage: 2, gap: "4rem", speed: 800, easing: "ease-in-out", arrows: false, pagination: false, breakpoints: { 1366: { gap: "2rem"}, 1024: { gap: "2rem",perPage: 2 }, 768: { perPage: 1, gap: "2rem", }, 640: { perPage: 1 } } }
+      },
+      {
+        id: "#culinary-carousel",
+        prev: "culinary-prev",
+        next: "culinary-next",
+        options: { type: "slide", perPage: 3, gap: "4rem", speed: 800, easing: "ease-in-out", arrows: false, pagination: false, breakpoints: { 1366: { gap: "2rem"}, 1024: { gap: "2rem",perPage: 2 }, 768: { perPage: 1, gap: "2rem", }, 640: { perPage: 1 } } }
+      },
+      {
+        id: "#experience-carousel",
+        prev: "experience-prev",
+        next: "experience-next",
+        options: { type: "slide", perPage: 3, gap: "4rem", speed: 800, easing: "ease-in-out", arrows: false, pagination: false, breakpoints: { 1366: { gap: "2rem"}, 1024: { gap: "2rem",perPage: 2 }, 768: { perPage: 1, gap: "2rem", }, 640: { perPage: 1 } } }
+      }
+    ];
+    carousels.forEach(({ id, prev, next, options }) => {
+      const splide = new Splide(id, options);
+      splide.on('mounted move', () => {
+        const prevBtn = document.getElementById(prev);
+        const nextBtn = document.getElementById(next);
+        prevBtn.disabled = splide.index === 0;
+        prevBtn.classList.toggle('opacity-30', splide.index === 0);
+        prevBtn.classList.toggle('cursor-not-allowed', splide.index === 0);
+        nextBtn.disabled = splide.index >= splide.length - splide.options.perPage;
+        nextBtn.classList.toggle('opacity-30', splide.index >= splide.length - splide.options.perPage);
+        nextBtn.classList.toggle('cursor-not-allowed', splide.index >= splide.length - splide.options.perPage);
+      });
+      splide.mount();
+      document.getElementById(prev).addEventListener("click", () => splide.go("<"));
+      document.getElementById(next).addEventListener("click", () => splide.go(">"));
     });
-    villa.mount();
-    document.getElementById("villa-prev").addEventListener("click", () => villa.go("<"));
-    document.getElementById("villa-next").addEventListener("click", () => villa.go(">"));
-    const offer = new Splide("#offer-carousel", { type: "slide", perPage: 3, gap: "4rem", speed: 800, easing: "ease-in-out", arrows: false, pagination: false, breakpoints: { 1366: { gap: "2rem"}, 1024: { gap: "2rem",perPage: 2 }, 768: { perPage: 1, gap: "2rem", }, 640: { perPage: 1 } } });
-    offer.on('mounted move', () => {
-      const offerPrevBtn = document.getElementById('offer-prev');
-      const offerNextBtn = document.getElementById('offer-next');
-      offerPrevBtn.disabled = offer.index === 0;
-      offerPrevBtn.classList.toggle('opacity-30', offer.index === 0);
-      offerPrevBtn.classList.toggle('cursor-not-allowed', offer.index === 0);
-      offerNextBtn.disabled = offer.index >= offer.length - offer.options.perPage;
-      offerNextBtn.classList.toggle('opacity-30', offer.index >= offer.length - offer.options.perPage);
-      offerNextBtn.classList.toggle('cursor-not-allowed', offer.index >= offer.length - offer.options.perPage);
-    });
-    offer.mount();
-    document.getElementById("offer-prev").addEventListener("click", () => offer.go("<"));
-    document.getElementById("offer-next").addEventListener("click", () => offer.go(">"));
-    const wellness = new Splide("#wellness-carousel", { type: "slide", perPage: 2, gap: "4rem", speed: 800, easing: "ease-in-out", arrows: false, pagination: false, breakpoints: { 1366: { gap: "2rem"}, 1024: { gap: "2rem",perPage: 2 }, 768: { perPage: 1, gap: "2rem", }, 640: { perPage: 1 } } });
-    wellness.on('mounted move', () => {
-      const wellnessPrevBtn = document.getElementById('wellness-prev');
-      const wellnessNextBtn = document.getElementById('wellness-next');
-      wellnessPrevBtn.disabled = wellness.index === 0;
-      wellnessPrevBtn.classList.toggle('opacity-30', wellness.index === 0);
-      wellnessPrevBtn.classList.toggle('cursor-not-allowed', wellness.index === 0);
-      wellnessNextBtn.disabled = wellness.index >= wellness.length - wellness.options.perPage;
-      wellnessNextBtn.classList.toggle('opacity-30', wellness.index >= wellness.length - wellness.options.perPage);
-      wellnessNextBtn.classList.toggle('cursor-not-allowed', wellness.index >= wellness.length - wellness.options.perPage);
-    });
-    wellness.mount();
-    document.getElementById("wellness-prev").addEventListener("click", () => wellness.go("<"));
-    document.getElementById("wellness-next").addEventListener("click", () => wellness.go(">"));
-    const culinary = new Splide("#culinary-carousel", { type: "slide", perPage: 3, gap: "4rem", speed: 800, easing: "ease-in-out", arrows: false, pagination: false, breakpoints: { 1366: { gap: "2rem"}, 1024: { gap: "2rem",perPage: 2 }, 768: { perPage: 1, gap: "2rem", }, 640: { perPage: 1 } } });
-    culinary.on('mounted move', () => {
-      const culinaryPrevBtn = document.getElementById('culinary-prev');
-      const culinaryNextBtn = document.getElementById('culinary-next');
-      culinaryPrevBtn.disabled = culinary.index === 0;
-      culinaryPrevBtn.classList.toggle('opacity-30', culinary.index === 0);
-      culinaryPrevBtn.classList.toggle('cursor-not-allowed', culinary.index === 0);
-      culinaryNextBtn.disabled = culinary.index >= culinary.length - culinary.options.perPage;
-      culinaryNextBtn.classList.toggle('opacity-30', culinary.index >= culinary.length - culinary.options.perPage);
-      culinaryNextBtn.classList.toggle('cursor-not-allowed', culinary.index >= culinary.length - culinary.options.perPage);
-    });
-    culinary.mount();
-    document.getElementById("culinary-prev").addEventListener("click", () => culinary.go("<"));
-    document.getElementById("culinary-next").addEventListener("click", () => culinary.go(">"));
-    const experience = new Splide("#experience-carousel", { type: "slide", perPage: 3, gap: "4rem", speed: 800, easing: "ease-in-out", arrows: false, pagination: false, breakpoints: { 1366: { gap: "2rem"}, 1024: { gap: "2rem",perPage: 2 }, 768: { perPage: 1, gap: "2rem", }, 640: { perPage: 1 } } });
-    experience.on('mounted move', () => {
-      const experiencePrevBtn = document.getElementById('experience-prev');
-      const experienceNextBtn = document.getElementById('experience-next');
-      experiencePrevBtn.disabled = experience.index === 0;
-      experiencePrevBtn.classList.toggle('opacity-30', experience.index === 0);
-      experiencePrevBtn.classList.toggle('cursor-not-allowed', experience.index === 0);
-      experienceNextBtn.disabled = experience.index >= experience.length - experience.options.perPage;
-      experienceNextBtn.classList.toggle('opacity-30', experience.index >= experience.length - experience.options.perPage);
-      experienceNextBtn.classList.toggle('cursor-not-allowed', experience.index >= experience.length - experience.options.perPage);
-    });
-    experience.mount();
-    document.getElementById("experience-prev").addEventListener("click", () => experience.go("<"));
-    document.getElementById("experience-next").addEventListener("click", () => experience.go(">"));
   </script>
 </Layout>
