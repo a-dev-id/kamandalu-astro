@@ -23,7 +23,6 @@ const pageDetails = await client.fetch(`*[_type == "page" && _id == "3e09def0-f5
   description,
   metaTitle,
   metaDescription,
-  metaKeywords,
   mainImageAlt,
   mainImage {
     asset->{url}
@@ -47,13 +46,9 @@ const villas = await client.fetch(`*[_type == "villa"] | order(order asc){
 // Set meta title and description for SEO
 const title = pageDetails?.metaTitle?.[locale] ?? '';
 const description = pageDetails?.metaDescription?.[locale] ?? '';
-const baseUrl = new URL(Astro.request.url);
-const url = baseUrl.href;
-const ogImage = pageDetails.mainImage.asset.url;
-const keywords = pageDetails.metaKeywords?.[locale] ?? '';
 ---
 
-<Layout {title} {description} {url} {ogImage} {keywords}>
+<Layout {title} {description}>
   {/* Hero Section */}
   <section class="relative w-full h-[50vh] md:h-[60vh] lg:h-[75vh] overflow-hidden">
     <OptimizedImage
