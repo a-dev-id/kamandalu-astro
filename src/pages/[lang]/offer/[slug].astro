@@ -4,6 +4,7 @@ import client from '../../../lib/sanityClient';
 import { getLocale } from '../../../utils/getLocale';
 import OptimizedImage from '../../../components/OptimizedImage.astro';
 import { toHTML } from '@portabletext/to-html';
+import { translations } from '../../../i18n/translations.js';
 
 // Generate all static paths for offers and languages
 export async function getStaticPaths() {
