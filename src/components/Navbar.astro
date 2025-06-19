@@ -50,7 +50,7 @@ const locale = getLocale(lang);
   <!-- Bottom Section: Main Navigation & Reserve Button -->
   <div class="flex justify-between items-center px-6 py-3 border-b border-white/50">
     <!-- Hamburger for Mobile -->
-    <button id="hamburger">
+    <button id="hamburger" aria-label="Open Mobile Menu">
       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
       </svg>
@@ -113,7 +113,7 @@ const locale = getLocale(lang);
       <a href="#" class="block text-xl">Spa & Wellness</a>
       <!-- Dining Dropdown (Mobile) -->
       <div>
-        <button id="dining-mobile-toggle" class="block text-xl w-full text-left flex items-center gap-1 justify-between">
+        <button aria-label="Dining Dropdown" id="dining-mobile-toggle" class="block text-xl w-full text-left flex items-center gap-1 justify-between">
           <span class="flex items-center">
             Dining
             <svg class="w-4 h-4 ml-1 inline-block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -135,7 +135,7 @@ const locale = getLocale(lang);
       <a href="#" class="block text-xl">Member</a>
       <!-- More Dropdown (Mobile) -->
       <!-- <div>
-        <button id="more-mobile-toggle" class="block text-xl w-full text-left flex items-center gap-1 justify-between">
+        <button aria-label="More Dropdown" id="more-mobile-toggle" class="block text-xl w-full text-left flex items-center gap-1 justify-between">
           <span class="flex items-center">
             More
             <svg class="w-4 h-4 ml-1 inline-block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
