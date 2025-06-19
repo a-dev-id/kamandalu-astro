@@ -15,6 +15,7 @@ const locale = getLocale(lang);
   <!-- Top Section: Language Selector & Logo -->
   <div class="flex items-center px-6 py-1 justify-between w-full relative">
     <!-- Language Dropdown (hidden on mobile, shown on md+) -->
+    <label for="languageSelect" class="sr-only">Language Selection</label>
     <div class="hidden md:block">
       <select id="languageSelect" class="bg-transparent text-white focus:outline-none text-sm">
         <option value="en" class="text-black">English</option>
@@ -25,14 +26,14 @@ const locale = getLocale(lang);
     <!-- Logo: centered using flex grow -->
     <div class="flex-1 flex justify-center">
       <a href={`/${locale}`}>
-        <img
-  id="navbar-logo"
-  src="/images/kamandalu-logo.png"
-  alt="Kamandalu Logo"
-  class="w-36 h-auto transition-all duration-300 mt-2 logo brightness-0 invert-[1]"
-  fetchpriority="high"
-  loading="eager"
-/>
+      <img
+        id="navbar-logo"
+        src="/images/kamandalu-logo.png"
+        alt="Kamandalu Logo"
+        class="w-36 h-auto transition-all duration-300 mt-2 logo brightness-0 invert-[1]"
+        fetchpriority="high"
+        loading="eager"
+      />
       </a>
     </div>
     <!-- Member Button (hidden on mobile, shown on md+) -->
