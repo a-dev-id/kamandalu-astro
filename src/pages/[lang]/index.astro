@@ -181,7 +181,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
       <div class="splide__track">
         <ul class="splide__list">
           {villas.map((villa, index) => (
-            <li class="splide__slide transition-transform duration-500 ease-in-out" role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${villas.length}`}>
+            <li class="splide__slide transition-transform duration-500 ease-in-out" aria-label={`${index + 1} of ${villas.length}`}>
               <div class="bg-white overflow-hidden flex flex-col h-full">
                 <OptimizedImage
                   src={villa.secondImage?.asset?.url ?? ''}
@@ -235,7 +235,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
       <div class="splide__track">
         <ul class="splide__list">
           {offers.map((offer, index) => (
-            <li class="splide__slide transition-transform duration-500 ease-in-out" role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${offers.length}`}>
+            <li class="splide__slide transition-transform duration-500 ease-in-out" aria-label={`${index + 1} of ${offers.length}`}>
               <div class="bg-white overflow-hidden flex flex-col h-full">
                 <OptimizedImage
                   src={offer.mainImage.asset.url}
@@ -279,7 +279,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
       <div class="splide__track">
         <ul class="splide__list">
           {wellnessVenue.map((venue, index) => (
-            <li class="splide__slide transition-transform duration-500 ease-in-out" role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${wellnessVenue.length}`}>
+            <li class="splide__slide transition-transform duration-500 ease-in-out" aria-label={`${index + 1} of ${wellnessVenue.length}`}>
               <div class="bg-white overflow-hidden flex flex-col h-full">
                 <OptimizedImage
                   src={venue.secondImage.asset.url}
@@ -323,7 +323,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
       <div class="splide__track">
         <ul class="splide__list">
           {diningExperience.map((dining, index) => (
-            <li class="splide__slide transition-transform duration-500 ease-in-out" role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${diningExperience.length}`}>
+            <li class="splide__slide transition-transform duration-500 ease-in-out" aria-label={`${index + 1} of ${diningExperience.length}`}>
               <div class="bg-white overflow-hidden flex flex-col h-full">
                 <OptimizedImage
                   src={dining.secondImage.asset.url}
@@ -367,7 +367,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
       <div class="splide__track">
         <ul class="splide__list">
           {diningExperience.map((dining, index) => (
-            <li class="splide__slide transition-transform duration-500 ease-in-out" role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${diningExperience.length}`}>
+            <li class="splide__slide transition-transform duration-500 ease-in-out" aria-label={`${index + 1} of ${diningExperience.length}`}>
               <div class="bg-white overflow-hidden flex flex-col h-full">
                 <OptimizedImage
                   src={dining.secondImage.asset.url}
