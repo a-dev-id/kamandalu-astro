@@ -179,9 +179,9 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
     </div>
     <div id="villa-carousel" class="splide mb-8 md:mb-12" role="region" aria-label="Villa Carousel">
       <div class="splide__track">
-        <ul class="splide__list">
+        <div class="splide__list">
           {villas.map((villa, index) => (
-            <li class="splide__slide transition-transform duration-500 ease-in-out" aria-label={`${index + 1} of ${villas.length}`}>
+            <div class="splide__slide transition-transform duration-500 ease-in-out" role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${villas.length}`}>
               <div class="bg-white overflow-hidden flex flex-col h-full">
                 <OptimizedImage
                   src={villa.secondImage?.asset?.url ?? ''}
@@ -204,9 +204,9 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
                   </a>
                 </div>
               </div>
-            </li>
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
     </div>
     <div class="flex items-center gap-4 md:gap-6 mt-4 md:mt-8 justify-start">
@@ -233,9 +233,9 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
     </div>
     <div id="offer-carousel" class="splide mb-8 md:mb-12" role="region" aria-label="Villa Carousel">
       <div class="splide__track">
-        <ul class="splide__list">
+        <div class="splide__list">
           {offers.map((offer, index) => (
-            <li class="splide__slide transition-transform duration-500 ease-in-out" aria-label={`${index + 1} of ${offers.length}`}>
+            <div class="splide__slide transition-transform duration-500 ease-in-out" role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${offers.length}`}>
               <div class="bg-white overflow-hidden flex flex-col h-full">
                 <OptimizedImage
                   src={offer.mainImage.asset.url}
@@ -253,9 +253,9 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
                   <a href={`/${locale}/offers/${offer.slug}`} class="text-base md:text-lg mt-4 inline-block text-black uppercase">{translations.btnexplore[locale]}</a>
                 </div>
               </div>
-            </li>
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
     </div>
     <div class="flex items-center gap-4 md:gap-6 mt-4 md:mt-8 justify-start">
@@ -277,9 +277,9 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
     </div>
     <div id="wellness-carousel" class="splide mb-8 md:mb-12" role="region" aria-label="Wellness Carousel">
       <div class="splide__track">
-        <ul class="splide__list">
+        <div class="splide__list">
           {wellnessVenue.map((venue, index) => (
-            <li class="splide__slide transition-transform duration-500 ease-in-out" aria-label={`${index + 1} of ${wellnessVenue.length}`}>
+            <div class="splide__slide transition-transform duration-500 ease-in-out" role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${wellnessVenue.length}`}>
               <div class="bg-white overflow-hidden flex flex-col h-full">
                 <OptimizedImage
                   src={venue.secondImage.asset.url}
@@ -297,9 +297,9 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
                   <a href="#" class="text-base md:text-lg mt-4 inline-block text-black uppercase">Explore</a>
                 </div>
               </div>
-            </li>
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
     </div>
     <div class="flex items-center gap-4 md:gap-6 mt-4 md:mt-8 justify-center md:hidden">
@@ -321,9 +321,9 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
     </div>
     <div id="culinary-carousel" class="splide mb-8 md:mb-12" role="region" aria-label="Culinary Carousel">
       <div class="splide__track">
-        <ul class="splide__list">
+        <div class="splide__list">
           {diningExperience.map((dining, index) => (
-            <li class="splide__slide transition-transform duration-500 ease-in-out" aria-label={`${index + 1} of ${diningExperience.length}`}>
+            <div class="splide__slide transition-transform duration-500 ease-in-out" role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${diningExperience.length}`}>
               <div class="bg-white overflow-hidden flex flex-col h-full">
                 <OptimizedImage
                   src={dining.secondImage.asset.url}
@@ -341,9 +341,9 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
                   <a href="#" class="text-base md:text-lg mt-4 inline-block text-black uppercase">Explore</a>
                 </div>
               </div>
-            </li>
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
     </div>
     <div class="flex items-center gap-4 md:gap-6 mt-4 md:mt-8 justify-start">
@@ -365,9 +365,9 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
     </div>
     <div id="experience-carousel" class="splide mb-8 md:mb-12" role="region" aria-label="Experience Carousel">
       <div class="splide__track">
-        <ul class="splide__list">
+        <div class="splide__list">
           {diningExperience.map((dining, index) => (
-            <li class="splide__slide transition-transform duration-500 ease-in-out" aria-label={`${index + 1} of ${diningExperience.length}`}>
+            <div class="splide__slide transition-transform duration-500 ease-in-out" role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${diningExperience.length}`}>
               <div class="bg-white overflow-hidden flex flex-col h-full">
                 <OptimizedImage
                   src={dining.secondImage.asset.url}
@@ -385,9 +385,9 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
                   <a href="#" class="text-base md:text-lg mt-4 inline-block text-black uppercase">Explore</a>
                 </div>
               </div>
-            </li>
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
     </div>
     <div class="flex items-center gap-4 md:gap-6 mt-4 md:mt-8 justify-start">

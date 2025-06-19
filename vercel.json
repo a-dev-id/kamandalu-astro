@@ -12,7 +12,7 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'sha256-Fn4p5aKuvPIdDvlFmvOw2FUXJqFdY5cO+eOT9vgd1l4=' https://cdn.jsdelivr.net https://www.googletagmanager.com https://*.vercel-insights.com; style-src 'self' https://cdn.jsdelivr.net; img-src 'self' data: https:; font-src 'self' https:; connect-src 'self' https://*.sanity.io https://*.vercel-insights.com; frame-ancestors 'none';"
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.googletagmanager.com https://*.vercel-insights.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: https:; font-src 'self' https:; connect-src 'self' https://*.sanity.io https://*.vercel-insights.com; frame-ancestors 'none';"
         },
         {
           "key": "Cross-Origin-Opener-Policy",
