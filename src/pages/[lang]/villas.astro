@@ -49,7 +49,7 @@ const title = pageDetails?.metaTitle?.[locale] ?? '';
 const description = pageDetails?.metaDescription?.[locale] ?? '';
 const baseUrl = new URL(Astro.request.url);
 const url = baseUrl.href;
-const ogImage = pageDetails.mainImage.asset.url;
+const ogImage = pageDetails.mainImage?.asset?.url ?? '';
 const keywords = pageDetails.metaKeywords?.[locale] ?? '';
 ---
 
@@ -57,7 +57,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
   {/* Hero Section */}
   <section class="relative w-full h-[50vh] md:h-[60vh] lg:h-[75vh] overflow-hidden">
     <OptimizedImage
-      src={pageDetails.mainImage.asset.url}
+      src={pageDetails.mainImage?.asset?.url}
       alt={pageDetails.mainImageAlt?.[locale] ?? ''}
       width={1600}
       height={900}

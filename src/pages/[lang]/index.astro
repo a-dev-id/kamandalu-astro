@@ -33,7 +33,7 @@ const title = pageDetails?.metaTitle?.[locale] ?? '';
 const description = pageDetails?.metaDescription?.[locale] ?? '';
 const baseUrl = new URL(Astro.request.url);
 const url = baseUrl.href;
-const ogImage = pageDetails.mainImage.asset.url;
+const ogImage = pageDetails.mainImage?.asset?.url ?? '';
 const keywords = pageDetails.metaKeywords?.[locale] ?? '';
 ---
 
