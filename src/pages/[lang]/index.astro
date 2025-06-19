@@ -216,7 +216,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
     <div id="offer-carousel" class="splide mb-8 md:mb-12" role="region" aria-label="Villa Carousel">
       <div class="splide__track">
         <ul class="splide__list">
-          {offers.map(offer => (
+          {offers.map((offer, index) => (
           <li class="splide__slide transition-transform duration-500 ease-in-out" role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${offers.length}`}>
             <div class="bg-white overflow-hidden flex flex-col h-full">
               <OptimizedImage src={offer.mainImage.asset.url} alt={offer.mainImageAlt?.[locale]} width={800} height={600} quality={75} loading="lazy" className="w-full h-auto aspect-[4/3] transition duration-500" />
