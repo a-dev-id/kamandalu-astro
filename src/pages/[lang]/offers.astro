@@ -17,7 +17,7 @@ const { lang } = Astro.params;
 const locale = getLocale(lang);
 
 // Fetch page meta and hero image
-const pageDetails = await client.fetch(`*[_type == "page" && _id == "3e09def0-f5fd-4b6a-b749-8757187239e9"][0]{
+const pageDetails = await client.fetch(`*[_type == "page" && _id == "2ff8dda1-8c5a-4622-b79c-e217495e327f"][0]{
   title,
   subtitle,
   description,
@@ -30,14 +30,15 @@ const pageDetails = await client.fetch(`*[_type == "page" && _id == "3e09def0-f5
   }
 }`);
 
-// Fetch all villas, ordered by 'order' field
-const villas = await client.fetch(`*[_type == "villa"] | order(order asc){
+// Fetch all offers, ordered by 'order' field
+const offers = await client.fetch(`*[_type == "offer"] | order(order asc){
   "slug": slug.current,
   title,
   excerpt,
-  villaSize,
-  bedSize,
-  view,
+  mainImage {
+    asset->{url}
+  },
+  mainImageAlt,
   secondImage {
     asset->{url}
   },
@@ -68,7 +69,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
   </section>
 
   {/* Page Title & Description */}
-  <section class="container mx-auto px-4 py-16 md:py-24">
+  <section class="container mx-auto px-4 xl:px-10 2xl:px-0 pt-16 md:pt-24">
     <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
       <h1 class="font-title text-3xl sm:text-4xl md:text-5xl uppercase mb-4 md:mb-6 tracking-widest font-light">
         {pageDetails?.title?.[locale] ?? ''}
@@ -79,64 +80,49 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
     </div>
   </section>
 
-  {/* Villas List */}
-  <section class="container mx-auto px-4 space-y-18">
-    {villas.map(villa => (
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-        {/* Villa Image */}
-        <div class="relative">
+  {/* Offers List */}
+  <section class="container mx-auto px-4 xl:px-10 2xl:px-0 py-12">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      {offers.map((offer, index) => (
+        <div class="transition-transform duration-500 ease-in-out bg-white overflow-hidden flex flex-col h-full">
           <OptimizedImage
-            src={villa.secondImage.asset.url}
-            alt={villa.secondImageAlt?.[locale] ?? ''}
+            src={offer.secondImage?.asset?.url ?? offer.mainImage?.asset?.url}
+            alt={offer.secondImageAlt?.[locale] ?? offer.mainImageAlt?.[locale] ?? 'Offer image'}
             width={800}
             height={600}
             quality={75}
-            className="w-full h-auto object-cover aspect-[16/9] transition duration-500"
+            loading="lazy"
+            className="w-full h-auto aspect-[4/3] transition duration-500"
           />
-        </div>
-
-        {/* Villa Details */}
-        <div class="flex flex-col justify-center px-2">
-          <h2 class="text-2xl md:text-3xl font-title tracking-wide uppercase mb-4">
-            {villa.title?.[locale] ?? ''}
-          </h2>
-          <p class="mb-6 text-base md:text-lg text-gray-700">
-            {villa.excerpt?.[locale] ?? ''}
-          </p>
-
-          {/* Villa Features */}
-          <div class="flex flex-wrap gap-8 text-sm text-[#1C2A39] mb-8">
-            <div class="flex items-center gap-2">
-              <img src="/images/villas/area.png" alt="Room size" class="w-5 h-5" loading="lazy" />
-              <span>{villa.villaSize?.[locale] ?? ''}</span>
-            </div>
-            <div class="flex items-center gap-2">
-              <img src="/images/villas/bed.png" alt="Bed type" class="w-5 h-5" loading="lazy" />
-              <span>{villa.bedSize?.[locale] ?? ''}</span>
-            </div>
-            <div class="flex items-center gap-2">
-              <img src="/images/villas/interface.png" alt="View" class="w-5 h-5" loading="lazy" />
-              <span>{villa.view?.[locale] ?? ''}</span>
+          <div class="p-4 md:p-6 flex flex-col flex-1">
+            <h3 class="text-base md:text-lg tracking-widest uppercase font-title">
+              {offer.title?.[locale] ?? offer.title?.en}
+            </h3>
+            <p class="mt-2 text-sm md:text-base">
+              {offer.excerpt?.[locale] ?? offer.excerpt?.en}
+            </p>
+            <div class="flex-grow"></div>
+  
+            <div class="mt-6 flex flex-wrap gap-4 lg:mb-20 mb-10">
+              <a
+                href={`/${locale}/offer/${offer.slug}`}
+                class="bg-white text-black px-4 py-3 md:px-4 md:py-2 text-xs font-title tracking-widest transition-colors duration-300 border border-black hover:bg-[#916B2C] hover:text-white hover:border-transparent inline-block text-center"
+              >
+                DETAILS
+              </a>
+              <a
+                href={`https://www.book-secure.com/index.php?s=results&property=idbal31692&locale=${locale}_GB&stid=986w12cwy`}
+                class="hover:bg-white hover:text-black px-4 py-3 md:px-4 md:py-2 text-xs font-title tracking-widest transition-colors duration-300 border hover:border-black bg-[#916B2C] text-white border-transparent inline-block text-center"
+                target="_blank" rel="noopener noreferrer"
+              >
+                BOOK NOW
+              </a>
             </div>
           </div>
-
-          {/* Action Buttons */}
-          <div class="flex gap-4">
-            <a
-              href="#"
-              class="bg-[#916B2C] border border-[#916B2C] uppercase text-white px-4 py-3 md:px-6 md:py-4 text-xs md:text-sm font-title tracking-widest transition-colors duration-300 hover:border hover:border-black hover:bg-white hover:text-black inline-block"
-            >
-              Book Now
-            </a>
-            <a
-              href={`/${lang}/villa/${villa.slug}`}
-              class="bg-white uppercase text-black px-4 py-3 md:px-6 md:py-4 text-xs md:text-sm font-title tracking-widest transition-colors duration-300 border border-black hover:bg-[#916B2C] hover:text-white hover:border-transparent inline-block"
-            >
-              Details
-            </a>
-          </div>
         </div>
-      </div>
-    ))}
+      ))}
+    </div>
   </section>
+  
+  
 </Layout>

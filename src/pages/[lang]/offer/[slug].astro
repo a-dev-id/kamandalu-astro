@@ -29,6 +29,8 @@ const offer = await client.fetch(`*[_type == "offer" && slug.current == $slug][0
   title,
   excerpt,
   description,
+  inclusion,
+  cancelPolicy,
   mainImage { asset->{url} },
   mainImageAlt,
   minNights,
@@ -41,14 +43,19 @@ const offer = await client.fetch(`*[_type == "offer" && slug.current == $slug][0
 
 // Convert Portable Text to HTML strings safely with fallback
 const htmlFields = {
-  description: toHTML(safeArray(offer?.description?.[locale])),
+  desc: toHTML(safeArray(offer?.description?.[locale])),
+  cancel: toHTML(safeArray(offer?.cancelPolicy?.[locale])),
 };
 
-const title = offer?.title?.[locale] ?? '';
-const description = offer?.excerpt?.[locale] ?? '';
+const title = offer?.metaTitle?.[locale] ?? '';
+const description = offer?.metaDescription?.[locale] ?? '';
+const baseUrl = new URL(Astro.request.url);
+const url = baseUrl.href;
+const ogImage = offer.mainImage?.asset?.url ?? '';
+const keywords = offer.metaKeywords?.[locale] ?? '';
 ---
 
-<Layout {title} {description}>
+<Layout {title} {description} {url} {ogImage} {keywords}>
 <!-- Hero Section -->
 <section class="relative w-full h-[50vh] md:h-[60vh] lg:h-[75vh] overflow-hidden">
   <OptimizedImage
@@ -68,28 +75,50 @@ const description = offer?.excerpt?.[locale] ?? '';
     <h1 class="font-title text-3xl sm:text-4xl md:text-5xl uppercase mb-4 md:mb-6 tracking-widest font-light">
       {title}
     </h1>
-    <p class="text-base md:text-lg">
-      {offer?.description?.[locale] ?? ''}
-    </p>
+    <div class="text-base md:text-lg prose max-w-none" set:html={htmlFields.desc}></div>
   </div>
 </section>
 
-  <!-- OFFERS CAROUSEL -->
-  <section class="container mx-auto px-4 xl:px-10 2xl:px-0 pt-24">
-    <div  class="splide mb-8 md:mb-12">
-            <div class="bg-white overflow-hidden flex flex-col h-full">
-              <OptimizedImage src={offer.mainImage.asset.url} alt={offer.mainImageAlt?.[locale]} width={800} height={600} quality={75} loading="lazy" className="w-full h-auto aspect-[4/3] transition duration-500" />
-              <div class="p-4 md:p-6 flex flex-col flex-1">
-                <h3 class="text-base md:text-lg tracking-widest uppercase font-title">{offer.title?.[locale] ?? offer.title?.en}</h3>
-                <p class="mt-2 text-sm md:text-base">{offer.excerpt?.[locale] ?? offer.excerpt?.en}</p>
-                <div class="flex-grow"></div>
-                <a href={`/${locale}/offers/${offer.slug}`} class="text-base md:text-lg mt-4 inline-block text-black uppercase">{translations.btnexplore[locale]}</a>
-              </div>
-            </div>
-        
+<section class="container mx-auto px-4 xl:px-10 2xl:px-0 py-12">
+  <div class="border-t border-b border-gray-300">
+    <button
+      type="button"
+      class="w-full flex justify-between items-center py-4 font-title text-left text-lg uppercase toggle-btn"
+      data-target="accordion-1"
+      aria-expanded="false"
+      aria-controls="accordion-1"
+    >
+    Cancellation Policy
+      <svg class="w-5 h-5 transition-transform duration-300" data-icon data-target="accordion-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+      </svg>
+    </button>
+    <div id="accordion-1" class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 hidden" role="region" aria-labelledby="accordion-1">
+      <div class="ms-6">
+        <div class="custom-list" set:html={htmlFields.cancel}></div>
+      </div>
     </div>
-    
-  </section>
+  </div>
 
+</section>
+
+<!-- Accordion Toggle Script -->
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.toggle-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetId = btn.dataset.target;
+        const panel = document.getElementById(targetId);
+        const icon = document.querySelector(`svg[data-icon][data-target="${targetId}"]`);
+
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!expanded));
+
+        panel.classList.toggle('hidden');
+        icon.classList.toggle('rotate-180');
+      });
+    });
+  });
+</script>
  
 </Layout>

@@ -59,7 +59,7 @@ const locale = getLocale(lang);
 
     <!-- Desktop Navigation Menu -->
     <nav class="hidden xl:flex space-x-6 text-base font-normal w-full justify-center overflow-visible relative">
-      <a href="#" class="uppercase">Offers</a>
+      <a href={`/${locale}/offers`} class="uppercase">Offers</a>
       <a href={`/${locale}/villas`} class="uppercase">Our Villas</a>
       <a href="#" class="uppercase">Spa & Wellness</a>
       <!-- Dining Dropdown Trigger -->
@@ -110,8 +110,8 @@ const locale = getLocale(lang);
     </div>
     <!-- Offcanvas Navigation Links -->
     <nav class="flex-1 px-6 pb-6 mt-6 space-y-4 overflow-y-auto font-normal">
-      <a href="#" class="block text-xl">Offers</a>
-      <a href={`/${lang}/villas`} class="block text-xl">Our Villas</a>
+      <a href={`/${locale}/offers`} class="block text-xl">Offers</a>
+      <a href={`/${locale}/villas`} class="block text-xl">Our Villas</a>
       <a href="#" class="block text-xl">Spa & Wellness</a>
       <!-- Dining Dropdown (Mobile) -->
       <div>
