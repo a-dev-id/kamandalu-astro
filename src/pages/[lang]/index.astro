@@ -250,7 +250,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
                   <h3 class="text-base md:text-lg tracking-widest uppercase font-title">{offer.title?.[locale] ?? offer.title?.en}</h3>
                   <p class="mt-2 text-sm md:text-base">{offer.excerpt?.[locale] ?? offer.excerpt?.en}</p>
                   <div class="flex-grow"></div>
-                  <a href={`/${locale}/offers/${offer.slug}`} class="text-base md:text-lg mt-4 inline-block text-black uppercase">{translations.btnexplore[locale]}</a>
+                  <a href={`/${locale}/offer/${offer.slug}`} class="text-base md:text-lg mt-4 inline-block text-black uppercase">{translations.btnexplore[locale]}</a>
                 </div>
               </div>
             </div>
