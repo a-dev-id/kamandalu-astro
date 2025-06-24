@@ -2,59 +2,33 @@
 import Layout from '../../layouts/Base.astro';
 import client from '../../lib/sanityClient';
 import { getLocale } from '../../utils/getLocale';
-import { translations } from '../../i18n/translations.js';
 import OptimizedImage from '../../components/OptimizedImage.astro';
 
-// Generate static paths for supported languages
 export async function getStaticPaths() {
-  return ['en', 'ko', 'zh'].map(lang => ({
-    params: { lang }
-  }));
+  return ['en', 'ko', 'zh'].map(lang => ({ params: { lang } }));
 }
 
-// Get locale from URL param
 const { lang } = Astro.params;
 const locale = getLocale(lang);
 
-// Fetch page meta and hero image
 const pageDetails = await client.fetch(`*[_type == "page" && _id == "3e09def0-f5fd-4b6a-b749-8757187239e9"][0]{
-  title,
-  subtitle,
-  description,
-  metaTitle,
-  metaDescription,
-  metaKeywords,
-  mainImageAlt,
-  mainImage {
-    asset->{url}
-  }
+  title, subtitle, description, metaTitle, metaDescription, metaKeywords, mainImageAlt,
+  mainImage { asset->{url} }
 }`);
 
-// Fetch all villas, ordered by 'order' field
 const villas = await client.fetch(`*[_type == "villa"] | order(order asc){
-  "slug": slug.current,
-  title,
-  excerpt,
-  villaSize,
-  bedSize,
-  view,
-  secondImage {
-    asset->{url}
-  },
-  secondImageAlt
+  "slug": slug.current, title, excerpt, villaSize, bedSize, view,
+  secondImage { asset->{url} }, secondImageAlt
 }`);
 
-// Set meta title and description for SEO
 const title = pageDetails?.metaTitle?.[locale] ?? '';
 const description = pageDetails?.metaDescription?.[locale] ?? '';
-const baseUrl = new URL(Astro.request.url);
-const url = baseUrl.href;
+const url = new URL(Astro.request.url).href;
 const ogImage = pageDetails.mainImage?.asset?.url ?? '';
 const keywords = pageDetails.metaKeywords?.[locale] ?? '';
 ---
 
 <Layout {title} {description} {url} {ogImage} {keywords}>
-  {/* Hero Section */}
   <section class="relative w-full h-[50vh] md:h-[60vh] lg:h-[75vh] overflow-hidden">
     <OptimizedImage
       src={pageDetails.mainImage?.asset?.url}
@@ -67,7 +41,6 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
     <div class="absolute inset-0 bg-black/25 z-20"></div>
   </section>
 
-  {/* Page Title & Description */}
   <section class="container mx-auto px-4 py-16 md:py-24">
     <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
       <h1 class="font-title text-3xl sm:text-4xl md:text-5xl uppercase mb-4 md:mb-6 tracking-widest font-light">
@@ -79,11 +52,9 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
     </div>
   </section>
 
-  {/* Villas List */}
   <section class="container mx-auto px-4 space-y-18">
     {villas.map(villa => (
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-        {/* Villa Image */}
         <div class="relative">
           <OptimizedImage
             src={villa.secondImage.asset.url}
@@ -94,8 +65,6 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
             className="w-full h-auto object-cover aspect-[16/9] transition duration-500"
           />
         </div>
-
-        {/* Villa Details */}
         <div class="flex flex-col justify-center px-2">
           <h2 class="text-2xl md:text-3xl font-title tracking-wide uppercase mb-4">
             {villa.title?.[locale] ?? ''}
@@ -103,8 +72,6 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
           <p class="mb-6 text-base md:text-lg text-gray-700">
             {villa.excerpt?.[locale] ?? ''}
           </p>
-
-          {/* Villa Features */}
           <div class="flex flex-wrap gap-8 text-sm text-[#1C2A39] mb-8">
             <div class="flex items-center gap-2">
               <img src="/images/villas/area.png" alt="Room size" class="w-5 h-5" loading="lazy" />
@@ -119,21 +86,15 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
               <span>{villa.view?.[locale] ?? ''}</span>
             </div>
           </div>
-
-          {/* Action Buttons */}
           <div class="flex gap-4">
             <a
-              href="#"
+              href="https://www.book-secure.com/index.php?s=results&property=idbal31692&locale=en_GB&currency=IDR&stid=986w12cwy"
               class="bg-[#916B2C] border border-[#916B2C] uppercase text-white px-4 py-3 md:px-6 md:py-4 text-xs md:text-sm font-title tracking-widest transition-colors duration-300 hover:border hover:border-black hover:bg-white hover:text-black inline-block"
-            >
-              Book Now
-            </a>
+            >Book Now</a>
             <a
               href={`/${lang}/villa/${villa.slug}`}
               class="bg-white uppercase text-black px-4 py-3 md:px-6 md:py-4 text-xs md:text-sm font-title tracking-widest transition-colors duration-300 border border-black hover:bg-[#916B2C] hover:text-white hover:border-transparent inline-block"
-            >
-              Details
-            </a>
+            >Details</a>
           </div>
         </div>
       </div>

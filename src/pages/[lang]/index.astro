@@ -5,46 +5,23 @@ import { getLocale } from '../../utils/getLocale';
 import { translations } from '../../i18n/translations.js';
 import OptimizedImage from '../../components/OptimizedImage.astro';
 
-// Dynamic routes
 export async function getStaticPaths() {
   return ['en', 'ko', 'zh'].map(lang => ({ params: { lang } }));
 }
 
-// Get locale from URL param
 const { lang } = Astro.params;
 const locale = getLocale(lang);
 
 const [
-  villas,
-  offers,
-  wellnessVenue,
-  diningExperience,
-  homeSliders,
-  pageDetails,
-  villaDetails,
-  offerDetails,
-  wellnessDetails,
-  culinaryDetails,
-  experienceDetails
+  villas, offers, wellnessVenue, diningExperience, homeSliders, pageDetails,
+  villaDetails, offerDetails, wellnessDetails, culinaryDetails, experienceDetails
 ] = await Promise.all([
-  client.fetch(`*[_type == "villa"] | order(order asc){
-    "slug": slug.current, title, excerpt, secondImageAlt, secondImage { asset-> { url } }
-  }`),
-  client.fetch(`*[_type == "offer"] | order(order asc){
-    "slug": slug.current, title, excerpt, mainImageAlt, mainImage { asset-> { url } }
-  }`),
-  client.fetch(`*[_type == "wellnessVenue"] | order(order asc){
-    "slug": slug.current, title, excerpt, secondImageAlt, secondImage { asset-> { url } }
-  }`),
-  client.fetch(`*[_type == "diningExperience"] | order(order asc){
-    "slug": slug.current, title, excerpt, secondImageAlt, secondImage { asset-> { url } }
-  }`),
-  client.fetch(`*[_type == "homeSlider"] | order(order asc){
-    title, image { asset-> { url } }
-  }`),
-  client.fetch(`*[_type == "page" && _id == "6b81d880-cd1c-4993-a985-a74eda7f419e"][0]{
-    title, subtitle, description, metaTitle, metaDescription, metaKeywords, mainImage { asset-> { url } }
-  }`),
+  client.fetch(`*[_type == "villa"] | order(order asc){ "slug": slug.current, title, excerpt, secondImageAlt, secondImage { asset-> { url } } }`),
+  client.fetch(`*[_type == "offer"] | order(order asc){ "slug": slug.current, title, excerpt, mainImageAlt, mainImage { asset-> { url } } }`),
+  client.fetch(`*[_type == "wellnessVenue"] | order(order asc){ "slug": slug.current, title, excerpt, secondImageAlt, secondImage { asset-> { url } } }`),
+  client.fetch(`*[_type == "diningExperience"] | order(order asc){ "slug": slug.current, title, excerpt, secondImageAlt, secondImage { asset-> { url } } }`),
+  client.fetch(`*[_type == "homeSlider"] | order(order asc){ title, image { asset-> { url } } }`),
+  client.fetch(`*[_type == "page" && _id == "6b81d880-cd1c-4993-a985-a74eda7f419e"][0]{ title, subtitle, description, metaTitle, metaDescription, metaKeywords, mainImage { asset-> { url } } }`),
   client.fetch(`*[_type == "settingHome" && _id == "203dafa9-65fe-4791-9bfa-713d49300733"][0]{ title, description }`),
   client.fetch(`*[_type == "settingHome" && _id == "d005d37f-034b-4a80-9cf3-1886e310e5e3"][0]{ title, description }`),
   client.fetch(`*[_type == "settingHome" && _id == "3e45dc06-f49d-48fc-abdc-7601afce5048"][0]{ title, description, mainImageAlt, mainImage { asset-> { url } } }`),
@@ -54,18 +31,16 @@ const [
 
 const title = pageDetails?.metaTitle?.[locale] ?? '';
 const description = pageDetails?.metaDescription?.[locale] ?? '';
-const baseUrl = new URL(Astro.request.url);
-const url = baseUrl.href;
+const url = new URL(Astro.request.url).href;
 const ogImage = pageDetails.mainImage?.asset?.url ?? '';
 const keywords = pageDetails.metaKeywords?.[locale] ?? '';
 ---
 
 <Layout {title} {description} {url} {ogImage} {keywords}>
-  <!-- HERO CAROUSEL SECTION -->
   <section class="relative w-full h-screen overflow-hidden">
     <div id="carousel" class="w-full h-full relative">
-      {homeSliders.map((homeSlider, index) => (
-        <div class={`carousel-slide w-full h-full absolute inset-0 transition-opacity duration-1000 ${index === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
+      {homeSliders.map((homeSlider, i) => (
+        <div class={`carousel-slide w-full h-full absolute inset-0 transition-opacity duration-1000 ${i === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
           <OptimizedImage
             src={homeSlider.image.asset.url}
             alt={homeSlider.title}
@@ -73,17 +48,16 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
             height={900}
             quality={75}
             className="w-full h-full"
-            fetchpriority={index === 0 ? 'high' : 'auto'}
-            loading={index === 0 ? 'eager' : 'lazy'}
+            fetchpriority={i === 0 ? 'high' : 'auto'}
+            loading={i === 0 ? 'eager' : 'lazy'}
           />
         </div>
       ))}
       <div class="absolute inset-0 bg-black/25 z-20"></div>
-      <button aria-label="Previous Slide" id="prevSlide" class="absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-3xl z-20">❮</button>
-      <button aria-label="Next Slide" id="nextSlide" class="absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-3xl z-20">❯</button>
+      <button aria-label="Previous Slide" id="prevSlide" class="absolute left-4 top-1/2 -translate-y-1/2 text-white text-3xl z-20">❮</button>
+      <button aria-label="Next Slide" id="nextSlide" class="absolute right-4 top-1/2 -translate-y-1/2 text-white text-3xl z-20">❯</button>
     </div>
-    <!-- Booking Form -->
-    <div class="absolute bottom-24 left-1/2 transform -translate-x-1/2 z-30 w-full max-w-4xl px-4">
+    <div class="absolute bottom-24 left-1/2 -translate-x-1/2 z-30 w-full max-w-4xl px-4">
       <form class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 text-sm md:text-base text-white w-full">
         <div class="flex flex-col w-full md:w-auto">
           <label class="uppercase text-base tracking-wide mb-1" for="flatpickr-date">Check In - Check Out</label>
@@ -105,8 +79,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
         </div>
       </form>
     </div>
-    <!-- Guests Modal -->
-    <div id="guests-modal" class="absolute bottom-[120px] left-1/2 transform -translate-x-1/2 bg-white text-black w-[360px] md:w-[640px] p-6 shadow-xl z-40 hidden">
+    <div id="guests-modal" class="absolute bottom-[120px] left-1/2 -translate-x-1/2 bg-white text-black w-[360px] md:w-[640px] p-6 shadow-xl z-40 hidden">
       <div class="flex justify-between items-start mb-4">
         <div class="text-center w-full font-semibold uppercase text-sm">Guests & Rooms</div>
         <button aria-label="Close Guests Modal" id="close-guests" type="button">✕</button>
@@ -157,7 +130,6 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
     </div>
   </section>
 
-  <!-- PAGE DESCRIPTION -->
   <section class="container mx-auto px-4 xl:px-10 2xl:px-0 py-16 md:py-24">
     <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
       <h1 class="font-title text-3xl sm:text-4xl md:text-5xl uppercase mb-4 md:mb-6 tracking-widest font-light">{pageDetails?.title?.[locale] ?? ''}</h1>
@@ -170,18 +142,14 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
   <!-- VILLA CAROUSEL -->
   <section class="container mx-auto px-4 xl:px-10 2xl:px-0 pt-10 md:pt-10">
     <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
-      <h2 class="font-title text-2xl md:text-4xl uppercase mb-4 md:mb-6 tracking-widest font-light">
-        {villaDetails?.title?.[locale] ?? ''}
-      </h2>
-      <p class="mb-10 md:mb-20 text-base md:text-lg">
-        {villaDetails?.description?.[locale] ?? ''}
-      </p>
+      <h2 class="font-title text-2xl md:text-4xl uppercase mb-4 md:mb-6 tracking-widest font-light">{villaDetails?.title?.[locale] ?? ''}</h2>
+      <p class="mb-10 md:mb-20 text-base md:text-lg">{villaDetails?.description?.[locale] ?? ''}</p>
     </div>
     <div id="villa-carousel" class="splide mb-8 md:mb-12" role="region" aria-label="Villa Carousel">
       <div class="splide__track">
         <div class="splide__list">
-          {villas.map((villa, index) => (
-            <div class="splide__slide transition-transform duration-500 ease-in-out" role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${villas.length}`}>
+          {villas.map((villa, i) => (
+            <div class="splide__slide transition-transform duration-500 ease-in-out" role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${villas.length}`}>
               <div class="bg-white overflow-hidden flex flex-col h-full">
                 <OptimizedImage
                   src={villa.secondImage?.asset?.url ?? ''}
@@ -192,16 +160,10 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
                   className="w-full h-auto aspect-[4/3] md:aspect-[16/9] 2xl:aspect-[4/3] transition duration-500"
                 />
                 <div class="p-4 md:p-6 flex flex-col flex-1">
-                  <h3 class="text-base md:text-lg tracking-widest uppercase font-title">
-                    {villa.title?.[locale] ?? villa.title?.en ?? ''}
-                  </h3>
-                  <p class="mt-2 text-sm md:text-base">
-                    {villa.excerpt?.[locale] ?? villa.excerpt?.en ?? ''}
-                  </p>
+                  <h3 class="text-base md:text-lg tracking-widest uppercase font-title">{villa.title?.[locale] ?? villa.title?.en ?? ''}</h3>
+                  <p class="mt-2 text-sm md:text-base">{villa.excerpt?.[locale] ?? villa.excerpt?.en ?? ''}</p>
                   <div class="flex-grow"></div>
-                  <a href={`/${locale}/villa/${villa.slug}`} class="text-base md:text-lg mt-4 inline-block text-black uppercase">
-                    {translations.btnexplore?.[locale] ?? 'Explore'}
-                  </a>
+                  <a href={`/${locale}/villa/${villa.slug}`} class="text-base md:text-lg mt-4 inline-block text-black uppercase">{translations.btnexplore?.[locale] ?? 'Explore'}</a>
                 </div>
               </div>
             </div>
@@ -211,16 +173,10 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
     </div>
     <div class="flex items-center gap-4 md:gap-6 mt-4 md:mt-8 justify-start">
       <button aria-label="Previous Villa" id="villa-prev" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="44" y1="12" x2="4" y2="12" />
-          <polyline points="12 20 4 12 12 4" />
-        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="44" y1="12" x2="4" y2="12" /><polyline points="12 20 4 12 12 4" /></svg>
       </button>
       <button aria-label="Next Villa" id="villa-next" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="4" y1="12" x2="44" y2="12" />
-          <polyline points="36 4 44 12 36 20" />
-        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="44" y2="12" /><polyline points="36 4 44 12 36 20" /></svg>
       </button>
     </div>
   </section>
@@ -234,8 +190,8 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
     <div id="offer-carousel" class="splide mb-8 md:mb-12" role="region" aria-label="Villa Carousel">
       <div class="splide__track">
         <div class="splide__list">
-          {offers.map((offer, index) => (
-            <div class="splide__slide transition-transform duration-500 ease-in-out" role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${offers.length}`}>
+          {offers.map((offer, i) => (
+            <div class="splide__slide transition-transform duration-500 ease-in-out" role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${offers.length}`}>
               <div class="bg-white overflow-hidden flex flex-col h-full">
                 <OptimizedImage
                   src={offer.mainImage.asset.url}
@@ -278,8 +234,8 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
     <div id="wellness-carousel" class="splide mb-8 md:mb-12" role="region" aria-label="Wellness Carousel">
       <div class="splide__track">
         <div class="splide__list">
-          {wellnessVenue.map((venue, index) => (
-            <div class="splide__slide transition-transform duration-500 ease-in-out" role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${wellnessVenue.length}`}>
+          {wellnessVenue.map((venue, i) => (
+            <div class="splide__slide transition-transform duration-500 ease-in-out" role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${wellnessVenue.length}`}>
               <div class="bg-white overflow-hidden flex flex-col h-full">
                 <OptimizedImage
                   src={venue.secondImage.asset.url}
@@ -322,8 +278,8 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
     <div id="culinary-carousel" class="splide mb-8 md:mb-12" role="region" aria-label="Culinary Carousel">
       <div class="splide__track">
         <div class="splide__list">
-          {diningExperience.map((dining, index) => (
-            <div class="splide__slide transition-transform duration-500 ease-in-out" role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${diningExperience.length}`}>
+          {diningExperience.map((dining, i) => (
+            <div class="splide__slide transition-transform duration-500 ease-in-out" role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${diningExperience.length}`}>
               <div class="bg-white overflow-hidden flex flex-col h-full">
                 <OptimizedImage
                   src={dining.secondImage.asset.url}
@@ -366,8 +322,8 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
     <div id="experience-carousel" class="splide mb-8 md:mb-12" role="region" aria-label="Experience Carousel">
       <div class="splide__track">
         <div class="splide__list">
-          {diningExperience.map((dining, index) => (
-            <div class="splide__slide transition-transform duration-500 ease-in-out" role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${diningExperience.length}`}>
+          {diningExperience.map((dining, i) => (
+            <div class="splide__slide transition-transform duration-500 ease-in-out" role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${diningExperience.length}`}>
               <div class="bg-white overflow-hidden flex flex-col h-full">
                 <OptimizedImage
                   src={dining.secondImage.asset.url}
@@ -403,171 +359,106 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
   <!-- SCRIPTS -->
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script is:inline>
-    // Booking form and guests modal logic
     document.addEventListener('DOMContentLoaded', () => {
-      // Flatpickr date picker setup
-      function getMonthsToShow() {
-        return window.innerWidth < 640 ? 1 : 2;
-      }
-      const today = new Date();
-      const tomorrow = new Date();
-      tomorrow.setDate(today.getDate() + 1);
-
+      function getMonthsToShow() { return window.innerWidth < 640 ? 1 : 2; }
+      const today = new Date(), tomorrow = new Date(); tomorrow.setDate(today.getDate() + 1);
       flatpickr("#flatpickr-date", {
-        mode: "range",
-        minDate: "today",
-        defaultDate: [today, tomorrow],
-        dateFormat: "Y-m-d",
-        altInput: true,
-        altFormat: "M j",
-        showMonths: getMonthsToShow()
+        mode: "range", minDate: "today", defaultDate: [today, tomorrow],
+        dateFormat: "Y-m-d", altInput: true, altFormat: "M j", showMonths: getMonthsToShow()
       });
-
       window.addEventListener("resize", () => {
         const fp = document.querySelector("#flatpickr-date")._flatpickr;
-        if (fp) {
-          const months = getMonthsToShow();
-          if (fp.config.showMonths !== months) {
-            fp.set("showMonths", months);
-          }
-        }
+        if (fp) { const m = getMonthsToShow(); if (fp.config.showMonths !== m) fp.set("showMonths", m); }
       });
-
-      // Guests modal elements
-      const guestsField = document.getElementById('guests-field');
-      const guestsModal = document.getElementById('guests-modal');
-      const guestsInput = document.getElementById('guests-input');
-      const closeGuests = document.getElementById('close-guests');
-      const confirmGuests = document.getElementById('confirm-guests');
-      const childrenSelect = document.getElementById('children');
-      const childAgesContainer = document.getElementById('child-ages-container');
-      const childAges = document.getElementById('child-ages');
-      const promoToggle = document.getElementById('toggle-promo');
-      const promoFields = document.getElementById('promo-fields');
-      const form = document.querySelector('form');
-
-      // Show guests modal
-      guestsField.addEventListener('click', (e) => {
-        e.stopPropagation();
-        guestsModal.classList.remove('hidden');
-      });
-
-      // Close guests modal
-      closeGuests.addEventListener('click', () => {
-        guestsModal.classList.add('hidden');
-      });
-
-      // Confirm guests selection
+      const guestsField = document.getElementById('guests-field'),
+        guestsModal = document.getElementById('guests-modal'),
+        guestsInput = document.getElementById('guests-input'),
+        closeGuests = document.getElementById('close-guests'),
+        confirmGuests = document.getElementById('confirm-guests'),
+        childrenSelect = document.getElementById('children'),
+        childAgesContainer = document.getElementById('child-ages-container'),
+        childAges = document.getElementById('child-ages'),
+        promoToggle = document.getElementById('toggle-promo'),
+        promoFields = document.getElementById('promo-fields'),
+        form = document.querySelector('form');
+      guestsField.addEventListener('click', e => { e.stopPropagation(); guestsModal.classList.remove('hidden'); });
+      closeGuests.addEventListener('click', () => guestsModal.classList.add('hidden'));
       confirmGuests.addEventListener('click', () => {
-        const adults = parseInt(document.getElementById('adults').value, 10);
-        const children = parseInt(childrenSelect.value, 10);
-        const rooms = parseInt(document.getElementById('rooms').value, 10);
+        const adults = +document.getElementById('adults').value,
+          children = +childrenSelect.value,
+          rooms = +document.getElementById('rooms').value;
         let summary = `${adults} Adult${adults > 1 ? 's' : ''}`;
         if (children > 0) summary += `, ${children} Child${children > 1 ? 'ren' : ''}`;
         summary += `, ${rooms} Room${rooms > 1 ? 's' : ''}`;
         guestsInput.value = summary;
         guestsModal.classList.add('hidden');
       });
-
-      // Hide modal when clicking outside
-      document.addEventListener('click', (e) => {
-        if (!guestsModal.contains(e.target) && !guestsField.contains(e.target)) {
-          guestsModal.classList.add('hidden');
-        }
+      document.addEventListener('click', e => {
+        if (!guestsModal.contains(e.target) && !guestsField.contains(e.target)) guestsModal.classList.add('hidden');
       });
-
-      // Children age fields
       childrenSelect.addEventListener('change', () => {
-        const count = parseInt(childrenSelect.value, 10);
+        const count = +childrenSelect.value;
         childAges.innerHTML = '';
         if (count > 0) {
           childAgesContainer.classList.remove('hidden');
           for (let i = 1; i <= count; i++) {
             const wrapper = document.createElement('div');
             wrapper.className = 'flex flex-col';
-            wrapper.innerHTML = `
-              <label class="text-xs mb-1">Child ${i} Age</label>
-              <select class="border px-2 py-1">
-                ${Array.from({ length: 18 }, (_, j) => `<option>${j + 1}</option>`).join('')}
-              </select>
-            `;
+            wrapper.innerHTML = `<label class="text-xs mb-1">Child ${i} Age</label>
+              <select class="border px-2 py-1">${Array.from({ length: 18 }, (_, j) => `<option>${j + 1}</option>`).join('')}</select>`;
             childAges.appendChild(wrapper);
           }
-        } else {
-          childAgesContainer.classList.add('hidden');
-        }
+        } else childAgesContainer.classList.add('hidden');
       });
-
-      // Promo code toggle
       promoToggle.addEventListener('click', () => {
         promoFields.classList.toggle('hidden');
         promoToggle.innerHTML = promoFields.classList.contains('hidden')
           ? `<span class="text-xl">+</span> Promo Code`
           : `<span class="text-xl">−</span> Promo Code`;
       });
-
-      // Booking form submit
-      form.addEventListener('submit', (e) => {
+      form.addEventListener('submit', e => {
         e.preventDefault();
         const dateRange = document.querySelector("#flatpickr-date")._flatpickr.selectedDates;
-        if (!dateRange || dateRange.length < 2) {
-          alert("Please select check-in and check-out dates");
-          return;
-        }
-        const arrival = dateRange[0].toLocaleDateString('sv-SE');
-        const departure = dateRange[1].toLocaleDateString('sv-SE');
-        const adults = parseInt(document.getElementById("adults").value, 10);
-        const children = parseInt(document.getElementById("children").value, 10);
-        const rooms = parseInt(document.getElementById("rooms").value, 10);
-
-        const baseUrl = "https://www.book-secure.com/index.php?s=results";
-        const params = new URLSearchParams();
-        params.set("property", "idbal31692");
-        params.set("arrival", arrival);
-        params.set("departure", departure);
-        params.set("locale", "en_GB");
-        params.set("currency", "IDR");
-        params.set("stid", "986w12cwy");
-
-        // Promo code
+        if (!dateRange || dateRange.length < 2) return alert("Please select check-in and check-out dates");
+        const arrival = dateRange[0].toLocaleDateString('sv-SE'),
+          departure = dateRange[1].toLocaleDateString('sv-SE'),
+          adults = +document.getElementById("adults").value,
+          children = +document.getElementById("children").value,
+          rooms = +document.getElementById("rooms").value,
+          baseUrl = "https://www.book-secure.com/index.php?s=results",
+          params = new URLSearchParams({
+            property: "idbal31692", arrival, departure, locale: "en_GB", currency: "IDR", stid: "986w12cwy"
+          });
         if (promoFields && !promoFields.classList.contains("hidden")) {
           const code = promoFields.querySelectorAll("input")[0]?.value.trim();
           if (code) params.set("code", code);
         }
-
-        // Room guests
         for (let i = 1; i <= rooms; i++) {
           params.set(`adults${i}`, adults);
           params.set(`children${i}`, children);
         }
-
-        const fullUrl = `${baseUrl}&${params.toString()}`;
-        window.location.href = fullUrl;
+        window.location.href = `${baseUrl}&${params.toString()}`;
       });
     });
   </script>
   <script is:inline>
-    // Hero image carousel logic
     document.addEventListener('DOMContentLoaded', () => {
       const slides = document.querySelectorAll('.carousel-slide');
       let currentSlide = 0;
-      function showSlide(index) {
-        slides.forEach((slide, i) => {
-          if (i === index) {
-            slide.classList.remove('opacity-0', 'z-0');
-            slide.classList.add('opacity-100', 'z-10');
-          } else {
-            slide.classList.remove('opacity-100', 'z-10');
-            slide.classList.add('opacity-0', 'z-0');
-          }
-        });
+      function showSlide(idx) {
+        slides.forEach((slide, i) =>
+          slide.classList.toggle('opacity-100', i === idx),
+          slide.classList.toggle('z-10', i === idx),
+          slide.classList.toggle('opacity-0', i !== idx),
+          slide.classList.toggle('z-0', i !== idx)
+        );
       }
-      document.getElementById('prevSlide').addEventListener('click', (e) => {
+      document.getElementById('prevSlide').addEventListener('click', e => {
         e.stopPropagation();
         currentSlide = (currentSlide - 1 + slides.length) % slides.length;
         showSlide(currentSlide);
       });
-      document.getElementById('nextSlide').addEventListener('click', (e) => {
+      document.getElementById('nextSlide').addEventListener('click', e => {
         e.stopPropagation();
         currentSlide = (currentSlide + 1) % slides.length;
         showSlide(currentSlide);
@@ -582,43 +473,16 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
   <script>
     import "@splidejs/splide/css";
     import Splide from "@splidejs/splide";
-    const carousels = [
-      {
-        id: "#villa-carousel",
-        prev: "villa-prev",
-        next: "villa-next",
-        options: { type: "slide", perPage: 2, gap: "4rem", speed: 800, easing: "ease-in-out", arrows: false, pagination: false, breakpoints: { 1366: { gap: "2rem"}, 1024: { gap: "2rem", perPage: 2 }, 768: { perPage: 1 } } }
-      },
-      {
-        id: "#offer-carousel",
-        prev: "offer-prev",
-        next: "offer-next",
-        options: { type: "slide", perPage: 3, gap: "4rem", speed: 800, easing: "ease-in-out", arrows: false, pagination: false, breakpoints: { 1366: { gap: "2rem"}, 1024: { gap: "2rem",perPage: 2 }, 768: { perPage: 1, gap: "2rem", }, 640: { perPage: 1 } } }
-      },
-      {
-        id: "#wellness-carousel",
-        prev: "wellness-prev",
-        next: "wellness-next",
-        options: { type: "slide", perPage: 2, gap: "4rem", speed: 800, easing: "ease-in-out", arrows: false, pagination: false, breakpoints: { 1366: { gap: "2rem"}, 1024: { gap: "2rem",perPage: 2 }, 768: { perPage: 1, gap: "2rem", }, 640: { perPage: 1 } } }
-      },
-      {
-        id: "#culinary-carousel",
-        prev: "culinary-prev",
-        next: "culinary-next",
-        options: { type: "slide", perPage: 3, gap: "4rem", speed: 800, easing: "ease-in-out", arrows: false, pagination: false, breakpoints: { 1366: { gap: "2rem"}, 1024: { gap: "2rem",perPage: 2 }, 768: { perPage: 1, gap: "2rem", }, 640: { perPage: 1 } } }
-      },
-      {
-        id: "#experience-carousel",
-        prev: "experience-prev",
-        next: "experience-next",
-        options: { type: "slide", perPage: 3, gap: "4rem", speed: 800, easing: "ease-in-out", arrows: false, pagination: false, breakpoints: { 1366: { gap: "2rem"}, 1024: { gap: "2rem",perPage: 2 }, 768: { perPage: 1, gap: "2rem", }, 640: { perPage: 1 } } }
-      }
-    ];
-    carousels.forEach(({ id, prev, next, options }) => {
+    [
+      { id: "#villa-carousel", prev: "villa-prev", next: "villa-next", options: { type: "slide", perPage: 2, gap: "4rem", speed: 800, easing: "ease-in-out", arrows: false, pagination: false, breakpoints: { 1366: { gap: "2rem"}, 1024: { gap: "2rem", perPage: 2 }, 768: { perPage: 1 } } } },
+      { id: "#offer-carousel", prev: "offer-prev", next: "offer-next", options: { type: "slide", perPage: 3, gap: "4rem", speed: 800, easing: "ease-in-out", arrows: false, pagination: false, breakpoints: { 1366: { gap: "2rem"}, 1024: { gap: "2rem",perPage: 2 }, 768: { perPage: 1, gap: "2rem", }, 640: { perPage: 1 } } } },
+      { id: "#wellness-carousel", prev: "wellness-prev", next: "wellness-next", options: { type: "slide", perPage: 2, gap: "4rem", speed: 800, easing: "ease-in-out", arrows: false, pagination: false, breakpoints: { 1366: { gap: "2rem"}, 1024: { gap: "2rem",perPage: 2 }, 768: { perPage: 1, gap: "2rem", }, 640: { perPage: 1 } } } },
+      { id: "#culinary-carousel", prev: "culinary-prev", next: "culinary-next", options: { type: "slide", perPage: 3, gap: "4rem", speed: 800, easing: "ease-in-out", arrows: false, pagination: false, breakpoints: { 1366: { gap: "2rem"}, 1024: { gap: "2rem",perPage: 2 }, 768: { perPage: 1, gap: "2rem", }, 640: { perPage: 1 } } } },
+      { id: "#experience-carousel", prev: "experience-prev", next: "experience-next", options: { type: "slide", perPage: 3, gap: "4rem", speed: 800, easing: "ease-in-out", arrows: false, pagination: false, breakpoints: { 1366: { gap: "2rem"}, 1024: { gap: "2rem",perPage: 2 }, 768: { perPage: 1, gap: "2rem", }, 640: { perPage: 1 } } } }
+    ].forEach(({ id, prev, next, options }) => {
       const splide = new Splide(id, options);
       splide.on('mounted move', () => {
-        const prevBtn = document.getElementById(prev);
-        const nextBtn = document.getElementById(next);
+        const prevBtn = document.getElementById(prev), nextBtn = document.getElementById(next);
         prevBtn.disabled = splide.index === 0;
         prevBtn.classList.toggle('opacity-30', splide.index === 0);
         prevBtn.classList.toggle('cursor-not-allowed', splide.index === 0);

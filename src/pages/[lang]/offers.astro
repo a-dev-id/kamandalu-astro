@@ -2,73 +2,44 @@
 import Layout from '../../layouts/Base.astro';
 import client from '../../lib/sanityClient';
 import { getLocale } from '../../utils/getLocale';
-import { translations } from '../../i18n/translations.js';
 import OptimizedImage from '../../components/OptimizedImage.astro';
 
-// Generate static paths for supported languages
 export async function getStaticPaths() {
-  return ['en', 'ko', 'zh'].map(lang => ({
-    params: { lang }
-  }));
+  return ['en', 'ko', 'zh'].map(lang => ({ params: { lang } }));
 }
 
-// Get locale from URL param
 const { lang } = Astro.params;
 const locale = getLocale(lang);
 
-// Fetch page meta and hero image
 const pageDetails = await client.fetch(`*[_type == "page" && _id == "2ff8dda1-8c5a-4622-b79c-e217495e327f"][0]{
-  title,
-  subtitle,
-  description,
-  metaTitle,
-  metaDescription,
-  metaKeywords,
-  mainImageAlt,
-  mainImage {
-    asset->{url}
-  }
+  title, subtitle, description, metaTitle, metaDescription, metaKeywords,
+  mainImageAlt, mainImage { asset->{url} }
 }`);
 
-// Fetch all offers, ordered by 'order' field
 const offers = await client.fetch(`*[_type == "offer"] | order(order asc){
-  "slug": slug.current,
-  title,
-  excerpt,
-  mainImage {
-    asset->{url}
-  },
-  mainImageAlt,
-  secondImage {
-    asset->{url}
-  },
-  secondImageAlt
+  "slug": slug.current, title, excerpt,
+  mainImage { asset->{url} }, mainImageAlt,
+  secondImage { asset->{url} }, secondImageAlt
 }`);
 
-// Set meta title and description for SEO
 const title = pageDetails?.metaTitle?.[locale] ?? '';
 const description = pageDetails?.metaDescription?.[locale] ?? '';
-const baseUrl = new URL(Astro.request.url);
-const url = baseUrl.href;
+const url = new URL(Astro.request.url).href;
 const ogImage = pageDetails.mainImage?.asset?.url ?? '';
 const keywords = pageDetails.metaKeywords?.[locale] ?? '';
 ---
 
 <Layout {title} {description} {url} {ogImage} {keywords}>
-  {/* Hero Section */}
   <section class="relative w-full h-[50vh] md:h-[60vh] lg:h-[75vh] overflow-hidden">
     <OptimizedImage
       src={pageDetails.mainImage.asset.url}
       alt={pageDetails.mainImageAlt?.[locale] ?? ''}
-      width={1600}
-      height={900}
-      quality={75}
+      width={1600} height={900} quality={75}
       className="w-full h-full object-cover"
     />
     <div class="absolute inset-0 bg-black/25 z-20"></div>
   </section>
 
-  {/* Page Title & Description */}
   <section class="container mx-auto px-4 xl:px-10 2xl:px-0 pt-16 md:pt-24">
     <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
       <h1 class="font-title text-3xl sm:text-4xl md:text-5xl uppercase mb-4 md:mb-6 tracking-widest font-light">
@@ -80,18 +51,14 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
     </div>
   </section>
 
-  {/* Offers List */}
   <section class="container mx-auto px-4 xl:px-10 2xl:px-0 py-12">
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-      {offers.map((offer, index) => (
+      {offers.map((offer) => (
         <div class="transition-transform duration-500 ease-in-out bg-white overflow-hidden flex flex-col h-full">
           <OptimizedImage
             src={offer.secondImage?.asset?.url ?? offer.mainImage?.asset?.url}
             alt={offer.secondImageAlt?.[locale] ?? offer.mainImageAlt?.[locale] ?? 'Offer image'}
-            width={800}
-            height={600}
-            quality={75}
-            loading="lazy"
+            width={800} height={600} quality={75} loading="lazy"
             className="w-full h-auto aspect-[4/3] transition duration-500"
           />
           <div class="p-4 md:p-6 flex flex-col flex-1">
@@ -102,27 +69,20 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
               {offer.excerpt?.[locale] ?? offer.excerpt?.en}
             </p>
             <div class="flex-grow"></div>
-  
             <div class="mt-6 flex flex-wrap gap-4 lg:mb-20 mb-10">
               <a
                 href={`/${locale}/offer/${offer.slug}`}
                 class="bg-white text-black px-4 py-3 md:px-4 md:py-2 text-xs font-title tracking-widest transition-colors duration-300 border border-black hover:bg-[#916B2C] hover:text-white hover:border-transparent inline-block text-center"
-              >
-                DETAILS
-              </a>
+              >DETAILS</a>
               <a
                 href={`https://www.book-secure.com/index.php?s=results&property=idbal31692&locale=${locale}_GB&stid=986w12cwy`}
                 class="hover:bg-white hover:text-black px-4 py-3 md:px-4 md:py-2 text-xs font-title tracking-widest transition-colors duration-300 border hover:border-black bg-[#916B2C] text-white border-transparent inline-block text-center"
                 target="_blank" rel="noopener noreferrer"
-              >
-                BOOK NOW
-              </a>
+              >BOOK NOW</a>
             </div>
           </div>
         </div>
       ))}
     </div>
   </section>
-  
-  
 </Layout>

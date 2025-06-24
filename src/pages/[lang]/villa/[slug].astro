@@ -5,44 +5,23 @@ import { getLocale } from '../../../utils/getLocale';
 import OptimizedImage from '../../../components/OptimizedImage.astro';
 import { toHTML } from '@portabletext/to-html';
 
-// Generate all static paths for villas and languages
 export async function getStaticPaths() {
   const slugs = await client.fetch(`*[_type == "villa" && defined(slug.current)]{ "slug": slug.current }`);
   const languages = ['en', 'ko', 'zh'];
-  return languages.flatMap(lang =>
-    slugs.map(villa => ({
-      params: { lang, slug: villa.slug }
-    }))
-  );
+  return languages.flatMap(lang => slugs.map(villa => ({ params: { lang, slug: villa.slug } })));
 }
 
-// Get route params and locale
 const { lang, slug } = Astro.params;
 const locale = getLocale(lang);
+const safeArray = arr => Array.isArray(arr) ? arr : [];
 
-// Helper to safely handle Portable Text arrays
-const safeArray = (arr) => Array.isArray(arr) ? arr : [];
-
-// Fetch villa detail from Sanity
 const villa = await client.fetch(`*[_type == "villa" && slug.current == $slug][0]{
-  title,
-  excerpt,
-  description,
-  mainImage { asset->{url} },
-  mainImageAlt,
-  villaGallery[] { asset->{url} },
-  villaFeatures,
-  inVillaEntertainment,
-  complimentaries,
-  area,
-  maximumOccupancy,
-  others,
-  metaTitle,
-  metaDescription,
-  metaKeywords,
+  title, excerpt, description, mainImage { asset->{url} }, mainImageAlt,
+  villaGallery[] { asset->{url} }, villaFeatures, inVillaEntertainment,
+  complimentaries, area, maximumOccupancy, others,
+  metaTitle, metaDescription, metaKeywords,
 }`, { slug });
 
-// Convert Portable Text to HTML strings safely with fallback
 const htmlFields = {
   villaFeatures: toHTML(safeArray(villa?.villaFeatures?.[locale])),
   inVillaEntertainment: toHTML(safeArray(villa?.inVillaEntertainment?.[locale])),
@@ -54,15 +33,12 @@ const htmlFields = {
 
 const title = villa?.metaTitle?.[locale] ?? '';
 const description = villa?.metaDescription?.[locale] ?? '';
-const baseUrl = new URL(Astro.request.url);
-const url = baseUrl.href;
+const url = new URL(Astro.request.url).href;
 const ogImage = villa.mainImage?.asset?.url ?? '';
 const keywords = villa.metaKeywords?.[locale] ?? '';
 ---
 
-<Layout title={title} description={description} {url} {ogImage} {keywords}>
-
-  <!-- Hero Section -->
+<Layout {title} {description} {url} {ogImage} {keywords}>
   <section class="relative w-full h-[50vh] md:h-[60vh] lg:h-[75vh] overflow-hidden">
     <OptimizedImage
       src={villa.mainImage.asset.url}
@@ -75,32 +51,24 @@ const keywords = villa.metaKeywords?.[locale] ?? '';
     <div class="absolute inset-0 bg-black/25 z-20"></div>
   </section>
 
-  <!-- Page Title & Description -->
   <section class="container mx-auto px-4 xl:px-10 2xl:px-0 py-16 md:py-24">
     <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
-      <h1 class="font-title text-3xl sm:text-4xl md:text-5xl uppercase mb-4 md:mb-6 tracking-widest font-light">
-        {title}
-      </h1>
-      <p class="mb-12 md:mb-18 text-base md:text-lg">
-        {villa?.description?.[locale] ?? ''}
-      </p>
+      <h1 class="font-title text-3xl sm:text-4xl md:text-5xl uppercase mb-4 md:mb-6 tracking-widest font-light">{title}</h1>
+      <p class="mb-12 md:mb-18 text-base md:text-lg">{villa?.description?.[locale] ?? ''}</p>
       <a
         href="https://www.book-secure.com/index.php?s=results&property=idbal31692&locale=en_GB&currency=IDR&stid=986w12cwy"
         class="bg-white text-black px-4 py-3 md:px-6 md:py-4 text-xs md:text-sm font-title tracking-widest transition-colors duration-300 border border-black hover:bg-[#916B2C] hover:text-white hover:border-transparent inline-block"
-      >
-        CHECK RATES
-      </a>
+      >CHECK RATES</a>
     </div>
   </section>
 
-  <!-- Image Gallery -->
   <section class="container mx-auto px-4 xl:px-10 2xl:px-0 pb-12">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
       <div class="grid grid-cols-2 gap-4 md:col-span-2">
-        {(villa?.villaGallery ?? []).slice(0, 4).map((image, index) => (
+        {(villa?.villaGallery ?? []).slice(0, 4).map((image, i) => (
           <img
             src={image.asset.url}
-            alt={`${title} - Image ${index + 1}`}
+            alt={`${title} - Image ${i + 1}`}
             class="w-full h-auto object-cover aspect-[16/9] 2xl:aspect-[4/3]"
             loading="lazy"
           />
@@ -126,7 +94,6 @@ const keywords = villa.metaKeywords?.[locale] ?? '';
     </div>
   </section>
 
-  <!-- Gallery Modal -->
   {(villa?.villaGallery ?? []).length > 0 && (
     <div id="galleryModal" class="fixed inset-0 bg-black/90 z-50 hidden flex flex-col items-center justify-center px-4 py-8" role="dialog" aria-modal="true" aria-labelledby="galleryLabel" tabindex="-1">
       <button id="closeGallery" class="absolute top-4 right-4 text-white text-3xl hover:scale-110 transition" aria-label="Close gallery modal">×</button>
@@ -140,11 +107,11 @@ const keywords = villa.metaKeywords?.[locale] ?? '';
           <div id="galleryCarousel" class="splide w-full" aria-labelledby="galleryLabel" role="region" tabindex="0">
             <div class="splide__track mb-4">
               <ul class="splide__list">
-                {(villa.villaGallery ?? []).map((image, index) => (
+                {(villa.villaGallery ?? []).map((image, i) => (
                   <li class="splide__slide">
                     <img
                       src={image.asset.url}
-                      alt={`${title} - Image ${index + 1}`}
+                      alt={`${title} - Image ${i + 1}`}
                       class="w-full h-auto object-cover max-h-[80vh] mx-auto rounded"
                       loading="lazy"
                     />
@@ -164,7 +131,6 @@ const keywords = villa.metaKeywords?.[locale] ?? '';
     </div>
   )}
 
-  <!-- Services & Amenities Accordion -->
   <section class="container mx-auto px-4 xl:px-10 2xl:px-0 py-12">
     <div class="border-t border-gray-300">
       <button
@@ -225,7 +191,6 @@ const keywords = villa.metaKeywords?.[locale] ?? '';
     </div>
   </section>
 
-  <!-- Accordion Toggle Script -->
   <script is:inline>
     document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('.toggle-btn').forEach(btn => {
@@ -233,10 +198,8 @@ const keywords = villa.metaKeywords?.[locale] ?? '';
           const targetId = btn.dataset.target;
           const panel = document.getElementById(targetId);
           const icon = document.querySelector(`svg[data-icon][data-target="${targetId}"]`);
-
           const expanded = btn.getAttribute('aria-expanded') === 'true';
-          btn.setAttribute('aria-expanded', String(!expanded));
-
+          btn.setAttribute('aria-expanded', !expanded);
           panel.classList.toggle('hidden');
           icon.classList.toggle('rotate-180');
         });
@@ -244,7 +207,6 @@ const keywords = villa.metaKeywords?.[locale] ?? '';
     });
   </script>
 
-  <!-- Gallery Modal Script -->
   <script is:inline>
     document.addEventListener("DOMContentLoaded", () => {
       const openBtn = document.getElementById("openGallery");
@@ -254,18 +216,14 @@ const keywords = villa.metaKeywords?.[locale] ?? '';
       const nextBtn = document.getElementById("galleryNext");
       let gallerySplide = null;
 
-      openBtn?.addEventListener("click", (e) => {
+      openBtn?.addEventListener("click", e => {
         e.preventDefault();
         modal.classList.remove("hidden");
         document.body.classList.add("overflow-hidden");
         setTimeout(() => {
           if (!gallerySplide) {
             gallerySplide = new Splide('#galleryCarousel', {
-              type: 'loop',
-              perPage: 1,
-              arrows: false,
-              pagination: true,
-              speed: 600,
+              type: 'loop', perPage: 1, arrows: false, pagination: true, speed: 600,
             }).mount();
             prevBtn?.addEventListener('click', () => gallerySplide.go('<'));
             nextBtn?.addEventListener('click', () => gallerySplide.go('>'));
@@ -278,7 +236,7 @@ const keywords = villa.metaKeywords?.[locale] ?? '';
         document.body.classList.remove("overflow-hidden");
       });
 
-      modal.addEventListener("click", (e) => {
+      modal.addEventListener("click", e => {
         if (e.target === modal) {
           modal.classList.add("hidden");
           document.body.classList.remove("overflow-hidden");
@@ -288,13 +246,7 @@ const keywords = villa.metaKeywords?.[locale] ?? '';
   </script>
 
   <style>
-    .custom-list ul {
-      list-style-type: disc;
-      padding-left: 1.25rem;
-    }
-    .custom-list li {
-      margin-bottom: 0.25rem;
-    }
+    .custom-list ul { list-style-type: disc; padding-left: 1.25rem; }
+    .custom-list li { margin-bottom: 0.25rem; }
   </style>
-
 </Layout>
