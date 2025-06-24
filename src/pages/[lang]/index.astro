@@ -357,142 +357,190 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
   </section>
 
   <!-- SCRIPTS -->
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-  <script is:inline>
-    document.addEventListener('DOMContentLoaded', () => {
-      function getMonthsToShow() { return window.innerWidth < 640 ? 1 : 2; }
-      const today = new Date(), tomorrow = new Date(); tomorrow.setDate(today.getDate() + 1);
-      flatpickr("#flatpickr-date", {
-        mode: "range", minDate: "today", defaultDate: [today, tomorrow],
-        dateFormat: "Y-m-d", altInput: true, altFormat: "M j", showMonths: getMonthsToShow()
-      });
-      window.addEventListener("resize", () => {
-        const fp = document.querySelector("#flatpickr-date")._flatpickr;
-        if (fp) { const m = getMonthsToShow(); if (fp.config.showMonths !== m) fp.set("showMonths", m); }
-      });
-      const guestsField = document.getElementById('guests-field'),
-        guestsModal = document.getElementById('guests-modal'),
-        guestsInput = document.getElementById('guests-input'),
-        closeGuests = document.getElementById('close-guests'),
-        confirmGuests = document.getElementById('confirm-guests'),
-        childrenSelect = document.getElementById('children'),
-        childAgesContainer = document.getElementById('child-ages-container'),
-        childAges = document.getElementById('child-ages'),
-        promoToggle = document.getElementById('toggle-promo'),
-        promoFields = document.getElementById('promo-fields'),
-        form = document.querySelector('form');
-      guestsField.addEventListener('click', e => { e.stopPropagation(); guestsModal.classList.remove('hidden'); });
-      closeGuests.addEventListener('click', () => guestsModal.classList.add('hidden'));
-      confirmGuests.addEventListener('click', () => {
-        const adults = +document.getElementById('adults').value,
-          children = +childrenSelect.value,
-          rooms = +document.getElementById('rooms').value;
-        let summary = `${adults} Adult${adults > 1 ? 's' : ''}`;
-        if (children > 0) summary += `, ${children} Child${children > 1 ? 'ren' : ''}`;
-        summary += `, ${rooms} Room${rooms > 1 ? 's' : ''}`;
-        guestsInput.value = summary;
-        guestsModal.classList.add('hidden');
-      });
-      document.addEventListener('click', e => {
-        if (!guestsModal.contains(e.target) && !guestsField.contains(e.target)) guestsModal.classList.add('hidden');
-      });
-      childrenSelect.addEventListener('change', () => {
-        const count = +childrenSelect.value;
-        childAges.innerHTML = '';
-        if (count > 0) {
-          childAgesContainer.classList.remove('hidden');
-          for (let i = 1; i <= count; i++) {
-            const wrapper = document.createElement('div');
-            wrapper.className = 'flex flex-col';
-            wrapper.innerHTML = `<label class="text-xs mb-1">Child ${i} Age</label>
-              <select class="border px-2 py-1">${Array.from({ length: 18 }, (_, j) => `<option>${j + 1}</option>`).join('')}</select>`;
-            childAges.appendChild(wrapper);
-          }
-        } else childAgesContainer.classList.add('hidden');
-      });
-      promoToggle.addEventListener('click', () => {
-        promoFields.classList.toggle('hidden');
-        promoToggle.innerHTML = promoFields.classList.contains('hidden')
-          ? `<span class="text-xl">+</span> Promo Code`
-          : `<span class="text-xl">−</span> Promo Code`;
-      });
-      form.addEventListener('submit', e => {
-        e.preventDefault();
-        const dateRange = document.querySelector("#flatpickr-date")._flatpickr.selectedDates;
-        if (!dateRange || dateRange.length < 2) return alert("Please select check-in and check-out dates");
-        const arrival = dateRange[0].toLocaleDateString('sv-SE'),
-          departure = dateRange[1].toLocaleDateString('sv-SE'),
-          adults = +document.getElementById("adults").value,
-          children = +document.getElementById("children").value,
-          rooms = +document.getElementById("rooms").value,
-          baseUrl = "https://www.book-secure.com/index.php?s=results",
-          params = new URLSearchParams({
-            property: "idbal31692", arrival, departure, locale: "en_GB", currency: "IDR", stid: "986w12cwy"
-          });
-        if (promoFields && !promoFields.classList.contains("hidden")) {
-          const code = promoFields.querySelectorAll("input")[0]?.value.trim();
-          if (code) params.set("code", code);
-        }
-        for (let i = 1; i <= rooms; i++) {
-          params.set(`adults${i}`, adults);
-          params.set(`children${i}`, children);
-        }
-        window.location.href = `${baseUrl}&${params.toString()}`;
-      });
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Flatpickr
+    function getMonthsToShow() { return window.innerWidth < 640 ? 1 : 2; }
+    const today = new Date(), tomorrow = new Date(); tomorrow.setDate(today.getDate() + 1);
+    flatpickr("#flatpickr-date", {
+      mode: "range",
+      minDate: "today",
+      defaultDate: [today, tomorrow],
+      dateFormat: "Y-m-d",
+      altInput: true,
+      altFormat: "M j",
+      showMonths: getMonthsToShow()
     });
-  </script>
-  <script is:inline>
-    document.addEventListener('DOMContentLoaded', () => {
-      const slides = document.querySelectorAll('.carousel-slide');
-      let currentSlide = 0;
-      function showSlide(idx) {
-        slides.forEach((slide, i) =>
-          slide.classList.toggle('opacity-100', i === idx),
-          slide.classList.toggle('z-10', i === idx),
-          slide.classList.toggle('opacity-0', i !== idx),
-          slide.classList.toggle('z-0', i !== idx)
-        );
+
+    window.addEventListener("resize", () => {
+      const fp = document.querySelector("#flatpickr-date")._flatpickr;
+      if (fp) {
+        const m = getMonthsToShow();
+        if (fp.config.showMonths !== m) fp.set("showMonths", m);
       }
-      document.getElementById('prevSlide').addEventListener('click', e => {
-        e.stopPropagation();
-        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-        showSlide(currentSlide);
+    });
+
+    // Guests Modal Logic
+    const guestsField = document.getElementById('guests-field'),
+          guestsModal = document.getElementById('guests-modal'),
+          guestsInput = document.getElementById('guests-input'),
+          closeGuests = document.getElementById('close-guests'),
+          confirmGuests = document.getElementById('confirm-guests'),
+          childrenSelect = document.getElementById('children'),
+          childAgesContainer = document.getElementById('child-ages-container'),
+          childAges = document.getElementById('child-ages'),
+          promoToggle = document.getElementById('toggle-promo'),
+          promoFields = document.getElementById('promo-fields'),
+          form = document.querySelector('form');
+
+    guestsField.addEventListener('click', e => {
+      e.stopPropagation();
+      guestsModal.classList.remove('hidden');
+    });
+
+    closeGuests.addEventListener('click', () => guestsModal.classList.add('hidden'));
+
+    confirmGuests.addEventListener('click', () => {
+      const adults = +document.getElementById('adults').value,
+            children = +childrenSelect.value,
+            rooms = +document.getElementById('rooms').value;
+      let summary = `${adults} Adult${adults > 1 ? 's' : ''}`;
+      if (children > 0) summary += `, ${children} Child${children > 1 ? 'ren' : ''}`;
+      summary += `, ${rooms} Room${rooms > 1 ? 's' : ''}`;
+      guestsInput.value = summary;
+      guestsModal.classList.add('hidden');
+    });
+
+    document.addEventListener('click', e => {
+      if (!guestsModal.contains(e.target) && !guestsField.contains(e.target)) {
+        guestsModal.classList.add('hidden');
+      }
+    });
+
+    childrenSelect.addEventListener('change', () => {
+      const count = +childrenSelect.value;
+      childAges.innerHTML = '';
+      if (count > 0) {
+        childAgesContainer.classList.remove('hidden');
+        for (let i = 1; i <= count; i++) {
+          const wrapper = document.createElement('div');
+          wrapper.className = 'flex flex-col';
+          wrapper.innerHTML = `<label class="text-xs mb-1">Child ${i} Age</label>
+            <select class="border px-2 py-1">${Array.from({ length: 18 }, (_, j) => `<option>${j + 1}</option>`).join('')}</select>`;
+          childAges.appendChild(wrapper);
+        }
+      } else {
+        childAgesContainer.classList.add('hidden');
+      }
+    });
+
+    promoToggle.addEventListener('click', () => {
+      promoFields.classList.toggle('hidden');
+      promoToggle.innerHTML = promoFields.classList.contains('hidden')
+        ? `<span class="text-xl">+</span> Promo Code`
+        : `<span class="text-xl">−</span> Promo Code`;
+    });
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const dateRange = document.querySelector("#flatpickr-date")._flatpickr.selectedDates;
+      if (!dateRange || dateRange.length < 2) return alert("Please select check-in and check-out dates");
+
+      const arrival = dateRange[0].toLocaleDateString('sv-SE'),
+            departure = dateRange[1].toLocaleDateString('sv-SE'),
+            adults = +document.getElementById("adults").value,
+            children = +document.getElementById("children").value,
+            rooms = +document.getElementById("rooms").value,
+            baseUrl = "https://www.book-secure.com/index.php?s=results",
+            params = new URLSearchParams({
+              property: "idbal31692",
+              arrival,
+              departure,
+              locale: "en_GB",
+              currency: "IDR",
+              stid: "986w12cwy"
+            });
+
+      if (promoFields && !promoFields.classList.contains("hidden")) {
+        const code = promoFields.querySelectorAll("input")[0]?.value.trim();
+        if (code) params.set("code", code);
+      }
+
+      for (let i = 1; i <= rooms; i++) {
+        params.set(`adults${i}`, adults);
+        params.set(`children${i}`, children);
+      }
+
+      window.location.href = `${baseUrl}&${params.toString()}`;
+    });
+  });
+</script>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const slides = document.querySelectorAll('.carousel-slide');
+    let currentSlide = 0;
+
+    function showSlide(idx) {
+      slides.forEach((slide, i) => {
+        if (i === idx) {
+          slide.classList.add('opacity-100', 'z-10');
+          slide.classList.remove('opacity-0', 'z-0');
+        } else {
+          slide.classList.add('opacity-0', 'z-0');
+          slide.classList.remove('opacity-100', 'z-10');
+        }
       });
-      document.getElementById('nextSlide').addEventListener('click', e => {
-        e.stopPropagation();
-        currentSlide = (currentSlide + 1) % slides.length;
-        showSlide(currentSlide);
-      });
-      setInterval(() => {
-        currentSlide = (currentSlide + 1) % slides.length;
-        showSlide(currentSlide);
-      }, 5000);
+    }
+
+    document.getElementById('prevSlide').addEventListener('click', e => {
+      e.stopPropagation();
+      currentSlide = (currentSlide - 1 + slides.length) % slides.length;
       showSlide(currentSlide);
     });
-  </script>
-  <script>
-    import "@splidejs/splide/css";
-    import Splide from "@splidejs/splide";
-    [
-      { id: "#villa-carousel", prev: "villa-prev", next: "villa-next", options: { type: "slide", perPage: 2, gap: "4rem", speed: 800, easing: "ease-in-out", arrows: false, pagination: false, breakpoints: { 1366: { gap: "2rem"}, 1024: { gap: "2rem", perPage: 2 }, 768: { perPage: 1 } } } },
-      { id: "#offer-carousel", prev: "offer-prev", next: "offer-next", options: { type: "slide", perPage: 3, gap: "4rem", speed: 800, easing: "ease-in-out", arrows: false, pagination: false, breakpoints: { 1366: { gap: "2rem"}, 1024: { gap: "2rem",perPage: 2 }, 768: { perPage: 1, gap: "2rem", }, 640: { perPage: 1 } } } },
-      { id: "#wellness-carousel", prev: "wellness-prev", next: "wellness-next", options: { type: "slide", perPage: 2, gap: "4rem", speed: 800, easing: "ease-in-out", arrows: false, pagination: false, breakpoints: { 1366: { gap: "2rem"}, 1024: { gap: "2rem",perPage: 2 }, 768: { perPage: 1, gap: "2rem", }, 640: { perPage: 1 } } } },
-      { id: "#culinary-carousel", prev: "culinary-prev", next: "culinary-next", options: { type: "slide", perPage: 3, gap: "4rem", speed: 800, easing: "ease-in-out", arrows: false, pagination: false, breakpoints: { 1366: { gap: "2rem"}, 1024: { gap: "2rem",perPage: 2 }, 768: { perPage: 1, gap: "2rem", }, 640: { perPage: 1 } } } },
-      { id: "#experience-carousel", prev: "experience-prev", next: "experience-next", options: { type: "slide", perPage: 3, gap: "4rem", speed: 800, easing: "ease-in-out", arrows: false, pagination: false, breakpoints: { 1366: { gap: "2rem"}, 1024: { gap: "2rem",perPage: 2 }, 768: { perPage: 1, gap: "2rem", }, 640: { perPage: 1 } } } }
-    ].forEach(({ id, prev, next, options }) => {
-      const splide = new Splide(id, options);
-      splide.on('mounted move', () => {
-        const prevBtn = document.getElementById(prev), nextBtn = document.getElementById(next);
-        prevBtn.disabled = splide.index === 0;
-        prevBtn.classList.toggle('opacity-30', splide.index === 0);
-        prevBtn.classList.toggle('cursor-not-allowed', splide.index === 0);
-        nextBtn.disabled = splide.index >= splide.length - splide.options.perPage;
-        nextBtn.classList.toggle('opacity-30', splide.index >= splide.length - splide.options.perPage);
-        nextBtn.classList.toggle('cursor-not-allowed', splide.index >= splide.length - splide.options.perPage);
-      });
-      splide.mount();
-      document.getElementById(prev).addEventListener("click", () => splide.go("<"));
-      document.getElementById(next).addEventListener("click", () => splide.go(">"));
+
+    document.getElementById('nextSlide').addEventListener('click', e => {
+      e.stopPropagation();
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
     });
-  </script>
+
+    setInterval(() => {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    }, 5000);
+
+    showSlide(currentSlide);
+  });
+</script>
+
+<script>
+  import "@splidejs/splide/css";
+  import Splide from "@splidejs/splide";
+  [
+    { id: "#villa-carousel", prev: "villa-prev", next: "villa-next", options: { type: "slide", perPage: 2, gap: "4rem", speed: 800, easing: "ease-in-out", arrows: false, pagination: false, breakpoints: { 1366: { gap: "2rem" }, 1024: { gap: "2rem", perPage: 2 }, 768: { perPage: 1 } } } },
+    { id: "#offer-carousel", prev: "offer-prev", next: "offer-next", options: { type: "slide", perPage: 3, gap: "4rem", speed: 800, easing: "ease-in-out", arrows: false, pagination: false, breakpoints: { 1366: { gap: "2rem" }, 1024: { gap: "2rem", perPage: 2 }, 768: { perPage: 1, gap: "2rem" }, 640: { perPage: 1 } } } },
+    { id: "#wellness-carousel", prev: "wellness-prev", next: "wellness-next", options: { type: "slide", perPage: 2, gap: "4rem", speed: 800, easing: "ease-in-out", arrows: false, pagination: false, breakpoints: { 1366: { gap: "2rem" }, 1024: { gap: "2rem", perPage: 2 }, 768: { perPage: 1, gap: "2rem" }, 640: { perPage: 1 } } } },
+    { id: "#culinary-carousel", prev: "culinary-prev", next: "culinary-next", options: { type: "slide", perPage: 3, gap: "4rem", speed: 800, easing: "ease-in-out", arrows: false, pagination: false, breakpoints: { 1366: { gap: "2rem" }, 1024: { gap: "2rem", perPage: 2 }, 768: { perPage: 1, gap: "2rem" }, 640: { perPage: 1 } } } },
+    { id: "#experience-carousel", prev: "experience-prev", next: "experience-next", options: { type: "slide", perPage: 3, gap: "4rem", speed: 800, easing: "ease-in-out", arrows: false, pagination: false, breakpoints: { 1366: { gap: "2rem" }, 1024: { gap: "2rem", perPage: 2 }, 768: { perPage: 1, gap: "2rem" }, 640: { perPage: 1 } } } }
+  ].forEach(({ id, prev, next, options }) => {
+    const splide = new Splide(id, options);
+    splide.on('mounted move', () => {
+      const prevBtn = document.getElementById(prev),
+            nextBtn = document.getElementById(next);
+      prevBtn.disabled = splide.index === 0;
+      prevBtn.classList.toggle('opacity-30', splide.index === 0);
+      prevBtn.classList.toggle('cursor-not-allowed', splide.index === 0);
+      nextBtn.disabled = splide.index >= splide.length - splide.options.perPage;
+      nextBtn.classList.toggle('opacity-30', nextBtn.disabled);
+      nextBtn.classList.toggle('cursor-not-allowed', nextBtn.disabled);
+    });
+    splide.mount();
+    document.getElementById(prev).addEventListener("click", () => splide.go("<"));
+    document.getElementById(next).addEventListener("click", () => splide.go(">"));
+  });
+</script>
+
 </Layout>
