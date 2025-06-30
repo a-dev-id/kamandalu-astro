@@ -57,6 +57,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
       <button aria-label="Previous Slide" id="prevSlide" class="absolute left-4 top-1/2 -translate-y-1/2 text-white text-3xl z-20">❮</button>
       <button aria-label="Next Slide" id="nextSlide" class="absolute right-4 top-1/2 -translate-y-1/2 text-white text-3xl z-20">❯</button>
     </div>
+    
     <div class="absolute bottom-24 left-1/2 -translate-x-1/2 z-30 w-full max-w-4xl px-4">
       <form class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 text-sm md:text-base text-white w-full">
         <div class="flex flex-col w-full md:w-auto">
@@ -79,6 +80,8 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
         </div>
       </form>
     </div>
+
+    <!-- modal -->
     <div id="guests-modal" class="absolute bottom-[120px] left-1/2 -translate-x-1/2 bg-white text-black w-[360px] md:w-[640px] p-6 shadow-xl z-40 hidden">
       <div class="flex justify-between items-start mb-4">
         <div class="text-center w-full font-semibold uppercase text-sm">Guests & Rooms</div>
@@ -134,7 +137,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
     <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
       <h1 class="font-title text-3xl sm:text-4xl md:text-5xl uppercase mb-4 md:mb-6 tracking-widest font-light">{pageDetails?.title?.[locale] ?? ''}</h1>
       <p class="text-xl sm:text-2xl md:text-3xl mb-6 md:mb-12">{pageDetails?.subtitle?.[locale] ?? ''}</p>
-      <p class="mb-12 md:mb-36 text-base md:text-lg">{pageDetails?.description?.[locale] ?? ''}</p>
+      <p class="mb-12 md:mb-36 text-lg">{pageDetails?.description?.[locale] ?? ''}</p>
       <a href="https://www.book-secure.com/index.php?s=results&property=idbal31692&locale=en_GB&currency=IDR&stid=986w12cwy" class="bg-white text-black px-4 py-3 md:px-6 md:py-4 text-xs md:text-sm font-title tracking-widest transition-colors duration-300 border border-black hover:bg-[#916B2C] hover:text-white hover:border-transparent inline-block">CHECK RATES</a>
     </div>
   </section>
@@ -143,7 +146,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
   <section class="container mx-auto px-4 xl:px-10 2xl:px-0 pt-10 md:pt-10">
     <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
       <h2 class="font-title text-2xl md:text-4xl uppercase mb-4 md:mb-6 tracking-widest font-light">{villaDetails?.title?.[locale] ?? ''}</h2>
-      <p class="mb-10 md:mb-20 text-base md:text-lg">{villaDetails?.description?.[locale] ?? ''}</p>
+      <p class="mb-10 md:mb-20 text-lg">{villaDetails?.description?.[locale] ?? ''}</p>
     </div>
     <div id="villa-carousel" class="splide mb-8 md:mb-12" role="region" aria-label="Villa Carousel">
       <div class="splide__track">
@@ -159,9 +162,9 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
                   quality={30}
                   className="w-full h-auto aspect-[4/3] md:aspect-[16/9] 2xl:aspect-[4/3] transition duration-500"
                 />
-                <div class="p-4 md:p-6 flex flex-col flex-1">
+                <div class="py-4 md:py-6 flex flex-col flex-1">
                   <h3 class="text-base md:text-lg tracking-widest uppercase font-title">{villa.title?.[locale] ?? villa.title?.en ?? ''}</h3>
-                  <p class="mt-2 text-sm md:text-base">{villa.excerpt?.[locale] ?? villa.excerpt?.en ?? ''}</p>
+                  <p class="mt-2 text-lg">{villa.excerpt?.[locale] ?? villa.excerpt?.en ?? ''}</p>
                   <div class="flex-grow"></div>
                   <a href={`/${locale}/villa/${villa.slug}`} class="text-base md:text-lg mt-4 inline-block text-black uppercase">{translations.btnexplore?.[locale] ?? 'Explore'}</a>
                 </div>
@@ -185,7 +188,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
   <section class="container mx-auto px-4 xl:px-10 2xl:px-0 pt-24">
     <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
       <h2 class="font-title text-2xl md:text-3xl uppercase mb-4 md:mb-6 tracking-widest font-light">{offerDetails?.title?.[locale] ?? ''}</h2>
-      <p class="mb-10 md:mb-20 text-base md:text-lg">{offerDetails?.description?.[locale] ?? ''}</p>
+      <p class="mb-10 md:mb-20 text-lg">{offerDetails?.description?.[locale] ?? ''}</p>
     </div>
     <div id="offer-carousel" class="splide mb-8 md:mb-12" role="region" aria-label="Villa Carousel">
       <div class="splide__track">
@@ -202,9 +205,9 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
                   loading="lazy"
                   className="w-full h-auto aspect-[4/3] transition duration-500"
                 />
-                <div class="p-4 md:p-6 flex flex-col flex-1">
+                <div class="py-4 md:py-6 flex flex-col flex-1">
                   <h3 class="text-base md:text-lg tracking-widest uppercase font-title">{offer.title?.[locale] ?? offer.title?.en}</h3>
-                  <p class="mt-2 text-sm md:text-base">{offer.excerpt?.[locale] ?? offer.excerpt?.en}</p>
+                  <p class="mt-2 text-lg">{offer.excerpt?.[locale] ?? offer.excerpt?.en}</p>
                   <div class="flex-grow"></div>
                   <a href={`/${locale}/offer/${offer.slug}`} class="text-base md:text-lg mt-4 inline-block text-black uppercase">{translations.btnexplore[locale]}</a>
                 </div>
@@ -229,7 +232,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
     <img src={wellnessDetails?.mainImage?.asset?.url} width="800" height="450" alt={wellnessDetails?.mainImageAlt?.[locale] ?? ''} loading="lazy" class="w-full h-auto object-cover aspect-[4/3] md:aspect-[16/6] 2xl:aspect-[16/7] mb-10 md:mb-20" />
     <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
       <h2 class="font-title text-2xl md:text-3xl uppercase mb-4 md:mb-6 tracking-widest font-light">{wellnessDetails?.title?.[locale] ?? ''}</h2>
-      <p class="mb-10 md:mb-20 text-base md:text-lg">{wellnessDetails?.description?.[locale] ?? ''}</p>
+      <p class="mb-10 md:mb-20 text-lg">{wellnessDetails?.description?.[locale] ?? ''}</p>
     </div>
     <div id="wellness-carousel" class="splide mb-8 md:mb-12" role="region" aria-label="Wellness Carousel">
       <div class="splide__track">
@@ -246,9 +249,9 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
                   loading="lazy"
                   className="w-full h-auto aspect-[4/3] md:aspect-[16/9] 2xl:aspect-[4/3] transition duration-500"
                 />
-                <div class="p-4 md:p-6 flex flex-col flex-1">
+                <div class="py-4 md:py-6 flex flex-col flex-1">
                   <h3 class="text-base md:text-lg tracking-widest uppercase font-title">{venue?.title?.[locale] ?? ''}</h3>
-                  <p class="mt-2 text-sm md:text-base">{venue?.excerpt?.[locale] ?? ''}</p>
+                  <p class="mt-2 text-lg">{venue?.excerpt?.[locale] ?? ''}</p>
                   <div class="flex-grow"></div>
                   <a href={`/${locale}/spa-wellness/${venue.slug}`} class="text-base md:text-lg mt-4 inline-block text-black uppercase">Explore</a>
                 </div>
@@ -273,7 +276,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
     <img src={culinaryDetails?.mainImage?.asset?.url} width="800" height="450" alt={culinaryDetails?.mainImageAlt?.[locale] ?? ''} loading="lazy" class="w-full h-auto object-cover aspect-[4/3] md:aspect-[16/6] 2xl:aspect-[16/7] mb-10 md:mb-20" />
     <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
       <h2 class="font-title text-2xl md:text-3xl uppercase mb-4 md:mb-6 tracking-widest font-light">{culinaryDetails?.title?.[locale] ?? ''}</h2>
-      <p class="mb-10 md:mb-20 text-base md:text-lg">{culinaryDetails?.description?.[locale] ?? ''}</p>
+      <p class="mb-10 md:mb-20 text-lg">{culinaryDetails?.description?.[locale] ?? ''}</p>
     </div>
     <div id="culinary-carousel" class="splide mb-8 md:mb-12" role="region" aria-label="Culinary Carousel">
       <div class="splide__track">
@@ -290,9 +293,9 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
                   loading="lazy"
                   className="w-full h-auto aspect-[4/3] transition duration-500"
                 />
-                <div class="p-4 md:p-6 flex flex-col flex-1">
+                <div class="py-4 md:py-6 flex flex-col flex-1">
                   <h3 class="text-base md:text-lg tracking-widest uppercase font-title">{dining.title?.[locale] ?? ''}</h3>
-                  <p class="mt-2 text-sm md:text-base">{dining.excerpt?.[locale] ?? ''}</p>
+                  <p class="mt-2 text-lg">{dining.excerpt?.[locale] ?? ''}</p>
                   <div class="flex-grow"></div>
                   <a href="#" class="text-base md:text-lg mt-4 inline-block text-black uppercase">Explore</a>
                 </div>
@@ -317,7 +320,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
     <img src={experienceDetails?.mainImage?.asset?.url} width="800" height="450" alt={experienceDetails?.mainImageAlt?.[locale] ?? ''} loading="lazy" class="w-full h-auto object-cover aspect-[4/3] md:aspect-[16/6] 2xl:aspect-[16/7] mb-10 md:mb-20" />
     <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
       <h2 class="font-title text-2xl md:text-3xl uppercase mb-4 md:mb-6 tracking-widest font-light">{experienceDetails?.title?.[locale] ?? ''}</h2>
-      <p class="mb-10 md:mb-20 text-base md:text-lg">{experienceDetails?.description?.[locale] ?? ''}</p>
+      <p class="mb-10 md:mb-20 text-lg">{experienceDetails?.description?.[locale] ?? ''}</p>
     </div>
     <div id="experience-carousel" class="splide mb-8 md:mb-12" role="region" aria-label="Experience Carousel">
       <div class="splide__track">
@@ -334,9 +337,9 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
                   loading="lazy"
                   className="w-full h-auto aspect-[4/3] transition duration-500"
                 />
-                <div class="p-4 md:p-6 flex flex-col flex-1">
+                <div class="py-4 md:py-6 flex flex-col flex-1">
                   <h3 class="text-base md:text-lg tracking-widest uppercase font-title">{dining.title?.[locale] ?? ''}</h3>
-                  <p class="mt-2 text-sm md:text-base">{dining.excerpt?.[locale] ?? ''}</p>
+                  <p class="mt-2 text-lg">{dining.excerpt?.[locale] ?? ''}</p>
                   <div class="flex-grow"></div>
                   <a href="#" class="text-base md:text-lg mt-4 inline-block text-black uppercase">Explore</a>
                 </div>
@@ -440,7 +443,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
       promoFields.classList.toggle('hidden');
       promoToggle.innerHTML = promoFields.classList.contains('hidden')
         ? `<span class="text-xl">+</span> Promo Code`
-        : `<span class="text-xl">−</span> Promo Code`;
+        : `<span class="text-xl">-</span> Promo Code`;
     });
 
     form.addEventListener('submit', e => {

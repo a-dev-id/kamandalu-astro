@@ -11,20 +11,12 @@ export async function getStaticPaths() {
 const { lang } = Astro.params;
 const locale = getLocale(lang);
 
-const pageDetails = await client.fetch(`*[_type == "page" && _id == "89c9b6c7-8a83-4d98-92d7-775acb1d9b1c"][0]{
-  title, subtitle, description, metaTitle, metaDescription, metaKeywords, mainImageAlt,
+const pageDetails = await client.fetch(`*[_type == "page" && _id == "2d19ccbc-5362-4587-9ba0-89f25afc136e"][0]{
+  title, subtitle, description, note,metaTitle, metaDescription, metaKeywords, mainImageAlt,
   mainImage { asset->{url} }
 }`);
 
-const wellness = await client.fetch(`*[_type == "settingHome" && _id == "33910d6e-0de3-49b2-bb23-354b1da3e9cc"][0]{
-  title, subtitle, description,
-}`);
-
-const wellnessExperiences = await client.fetch(`*[_type == "wellnessExperience"] | order(order asc){
-  "slug": slug.current, title, excerpt, secondImage { asset->{url} }, secondImageAlt
-}`);
-
-const venues = await client.fetch(`*[_type == "wellnessVenue"] | order(order asc){
+const venues = await client.fetch(`*[_type == "diningVenue"] | order(order asc){
   "slug": slug.current, title, excerpt, secondImage { asset->{url} }, secondImageAlt
 }`);
 
@@ -51,8 +43,11 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
       <h1 class="font-title text-3xl sm:text-4xl md:text-5xl uppercase mb-4 md:mb-6 tracking-widest font-light">
         {pageDetails?.title?.[locale] ?? ''}
       </h1>
-      <p class="mb-12 md:mb-18 text-base md:text-lg">
+      <p class="mb-5 text-base md:text-lg">
         {pageDetails?.description?.[locale] ?? ''}
+      </p>
+      <p class="mb-12 md:mb-18 text-base md:text-lg italic">
+        {pageDetails?.note?.[locale] ?? ''}
       </p>
     </div>
   </section>
@@ -74,7 +69,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
                   <h3 class="text-base md:text-lg tracking-widest uppercase font-title">{data?.title?.[locale] ?? ''}</h3>
                   <p class="mt-2 text-sm md:text-base">{data?.excerpt?.[locale] ?? ''}</p>
                   <div class="flex-grow"></div>
-                  <a href={`/${locale}/spa-wellness/${data.slug}`} class="text-base md:text-lg mt-4 inline-block text-black uppercase">Details</a>
+                  <a href={`/${locale}/dining/${data.slug}`} class="text-base md:text-lg mt-4 inline-block text-black uppercase">Details</a>
                 </div>
               </div>
             </div>
@@ -92,57 +87,14 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
     </div>
   </section>
 
-  <section class="container mx-auto px-4 xl:px-10 2xl:px-0 pt-24">
-    <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
-      <h2 class="font-title text-2xl md:text-3xl uppercase mb-4 md:mb-6 tracking-widest font-light">{wellness?.title?.[locale] ?? ''}</h2>
-      <p class="mb-10 md:mb-20 text-base md:text-lg">{wellness?.description?.[locale] ?? ''}</p>
-    </div>
-    <div id="wellness-carousel" class="splide mb-8 md:mb-12" role="region" aria-label="Wellness Carousel">
-      <div class="splide__track">
-        <div class="splide__list">
-          {wellnessExperiences.map((data, i) => (
-            <div class="splide__slide transition-transform duration-500 ease-in-out" role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${wellnessExperiences.length}`}>
-              <div class="bg-white overflow-hidden flex flex-col h-full">
-                <OptimizedImage
-                  src={data.secondImage.asset.url}
-                  alt={data.secondImageAlt?.[locale]}
-                  width={800} height={600} quality={75} loading="lazy"
-                  className="w-full h-auto aspect-[4/3] transition duration-500"
-                />
-                <div class="py-4 md:py-6 flex flex-col flex-1">
-                  <h3 class="text-base md:text-lg tracking-widest uppercase font-title">{data.title?.[locale] ?? data.title?.en}</h3>
-                  <p class="mt-2 text-sm md:text-base">{data.excerpt?.[locale] ?? data.excerpt?.en}</p>
-                  <div class="flex-grow"></div>
-                  <a href={`/${locale}/spa-wellness/${data.slug}`} class="text-base md:text-lg mt-4 inline-block text-black uppercase">Details</a>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-    <div class="flex items-center gap-4 md:gap-6 mt-4 md:mt-8 justify-start">
-      <button aria-label="Previous wellness slide" id="wellness-prev" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="44" y1="12" x2="4" y2="12" /><polyline points="12 20 4 12 12 4" /></svg>
-      </button>
-      <button aria-label="Next wellness slide" id="wellness-next" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="44" y2="12" /><polyline points="36 4 44 12 36 20" /></svg>
-      </button>
-    </div>
-  </section>
-
   <script>
     import "@splidejs/splide/css";
     import Splide from "@splidejs/splide";
     [
       {
         id: "#venue-carousel", prev: "venue-prev", next: "venue-next",
-        options: { type: "slide", perPage: 2, gap: "4rem", speed: 800, easing: "ease-in-out", arrows: false, pagination: false, breakpoints: { 1366: { gap: "2rem"}, 1024: { gap: "2rem", perPage: 2 }, 768: { perPage: 1, gap: "2rem" }, 640: { perPage: 1 } } }
-      },
-      {
-        id: "#wellness-carousel", prev: "wellness-prev", next: "wellness-next",
         options: { type: "slide", perPage: 3, gap: "4rem", speed: 800, easing: "ease-in-out", arrows: false, pagination: false, breakpoints: { 1366: { gap: "2rem"}, 1024: { gap: "2rem", perPage: 2 }, 768: { perPage: 1, gap: "2rem" }, 640: { perPage: 1 } } }
-      }
+      },
     ].forEach(({ id, prev, next, options }) => {
       const splide = new Splide(id, options);
       splide.on('mounted move', () => {

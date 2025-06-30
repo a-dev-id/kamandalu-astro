@@ -1,11 +1,17 @@
 ---
 import { getLocale } from '../utils/getLocale';
+import client from '../lib/sanityClient';
+
 // Required for dynamic routes
 export async function getStaticPaths() {
   return ['en', 'ko', 'zh'].map(lang => ({
     params: { lang }
   }));
 }
+
+const venues = await client.fetch(`*[_type == "diningVenue"] | order(order asc){
+  "slug": slug.current, title
+}`);
 
 // Get locale from URL param
 const { lang } = Astro.params;
@@ -17,7 +23,7 @@ const locale = getLocale(lang);
     <!-- Language Dropdown (hidden on mobile, shown on md+) -->
     <label for="languageSelect" class="sr-only">Language Selection</label>
     <div class="hidden md:block">
-      <select id="languageSelect" class="bg-transparent text-white focus:outline-none text-sm">
+      <select id="languageSelect" class="bg-transparent text-white focus:outline-none text-lg">
         <option value="en" class="text-black">English</option>
         <option value="ko" class="text-black">한국어</option>
         <option value="zh" class="text-black">中文</option>
@@ -41,7 +47,7 @@ const locale = getLocale(lang);
       <a
         href="#"
         id="memberBtn"
-        class="uppercase underline text-xs font-title tracking-widest px-4 py-2 text-white bg-transparent hover:bg-white hover:text-black transition-colors duration-300"
+        class="uppercase underline text-sm font-title tracking-widest px-4 py-2 text-white bg-transparent hover:bg-white hover:text-black transition-colors duration-300"
       >
         Member
       </a>
@@ -58,13 +64,13 @@ const locale = getLocale(lang);
     </button>
 
     <!-- Desktop Navigation Menu -->
-    <nav class="hidden xl:flex space-x-6 text-base font-normal w-full justify-center overflow-visible relative">
+    <nav class="hidden xl:flex md:space-x-6 xl:space-x-8 text-base font-normal w-full justify-center overflow-visible relative">
       <a href={`/${locale}/offers`} class="uppercase">Offers</a>
       <a href={`/${locale}/villas`} class="uppercase">Our Villas</a>
       <a href={`/${locale}/spa-wellness`} class="uppercase">Spa & Wellness</a>
       <!-- Dining Dropdown Trigger -->
       <div id="dining-trigger" class="relative group">
-      <a href="#" class="inline-block px-2 uppercase">Dining</a>
+      <a href={`/${locale}/dining`} class="inline-block px-2 uppercase">Dining</a>
       </div>
       <a href="#" class="uppercase">Romantic Experiences</a>
       <a href="#" class="uppercase">Wedding & Events</a>
@@ -124,10 +130,9 @@ const locale = getLocale(lang);
           </span>
         </button>
         <div id="dining-mobile-dropdown" class="pl-4 space-y-2 hidden mt-3">
-          <a href="#" class="block text-xl">Petulu</a>
-          <a href="#" class="block text-xl">Aira</a>
-          <a href="#" class="block text-xl">Awana</a>
-          <a href="#" class="block text-xl">Vana Dining</a>
+          {venues.map((data) => (
+          <a href={`/${locale}/dining/${data.slug}`} class="block text-xl">{data.title?.[locale]}</a>
+          ))}
         </div>
       </div>
       <a href="#" class="block text-xl">Romantic Experiences</a>
@@ -159,10 +164,9 @@ const locale = getLocale(lang);
     class="hidden absolute left-0 right-0 top-[100%] bg-white text-black z-40 shadow-md transition-all duration-200 opacity-0 group-hover:opacity-100"
   >
     <div class="max-w-screen-xl mx-auto px-2 flex justify-center space-x-6 py-3 font-normal text-xl">
-      <a href="#" class="hover:underline uppercase text-base">Petulu</a>
-      <a href="#" class="hover:underline uppercase text-base">Aira</a>
-      <a href="#" class="hover:underline uppercase text-base">Awana</a>
-      <a href="#" class="hover:underline uppercase text-base">Vana Dining</a>
+      {venues.map((data) => (
+      <a href={`/${locale}/dining/${data.slug}`} class="hover:underline uppercase text-base">{data.title?.[locale]}</a>
+      ))}
     </div>
   </div>
 

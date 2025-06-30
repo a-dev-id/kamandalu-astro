@@ -5,6 +5,18 @@ import SpeedInsights from "@vercel/speed-insights/astro";
 import Analytics from '@vercel/analytics/astro';
 import "@splidejs/splide/dist/css/splide.min.css";
 
+import { getLocale } from '../utils/getLocale';
+// Required for dynamic routes
+export async function getStaticPaths() {
+  return ['en', 'ko', 'zh'].map(lang => ({
+    params: { lang }
+  }));
+}
+
+// Get locale from URL param
+const { lang } = Astro.params;
+const locale = getLocale(lang);
+
 const { title, description, url, ogImage, keywords } = Astro.props;
 ---
 
@@ -67,9 +79,9 @@ const { title, description, url, ogImage, keywords } = Astro.props;
         <div>
           <h3 class="uppercase tracking-widest font-title text-md 2xl:text-lg mb-6">Get Notified On Our Offers</h3>
           <form class="flex flex-col gap-4">
-        <input type="text" placeholder="Your Name*" class="border-b border-black bg-transparent focus:outline-none py-2 w-full max-w-xs md:max-w-62" />
-        <input type="email" placeholder="Your Email*" class="border-b border-black bg-transparent focus:outline-none py-2 w-full max-w-xs md:max-w-62" />
-        <button aria-label="Submit Newsletter Form" type="submit" class="uppercase mt-4 tracking-widest text-left border-b border-black w-fit">Submit</button>
+        <input type="text" placeholder="Your Name*" class="border-b border-black bg-transparent focus:outline-none py-2 w-full max-w-xs md:max-w-62 text-base" />
+        <input type="email" placeholder="Your Email*" class="border-b border-black bg-transparent focus:outline-none py-2 w-full max-w-xs md:max-w-62 text-base" />
+        <button aria-label="Submit Newsletter Form" type="submit" class="uppercase mt-4 tracking-widest text-left border-b border-black w-fit text-base">Submit</button>
           </form>
         </div>
         
@@ -80,22 +92,22 @@ const { title, description, url, ogImage, keywords } = Astro.props;
         <h3 class="uppercase tracking-widest font-title text-md 2xl:text-lg mb-4">Explore</h3>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 lg:gap-4">
             <ul class="space-y-2 col-span-1 max-w-[120px]">
-            <li><a href="#">Offers</a></li>
-            <li><a href="#">Our Villa</a></li>
-            <li><a href="#">Spa & Wellness</a></li>
-            <li><a href="#">Dining</a></li>
+            <li><a class="text-lg" href={`/${locale}/offers`}>Offers</a></li>
+            <li><a class="text-lg" href={`/${locale}/villas`}>Our Villa</a></li>
+            <li><a class="text-lg" href={`/${locale}/spa-wellness`}>Spa & Wellness</a></li>
+            <li><a class="text-lg" href={`/${locale}/dining`}>Dining</a></li>
             </ul>
             <ul class="space-y-2 col-span-1 sm:-ml-8 lg:-ml-2">
-            <li><a href="#">Romantic Experiences</a></li>
-            <li><a href="#">Wedding & Events</a></li>
-            <li><a href="#">Our Story</a></li>
-            <li><a href="#">Gallery</a></li>
+            <li><a class="text-lg" href={`/${locale}/romantic-experiences`}>Romantic Experiences</a></li>
+            <li><a class="text-lg" href={`/${locale}/wedding-events`}>Wedding & Events</a></li>
+            <li><a class="text-lg" href={`/${locale}/our-story`}>Our Story</a></li>
+            <li><a class="text-lg" href={`/${locale}/gallery`}>Gallery</a></li>
             </ul>
             <ul class="space-y-2 col-span-1">
-            <li><a href="#">Facilities</a></li>
-            <li><a href="#">Blog</a></li>
-            <li><a href="#">Videos</a></li>
-            <li><a href="#">Contact Us</a></li>
+            <li><a class="text-lg" href={`/${locale}/facilities`}>Facilities</a></li>
+            <li><a class="text-lg" href={`/${locale}/blog`}>Blog</a></li>
+            <li><a class="text-lg" href={`/${locale}/videos`}>Videos</a></li>
+            <li><a class="text-lg" href={`/${locale}/contact-us`}>Contact Us</a></li>
             </ul>
         </div>
           </div>
@@ -104,10 +116,10 @@ const { title, description, url, ogImage, keywords } = Astro.props;
           <div class="col-span-1 max-w-xs">
         <h3 class="uppercase tracking-widest font-title text-md 2xl:text-lg mb-4">Connect</h3>
         <ul class="space-y-2">
-          <li><a href="#">Whatsapp</a></li>
-          <li><a href="#">Facebook</a></li>
-          <li><a href="#">Instagram</a></li>
-          <li><a href="#">TikTok</a></li>
+          <li><a class="text-lg" href="https://wa.me/+628113984566" target="_blank">Whatsapp</a></li>
+          <li><a class="text-lg" href="https://www.facebook.com/kamandaluresort" target="_blank">Facebook</a></li>
+          <li><a class="text-lg" href="https://www.instagram.com/kamandalu" target="_blank">Instagram</a></li>
+          <li><a class="text-lg" href="https://www.tiktok.com/@kamandaluubud" target="_blank">TikTok</a></li>
         </ul>
           </div>
         </div>
@@ -117,12 +129,12 @@ const { title, description, url, ogImage, keywords } = Astro.props;
       <div class="mx-auto px-4 xl:px-20 mt-12 grid grid-cols-3 items-center gap-4 text-xs">
         <!-- Left: Terms & Privacy -->
         <div class="flex gap-4 justify-start">
-          <a href="#">Terms</a>
-          <a href="#">Privacy</a>
+          <a class="text-lg" href={`/${locale}/terms`}>Terms</a>
+          <a class="text-lg" href={`/${locale}/privacy`}>Privacy</a>
         </div>
         <!-- Center: Copyright -->
         <div class="flex justify-center">
-          <p class="text-center">&copy; 2025 Kamandalu Ubud. All Rights Reserved</p>
+          <p class="text-center text-lg">&copy; 2025 Kamandalu Ubud. All Rights Reserved</p>
         </div>
         <!-- Right: Blank space -->
         <div></div>
