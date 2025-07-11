@@ -11,12 +11,12 @@ export async function getStaticPaths() {
 const { lang } = Astro.params;
 const locale = getLocale(lang);
 
-const pageDetails = await client.fetch(`*[_type == "page" && _id == "2d19ccbc-5362-4587-9ba0-89f25afc136e"][0]{
-  title, subtitle, description, note,metaTitle, metaDescription, metaKeywords, mainImageAlt,
+const pageDetails = await client.fetch(`*[_type == "page" && _id == "a0943009-62ff-4fb0-8de0-6e8c62288528"][0]{
+  title, subtitle, description, metaTitle, metaDescription, metaKeywords, mainImageAlt,
   mainImage { asset->{url} }
 }`);
 
-const venues = await client.fetch(`*[_type == "diningVenue"] | order(order asc){
+const experienceUnique = await client.fetch(`*[_type == "experienceUnique"] | order(order asc){
   "slug": slug.current, title, excerpt, secondImage { asset->{url} }, secondImageAlt
 }`);
 
@@ -43,21 +43,18 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
       <h1 class="font-title text-3xl sm:text-4xl md:text-5xl uppercase mb-4 md:mb-6 tracking-widest font-light">
         {pageDetails?.title?.[locale] ?? ''}
       </h1>
-      <p class="mb-5 text-lg">
+      <p class="mb-12 md:mb-18 text-lg">
         {pageDetails?.description?.[locale] ?? ''}
-      </p>
-      <p class="text-lg italic">
-        {pageDetails?.note?.[locale] ?? ''}
       </p>
     </div>
   </section>
 
   <section class="container mx-auto px-4 space-y-18">
-    <div id="venue-carousel" class="splide mb-8 md:mb-12" role="region" aria-label="Venue Carousel">
+    <div id="experienceUnique-carousel" class="splide mb-8 md:mb-12" role="region" aria-label="experienceUnique Carousel">
       <div class="splide__track">
         <div class="splide__list">
-          {venues.map((data, i) => (
-            <div class="splide__slide transition-transform duration-500 ease-in-out" role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${venues.length}`}>
+          {experienceUnique.map((data, i) => (
+            <div class="splide__slide transition-transform duration-500 ease-in-out" role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${experienceUnique.length}`}>
               <div class="bg-white overflow-hidden flex flex-col h-full">
                 <OptimizedImage
                   src={data.secondImage.asset.url}
@@ -69,7 +66,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
                   <h3 class="text-lg tracking-widest uppercase font-title">{data?.title?.[locale] ?? ''}</h3>
                   <p class="mt-2 text-lg">{data?.excerpt?.[locale] ?? ''}</p>
                   <div class="flex-grow"></div>
-                  <a href={`/${locale}/dining/${data.slug}`} class="text-lg mt-4 inline-block text-gray-700 uppercase">Details</a>
+                  <a href={`/${locale}/experience/${data.slug}`} class="text-lg mt-4 inline-block text-gray-700 uppercase">Details</a>
                 </div>
               </div>
             </div>
@@ -78,10 +75,10 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
       </div>
     </div>
     <div class="flex items-center gap-4 md:gap-6 mt-4 md:mt-8 justify-center md:hidden">
-      <button aria-label="Previous venue Slide" id="venue-prev" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
+      <button aria-label="Previous experienceUnique Slide" id="experienceUnique-prev" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="44" y1="12" x2="4" y2="12" /><polyline points="12 20 4 12 12 4" /></svg>
       </button>
-      <button aria-label="Next venue Slide" id="venue-next" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
+      <button aria-label="Next experienceUnique Slide" id="experienceUnique-next" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="44" y2="12" /><polyline points="36 4 44 12 36 20" /></svg>
       </button>
     </div>
@@ -92,7 +89,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
     import Splide from "@splidejs/splide";
     [
       {
-        id: "#venue-carousel", prev: "venue-prev", next: "venue-next",
+        id: "#experienceUnique-carousel", prev: "experienceUnique-prev", next: "experienceUnique-next",
         options: { type: "slide", perPage: 3, gap: "4rem", speed: 800, easing: "ease-in-out", arrows: false, pagination: false, breakpoints: { 1366: { gap: "2rem"}, 1024: { gap: "2rem", perPage: 2 }, 768: { perPage: 1, gap: "2rem" }, 640: { perPage: 1 } } }
       },
     ].forEach(({ id, prev, next, options }) => {

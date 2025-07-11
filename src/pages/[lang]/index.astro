@@ -75,14 +75,14 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
         <div class="flex flex-col w-full md:w-auto">
           <label class="uppercase text-base tracking-wide mb-1">&nbsp;</label>
           <div class="border border-white flex items-center justify-center h-[44px]">
-            <button aria-label="Check Rates" type="submit" class="text-white uppercase tracking-widest font-title text-xs hover:bg-white hover:text-black w-full h-full px-4 py-2">Check Rates</button>
+            <button aria-label="Check Rates" type="submit" class="text-white uppercase tracking-widest font-title text-xs hover:bg-white hover:text-gray-700 w-full h-full px-4 py-2">Check Rates</button>
           </div>
         </div>
       </form>
     </div>
 
     <!-- modal -->
-    <div id="guests-modal" class="absolute bottom-[120px] left-1/2 -translate-x-1/2 bg-white text-black w-[360px] md:w-[640px] p-6 shadow-xl z-40 hidden">
+    <div id="guests-modal" class="absolute bottom-[120px] left-1/2 -translate-x-1/2 bg-white text-gray-700 w-[360px] md:w-[640px] p-6 shadow-xl z-40 hidden">
       <div class="flex justify-between items-start mb-4">
         <div class="text-center w-full font-semibold uppercase text-sm">Guests & Rooms</div>
         <button aria-label="Close Guests Modal" id="close-guests" type="button">✕</button>
@@ -111,10 +111,10 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
         <div id="child-ages" class="flex flex-wrap gap-4"></div>
       </div>
       <div class="flex justify-center mb-5">
-        <button aria-label="Confirm Guests" id="confirm-guests" type="button" class="hover:bg-white hover:text-black px-6 py-3 text-sm font-title tracking-widest transition-colors duration-300 border hover:border-black bg-[#916B2C] text-white border-transparent">Confirm</button>
+        <button aria-label="Confirm Guests" id="confirm-guests" type="button" class="hover:bg-white hover:text-gray-700 px-6 py-3 text-sm font-title tracking-widest transition-colors duration-300 border hover:border-black bg-[#916B2C] text-white border-transparent">Confirm</button>
       </div>
       <div class="flex items-center justify-end mb-2">
-        <button aria-label="Toggle Promo Code" id="toggle-promo" type="button" class="flex items-center text-sm text-black gap-2 hover:underline"><span class="text-xl">+</span> Promo Code</button>
+        <button aria-label="Toggle Promo Code" id="toggle-promo" type="button" class="flex items-center text-sm text-gray-700 gap-2 hover:underline"><span class="text-xl">+</span> Promo Code</button>
       </div>
       <div id="promo-fields" class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm hidden">
         <div>
@@ -138,7 +138,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
       <h1 class="font-title text-3xl sm:text-4xl md:text-5xl uppercase mb-4 md:mb-6 tracking-widest font-light">{pageDetails?.title?.[locale] ?? ''}</h1>
       <p class="text-xl sm:text-2xl md:text-3xl mb-6 md:mb-12">{pageDetails?.subtitle?.[locale] ?? ''}</p>
       <p class="mb-12 md:mb-36 text-lg">{pageDetails?.description?.[locale] ?? ''}</p>
-      <a href="https://www.book-secure.com/index.php?s=results&property=idbal31692&locale=en_GB&currency=IDR&stid=986w12cwy" class="bg-white text-black px-4 py-3 md:px-6 md:py-4 text-xs md:text-sm font-title tracking-widest transition-colors duration-300 border border-black hover:bg-[#916B2C] hover:text-white hover:border-transparent inline-block">CHECK RATES</a>
+      <a href="https://www.book-secure.com/index.php?s=results&property=idbal31692&locale=en_GB&currency=IDR&stid=986w12cwy" class="bg-white text-gray-700 px-4 py-3 md:px-6 md:py-4 text-xs md:text-sm font-title tracking-widest transition-colors duration-300 border border-black hover:bg-[#916B2C] hover:text-white hover:border-transparent inline-block">CHECK RATES</a>
     </div>
   </section>
 
@@ -163,10 +163,10 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
                   className="w-full h-auto aspect-[4/3] md:aspect-[16/9] 2xl:aspect-[4/3] transition duration-500"
                 />
                 <div class="py-4 md:py-6 flex flex-col flex-1">
-                  <h3 class="text-base md:text-lg tracking-widest uppercase font-title">{villa.title?.[locale] ?? villa.title?.en ?? ''}</h3>
+                  <h3 class="text-lg tracking-widest uppercase font-title">{villa.title?.[locale] ?? villa.title?.en ?? ''}</h3>
                   <p class="mt-2 text-lg">{villa.excerpt?.[locale] ?? villa.excerpt?.en ?? ''}</p>
                   <div class="flex-grow"></div>
-                  <a href={`/${locale}/villa/${villa.slug}`} class="text-base md:text-lg mt-4 inline-block text-black uppercase">{translations.btnexplore?.[locale] ?? 'Explore'}</a>
+                  <a href={`/${locale}/villa/${villa.slug}`} class="text-lg mt-4 inline-block text-gray-700 uppercase">{translations.btnexplore?.[locale] ?? 'Explore'}</a>
                 </div>
               </div>
             </div>
@@ -206,10 +206,10 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
                   className="w-full h-auto aspect-[4/3] transition duration-500"
                 />
                 <div class="py-4 md:py-6 flex flex-col flex-1">
-                  <h3 class="text-base md:text-lg tracking-widest uppercase font-title">{offer.title?.[locale] ?? offer.title?.en}</h3>
+                  <h3 class="text-lg tracking-widest uppercase font-title">{offer.title?.[locale] ?? offer.title?.en}</h3>
                   <p class="mt-2 text-lg">{offer.excerpt?.[locale] ?? offer.excerpt?.en}</p>
                   <div class="flex-grow"></div>
-                  <a href={`/${locale}/offer/${offer.slug}`} class="text-base md:text-lg mt-4 inline-block text-black uppercase">{translations.btnexplore[locale]}</a>
+                  <a href={`/${locale}/offer/${offer.slug}`} class="text-lg mt-4 inline-block text-gray-700 uppercase">{translations.btnexplore[locale]}</a>
                 </div>
               </div>
             </div>
@@ -250,10 +250,10 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
                   className="w-full h-auto aspect-[4/3] md:aspect-[16/9] 2xl:aspect-[4/3] transition duration-500"
                 />
                 <div class="py-4 md:py-6 flex flex-col flex-1">
-                  <h3 class="text-base md:text-lg tracking-widest uppercase font-title">{venue?.title?.[locale] ?? ''}</h3>
+                  <h3 class="text-lg tracking-widest uppercase font-title">{venue?.title?.[locale] ?? ''}</h3>
                   <p class="mt-2 text-lg">{venue?.excerpt?.[locale] ?? ''}</p>
                   <div class="flex-grow"></div>
-                  <a href={`/${locale}/spa-wellness/${venue.slug}`} class="text-base md:text-lg mt-4 inline-block text-black uppercase">Explore</a>
+                  <a href={`/${locale}/spa-wellness/${venue.slug}`} class="text-lg mt-4 inline-block text-gray-700 uppercase">Explore</a>
                 </div>
               </div>
             </div>
@@ -294,10 +294,10 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
                   className="w-full h-auto aspect-[4/3] transition duration-500"
                 />
                 <div class="py-4 md:py-6 flex flex-col flex-1">
-                  <h3 class="text-base md:text-lg tracking-widest uppercase font-title">{dining.title?.[locale] ?? ''}</h3>
+                  <h3 class="text-lg tracking-widest uppercase font-title">{dining.title?.[locale] ?? ''}</h3>
                   <p class="mt-2 text-lg">{dining.excerpt?.[locale] ?? ''}</p>
                   <div class="flex-grow"></div>
-                  <a href="#" class="text-base md:text-lg mt-4 inline-block text-black uppercase">Explore</a>
+                  <a href="#" class="text-lg mt-4 inline-block text-gray-700 uppercase">Explore</a>
                 </div>
               </div>
             </div>
@@ -338,10 +338,10 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
                   className="w-full h-auto aspect-[4/3] transition duration-500"
                 />
                 <div class="py-4 md:py-6 flex flex-col flex-1">
-                  <h3 class="text-base md:text-lg tracking-widest uppercase font-title">{dining.title?.[locale] ?? ''}</h3>
+                  <h3 class="text-lg tracking-widest uppercase font-title">{dining.title?.[locale] ?? ''}</h3>
                   <p class="mt-2 text-lg">{dining.excerpt?.[locale] ?? ''}</p>
                   <div class="flex-grow"></div>
-                  <a href="#" class="text-base md:text-lg mt-4 inline-block text-black uppercase">Explore</a>
+                  <a href="#" class="text-lg mt-4 inline-block text-gray-700 uppercase">Explore</a>
                 </div>
               </div>
             </div>

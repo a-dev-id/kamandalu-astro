@@ -60,7 +60,7 @@ const { title, description, url, ogImage, keywords } = Astro.props;
     <SpeedInsights />
     <Analytics />
   </head>
-  <body class="font-body text-xl">
+  <body class="font-body text-xl text-gray-700">
     <Navbar />
 
     <main>
@@ -90,7 +90,7 @@ const { title, description, url, ogImage, keywords } = Astro.props;
           <!-- Explore (takes up 2 columns) -->
           <div class="col-span-2">
         <h3 class="uppercase tracking-widest font-title text-md 2xl:text-lg mb-4">Explore</h3>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 lg:gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 lg:gap-4">
             <ul class="space-y-2 col-span-1 max-w-[120px]">
             <li><a class="text-lg" href={`/${locale}/offers`}>Offers</a></li>
             <li><a class="text-lg" href={`/${locale}/villas`}>Our Villa</a></li>
@@ -98,7 +98,7 @@ const { title, description, url, ogImage, keywords } = Astro.props;
             <li><a class="text-lg" href={`/${locale}/dining`}>Dining</a></li>
             </ul>
             <ul class="space-y-2 col-span-1 sm:-ml-8 lg:-ml-2">
-            <li><a class="text-lg" href={`/${locale}/romantic-experiences`}>Romantic Experiences</a></li>
+            <li><a class="text-lg" href={`/${locale}/experiences`}>Unique Experiences</a></li>
             <li><a class="text-lg" href={`/${locale}/wedding-events`}>Wedding & Events</a></li>
             <li><a class="text-lg" href={`/${locale}/our-story`}>Our Story</a></li>
             <li><a class="text-lg" href={`/${locale}/gallery`}>Gallery</a></li>
@@ -126,9 +126,9 @@ const { title, description, url, ogImage, keywords } = Astro.props;
       </div>
     
       <!-- Bottom -->
-      <div class="mx-auto px-4 xl:px-20 mt-12 grid grid-cols-3 items-center gap-4 text-xs">
+      <div class="mx-auto px-4 xl:px-20 mt-12 grid grid-cols-1 xl:grid-cols-3 items-center gap-4 text-xs">
         <!-- Left: Terms & Privacy -->
-        <div class="flex gap-4 justify-start">
+        <div class="flex gap-4 justify-center md:justify-start">
           <a class="text-lg" href={`/${locale}/terms`}>Terms</a>
           <a class="text-lg" href={`/${locale}/privacy`}>Privacy</a>
         </div>

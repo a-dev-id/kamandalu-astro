@@ -29,7 +29,14 @@ let wellness = await client.fetch(
   `*[_type == "wellnessExperience" && slug.current == $slug][0]{
     _type, title, excerpt, description, mainImage { asset->{url} }, mainImageAlt,
     metaTitle, metaDescription, metaKeywords,
-    "details": details[$locale], "contactBooking": contactBooking[$locale]
+    "details": details[$locale], "contactBooking": contactBooking[$locale],
+    packages[]{
+      title,
+      images[]{asset->{url}},
+      price,
+      description,
+      inclusion
+    }
   }`, { slug, locale }
 );
 
@@ -38,7 +45,14 @@ if (!wellness) {
     `*[_type == "wellnessVenue" && slug.current == $slug][0]{
       _type, title, excerpt, description, mainImage { asset->{url} }, mainImageAlt,
       metaTitle, metaDescription, metaKeywords,
-      "details": details[$locale], "contactBooking": contactBooking[$locale]
+      "details": details[$locale], "contactBooking": contactBooking[$locale],
+      packages[]{
+      title,
+      images[]{asset->{url}},
+      price,
+      description,
+      inclusion
+    }
     }`, { slug, locale }
   );
 }
@@ -61,6 +75,7 @@ const htmlOpts = {
 const detailsHTML = toHTML(safeArray(wellness.details), htmlOpts);
 const contactHTML = toHTML(safeArray(wellness.contactBooking), htmlOpts);
 
+const packages = safeArray(wellness.packages);
 const title = wellness?.metaTitle?.[locale] ?? '';
 const description = wellness?.metaDescription?.[locale] ?? '';
 const baseUrl = new URL(Astro.request.url);
@@ -87,7 +102,7 @@ const keywords = wellness.metaKeywords?.[locale] ?? '';
       <h1 class="font-title text-3xl sm:text-4xl md:text-5xl uppercase mb-4 md:mb-6 tracking-widest font-light">
         {wellness?.title?.[locale] ?? ''}
       </h1>
-      <p class="mb-12 md:mb-18 text-base md:text-lg">
+      <p class="text-lg">
         {wellness?.description?.[locale] ?? ''}
       </p>
     </div>
@@ -97,12 +112,12 @@ const keywords = wellness.metaKeywords?.[locale] ?? '';
     <div class="flex flex-col lg:flex-row justify-between gap-12">
       <div class="lg:w-3/5">
         <h3 class="font-title text-xl md:text-2xl uppercase mb-6">Details</h3>
-        <div class="text-base md:text-lg max-w-none pe-0 2xl:pe-42" set:html={detailsHTML}></div>
+        <div class="text-lg max-w-none pe-0 2xl:pe-42" set:html={detailsHTML}></div>
       </div>
       <div class="lg:w-2/5 flex flex-col items-start">
         <div>
           <h3 class="font-title text-xl md:text-2xl uppercase mb-6">Reserve your experience</h3>
-          <div class="text-base md:text-lg mb-6" set:html={contactHTML}></div>
+          <div class="text-lg mb-6" set:html={contactHTML}></div>
           <a
             href={`https://www.book-secure.com/index.php?s=results&property=idbal31692&locale=${locale}_GB&stid=986w12cwy`}
             class="inline-block px-4 py-3 md:px-4 md:py-2 text-xs font-title tracking-widest border bg-[#916B2C] text-white border-transparent hover:bg-white hover:text-black hover:border-black transition-colors duration-300 text-center"
@@ -115,4 +130,72 @@ const keywords = wellness.metaKeywords?.[locale] ?? '';
       </div>
     </div>
   </section>
+
+  <section class="container mx-auto px-4 xl:px-10 2xl:px-0 py-12">
+    <h3 class="font-title text-xl md:text-2xl uppercase mb-6">Treatment Package</h3>
+    {packages.map((pkg, i) => {
+      const pkgDescription = toHTML(safeArray(pkg.description?.[locale]), htmlOpts);
+      const pkgInclusion = toHTML(safeArray(pkg.inclusion?.[locale]), htmlOpts);
+  
+      return (
+        <div class="border-t border-b border-gray-300 mb-4" key={`package-${i}`}>
+          <button
+            type="button"
+            class="w-full flex justify-between items-center py-4 text-left text-lg uppercase toggle-btn"
+            data-target={`accordion-${i}`}
+            aria-expanded="false"
+            aria-controls={`accordion-${i}`}
+          >
+            <div>
+              <div class="text-sm text-gray-500 uppercase tracking-wide">
+                {pkg.price?.[locale] ?? ''}
+              </div>
+              <span class="font-title">
+                {pkg.title?.[locale] ?? `Package ${i + 1}`}
+              </span>
+            </div>
+  
+            <div class="flex items-center gap-4">
+              <svg class="w-5 h-5 transition-transform duration-300" data-icon data-target={`accordion-${i}`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+              <a
+            href={`https://www.book-secure.com/index.php?s=results&property=idbal31692&locale=${locale}_GB&stid=986w12cwy`}
+            class="inline-block px-4 py-3 md:px-4 md:py-2 text-xs font-title tracking-widest border hover:bg-[#916B2C] hover:text-white hover:border-transparent bg-white text-black border-black transition-colors duration-300 text-center"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            BOOK NOW
+          </a>
+            </div>
+          </button>
+  
+          <div id={`accordion-${i}`} class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 hidden" role="region" aria-labelledby={`accordion-${i}`}>
+            <div class="space-y-4">
+              <div class="text-lg max-w-none" set:html={pkgDescription}></div>
+            </div>
+            <div class="text-lg max-w-none" set:html={pkgInclusion}></div>
+          </div>
+        </div>
+      );
+    })}
+  </section>
+  
+  
+
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.toggle-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const targetId = btn.dataset.target;
+          const panel = document.getElementById(targetId);
+          const icon = document.querySelector(`svg[data-icon][data-target="${targetId}"]`);
+          const expanded = btn.getAttribute('aria-expanded') === 'true';
+          btn.setAttribute('aria-expanded', String(!expanded));
+          panel.classList.toggle('hidden');
+          icon.classList.toggle('rotate-180');
+        });
+      });
+    });
+  </script>
 </Layout>
