@@ -5,16 +5,19 @@ import { getLocale } from '../../../utils/getLocale';
 import OptimizedImage from '../../../components/OptimizedImage.astro';
 import { toHTML } from '@portabletext/to-html';
 
+// Fetch all possible static paths for villa pages (for each language)
 export async function getStaticPaths() {
   const slugs = await client.fetch(`*[_type == "villa" && defined(slug.current)]{ "slug": slug.current }`);
   const languages = ['en', 'ko', 'zh'];
   return languages.flatMap(lang => slugs.map(villa => ({ params: { lang, slug: villa.slug } })));
 }
 
+// Get params and locale
 const { lang, slug } = Astro.params;
 const locale = getLocale(lang);
 const safeArray = arr => Array.isArray(arr) ? arr : [];
 
+// Fetch villa data from Sanity
 const villa = await client.fetch(`*[_type == "villa" && slug.current == $slug][0]{
   title, excerpt, description, mainImage { asset->{url} }, mainImageAlt,
   villaGallery[] { asset->{url} }, villaFeatures, inVillaEntertainment,
@@ -22,15 +25,39 @@ const villa = await client.fetch(`*[_type == "villa" && slug.current == $slug][0
   metaTitle, metaDescription, metaKeywords,
 }`, { slug });
 
-const htmlFields = {
-  villaFeatures: toHTML(safeArray(villa?.villaFeatures?.[locale])),
-  inVillaEntertainment: toHTML(safeArray(villa?.inVillaEntertainment?.[locale])),
-  complimentaries: toHTML(safeArray(villa?.complimentaries?.[locale])),
-  area: toHTML(safeArray(villa?.area?.[locale])),
-  maximumOccupancy: toHTML(safeArray(villa?.maximumOccupancy?.[locale])),
-  others: toHTML(safeArray(villa?.others?.[locale])),
+// Define how to render lists from Portable Text
+const htmlListComponents = {
+  list: ({ children, value }) =>
+    value?.listItem === 'bullet' || value?.style === 'normal'
+      ? `<ul class="list-disc ml-6 space-y-2">${children}</ul>`
+      : `<ol class="list-decimal ml-6 space-y-2">${children}</ol>`,
+  listItem: ({ children }) => `<li>${children}</li>`,
 };
 
+// Convert Portable Text fields to HTML for display
+const htmlFields = {
+  villaFeatures: toHTML(safeArray(villa?.villaFeatures?.[locale]), {
+    components: htmlListComponents,
+  }),
+  inVillaEntertainment: toHTML(safeArray(villa?.inVillaEntertainment?.[locale]), {
+    components: htmlListComponents,
+  }),
+  complimentaries: toHTML(safeArray(villa?.complimentaries?.[locale]), {
+    components: htmlListComponents,
+  }),
+  area: toHTML(safeArray(villa?.area?.[locale]), {
+    components: htmlListComponents,
+  }),
+  maximumOccupancy: toHTML(safeArray(villa?.maximumOccupancy?.[locale]), {
+    components: htmlListComponents,
+  }),
+  others: toHTML(safeArray(villa?.others?.[locale]), {
+    components: htmlListComponents,
+  }),
+};
+
+// Prepare meta and description fields
+const villaDescription = toHTML(safeArray(villa.description?.[locale]));
 const title = villa?.metaTitle?.[locale] ?? '';
 const description = villa?.metaDescription?.[locale] ?? '';
 const url = new URL(Astro.request.url).href;
@@ -39,6 +66,7 @@ const keywords = villa.metaKeywords?.[locale] ?? '';
 ---
 
 <Layout {title} {description} {url} {ogImage} {keywords}>
+  {/* Hero section with main villa image */}
   <section class="relative w-full h-[50vh] md:h-[60vh] lg:h-[75vh] overflow-hidden">
     <OptimizedImage
       src={villa.mainImage.asset.url}
@@ -51,10 +79,11 @@ const keywords = villa.metaKeywords?.[locale] ?? '';
     <div class="absolute inset-0 bg-black/25 z-20"></div>
   </section>
 
+  {/* Villa title, description, and booking button */}
   <section class="container mx-auto px-4 xl:px-10 2xl:px-0 py-16 md:py-24">
     <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
       <h1 class="font-title text-3xl sm:text-4xl md:text-5xl uppercase mb-4 md:mb-6 tracking-widest font-light">{title}</h1>
-      <p class="mb-12 md:mb-18 text-lg">{villa?.description?.[locale] ?? ''}</p>
+      <div class="mb-12 md:mb-18 text-lg" set:html={villaDescription}></div>
       <a
         href="https://www.book-secure.com/index.php?s=results&property=idbal31692&locale=en_GB&currency=IDR&stid=986w12cwy"
         class="bg-white text-gray-700 px-4 py-3 md:px-6 md:py-4 text-xs md:text-sm font-title tracking-widest transition-colors duration-300 border border-black hover:bg-[#916B2C] hover:text-white hover:border-transparent inline-block"
@@ -62,6 +91,7 @@ const keywords = villa.metaKeywords?.[locale] ?? '';
     </div>
   </section>
 
+  {/* Villa gallery preview grid */}
   <section class="container mx-auto px-4 xl:px-10 2xl:px-0 pb-12">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
       <div class="grid grid-cols-2 gap-4 md:col-span-2">
@@ -81,6 +111,7 @@ const keywords = villa.metaKeywords?.[locale] ?? '';
           class="w-full h-full object-cover aspect-[16/9] md:aspect-auto 2xl:aspect-[4/3]"
           loading="lazy"
         />
+        {/* Button to open full gallery modal */}
         <a
           id="openGallery"
           href="#"
@@ -94,15 +125,19 @@ const keywords = villa.metaKeywords?.[locale] ?? '';
     </div>
   </section>
 
+  {/* Modal for full image gallery with carousel */}
   {(villa?.villaGallery ?? []).length > 0 && (
     <div id="galleryModal" class="fixed inset-0 bg-black/90 z-50 hidden flex flex-col items-center justify-center px-4 py-8" role="dialog" aria-modal="true" aria-labelledby="galleryLabel" tabindex="-1">
+      {/* Close button for gallery modal */}
       <button id="closeGallery" class="absolute top-4 right-4 text-white text-3xl hover:scale-110 transition" aria-label="Close gallery modal">×</button>
       <div class="flex items-center gap-6 max-w-5xl w-full">
+        {/* Previous slide button */}
         <button id="galleryPrev" class="text-white hover:scale-110 transition" aria-label="Previous Slide">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
           </svg>
         </button>
+        {/* Carousel for gallery images */}
         <div class="flex-1 flex flex-col items-center">
           <div id="galleryCarousel" class="splide w-full" aria-labelledby="galleryLabel" role="region" tabindex="0">
             <div class="splide__track mb-4">
@@ -122,6 +157,7 @@ const keywords = villa.metaKeywords?.[locale] ?? '';
             <div class="splide__pagination mt-6 !relative !bottom-0 flex justify-center" />
           </div>
         </div>
+        {/* Next slide button */}
         <button id="galleryNext" class="text-white hover:scale-110 transition" aria-label="Next Slide">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -131,8 +167,10 @@ const keywords = villa.metaKeywords?.[locale] ?? '';
     </div>
   )}
 
+  {/* Accordions for villa services and more information */}
   <section class="container mx-auto px-4 xl:px-10 2xl:px-0 py-12">
     <div class="border-t border-gray-300">
+      {/* Accordion button for Services & Amenities */}
       <button
         type="button"
         class="w-full flex justify-between items-center py-4 font-title text-left text-lg uppercase toggle-btn"
@@ -145,6 +183,7 @@ const keywords = villa.metaKeywords?.[locale] ?? '';
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
         </svg>
       </button>
+      {/* Accordion panel for Services & Amenities */}
       <div id="accordion-1" class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 hidden" role="region" aria-labelledby="accordion-1">
         <div>
           <h4 class="font-semibold mb-2">Villa Features</h4>
@@ -162,6 +201,7 @@ const keywords = villa.metaKeywords?.[locale] ?? '';
     </div>
 
     <div class="border-t border-b border-gray-300">
+      {/* Accordion button for More Information */}
       <button
         type="button"
         class="w-full flex justify-between items-center py-4 font-title text-left text-lg uppercase toggle-btn"
@@ -174,6 +214,7 @@ const keywords = villa.metaKeywords?.[locale] ?? '';
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
         </svg>
       </button>
+      {/* Accordion panel for More Information */}
       <div id="accordion-2" class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 hidden" role="region" aria-labelledby="accordion-2">
         <div>
           <h4 class="font-semibold mb-2">Maximum Occupancy</h4>
@@ -191,6 +232,7 @@ const keywords = villa.metaKeywords?.[locale] ?? '';
     </div>
   </section>
 
+  {/* Script for accordion toggle functionality */}
   <script is:inline>
     document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('.toggle-btn').forEach(btn => {
@@ -207,6 +249,7 @@ const keywords = villa.metaKeywords?.[locale] ?? '';
     });
   </script>
 
+  {/* Script for gallery modal and carousel functionality */}
   <script is:inline>
     document.addEventListener("DOMContentLoaded", () => {
       const openBtn = document.getElementById("openGallery");
@@ -244,9 +287,4 @@ const keywords = villa.metaKeywords?.[locale] ?? '';
       });
     });
   </script>
-
-  <style>
-    .custom-list ul { list-style-type: disc; padding-left: 1.25rem; }
-    .custom-list li { margin-bottom: 0.25rem; }
-  </style>
 </Layout>

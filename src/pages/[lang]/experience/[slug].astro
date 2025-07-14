@@ -1,14 +1,17 @@
 ---
+// Import dependencies and components
 import Layout from '../../../layouts/Base.astro';
 import client from '../../../lib/sanityClient';
 import { getLocale } from '../../../utils/getLocale';
 import OptimizedImage from '../../../components/OptimizedImage.astro';
 import { toHTML } from '@portabletext/to-html';
 
+// Get route parameters and locale
 const { lang, slug } = Astro.params;
 const locale = getLocale(lang);
 const safeArray = arr => Array.isArray(arr) ? arr : [];
 
+// Fetch experience data from Sanity CMS
 const experience = await client.fetch(`*[_type == "experienceUnique" && slug.current == $slug][0]{
   title,
   excerpt,
@@ -24,12 +27,14 @@ const experience = await client.fetch(`*[_type == "experienceUnique" && slug.cur
   "contact": contact[$locale],
 }`, { slug, locale });
 
+// Generate static paths for all languages and slugs
 export async function getStaticPaths() {
   const slugs = await client.fetch(`*[_type == "experienceUnique" && defined(slug.current)]{ "slug": slug.current }`);
   const languages = ['en', 'ko', 'zh'];
   return languages.flatMap(lang => slugs.map(experience => ({ params: { lang, slug: experience.slug } })));
 }
 
+// Convert Portable Text fields to HTML for rendering
 const detailHTML = toHTML(safeArray(experience.detail), {
   components: {
     list: ({ children, value }) => (value?.listItem === 'bullet' || value?.style === 'normal'
@@ -63,7 +68,7 @@ const htmlOpts = {
 
 const contactHTML = toHTML(safeArray(experience.contact), htmlOpts);
 
-const htmlFields = { desc: toHTML(safeArray(experience?.description?.[locale])) };
+// Prepare meta tags and Open Graph data
 const title = experience?.metaTitle?.[locale] ?? '';
 const description = experience?.metaDescription?.[locale] ?? '';
 const baseUrl = new URL(Astro.request.url);
@@ -73,6 +78,7 @@ const keywords = experience.metaKeywords?.[locale] ?? '';
 ---
 
 <Layout {title} {description} {url} {ogImage} {keywords}>
+  {/* Hero section with main image */}
   <section class="relative w-full h-[50vh] md:h-[60vh] lg:h-[75vh] overflow-hidden">
     <OptimizedImage
       src={experience.mainImage.asset.url}
@@ -85,6 +91,7 @@ const keywords = experience.metaKeywords?.[locale] ?? '';
     <div class="absolute inset-0 bg-black/25 z-20"></div>
   </section>
 
+  {/* Title and description section */}
   <section class="container mx-auto px-4 xl:px-10 2xl:px-0 py-16 md:py-24">
     <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
       <h1 class="font-title text-3xl sm:text-4xl md:text-5xl uppercase mb-4 md:mb-6 tracking-widest font-light">
@@ -96,12 +103,15 @@ const keywords = experience.metaKeywords?.[locale] ?? '';
     </div>
   </section>
 
+  {/* Details and reservation section */}
   <section class="container mx-auto px-4 xl:px-10 2xl:px-0 pb-16 md:pb-24">
     <div class="flex flex-col lg:flex-row justify-between gap-12">
+      {/* Experience details */}
       <div class="lg:w-3/5">
         <h3 class="font-title text-xl md:text-2xl uppercase mb-6">Details</h3>
         <div class="text-lg max-w-none" set:html={detailHTML}></div>
       </div>
+      {/* Reservation and contact info */}
       <div class="lg:w-2/5 flex flex-col items-end">
         <div>
           <h3 class="font-title text-xl md:text-2xl uppercase mb-6">Reserve your experience</h3>
@@ -119,6 +129,7 @@ const keywords = experience.metaKeywords?.[locale] ?? '';
     </div>
   </section>
 
+  {/* Accordion section for more information */}
   <section class="container mx-auto px-4 xl:px-10 2xl:px-0 pb-12">
     <div class="border-t border-b border-gray-300">
       <button
@@ -129,6 +140,7 @@ const keywords = experience.metaKeywords?.[locale] ?? '';
         aria-controls="accordion-1"
       >
         More Information
+        {/* Accordion arrow icon */}
         <svg class="w-5 h-5 transition-transform duration-300" data-icon data-target="accordion-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
         </svg>
@@ -139,6 +151,7 @@ const keywords = experience.metaKeywords?.[locale] ?? '';
     </div>
   </section>
 
+  {/* Accordion toggle script */}
   <script is:inline>
     document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('.toggle-btn').forEach(btn => {

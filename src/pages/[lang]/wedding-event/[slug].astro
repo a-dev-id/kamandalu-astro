@@ -6,63 +6,60 @@ import { getLocale } from '../../../utils/getLocale';
 import OptimizedImage from '../../../components/OptimizedImage.astro';
 import { toHTML } from '@portabletext/to-html';
 
-// Generate static paths for all wellness experiences and venues in all languages
-export async function getStaticPaths() {
-  const [experienceSlugs, venueSlugs] = await Promise.all([
-    client.fetch(`*[_type == "wellnessExperience" && defined(slug.current)]{ "slug": slug.current }`),
-    client.fetch(`*[_type == "wellnessVenue" && defined(slug.current)]{ "slug": slug.current }`)
-  ]);
-  const allSlugs = [...experienceSlugs, ...venueSlugs];
-  const languages = ['en', 'ko', 'zh'];
-  return languages.flatMap(lang =>
-    allSlugs.map(item => ({
-      params: { lang, slug: item.slug }
-    }))
-  );
-}
-
 // Get params and locale
 const { lang, slug } = Astro.params;
 const locale = getLocale(lang);
 const safeArray = arr => Array.isArray(arr) ? arr : [];
 
-// Fetch wellnessExperience or fallback to wellnessVenue by slug
-let wellness = await client.fetch(
-  `*[_type == "wellnessExperience" && slug.current == $slug][0]{
-    _type, title, excerpt, description, mainImage { asset->{url} }, mainImageAlt,
-    metaTitle, metaDescription, metaKeywords,
-    "details": details[$locale], "contactBooking": contactBooking[$locale],
-    packages[]{
+// Fetch wedding venue data from Sanity
+const wedding = await client.fetch(`*[_type == "weddingVenue" && slug.current == $slug][0]{
+  title,
+  excerpt,
+  description,
+  mainImage { asset->{url} },
+  mainImageAlt,
+  metaTitle,
+  metaDescription,
+  metaKeywords,
+  order,
+  "detail": detail[$locale],
+  "contact": contact[$locale],
+  packages[]{
       title,
       images[]{asset->{url}},
       price,
       description,
       inclusion
-    }
-  }`, { slug, locale }
-);
+    },
+}`, { slug, locale });
 
-if (!wellness) {
-  wellness = await client.fetch(
-    `*[_type == "wellnessVenue" && slug.current == $slug][0]{
-      _type, title, excerpt, description, mainImage { asset->{url} }, mainImageAlt,
-      metaTitle, metaDescription, metaKeywords,
-      "details": details[$locale], "contactBooking": contactBooking[$locale],
-      packages[]{
-      title,
-      images[]{asset->{url}},
-      price,
-      description,
-      inclusion
-    }
-    }`, { slug, locale }
-  );
+// Generate static paths for all languages and slugs
+export async function getStaticPaths() {
+  const slugs = await client.fetch(`*[_type == "weddingVenue" && defined(slug.current)]{ "slug": slug.current }`);
+  const languages = ['en', 'ko', 'zh'];
+  return languages.flatMap(lang => slugs.map(wedding => ({ params: { lang, slug: wedding.slug } })));
 }
 
-// Throw error if no document found
-if (!wellness) throw new Error(`No document found for slug: ${slug}`);
+// Convert detail and menu fields to HTML
+const detailHTML = toHTML(safeArray(wedding.detail), {
+  components: {
+    list: ({ children, value }) => (value?.listItem === 'bullet' || value?.style === 'normal'
+      ? `<ul class="list-disc ml-6 space-y-2">${children}</ul>`
+      : `<ol class="list-decimal ml-6 space-y-2">${children}</ol>`),
+    listItem: ({ children }) => `<li>${children}</li>`,
+  }
+});
 
-// Portable Text to HTML options for rendering rich text
+const menuHTML = toHTML(safeArray(wedding.menu), {
+  components: {
+    list: ({ children, value }) => (value?.listItem === 'bullet' || value?.style === 'normal'
+      ? `<ul class="list-disc ml-6 space-y-2">${children}</ul>`
+      : `<ol class="list-decimal ml-6 space-y-2">${children}</ol>`),
+    listItem: ({ children }) => `<li>${children}</li>`,
+  }
+});
+
+// HTML options for block content
 const htmlOpts = {
   components: {
     block: ({ children }) => `<p>${children.replace(/\n/g, '<br>')}</p>`,
@@ -76,26 +73,26 @@ const htmlOpts = {
   }
 };
 
-// Convert details and contactBooking to HTML
-const detailsHTML = toHTML(safeArray(wellness.details), htmlOpts);
-const contactHTML = toHTML(safeArray(wellness.contactBooking), htmlOpts);
+// Convert contact field to HTML
+const contactHTML = toHTML(safeArray(wedding.contact), htmlOpts);
 
-// Prepare meta and package data
-const packages = safeArray(wellness.packages);
-const title = wellness?.metaTitle?.[locale] ?? '';
-const description = wellness?.metaDescription?.[locale] ?? '';
+// Prepare other fields and meta data
+const htmlFields = { desc: toHTML(safeArray(wedding?.description?.[locale])) };
+const packages = safeArray(wedding.packages);
+const title = wedding?.metaTitle?.[locale] ?? '';
+const description = wedding?.metaDescription?.[locale] ?? '';
 const baseUrl = new URL(Astro.request.url);
 const url = baseUrl.href;
-const ogImage = wellness.mainImage?.asset?.url ?? '';
-const keywords = wellness.metaKeywords?.[locale] ?? '';
+const ogImage = wedding.mainImage?.asset?.url ?? '';
+const keywords = wedding.metaKeywords?.[locale] ?? '';
 ---
 
 <Layout {title} {description} {url} {ogImage} {keywords}>
   {/* Hero section with main image */}
   <section class="relative w-full h-[50vh] md:h-[60vh] lg:h-[75vh] overflow-hidden">
     <OptimizedImage
-      src={wellness.mainImage.asset.url}
-      alt={wellness.mainImageAlt?.[locale] ?? ''}
+      src={wedding.mainImage.asset.url}
+      alt={wedding.mainImageAlt?.[locale] ?? ''}
       width={1600}
       height={900}
       quality={75}
@@ -105,27 +102,27 @@ const keywords = wellness.metaKeywords?.[locale] ?? '';
   </section>
 
   {/* Title and description section */}
-  <section class="container mx-auto px-4 xl:px-10 2xl:px-0 pt-16 md:pt-24">
+  <section class="container mx-auto px-4 xl:px-10 2xl:px-0 py-16 md:py-24">
     <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
       <h1 class="font-title text-3xl sm:text-4xl md:text-5xl uppercase mb-4 md:mb-6 tracking-widest font-light">
-        {wellness?.title?.[locale] ?? ''}
+        {wedding?.title?.[locale] ?? ''}
       </h1>
       <p class="text-lg">
-        {wellness?.description?.[locale] ?? ''}
+        {wedding?.description?.[locale] ?? ''}
       </p>
     </div>
   </section>
 
-  {/* Details and booking section */}
-  <section class="container mx-auto px-4 xl:px-10 2xl:px-0 py-16 md:py-24">
+  {/* Details and contact/reservation section */}
+  <section class="container mx-auto px-4 xl:px-10 2xl:px-0 pb-16 md:pb-24">
     <div class="flex flex-col lg:flex-row justify-between gap-12">
       <div class="lg:w-3/5">
         <h3 class="font-title text-xl md:text-2xl uppercase mb-6">Details</h3>
-        <div class="text-lg max-w-none pe-0 2xl:pe-42" set:html={detailsHTML}></div>
+        <div class="text-lg max-w-none" set:html={detailHTML}></div>
       </div>
-      <div class="lg:w-2/5 flex flex-col items-start">
+      <div class="lg:w-2/5 flex flex-col items-end">
         <div>
-          <h3 class="font-title text-xl md:text-2xl uppercase mb-6">Reserve your experience</h3>
+          <h3 class="font-title text-xl md:text-2xl uppercase mb-6">Reserve your wedding<br>or Event</h3>
           <div class="text-lg mb-6" set:html={contactHTML}></div>
           <a
             href={`https://www.book-secure.com/index.php?s=results&property=idbal31692&locale=${locale}_GB&stid=986w12cwy`}
@@ -140,10 +137,10 @@ const keywords = wellness.metaKeywords?.[locale] ?? '';
     </div>
   </section>
 
-  {/* Treatment packages accordion section */}
+  {/* Packages section with accordion */}
   {packages.length > 0 && (
-    <section class="container mx-auto px-4 xl:px-10 2xl:px-0 py-12">
-      <h3 class="font-title text-xl md:text-2xl uppercase mb-6">Treatment Package</h3>
+    <section class="container mx-auto px-4 xl:px-10 2xl:px-0 pb-12">
+      <h3 class="font-title text-xl md:text-2xl uppercase mb-6">Package</h3>
       {packages.map((pkg, i) => {
         const pkgDescription = toHTML(safeArray(pkg.description?.[locale]), htmlOpts);
         const pkgInclusion = toHTML(safeArray(pkg.inclusion?.[locale]), htmlOpts);
@@ -168,7 +165,7 @@ const keywords = wellness.metaKeywords?.[locale] ?? '';
               </div>
 
               <div class="flex items-center gap-4">
-                {/* Accordion arrow icon */}
+                {/* Accordion icon */}
                 <svg class="w-5 h-5 transition-transform duration-300" data-icon data-target={`accordion-${i}`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                 </svg>
@@ -186,9 +183,23 @@ const keywords = wellness.metaKeywords?.[locale] ?? '';
 
             {/* Accordion panel for package details */}
             <div id={`accordion-${i}`} class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 hidden" role="region" aria-labelledby={`accordion-${i}`}>
-              <div class="space-y-4">
-                <div class="text-lg max-w-none" set:html={pkgDescription}></div>
-              </div>
+                <div class="flex flex-col md:flex-row gap-6 items-start">
+                {pkg.images && pkg.images.length > 0 && (
+                  <div class="md:w-1/3 w-full flex-shrink-0">
+                  <OptimizedImage
+                    src={pkg.images[0].asset.url}
+                    alt={pkg.title?.[locale] ?? ''}
+                    width={400}
+                    height={300}
+                    quality={75}
+                    className="w-full h-auto mb-4 md:mb-0"
+                  />
+                  </div>
+                )}
+                <div class="md:w-2/3 w-full">
+                  <div class="text-lg max-w-none" set:html={pkgDescription}></div>
+                </div>
+                </div>
               <div class="text-lg max-w-none" set:html={pkgInclusion}></div>
             </div>
           </div>

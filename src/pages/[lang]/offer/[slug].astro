@@ -5,18 +5,22 @@ import { getLocale } from '../../../utils/getLocale';
 import OptimizedImage from '../../../components/OptimizedImage.astro';
 import { toHTML } from '@portabletext/to-html';
 
+// Helper to format date strings for display
 const formatDate = dateStr => new Date(dateStr).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 
+// Generate static paths for all offers in all supported languages
 export async function getStaticPaths() {
   const slugs = await client.fetch(`*[_type == "offer" && defined(slug.current)]{ "slug": slug.current }`);
   const languages = ['en', 'ko', 'zh'];
   return languages.flatMap(lang => slugs.map(offer => ({ params: { lang, slug: offer.slug } })));
 }
 
+// Get parameters and locale from Astro
 const { lang, slug } = Astro.params;
 const locale = getLocale(lang);
 const safeArray = arr => Array.isArray(arr) ? arr : [];
 
+// Fetch offer data from Sanity CMS for the current slug and locale
 const offer = await client.fetch(`*[_type == "offer" && slug.current == $slug][0]{
   title,
   excerpt,
@@ -35,25 +39,25 @@ const offer = await client.fetch(`*[_type == "offer" && slug.current == $slug][0
   "cancelPolicy": cancelPolicy[$locale],
 }`, { slug, locale });
 
-const inclusionHTML = toHTML(safeArray(offer.inclusion), {
-  components: {
-    list: ({ children, value }) => (value?.listItem === 'bullet' || value?.style === 'normal'
+// Convert inclusion and cancel policy fields to HTML using Portable Text
+const htmlListComponents = {
+  list: ({ children, value }) =>
+    value?.listItem === 'bullet' || value?.style === 'normal'
       ? `<ul class="list-disc ml-6 space-y-2">${children}</ul>`
-      : `<ol class="list-decimal ml-6 space-y-2">${children}</ol>`),
-    listItem: ({ children }) => `<li>${children}</li>`,
-  }
+      : `<ol class="list-decimal ml-6 space-y-2">${children}</ol>`,
+  listItem: ({ children }) => `<li>${children}</li>`,
+};
+
+const inclusionHTML = toHTML(safeArray(offer.inclusion), {
+  components: htmlListComponents,
 });
 
 const cancelPolicyHTML = toHTML(safeArray(offer.cancelPolicy), {
-  components: {
-    list: ({ children, value }) => (value?.listItem === 'bullet' || value?.style === 'normal'
-      ? `<ul class="list-disc ml-6 space-y-2">${children}</ul>`
-      : `<ol class="list-decimal ml-6 space-y-2">${children}</ol>`),
-    listItem: ({ children }) => `<li>${children}</li>`,
-  }
+  components: htmlListComponents,
 });
 
-const htmlFields = { desc: toHTML(safeArray(offer?.description?.[locale])) };
+// Prepare meta and description fields for SEO and display
+const offerDescription = toHTML(safeArray(offer.description?.[locale]));
 const title = offer?.metaTitle?.[locale] ?? '';
 const description = offer?.metaDescription?.[locale] ?? '';
 const baseUrl = new URL(Astro.request.url);
@@ -63,6 +67,7 @@ const keywords = offer.metaKeywords?.[locale] ?? '';
 ---
 
 <Layout {title} {description} {url} {ogImage} {keywords}>
+  {/* Hero section with main offer image */}
   <section class="relative w-full h-[50vh] md:h-[60vh] lg:h-[75vh] overflow-hidden">
     <OptimizedImage
       src={offer.mainImage.asset.url}
@@ -75,21 +80,25 @@ const keywords = offer.metaKeywords?.[locale] ?? '';
     <div class="absolute inset-0 bg-black/25 z-20"></div>
   </section>
 
+  {/* Offer title and description */}
   <section class="container mx-auto px-4 xl:px-10 2xl:px-0 py-16 md:py-24">
     <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
       <h1 class="font-title text-3xl sm:text-4xl md:text-5xl uppercase mb-4 md:mb-6 tracking-widest font-light">
         {offer?.title?.[locale] ?? ''}
       </h1>
-      <div class="text-lg prose max-w-none" set:html={htmlFields.desc}></div>
+      <div class="text-lg prose max-w-none" set:html={offerDescription}></div>
     </div>
   </section>
 
+  {/* What's Included and Booking section */}
   <section class="container mx-auto px-4 xl:px-10 2xl:px-0 pb-16 md:pb-24">
     <div class="flex flex-col lg:flex-row justify-between gap-12">
+      {/* Inclusion list */}
       <div class="lg:w-4/5">
         <h3 class="font-title text-xl md:text-2xl uppercase mb-6">What's Included</h3>
         <div class="text-lg max-w-none" set:html={inclusionHTML}></div>
       </div>
+      {/* Offer validity and booking button */}
       <div class="lg:w-1/5 flex flex-col items-end">
         <div>
           <h3 class="font-title text-xl md:text-2xl uppercase mb-2">Offer Valid</h3>
@@ -109,6 +118,7 @@ const keywords = offer.metaKeywords?.[locale] ?? '';
     </div>
   </section>
 
+  {/* Accordion for cancellation policy */}
   <section class="container mx-auto px-4 xl:px-10 2xl:px-0 pb-12">
     <div class="border-t border-b border-gray-300">
       <button
@@ -119,6 +129,7 @@ const keywords = offer.metaKeywords?.[locale] ?? '';
         aria-controls="accordion-1"
       >
         Cancellation Policy
+        {/* SVG icon for accordion toggle */}
         <svg class="w-5 h-5 transition-transform duration-300" data-icon data-target="accordion-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
         </svg>
@@ -129,6 +140,7 @@ const keywords = offer.metaKeywords?.[locale] ?? '';
     </div>
   </section>
 
+  {/* Inline script for accordion toggle functionality */}
   <script is:inline>
     document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('.toggle-btn').forEach(btn => {
