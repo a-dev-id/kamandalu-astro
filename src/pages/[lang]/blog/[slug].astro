@@ -1,0 +1,89 @@
+---
+import Layout from '../../../layouts/Base.astro';
+import client from '../../../lib/sanityClient';
+import { getLocale } from '../../../utils/getLocale';
+import OptimizedImage from '../../../components/OptimizedImage.astro';
+import { toHTML } from '@portabletext/to-html';
+
+// Format publish date
+const formatDate = dateStr => new Date(dateStr).toLocaleDateString('en-US', {
+  month: 'long',
+  day: 'numeric',
+  year: 'numeric',
+});
+
+// Generate paths for all blog slugs in each language
+export async function getStaticPaths() {
+  const slugs = await client.fetch(`*[_type == "blog" && defined(slug.current)]{ "slug": slug.current }`);
+  const languages = ['en', 'ko', 'zh'];
+  return languages.flatMap(lang =>
+    slugs.map(blog => ({ params: { lang, slug: blog.slug } }))
+  );
+}
+
+// Params
+const { lang, slug } = Astro.params;
+const locale = getLocale(lang);
+const safeArray = arr => Array.isArray(arr) ? arr : [];
+
+// Fetch blog content by slug
+const blog = await client.fetch(`*[_type == "blog" && slug.current == $slug][0]{
+  title,
+  excerpt,
+  publishedAt,
+  description,
+  mainImage { asset->{url} },
+  mainImageAlt,
+  secondImage { asset->{url} },
+  secondImageAlt,
+  metaTitle,
+  metaDescription,
+  metaKeywords
+}`, { slug });
+
+// Convert description to HTML
+const blogDescription = toHTML(safeArray(blog.description?.[locale]), {
+  components: {
+    list: ({ children, value }) =>
+      value?.listItem === 'bullet' || value?.style === 'normal'
+        ? `<ul class="list-disc ml-6 space-y-2">${children}</ul>`
+        : `<ol class="list-decimal ml-6 space-y-2">${children}</ol>`,
+    listItem: ({ children }) => `<li>${children}</li>`,
+  },
+});
+
+// SEO
+const title = blog?.metaTitle?.[locale] ?? blog?.title?.[locale] ?? '';
+const description = blog?.metaDescription?.[locale] ?? '';
+const keywords = blog?.metaKeywords?.[locale] ?? '';
+const url = new URL(Astro.request.url).href;
+const ogImage = blog.secondImage?.asset?.url ?? blog.mainImage?.asset?.url ?? '';
+---
+
+<Layout {title} {description} {url} {ogImage} {keywords}>
+  {/* Hero image */}
+  <section class="relative w-full h-[50vh] md:h-[60vh] lg:h-[75vh] overflow-hidden">
+    <OptimizedImage
+      src={blog.mainImage.asset.url}
+      alt={blog.mainImageAlt?.[locale] ?? ''}
+      width={1600} height={900} quality={75}
+      className="w-full h-full object-cover"
+    />
+    <div class="absolute inset-0 bg-black/25 z-20"></div>
+  </section>
+
+  {/* Blog title and content */}
+  <section class="container mx-auto px-4 xl:px-10 2xl:px-56 py-16 md:py-24">
+    <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
+      <h1 class="font-title text-3xl sm:text-4xl md:text-5xl uppercase mb-4 md:mb-6 tracking-widest font-light">
+        {blog?.title?.[locale] ?? ''}
+      </h1>
+      {blog.publishedAt && (
+        <p class="text-sm text-gray-500 mb-6 uppercase tracking-wide">
+          {formatDate(blog.publishedAt)}
+        </p>
+      )}
+      <div class="prose max-w-none text-left text-lg" set:html={blogDescription}></div>
+    </div>
+  </section>
+</Layout>

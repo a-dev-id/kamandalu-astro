@@ -1,0 +1,131 @@
+---
+import Layout from '../../../layouts/Base.astro';
+import client from '../../../lib/sanityClient';
+import { getLocale } from '../../../utils/getLocale';
+import OptimizedImage from '../../../components/OptimizedImage.astro';
+import { toHTML } from '@portabletext/to-html';
+
+// Params
+const { lang, page } = Astro.params;
+const locale = getLocale(lang);
+const currentPage = parseInt(page, 10);
+
+const perPage = 9;
+const start = (currentPage - 1) * perPage;
+const end = start + perPage;
+const safeArray = arr => Array.isArray(arr) ? arr : [];
+
+// Fetch page meta
+const pageDetails = await client.fetch(`*[_type == "page" && _id == "da5b24b7-654f-4ae5-8b49-d50988933437"][0]{
+  title, subtitle, description, metaTitle, metaDescription, metaKeywords,
+  mainImageAlt, mainImage { asset->{url} }
+}`);
+
+// Fetch blogs
+const allBlogs = await client.fetch(`*[_type == "blog"] | order(order asc){
+  "slug": slug.current, title, excerpt,
+  mainImage { asset->{url} }, mainImageAlt,
+  secondImage { asset->{url} }, secondImageAlt
+}`);
+const blog = allBlogs.slice(start, end);
+const totalPages = Math.ceil(allBlogs.length / perPage);
+
+// SEO
+const pageDescription = toHTML(safeArray(pageDetails.description?.[locale]));
+const title = pageDetails?.metaTitle?.[locale] ?? '';
+const description = pageDetails?.metaDescription?.[locale] ?? '';
+const url = new URL(Astro.request.url).href;
+const ogImage = pageDetails.mainImage?.asset?.url ?? '';
+const keywords = pageDetails.metaKeywords?.[locale] ?? '';
+
+// Static paths for pages 2+
+export async function getStaticPaths() {
+  const languages = ['en', 'ko', 'zh'];
+  const blogCount = await client.fetch('count(*[_type == "blog"])');
+  const perPage = 9;
+  const totalPages = Math.ceil(blogCount / perPage);
+
+  // Generate only pages 2 and above
+  return languages.flatMap(lang =>
+    Array.from({ length: totalPages - 1 }, (_, i) => ({
+      params: {
+        lang,
+        page: (i + 2).toString() // Starts from 2
+      }
+    }))
+  );
+}
+---
+
+<Layout {title} {description} {url} {ogImage} {keywords}>
+  {/* Hero Image */}
+  <section class="relative w-full h-[50vh] md:h-[60vh] lg:h-[75vh] overflow-hidden">
+    <OptimizedImage
+      src={pageDetails.mainImage.asset.url}
+      alt={pageDetails.mainImageAlt?.[locale] ?? ''}
+      width={1600} height={900} quality={75}
+      className="w-full h-full object-cover"
+    />
+    <div class="absolute inset-0 bg-black/25 z-20"></div>
+  </section>
+
+  {/* Page Header */}
+  <section class="container mx-auto px-4 xl:px-10 2xl:px-0 pt-16 md:pt-24">
+    <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
+      <h1 class="font-title text-3xl sm:text-4xl md:text-5xl uppercase mb-4 md:mb-6 tracking-widest font-light">
+        {pageDetails?.title?.[locale] ?? ''}
+      </h1>
+      <div class="mb-12 md:mb-18 text-lg" set:html={pageDescription}></div>
+    </div>
+  </section>
+
+  {/* Blog Grid */}
+  <section class="container mx-auto px-4 xl:px-10 2xl:px-0 py-12">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      {blog.map((data) => (
+        <div class="transition-transform duration-500 ease-in-out bg-white overflow-hidden flex flex-col h-full">
+          <OptimizedImage
+            src={data.secondImage?.asset?.url ?? data.mainImage?.asset?.url}
+            alt={data.secondImageAlt?.[locale] ?? data.mainImageAlt?.[locale] ?? 'Blog image'}
+            width={800} height={600} quality={75} loading="lazy"
+            class="w-full h-auto aspect-[4/3] transition duration-500"
+          />
+          <div class="py-4 md:py-6 flex flex-col flex-1">
+            <h3 class="text-lg tracking-widest uppercase font-title">
+              {data.title?.[locale] ?? data.title?.en}
+            </h3>
+            <p class="mt-2 text-lg">
+              {data.excerpt?.[locale] ?? data.excerpt?.en}
+            </p>
+            <div class="flex-grow"></div>
+            <div class="mt-6 flex flex-wrap gap-4 lg:mb-20 mb-10">
+              <a
+                href={`/${locale}/blog/${data.slug}`}
+                class="bg-white text-black px-4 py-3 md:px-4 md:py-2 text-xs font-title tracking-widest transition-colors duration-300 border border-black hover:bg-[#916B2C] hover:text-white hover:border-transparent inline-block text-center"
+              >READ MORE</a>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    {/* Pagination */}
+    <div class="flex flex-wrap justify-center mt-12 gap-2">
+      {Array.from({ length: totalPages }, (_, i) => {
+        const pageNum = i + 1;
+        return (
+          <a
+            href={`/${lang}/blog${pageNum === 1 ? '' : `/${pageNum}`}`}
+            class={`px-4 py-2 min-w-[44px] text-center rounded border font-title text-sm transition-colors duration-300 ${
+              currentPage === pageNum
+                ? 'text-black border-black'
+                : 'bg-gray-100 text-black border-gray-300 hover:bg-[#916B2C] hover:text-white hover:border-[#916B2C]'
+            }`}
+          >
+            {pageNum}
+          </a>
+        );
+      })}
+    </div>
+  </section>
+</Layout>
