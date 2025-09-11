@@ -130,26 +130,31 @@ const keywords = experience.metaKeywords?.[locale] ?? '';
   </section>
 
   {/* Accordion section for more information */}
-  <section class="container mx-auto px-4 xl:px-10 2xl:px-0 pb-12">
-    <div class="border-t border-b border-gray-300">
-      <button
-        type="button"
-        class="w-full flex justify-between items-center py-4 font-title text-left text-lg uppercase toggle-btn"
-        data-target="accordion-1"
-        aria-expanded="false"
-        aria-controls="accordion-1"
-      >
-        More Information
-        {/* Accordion arrow icon */}
-        <svg class="w-5 h-5 transition-transform duration-300" data-icon data-target="accordion-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-        </svg>
-      </button>
-      <div id="accordion-1" class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 hidden" role="region" aria-labelledby="accordion-1">
-        <div class="text-lg max-w-none" set:html={menuHTML}></div>
-      </div>
-    </div>
-  </section>
+  {menuHTML.trim()
+    ? (
+      <section class="container mx-auto px-4 xl:px-10 2xl:px-0 pb-12">
+        <div class="border-t border-b border-gray-300">
+          <button
+            type="button"
+            class="w-full flex justify-between items-center py-4 font-title text-left text-lg uppercase toggle-btn"
+            data-target="accordion-1"
+            aria-expanded="false"
+            aria-controls="accordion-1"
+          >
+            More Information
+            {/* Accordion arrow icon */}
+            <svg class="w-5 h-5 transition-transform duration-300" data-icon data-target="accordion-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div id="accordion-1" class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 hidden" role="region" aria-labelledby="accordion-1">
+            <div class="text-lg max-w-none" set:html={menuHTML}></div>
+          </div>
+        </div>
+      </section>
+    )
+    : null
+  }
 
   {/* Accordion toggle script */}
   <script is:inline>

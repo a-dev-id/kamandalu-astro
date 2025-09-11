@@ -25,8 +25,12 @@ const pageDetails = await client.fetch(`*[_type == "page" && _id == "2d19ccbc-53
 }`);
 
 // Fetch dining venues from Sanity CMS
-const venues = await client.fetch(`*[_type == "diningVenue"] | order(order asc){
-  "slug": slug.current, title, excerpt, secondImage { asset->{url} }, secondImageAlt
+const venues = await client.fetch(`*[_type == "diningVenue"] | order(sortOrder asc){
+  "slug": slug.current,
+  title,
+  excerpt,
+  secondImage { asset->{url} },
+  secondImageAlt
 }`);
 
 // Prepare meta and content variables
