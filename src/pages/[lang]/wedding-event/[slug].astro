@@ -122,7 +122,7 @@ const keywords = wedding.metaKeywords?.[locale] ?? '';
       </div>
       <div class="lg:w-2/5 flex flex-col items-end">
         <div>
-          <h3 class="font-title text-xl md:text-2xl uppercase mb-6">Reserve your wedding<br>or Event</h3>
+          <h3 class="font-title text-xl md:text-2xl uppercase mb-4">Reserve</h3>
           <div class="text-lg mb-6" set:html={contactHTML}></div>
           <a
             href={`https://www.book-secure.com/index.php?s=results&property=idbal31692&locale=${locale}_GB&stid=986w12cwy`}
@@ -146,11 +146,11 @@ const keywords = wedding.metaKeywords?.[locale] ?? '';
         const pkgInclusion = toHTML(safeArray(pkg.inclusion?.[locale]), htmlOpts);
 
         return (
-          <div class="border-t border-b border-gray-300 mb-4" key={`package-${i}`}>
+          <div class="border-t border-gray-300" key={`package-${i}`}>
             {/* Accordion button for package */}
             <button
               type="button"
-              class="w-full flex justify-between items-center py-4 text-left text-lg uppercase toggle-btn"
+              class="w-full flex justify-between items-center py-4 text-left text-lg uppercase toggle-btn cursor-pointer"
               data-target={`accordion-${i}`}
               aria-expanded="false"
               aria-controls={`accordion-${i}`}
@@ -205,6 +205,7 @@ const keywords = wedding.metaKeywords?.[locale] ?? '';
           </div>
         );
       })}
+      <div class="border-t border-gray-300"></div>
     </section>
   )}
 

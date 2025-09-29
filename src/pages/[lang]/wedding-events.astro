@@ -60,68 +60,24 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
   </section>
 
   {/* Wedding venue carousel section */}
-  <section class="container mx-auto px-4 space-y-18">
-    <div id="weddingVenue-carousel" class="splide mb-8 md:mb-12" role="region" aria-label="weddingVenue Carousel">
-      <div class="splide__track">
-        <div class="splide__list">
-          {weddingVenue.map((data, i) => (
-            // Single wedding venue slide
-            <div class="splide__slide transition-transform duration-500 ease-in-out" role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${weddingVenue.length}`}>
-              <div class="bg-white overflow-hidden flex flex-col h-full">
-                <OptimizedImage
-                  src={data.secondImage.asset.url}
-                  alt={data.secondImageAlt?.[locale]}
-                  width={800} height={600} quality={75} loading="lazy"
-                  className="w-full h-auto aspect-[4/3] md:aspect-[16/9] 2xl:aspect-[4/3] transition duration-500"
-                />
-                <div class="py-4 md:py-6 flex flex-col flex-1">
-                  <h3 class="text-lg tracking-widest uppercase font-title">{data?.title?.[locale] ?? ''}</h3>
-                  <p class="mt-2 text-lg">{data?.excerpt?.[locale] ?? ''}</p>
-                  <div class="flex-grow"></div>
-                  <a href={`/${locale}/wedding-event/${data.slug}`} class="text-lg mt-4 inline-block text-gray-700 uppercase">Details</a>
-                </div>
-              </div>
-            </div>
-          ))}
+   <section class="container mx-auto px-4 py-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {weddingVenue.map((data, i) => (
+        <div class="overflow-hidden flex flex-col h-full">
+          <OptimizedImage
+            src={data.secondImage.asset.url}
+            alt={data.secondImageAlt?.[locale]}
+            width={800} height={600} quality={75} loading="lazy"
+            className="w-full h-auto aspect-[4/3] md:aspect-[16/9] 2xl:aspect-[4/3] transition duration-500"
+          />
+          <div class="py-4 md:py-6 flex flex-col flex-1">
+            <h3 class="text-lg tracking-widest uppercase font-title">{data?.title?.[locale] ?? ''}</h3>
+            <p class="mt-2 text-lg">{data?.excerpt?.[locale] ?? ''}</p>
+            <div class="flex-grow"></div>
+            <a href={`/${locale}/wedding-event/${data.slug}`} class="text-lg mt-4 inline-block text-gray-700 uppercase mb-12">Details</a>
+          </div>
         </div>
-      </div>
-    </div>
-    {/* Carousel navigation buttons (mobile) */}
-    <div class="flex items-center gap-4 md:gap-6 mt-4 md:mt-8 justify-center md:hidden">
-      <button aria-label="Previous weddingVenue Slide" id="weddingVenue-prev" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
-        {/* Left arrow SVG */}
-        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="44" y1="12" x2="4" y2="12" /><polyline points="12 20 4 12 12 4" /></svg>
-      </button>
-      <button aria-label="Next weddingVenue Slide" id="weddingVenue-next" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
-        {/* Right arrow SVG */}
-        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="44" y2="12" /><polyline points="36 4 44 12 36 20" /></svg>
-      </button>
+      ))}
     </div>
   </section>
-
-  {/* Splide carousel initialization script */}
-  <script>
-    import "@splidejs/splide/css";
-    import Splide from "@splidejs/splide";
-    [
-      {
-        id: "#weddingVenue-carousel", prev: "weddingVenue-prev", next: "weddingVenue-next",
-        options: { type: "slide", perPage: 3, gap: "4rem", speed: 800, easing: "ease-in-out", arrows: false, pagination: false, breakpoints: { 1366: { gap: "2rem"}, 1024: { gap: "2rem", perPage: 2 }, 768: { perPage: 1, gap: "2rem" }, 640: { perPage: 1 } } }
-      },
-    ].forEach(({ id, prev, next, options }) => {
-      const splide = new Splide(id, options);
-      splide.on('mounted move', () => {
-        const prevBtn = document.getElementById(prev), nextBtn = document.getElementById(next);
-        prevBtn.disabled = splide.index === 0;
-        prevBtn.classList.toggle('opacity-30', splide.index === 0);
-        prevBtn.classList.toggle('cursor-not-allowed', splide.index === 0);
-        nextBtn.disabled = splide.index >= splide.length - splide.options.perPage;
-        nextBtn.classList.toggle('opacity-30', splide.index >= splide.length - splide.options.perPage);
-        nextBtn.classList.toggle('cursor-not-allowed', splide.index >= splide.length - splide.options.perPage);
-      });
-      splide.mount();
-      document.getElementById(prev).onclick = () => splide.go("<");
-      document.getElementById(next).onclick = () => splide.go(">");
-    });
-  </script>
 </Layout>

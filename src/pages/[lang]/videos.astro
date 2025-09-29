@@ -1,0 +1,71 @@
+---
+// Import necessary components and utilities
+import Layout from '../../layouts/Base.astro';
+import client from '../../lib/sanityClient';
+import { getLocale } from '../../utils/getLocale';
+import OptimizedImage from '../../components/OptimizedImage.astro';
+import { toHTML } from '@portabletext/to-html';
+
+// Generate static paths for supported languages
+export async function getStaticPaths() {
+  return ['en', 'ko', 'zh'].map(lang => ({ params: { lang } }));
+}
+
+// Get language parameter and locale
+const { lang } = Astro.params;
+const locale = getLocale(lang);
+
+// Helper to ensure array safety
+const safeArray = arr => Array.isArray(arr) ? arr : [];
+
+// Fetch page details from Sanity CMS
+const pageDetails = await client.fetch(`*[_type == "page" && _id == "62e3e036-218a-4860-a850-0c53822250c9"][0]{
+  title, subtitle, description, metaTitle, metaDescription, metaKeywords,
+  mainImageAlt, mainImage { asset->{url} }
+}`);
+
+// Prepare content and meta data for the page
+const pageDescription = toHTML(safeArray(pageDetails.description?.[locale]));
+const title = pageDetails?.metaTitle?.[locale] ?? '';
+const description = pageDetails?.metaDescription?.[locale] ?? '';
+const url = new URL(Astro.request.url).href;
+const ogImage = pageDetails.mainImage?.asset?.url ?? '';
+const keywords = pageDetails.metaKeywords?.[locale] ?? '';
+---
+
+<Layout {title} {description} {url} {ogImage} {keywords}>
+  {/* Hero section with background image */}
+  <section class="relative w-full h-[50vh] md:h-[60vh] lg:h-[75vh] overflow-hidden">
+    <OptimizedImage
+      src={pageDetails.mainImage.asset.url}
+      alt={pageDetails.mainImageAlt?.[locale] ?? ''}
+      width={1600} height={900} quality={75}
+      className="w-full h-full object-cover"
+    />
+    <div class="absolute inset-0 bg-black/25 z-20"></div>
+  </section>
+
+  {/* Main content section with title, description, and YouTube video */}
+  <section class="container mx-auto px-4 xl:px-10 2xl:px-56 pt-16 md:pt-24">
+    <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
+      <h1 class="font-title text-3xl sm:text-4xl md:text-5xl uppercase mb-4 md:mb-6 tracking-widest font-light">
+        {pageDetails?.title?.[locale] ?? ''}
+      </h1>
+      <div class="mb-12 md:mb-18 text-lg" set:html={pageDescription}></div>
+    </div>
+  </section>
+
+  <section class="container mx-auto px-4 py-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="overflow-hidden flex flex-col h-full">
+          <iframe src="https://www.youtube.com/embed/RdWJbHgM4Sg?si=H07AUfWlzOo4nhor" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="w-full h-auto aspect-[4/3] md:aspect-[16/9] 2xl:aspect-[4/3] transition duration-500"></iframe>
+        </div>
+        <div class="overflow-hidden flex flex-col h-full">
+          <iframe src="https://www.youtube.com/embed/wJ0rsXs9EGA?si=eZPemOyq7OnA3wFK" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="w-full h-auto aspect-[4/3] md:aspect-[16/9] 2xl:aspect-[4/3] transition duration-500"></iframe>
+        </div>
+        <div class="overflow-hidden flex flex-col h-full">
+          <iframe src="https://www.youtube.com/embed/mqy0IMoDpc0?si=4XJfkdrPOUk2kRlo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="w-full h-auto aspect-[4/3] md:aspect-[16/9] 2xl:aspect-[4/3] transition duration-500"></iframe>
+        </div>
+    </div>
+  </section>
+</Layout>
