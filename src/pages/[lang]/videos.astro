@@ -56,16 +56,52 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
   </section>
 
   <section class="container mx-auto px-4 py-8">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div class="overflow-hidden flex flex-col h-full">
-          <iframe src="https://www.youtube.com/embed/RdWJbHgM4Sg?si=H07AUfWlzOo4nhor" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="w-full h-auto aspect-[4/3] md:aspect-[16/9] 2xl:aspect-[4/3] transition duration-500"></iframe>
-        </div>
-        <div class="overflow-hidden flex flex-col h-full">
-          <iframe src="https://www.youtube.com/embed/wJ0rsXs9EGA?si=eZPemOyq7OnA3wFK" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="w-full h-auto aspect-[4/3] md:aspect-[16/9] 2xl:aspect-[4/3] transition duration-500"></iframe>
-        </div>
-        <div class="overflow-hidden flex flex-col h-full">
-          <iframe src="https://www.youtube.com/embed/mqy0IMoDpc0?si=4XJfkdrPOUk2kRlo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="w-full h-auto aspect-[4/3] md:aspect-[16/9] 2xl:aspect-[4/3] transition duration-500"></iframe>
-        </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <!-- Video 1 -->
+    <div class="overflow-hidden flex flex-col h-full">
+      <div class="w-full aspect-[16/9]">
+        <iframe
+          src="https://www.youtube.com/embed/RdWJbHgM4Sg"
+          title="YouTube video player"
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="origin-when-cross-origin"
+          allowfullscreen
+          class="w-full h-full border-0"
+        ></iframe>
+      </div>
     </div>
-  </section>
+
+    <!-- Video 2 -->
+    <div class="overflow-hidden flex flex-col h-full">
+      <div class="w-full aspect-[16/9]">
+        <iframe
+          src="https://www.youtube.com/embed/wJ0rsXs9EGA"
+          title="YouTube video player"
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="origin-when-cross-origin"
+          allowfullscreen
+          class="w-full h-full border-0"
+        ></iframe>
+      </div>
+    </div>
+
+    <!-- Video 3 -->
+    <div class="overflow-hidden flex flex-col h-full">
+      <div class="w-full aspect-[16/9]">
+        <iframe
+          src="https://www.youtube.com/embed/mqy0IMoDpc0"
+          title="YouTube video player"
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="origin-when-cross-origin"
+          allowfullscreen
+          class="w-full h-full border-0"
+        ></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
 </Layout>
