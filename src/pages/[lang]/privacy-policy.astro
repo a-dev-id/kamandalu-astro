@@ -1,0 +1,177 @@
+---
+import Layout from '../../layouts/Base.astro';
+import client from '../../lib/sanityClient';
+import { getLocale } from '../../utils/getLocale';
+import OptimizedImage from '../../components/OptimizedImage.astro';
+import { toHTML } from '@portabletext/to-html';
+
+// Static paths per language
+export async function getStaticPaths() {
+  return ['en', 'ko', 'zh'].map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params;
+const locale = getLocale(lang);
+
+// Safe array helper
+const safeArray = (arr) => (Array.isArray(arr) ? arr : []);
+
+// Portable Text to HTML options for rendering rich text
+const htmlOpts = {
+  components: {
+    block: ({ children }) => `<p>${children.replace(/\n/g, '<br>')}</p>`,
+    list: ({ children, value }) => {
+      const type = value?.listItem === 'bullet' || value?.style === 'normal' ? 'bullet' : 'number';
+      return type === 'bullet'
+        ? `<ul class="list-disc ml-6 space-y-2">${children}</ul>`
+        : `<ol class="list-decimal ml-6 space-y-2">${children}</ol>`;
+    },
+    listItem: ({ children }) => `<li>${children}</li>`,
+  }
+};
+
+// Fetch the single Terms page (adjust filter if you later use multiple docs)
+const pageDetails =
+  (await client.fetch(`*[_type == "termsPage" && _id == "c5364da1-1272-487d-9896-e97f9b43b138"][0]{
+    pageName,
+    title,
+    slug,
+    subtitle,
+    excerpt,
+    description,
+    mainImage { asset->{url} },
+    mainImageAlt,
+    items[]{
+      title,
+      description
+    },
+    metaTitle,
+    metaKeywords,
+    metaDescription
+  }`)) ?? {};
+
+// Meta + body fields
+const pageDescription = toHTML(safeArray(pageDetails?.description?.[locale]), htmlOpts);
+const title = pageDetails?.metaTitle?.[locale] ?? pageDetails?.title?.[locale] ?? 'Terms & Conditions';
+const description = pageDetails?.metaDescription?.[locale] ?? '';
+const url = new URL(Astro.request.url).href;
+const ogImage = pageDetails?.mainImage?.asset?.url ?? '';
+const keywords = pageDetails?.metaKeywords ?? '';
+
+// Map items → localized html
+const htmlItems = (pageDetails?.items ?? []).map((it) => ({
+  title: it?.title?.[locale] ?? '',
+  description: toHTML(safeArray(it?.description?.[locale]), htmlOpts),
+}));
+---
+
+<Layout {title} {description} {url} {ogImage} {keywords}>
+  {/* Hero */}
+  <section class="relative w-full h-[50vh] md:h-[60vh] lg:h-[75vh] overflow-hidden">
+    {pageDetails?.mainImage?.asset?.url && (
+      <OptimizedImage
+        src={pageDetails.mainImage.asset.url}
+        alt={pageDetails?.mainImageAlt?.[locale] ?? ''}
+        width={1600}
+        height={900}
+        quality={75}
+        loading="eager"
+        decoding="async"
+        sizes="100vw"
+        className="w-full h-full object-cover"
+      />
+    )}
+    <div class="absolute inset-0 bg-black/25 z-20"></div>
+  </section>
+
+  {/* Heading + intro */}
+  <section class="container mx-auto px-4 py-16 md:py-24">
+    <div class="text-center px-2 sm:px-6 md:px-8 mx-auto max-w-4xl">
+      <h1 class="font-title text-3xl sm:text-4xl md:text-5xl uppercase mb-4 md:mb-6 tracking-widest font-light">
+        {pageDetails?.title?.[locale] ?? 'Terms & Conditions'}
+      </h1>
+      {pageDetails?.subtitle?.[locale] && (
+        <p class="text-xl mb-4">{pageDetails.subtitle[locale]}</p>
+      )}
+      <div class="max-w-none text-lg mx-auto" set:html={pageDescription}></div>
+    </div>
+  </section>
+
+  {/* Terms items accordion (Title → button, Description → panel) */}
+  {htmlItems.length > 0 && (
+    <section class="container mx-auto px-4 xl:px-10 2xl:px-0 pb-20">
+      <div class="divide-y divide-gray-300" id="tac-accordion">
+        {htmlItems.map((item, i) => {
+          const btnId = `tac-btn-${i}`;
+          const panelId = `tac-panel-${i}`;
+          return (
+            <div class="py-2" key={`tac-${i}`}>
+              <button
+                id={btnId}
+                type="button"
+                class="w-full flex justify-between items-center py-4 font-title text-left text-lg uppercase tracking-wide toggle-btn"
+                data-target={panelId}
+                aria-expanded="false"
+                aria-controls={panelId}
+              >
+                <span class="pr-6">{item.title || `Item ${i + 1}`}</span>
+                <svg
+                  class="w-5 h-5 transition-transform duration-300"
+                  data-icon
+                  data-target={panelId}
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+
+              <div
+                id={panelId}
+                class="hidden pb-6"
+                role="region"
+                aria-labelledby={btnId}
+              >
+                {/* The ul/li bullets are produced by htmlOpts → list renderer */}
+                <div class="max-w-none" set:html={item.description} />
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  )}
+
+  {/* Accordion script */}
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      const buttons = document.querySelectorAll('#tac-accordion .toggle-btn');
+      buttons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const targetId = btn.dataset.target;
+          const panel = document.getElementById(targetId);
+          const icon = document.querySelector(`svg[data-icon][data-target="${targetId}"]`);
+          const expanded = btn.getAttribute('aria-expanded') === 'true';
+
+          // (Optional) close others
+          buttons.forEach((b) => {
+            if (b !== btn) {
+              const otherId = b.dataset.target;
+              const otherPanel = document.getElementById(otherId);
+              const otherIcon = document.querySelector(`svg[data-icon][data-target="${otherId}"]`);
+              b.setAttribute('aria-expanded', 'false');
+              otherPanel?.classList.add('hidden');
+              otherIcon?.classList.remove('rotate-180');
+            }
+          });
+
+          btn.setAttribute('aria-expanded', String(!expanded));
+          panel.classList.toggle('hidden');
+          icon?.classList.toggle('rotate-180');
+        });
+      });
+    });
+  </script>
+</Layout>

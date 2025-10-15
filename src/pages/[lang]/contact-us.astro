@@ -1,0 +1,161 @@
+---
+import Layout from '../../layouts/Base.astro';
+import client from '../../lib/sanityClient';
+import { getLocale } from '../../utils/getLocale';
+import OptimizedImage from '../../components/OptimizedImage.astro';
+import { toHTML } from '@portabletext/to-html';
+
+// 1) Required for dynamic routes [lang]/...
+export async function getStaticPaths() {
+  return ['en', 'ko', 'zh'].map((lang) => ({ params: { lang } }));
+}
+
+// 2) Read the lang param (e.g., 'en') and resolve locale if you need it
+const { lang } = Astro.params;
+const locale = getLocale?.(lang) ?? lang;
+
+// Safe array helper
+const safeArray = (arr) => (Array.isArray(arr) ? arr : []);
+
+// Optional Portable Text -> HTML opts (keeps bullets visible if your typography resets them)
+const htmlOpts = {
+  components: {
+    block: ({ children }) => `<p>${children.replace(/\n/g, '<br>')}</p>`,
+    list: ({ children, value }) => {
+      const type = value?.listItem === 'bullet' || value?.style === 'normal' ? 'bullet' : 'number';
+      return type === 'bullet'
+        ? `<ul class="list-disc ml-6 space-y-2">${children}</ul>`
+        : `<ol class="list-decimal ml-6 space-y-2">${children}</ol>`;
+    },
+    listItem: ({ children }) => `<li>${children}</li>`,
+  }
+};
+
+// 3) Fetch header content from Sanity by ID
+const pageDetails =
+  (await client.fetch(`*[_type == "page" && _id == "7da69ee6-49ef-4f6a-bba8-29781895b6ef"][0]{
+    title,
+    description,
+    metaTitle,
+    metaDescription,
+    metaKeywords,
+    mainImageAlt,
+    mainImage { asset->{ url } }
+  }`)) ?? {};
+
+// 4) Meta + body fields
+const pageDescription = toHTML(safeArray(pageDetails?.description?.[locale]), htmlOpts);
+const title = pageDetails?.metaTitle?.[locale] ?? pageDetails?.title?.[locale] ?? 'Contact Us';
+const description = pageDetails?.metaDescription?.[locale] ?? '';
+const url = new URL(Astro.request.url).href;
+const ogImage = pageDetails?.mainImage?.asset?.url ?? '';
+const keywords = pageDetails?.metaKeywords?.[locale] ?? 'Kamandalu, contact, Ubud, Bali, resort';
+---
+
+<Layout {title} {description} {url} {ogImage} {keywords}>
+  {/* Hero section with background image */}
+  <section class="relative w-full h-[50vh] md:h-[60vh] lg:h-[75vh] overflow-hidden">
+    {pageDetails?.mainImage?.asset?.url && (
+      <OptimizedImage
+        src={pageDetails.mainImage.asset.url}
+        alt={pageDetails?.mainImageAlt?.[locale] ?? ''}
+        width={1600}
+        height={900}
+        quality={75}
+        loading="eager"
+        decoding="async"
+        sizes="100vw"
+        className="w-full h-full object-cover"
+      />
+    )}
+    <div class="absolute inset-0 bg-black/25 z-20"></div>
+  </section>
+
+  {/* Heading + intro */}
+  <section class="container mx-auto px-4 py-16 md:py-24">
+    <div class="text-center px-2 sm:px-6 md:px-8 mx-auto max-w-4xl">
+      <h1 class="font-title text-3xl sm:text-4xl md:text-5xl uppercase mb-4 md:mb-6 tracking-widest font-light">
+        {pageDetails?.title?.[locale] ?? 'Terms & Conditions'}
+      </h1>
+      {pageDetails?.subtitle?.[locale] && (
+        <p class="text-xl mb-4">{pageDetails.subtitle[locale]}</p>
+      )}
+      <div class="max-w-none text-lg mx-auto" set:html={pageDescription}></div>
+    </div>
+  </section>
+
+
+  {/* Contact body (same as before) */}
+  <section class="container mx-auto px-4 xl:px-10 2xl:px-0 pb-10 md:pb-14">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14 pt-8 md:pt-10">
+      {/* Left: Form */}
+      <div>
+
+        <form action="#" method="post" class="space-y-6" novalidate>
+          <div>
+            <label for="full-name" class="block mb-2">Full Name</label>
+            <input id="full-name" name="name" type="text" required class="block w-full border border-[#A67C3D] focus:border-[#A67C3D] focus:ring-0 px-3 py-2" />
+          </div>
+
+          <div>
+            <label for="email" class="block mb-2">E-mail Address</label>
+            <input id="email" name="email" type="email" required class="block w-full border border-[#A67C3D] focus:border-[#A67C3D] focus:ring-0 px-3 py-2" />
+          </div>
+
+          <div>
+            <label for="message" class="block mb-2">Message</label>
+            <textarea id="message" name="message" rows="8" required class="block w-full border border-[#A67C3D] focus:border-[#A67C3D] focus:ring-0 px-3 py-2 resize-y"></textarea>
+          </div>
+
+          {/* Honeypot */}
+          <div class="hidden">
+            <label for="company">Company</label>
+            <input id="company" name="company" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <div>
+            <button type="submit" class="inline-block bg-[#A67C3D] text-white tracking-wider uppercase px-5 py-3">
+              Send Message
+            </button>
+          </div>
+        </form>
+      </div>
+
+      {/* Right: Contact Info */}
+      <aside>
+        <h3 class="font-semibold text-xl mb-3">Get in touch</h3>
+        <p class="font-semibold">Kamandalu Ubud</p>
+        <p>
+          Jalan Andong, Banjar Nagi, Ubud<br/>
+          Bali 80571 Indonesia
+        </p>
+        <p class="mt-2">
+          Tel: +62 361 975825<br/>
+          Fax: +62 361 975851<br/>
+          Whatsapp:<br/>
+          +62 08113984566
+        </p>
+
+        <h4 class="font-semibold text-lg mt-8 mb-3">E-mail Address</h4>
+        <div class="space-y-4">
+          <div>
+            <p>General info</p>
+            <a href="mailto:sales@kamandaluresort.com" class="underline hover:no-underline">sales@kamandaluresort.com</a>
+          </div>
+          <div>
+            <p>Reservation</p>
+            <a href="mailto:reservation@kamandaluresort.com" class="underline hover:no-underline">reservation@kamandaluresort.com</a>
+          </div>
+          <div>
+            <p>Restaurant</p>
+            <a href="mailto:fb@kamandaluresort.com" class="underline hover:no-underline">fb@kamandaluresort.com</a>
+          </div>
+          <div>
+            <p>Spa</p>
+            <a href="mailto:spa@kamandaluresort.com" class="underline hover:no-underline">spa@kamandaluresort.com</a>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+</Layout>
