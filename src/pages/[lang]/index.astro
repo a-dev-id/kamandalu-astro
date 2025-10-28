@@ -67,24 +67,29 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
     <!-- Carousel Images -->
     <div id="carousel" class="w-full h-full relative">
       {homeSliders.map((homeSlider, i) => (
-        <div class={`carousel-slide w-full h-full absolute inset-0 transition-opacity duration-1000 ${i === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
-          <OptimizedImage
-            src={homeSlider.image.asset.url}
-            alt={homeSlider.title}
-            width={1600}
-            height={900}
-            quality={75}
-            className="w-full h-full"
-            fetchpriority={i === 0 ? 'high' : 'auto'}
-            loading={i === 0 ? 'eager' : 'lazy'}
-          />
-        </div>
+      <div class={`carousel-slide w-full h-full absolute inset-0 transition-opacity duration-1000 ${i === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
+        <OptimizedImage
+        src={homeSlider.image.asset.url}
+        alt={homeSlider.title}
+        width={1600}
+        height={900}
+        quality={75}
+        className="w-full h-full"
+        fetchpriority={i === 0 ? 'high' : 'auto'}
+        loading={i === 0 ? 'eager' : 'lazy'}
+        />
+      </div>
       ))}
       <!-- Overlay for darkening the carousel images -->
       <div class="absolute inset-0 bg-black/25 z-20"></div>
-      <!-- Carousel Navigation Buttons -->
-      <button aria-label="Previous Slide" id="prevSlide" class="absolute left-4 top-1/2 -translate-y-1/2 text-white text-3xl z-20">❮</button>
-      <button aria-label="Next Slide" id="nextSlide" class="absolute right-4 top-1/2 -translate-y-1/2 text-white text-3xl z-20">❯</button>
+
+      <!-- Carousel Navigation Buttons (hidden when there's only one slide) -->
+      {homeSliders.length > 1 && (
+      <>
+        <button aria-label="Previous Slide" id="prevSlide" class="absolute left-4 top-1/2 -translate-y-1/2 text-white text-3xl z-20">❮</button>
+        <button aria-label="Next Slide" id="nextSlide" class="absolute right-4 top-1/2 -translate-y-1/2 text-white text-3xl z-20">❯</button>
+      </>
+      )}
     </div>
     
     <!-- BOOKING FORM SECTION (overlaid on carousel) -->
