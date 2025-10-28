@@ -101,9 +101,13 @@ const keywords = offer.metaKeywords?.[locale] ?? '';
       {/* Offer validity and booking button */}
       <div class="lg:w-1/5 flex flex-col items-end">
         <div>
-          <h3 class="font-title text-xl md:text-2xl uppercase mb-2">Offer Valid</h3>
+          <!-- <h3 class="font-title text-xl md:text-2xl uppercase mb-2">Offer Valid</h3>
           <p class="text-lg mb-6">
             {offer.offerStart ? formatDate(offer.offerStart) : ''} - {offer.offerEnd ? formatDate(offer.offerEnd) : ''}
+          </p> -->
+          <h3 class="font-title text-xl md:text-2xl uppercase mb-2">Reserve the special offers</h3>
+          <p class="text-lg mb-6">
+            Tel: +62 361 975825
           </p>
           <a
             href={`https://www.book-secure.com/index.php?s=results&property=idbal31692&locale=${locale}_GB&stid=986w12cwy`}
@@ -128,7 +132,7 @@ const keywords = offer.metaKeywords?.[locale] ?? '';
         aria-expanded="false"
         aria-controls="accordion-1"
       >
-        Cancellation Policy
+        Terms & Conditions
         {/* SVG icon for accordion toggle */}
         <svg class="w-5 h-5 transition-transform duration-300" data-icon data-target="accordion-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
