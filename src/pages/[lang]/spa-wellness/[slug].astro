@@ -131,7 +131,7 @@ const keywords = wellness.metaKeywords?.[locale] ?? '';
           <h3 class="font-title text-xl md:text-2xl uppercase mb-6">Reserve your experience</h3>
           <div class="text-lg mb-6" set:html={contactHTML}></div>
           <a
-            href={`https://www.book-secure.com/index.php?s=results&property=idbal31692&locale=${locale}_GB&stid=986w12cwy`}
+            href={`https://wa.me/+628113984566`}
             class="inline-block px-4 py-3 md:px-4 md:py-2 text-xs font-title tracking-widest border bg-[#916B2C] text-white border-transparent hover:bg-white hover:text-black hover:border-black transition-colors duration-300 text-center"
             target="_blank"
             rel="noopener noreferrer"
@@ -145,12 +145,12 @@ const keywords = wellness.metaKeywords?.[locale] ?? '';
 
   {/* Treatment packages grouped by category (plain JS) */}
 {packages.length > 0 && (() => {
-  // Group packages by localized category while preserving original order
   const groupsMap = new Map();
 
   for (const pkg of packages) {
-    const catName = (pkg?.category?.[locale]?.trim()) || 'General';
-    const catDescHTML = toHTML(safeArray(pkg?.categoryDescription?.[locale]), htmlOpts);
+    const catName = pkg?.category?.[locale]?.trim() || 'General';
+    const catBlocks = pkg?.categoryDescription ? pkg.categoryDescription[locale] : [];
+    const catDescHTML = toHTML(safeArray(catBlocks), htmlOpts);
 
     if (!groupsMap.has(catName)) {
       groupsMap.set(catName, { descriptionHTML: catDescHTML, items: [] });
@@ -158,14 +158,14 @@ const keywords = wellness.metaKeywords?.[locale] ?? '';
     groupsMap.get(catName).items.push(pkg);
   }
 
-  const groups = Array.from(groupsMap.entries()); // [ [name, { descriptionHTML, items }] ]
+  const groups = Array.from(groupsMap.entries());
 
   return (
     <section class="container mx-auto px-4 xl:px-10 2xl:px-0 pt-12">
       {groups.map(([catName, group], gi) => (
-        <div class="" key={`group-${gi}`}>
+        <div key={`group-${gi}`}>
           <h3 class="font-title text-xl md:text-2xl uppercase pt-14">{catName}</h3>
-          {group.descriptionHTML && group.descriptionHTML.trim() && (
+          {group.descriptionHTML?.trim() && (
             <div class="text-lg max-w-none" set:html={group.descriptionHTML}></div>
           )}
 
@@ -174,64 +174,66 @@ const keywords = wellness.metaKeywords?.[locale] ?? '';
             const pkgInclusion  = toHTML(safeArray(pkg?.inclusion?.[locale]), htmlOpts);
             const id = `accordion-${gi}-${i}`;
 
-            return (
-              <div class="border-b border-gray-300" key={`package-${gi}-${i}`}>
-                {/* Accordion button for package */}
-                <button
-                  type="button"
-                  class="w-full flex justify-between items-center py-4 text-left text-lg uppercase toggle-btn cursor-pointer hover:bg-gray-50"
-                  data-target={id}
-                  aria-expanded="false"
-                  aria-controls={id}
-                >
-                  <div>
-                    <div class="text-sm text-gray-500 uppercase tracking-wide">
-                      {pkg?.price?.[locale] ?? ''}
+            return pkg?.title?.[locale]?.trim()
+              ? (
+                <div class="border-b border-gray-300" key={`package-${gi}-${i}`}>
+                  <button
+                    type="button"
+                    class="w-full flex justify-between items-center py-4 text-left text-lg uppercase toggle-btn cursor-pointer hover:bg-gray-50"
+                    data-target={id}
+                    aria-expanded="false"
+                    aria-controls={id}
+                  >
+                    <div>
+                      <div class="text-sm text-gray-500 uppercase tracking-wide">
+                        {pkg?.price?.[locale] ?? ''}
+                      </div>
+                      <span class="font-title">
+                        {pkg?.title?.[locale] ?? `Package ${i + 1}`}
+                      </span>
                     </div>
-                    <span class="font-title">
-                      {pkg?.title?.[locale] ?? `Package ${i + 1}`}
-                    </span>
-                  </div>
 
-                  <div class="flex items-center gap-4">
-                    {/* Accordion arrow icon */}
-                    <svg
-                      class="w-5 h-5 transition-transform duration-300"
-                      data-icon
-                      data-target={id}
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                    </svg>
-                    {/* Book now */}
-                    <a
-                      href={`https://www.book-secure.com/index.php?s=results&property=idbal31692&locale=${locale}_GB&stid=986w12cwy`}
-                      class="inline-block px-4 py-3 md:px-4 md:py-2 text-xs font-title tracking-widest border hover:bg-[#916B2C] hover:text-white hover:border-transparent bg-white text-black border-black transition-colors duration-300 text-center"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      BOOK NOW
-                    </a>
-                  </div>
-                </button>
+                    <div class="flex items-center gap-4">
+                      <svg
+                        class="w-5 h-5 transition-transform duration-300"
+                        data-icon
+                        data-target={id}
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                      </svg>
+                      <a
+                        href={`https://wa.me/+628113984566`}
+                        class="inline-block px-4 py-3 md:px-4 md:py-2 text-xs font-title tracking-widest border hover:bg-[#916B2C] hover:text-white hover:border-transparent bg-white text-black border-black transition-colors duration-300 text-center"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        BOOK NOW
+                      </a>
+                    </div>
+                  </button>
 
-                {/* Accordion panel */}
-                <div
-                  id={id}
-                  class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 hidden"
-                  role="region"
-                  aria-labelledby={id}
-                >
-                  <div class="space-y-4">
-                    <div class="text-lg max-w-none" set:html={pkgDescription}></div>
+                  <div
+                    id={id}
+                    class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 hidden"
+                    role="region"
+                    aria-labelledby={id}
+                  >
+                    {pkgDescription && (
+                      <div class="space-y-4">
+                        <div class="text-lg max-w-none" set:html={pkgDescription}></div>
+                      </div>
+                    )}
+                    {pkgInclusion && (
+                      <div class="text-lg max-w-none" set:html={pkgInclusion}></div>
+                    )}
                   </div>
-                  <div class="text-lg max-w-none" set:html={pkgInclusion}></div>
                 </div>
-              </div>
-            );
+              )
+              : null;
           })}
         </div>
       ))}
@@ -239,39 +241,32 @@ const keywords = wellness.metaKeywords?.[locale] ?? '';
   );
 })()}
 
-{packages.length > 0 && (() => {
-  <section class="container mx-auto px-4 xl:px-10 2xl:px-0 py-14">
-          <div class="border-b border-t border-gray-300">
-            {/* Accordion button for package */}
-            <button
-              type="button"
-              class="w-full flex justify-between items-center py-4 text-left text-lg uppercase toggle-btn cursor-pointer"
-              data-target="spa-policy"
-              aria-expanded="false"
-              aria-controls="spa-policy"
-            >
-              <div>
-                <span class="font-title">
-                  Spa Policy
-                </span>
-              </div>
-              <div class="flex items-center">
-                {/* Accordion arrow icon */}
-                <svg class="w-5 h-5 transition-transform duration-300" data-icon data-target="spa-policy" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                </svg>
-              </div>
-            </button>
 
-            {/* Accordion panel for package details */}
-            <div id="spa-policy" class="gap-6 pb-6 hidden" role="region" aria-labelledby="spa-policy">
-              <div class="">
-                <div class="text-lg max-w-none pe-0 2xl:pe-42" set:html={policyHTML}></div>
-              </div>
-            </div>
-          </div>
+{packages.length > 0 && (() => {
+  return (
+    <section class="container mx-auto px-4 xl:px-10 2xl:px-0 py-14">
+      <div class="border-b border-t border-gray-300">
+        <button
+          type="button"
+          class="w-full flex justify-between items-center py-4 text-left text-lg uppercase toggle-btn cursor-pointer"
+          data-target="spa-policy"
+          aria-expanded="false"
+          aria-controls="spa-policy"
+        >
+          <span class="font-title">Spa Policy</span>
+          <svg class="w-5 h-5 transition-transform duration-300" data-icon data-target="spa-policy" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+
+        <div id="spa-policy" class="gap-6 pb-6 hidden" role="region" aria-labelledby="spa-policy">
+          <div class="text-lg max-w-none pe-0 2xl:pe-42" set:html={policyHTML}></div>
+        </div>
+      </div>
     </section>
-    })()}
+  );
+})()}
+
 
   {/* Accordion toggle script */}
   <script is:inline>

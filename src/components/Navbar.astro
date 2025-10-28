@@ -45,7 +45,7 @@ const locale = getLocale(lang);
     <!-- Member Button (hidden on mobile, shown on md+) -->
     <div class="hidden md:flex items-center justify-end w-32">
       <a
-        href="#"
+        href={`/${locale}/member`}
         id="memberBtn"
         class="uppercase underline text-sm font-title tracking-widest px-4 py-2 text-white bg-transparent hover:bg-white hover:text-black transition-colors duration-300"
       >
@@ -135,11 +135,11 @@ const locale = getLocale(lang);
           ))}
         </div>
       </div>
-      <a href="#" class="block text-xl">Unique Experiences</a>
-      <a href="#" class="block text-xl">Wedding & Events</a>
-      <a href="#" class="block text-xl">Our Story</a>
+      <a href={`/${locale}/experiences`} class="block text-xl">Unique Experiences</a>
+      <a href={`/${locale}/wedding-events`} class="block text-xl">Wedding & Events</a>
+      <a href={`/${locale}/our-story`} class="block text-xl">Our Story</a>
       <hr class="my-6" />
-      <a href="#" class="block text-xl">Member</a>
+      <a href={`/${locale}/member`} class="block text-xl">Member</a>
       <!-- More Dropdown (Mobile) -->
       <!-- <div>
         <button aria-label="More Dropdown" id="more-mobile-toggle" class="block text-xl w-full text-left flex items-center gap-1 justify-between">

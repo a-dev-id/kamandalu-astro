@@ -23,7 +23,8 @@ const [
   villas,                // List of villas for villa carousel
   offers,                // List of offers for offers carousel
   wellnessVenue,         // List of wellness venues for wellness carousel
-  diningExperience,      // List of dining experiences for culinary & experience carousels
+  culinaryJourney,
+  rareExperiences,
   homeSliders,           // Home page hero slider images
   pageDetails,           // Main page meta and content details
   villaDetails,          // Section details for villa carousel
@@ -35,7 +36,8 @@ const [
   client.fetch(`*[_type == "villa"] | order(order asc){ "slug": slug.current, title, excerpt, secondImageAlt, secondImage { asset-> { url } } }`),
   client.fetch(`*[_type == "offer"] | order(order asc){ "slug": slug.current, title, excerpt, mainImageAlt, mainImage { asset-> { url } } }`),
   client.fetch(`*[_type == "wellnessVenue"] | order(order asc){ "slug": slug.current, title, excerpt, secondImageAlt, secondImage { asset-> { url } } }`),
-  client.fetch(`*[_type == "diningExperience"] | order(order asc){ "slug": slug.current, title, excerpt, secondImageAlt, secondImage { asset-> { url } } }`),
+  client.fetch(`*[_type == "experienceUnique" && category=="culinaryJourney"] | order(order asc){ "slug": slug.current, title, excerpt, secondImageAlt, secondImage { asset-> { url } } }`),
+  client.fetch(`*[_type == "experienceUnique" && category=="rareExperiences"] | order(order asc){ "slug": slug.current, title, excerpt, secondImageAlt, secondImage { asset-> { url } } }`),
   client.fetch(`*[_type == "homeSlider"] | order(order asc){ title, image { asset-> { url } } }`),
   // Fetching page details for the main page
   client.fetch(`*[_type == "page" && _id == "6b81d880-cd1c-4993-a985-a74eda7f419e"][0]{ title, subtitle, description, metaTitle, metaDescription, metaKeywords, mainImage { asset-> { url } } }`),
@@ -361,9 +363,9 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
     <div id="culinary-carousel" class="splide mb-8 md:mb-12" role="region" aria-label="Culinary Carousel">
       <div class="splide__track">
         <div class="splide__list">
-          {/* Loop through diningExperience items to create each slide */}
-          {diningExperience.map((dining, i) => (
-            <div class="splide__slide transition-transform duration-500 ease-in-out" role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${diningExperience.length}`}>
+          {/* Loop through culinaryJourney items to create each slide */}
+          {culinaryJourney.map((dining, i) => (
+            <div class="splide__slide transition-transform duration-500 ease-in-out" role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${culinaryJourney.length}`}>
               <div class="bg-white overflow-hidden flex flex-col h-full">
                 {/* Dining experience image */}
                 <OptimizedImage
@@ -415,9 +417,9 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
     <div id="experience-carousel" class="splide mb-8 md:mb-12" role="region" aria-label="Experience Carousel">
       <div class="splide__track">
         <div class="splide__list">
-          {/* Loop through diningExperience items to create each experience slide */}
-          {diningExperience.map((dining, i) => (
-            <div class="splide__slide transition-transform duration-500 ease-in-out" role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${diningExperience.length}`}>
+          {/* Loop through rareExperiences items to create each experience slide */}
+          {rareExperiences.map((dining, i) => (
+            <div class="splide__slide transition-transform duration-500 ease-in-out" role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${rareExperiences.length}`}>
               <div class="bg-white overflow-hidden flex flex-col h-full">
                 {/* Experience image */}
                 <OptimizedImage
