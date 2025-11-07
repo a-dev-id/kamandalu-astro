@@ -121,44 +121,48 @@ const keywords = venue.metaKeywords?.[locale] ?? '';
   </section>
 
   {/* Gallery section title */}
-  <section class="container mx-auto px-4 mt-20">
-    <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
-      <h2 class="font-title text-xl sm:text-1xl md:text-2xl uppercase mb-4 md:mb-6 tracking-widest font-light">
-        Gallery
-      </h2>
-    </div>
-  </section>
-
-  {/* Gallery slider section */}
-  <section class="container mx-auto space-y-18 mt-10">
-    <div id="venue-slider" class="splide mb-8 md:mb-12" role="region" aria-label="Venue slider">
-      <div class="splide__track">
-        <div class="splide__list">
-          {(venue.gallery ?? []).map((image, i) => (
-            <div class="splide__slide transition-transform duration-500 ease-in-out" role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${venue.gallery.length}`}>
-              <div class="bg-white overflow-hidden flex flex-col h-full">
-                <OptimizedImage
-                  src={image.asset.url}
-                  alt={`${venue.mainImageAlt?.[locale]} - ${i + 1}`}
-                  width={800} height={600} quality={75} loading="lazy"
-                  className="w-full h-auto aspect-[4/3] md:aspect-[16/9] 2xl:aspect-[4/3] transition duration-500"
-                />
-              </div>
-            </div>
-          ))}
+  {(venue.gallery ?? []).some(img => img?.asset?.url) && (
+    <>
+      <section class="container mx-auto px-4 mt-20">
+        <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
+          <h2 class="font-title text-xl sm:text-1xl md:text-2xl uppercase mb-4 md:mb-6 tracking-widest font-light">
+            Gallery
+          </h2>
         </div>
-      </div>
-    </div>
-    {/* Gallery navigation buttons */}
-    <div class="flex items-center gap-4 md:gap-6 mt-4 md:mt-8 justify-start">
-      <button aria-label="Previous venue Slide" id="venue-prev" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="44" y1="12" x2="4" y2="12" /><polyline points="12 20 4 12 12 4" /></svg>
-      </button>
-      <button aria-label="Next venue Slide" id="venue-next" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="44" y2="12" /><polyline points="36 4 44 12 36 20" /></svg>
-      </button>
-    </div>
-  </section>
+      </section>
+
+      {/* Gallery slider section */}
+      <section class="container mx-auto space-y-18 mt-10">
+        <div id="venue-slider" class="splide mb-8 md:mb-12" role="region" aria-label="Venue slider">
+          <div class="splide__track">
+            <div class="splide__list">
+              {(venue.gallery ?? []).filter(image => image?.asset?.url).map((image, i) => (
+                <div class="splide__slide transition-transform duration-500 ease-in-out" role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${venue.gallery.length}`}>
+                  <div class="bg-white overflow-hidden flex flex-col h-full">
+                    <OptimizedImage
+                      src={image.asset.url}
+                      alt={`${venue.mainImageAlt?.[locale]} - ${i + 1}`}
+                      width={800} height={600} quality={75} loading="lazy"
+                      className="w-full h-auto aspect-[4/3] md:aspect-[16/9] 2xl:aspect-[4/3] transition duration-500"
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+        {/* Gallery navigation buttons */}
+        <div class="flex items-center gap-4 md:gap-6 mt-4 md:mt-8 justify-start">
+          <button aria-label="Previous venue Slide" id="venue-prev" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="44" y1="12" x2="4" y2="12" /><polyline points="12 20 4 12 12 4" /></svg>
+          </button>
+          <button aria-label="Next venue Slide" id="venue-next" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="44" y2="12" /><polyline points="36 4 44 12 36 20" /></svg>
+          </button>
+        </div>
+      </section>
+    </>
+  )}
 
   {/* Accordion toggle script */}
   <script is:inline>
