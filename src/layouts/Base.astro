@@ -78,15 +78,74 @@ const { title, description, url, ogImage, keywords } = Astro.props;
     
       <!-- Newsletter + Links -->
       <div class="w-full px-4 xl:px-20 grid grid-cols-1 md:grid-cols-3 gap-12 text-left mt-10">
-        <!-- Newsletter -->
-        <div>
-          <h3 class="uppercase tracking-widest font-title text-md 2xl:text-lg mb-6">Get Notified On Our Offers</h3>
-          <form class="flex flex-col gap-4">
-        <input type="text" placeholder="Your Name*" class="border-b border-black bg-transparent focus:outline-none py-2 w-full max-w-xs md:max-w-62 text-base" />
-        <input type="email" placeholder="Your Email*" class="border-b border-black bg-transparent focus:outline-none py-2 w-full max-w-xs md:max-w-62 text-base" />
-        <button aria-label="Submit Newsletter Form" type="submit" class="uppercase mt-4 tracking-widest text-left border-b border-black w-fit text-base">Submit</button>
-          </form>
-        </div>
+
+
+<!-- Newsletter -->
+<div>
+  <h3 class="uppercase tracking-widest font-title text-md 2xl:text-lg mb-6">
+    Get Notified On Our Offers
+  </h3>
+
+  <form
+    action="https://kamandaluresort.us5.list-manage.com/subscribe/post?u=40497a42bfdbacde47977c8a7&amp;id=44cec656a8&amp;f_id=008c47e0f0"
+    method="post"
+    target="_blank"
+    novalidate
+    class="flex flex-col gap-4"
+  >
+    <!-- Mailchimp merge fields -->
+
+    <input
+      type="text"
+      name="FNAME"
+      id="mce-FNAME"
+      required
+      placeholder="Your Name*"
+      class="border-b border-black bg-transparent focus:outline-none py-2 w-full max-w-xs md:max-w-62 text-base"
+      autocomplete="name"
+    />
+    
+    <input
+      type="email"
+      name="EMAIL"
+      id="mce-EMAIL"
+      required
+      placeholder="Your Email*"
+      class="border-b border-black bg-transparent focus:outline-none py-2 w-full max-w-xs md:max-w-62 text-base"
+      autocomplete="email"
+    />
+
+    <!-- apply audience tag -->
+    <input type="hidden" name="tags" value="2241679" />
+
+    <!-- responses (optional) -->
+    <div id="mce-responses" class="text-sm">
+      <div id="mce-error-response" class="hidden text-red-600"></div>
+      <div id="mce-success-response" class="hidden text-green-600"></div>
+    </div>
+
+    <!-- honeypot -->
+    <div aria-hidden="true" class="absolute -left-[5000px]">
+      <input
+        type="text"
+        name="b_40497a42bfdbacde47977c8a7_44cec656a8"
+        tabindex="-1"
+        value=""
+      />
+    </div>
+
+    <button
+      type="submit"
+      name="subscribe"
+      id="mc-embedded-subscribe"
+      class="uppercase mt-4 tracking-widest text-left border-b border-black w-fit text-base"
+      aria-label="Submit Newsletter Form"
+    >
+      Subscribe
+    </button>
+  </form>
+</div>
+
         
         <!-- Explore + Connect -->
         <div class="md:col-span-2 grid grid-cols-3 gap-12">
