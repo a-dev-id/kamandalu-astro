@@ -9,7 +9,7 @@ export async function getStaticPaths() {
   }));
 }
 
-const venues = await client.fetch(`*[_type == "diningVenue"] | order(sortOrder asc){
+const venues = await client.fetch(`*[_type == "diningVenue"] | order(order asc){
   "slug": slug.current, title
 }`);
 

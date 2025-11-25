@@ -25,6 +25,7 @@ const [
   wellnessVenue,         // List of wellness venues for wellness carousel
   culinaryJourney,
   rareExperiences,
+  diningVenue,
   homeSliders,           // Home page hero slider images
   pageDetails,           // Main page meta and content details
   villaDetails,          // Section details for villa carousel
@@ -38,6 +39,7 @@ const [
   client.fetch(`*[_type == "wellnessVenue"] | order(order asc){ "slug": slug.current, title, excerpt, secondImageAlt, secondImage { asset-> { url } } }`),
   client.fetch(`*[_type == "experienceUnique" && category=="culinaryJourney"] | order(order asc){ "slug": slug.current, title, excerpt, secondImageAlt, secondImage { asset-> { url } } }`),
   client.fetch(`*[_type == "experienceUnique" && category=="rareExperiences"] | order(order asc){ "slug": slug.current, title, excerpt, secondImageAlt, secondImage { asset-> { url } } }`),
+  client.fetch(`*[_type == "diningVenue"] | order(order asc){ "slug": slug.current, title, excerpt, secondImageAlt, secondImage { asset-> { url } } }`),
   client.fetch(`*[_type == "homeSlider"] | order(order asc){ title, image { asset-> { url } } }`),
   // Fetching page details for the main page
   client.fetch(`*[_type == "page" && _id == "6b81d880-cd1c-4993-a985-a74eda7f419e"][0]{ title, subtitle, description, metaTitle, metaDescription, metaKeywords, mainImage { asset-> { url } } }`),
@@ -337,8 +339,8 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
         </div>
       </div>
     </div>
-    {/* Carousel navigation buttons (visible on mobile only) */}
-    <div class="flex items-center gap-4 md:gap-6 mt-4 md:mt-8 justify-center md:hidden">
+    {/* Carousel navigation buttons */}
+    <div class="flex items-center gap-4 md:gap-6 mt-4 md:mt-8 justify-start">
       {/* Previous Wellness Slide Button */}
       <button aria-label="Previous Wellness Slide" id="wellness-prev" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="44" y1="12" x2="4" y2="12" /><polyline points="12 20 4 12 12 4" /></svg>
@@ -364,8 +366,8 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
       <div class="splide__track">
         <div class="splide__list">
           {/* Loop through culinaryJourney items to create each slide */}
-          {culinaryJourney.map((dining, i) => (
-            <div class="splide__slide transition-transform duration-500 ease-in-out" role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${culinaryJourney.length}`}>
+          {diningVenue.map((dining, i) => (
+            <div class="splide__slide transition-transform duration-500 ease-in-out" role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${diningVenue.length}`}>
               <div class="bg-white overflow-hidden flex flex-col h-full">
                 {/* Dining experience image */}
                 <OptimizedImage
@@ -383,7 +385,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
                   <p class="mt-2 text-lg">{dining.excerpt?.[locale] ?? ''}</p>
                   <div class="flex-grow"></div>
                   {/* Explore button for each dining experience */}
-                  <a href="#" class="text-lg mt-4 inline-block text-gray-700 uppercase">Explore</a>
+                  <a href={`/${locale}/dining/${dining.slug}`} class="text-lg mt-4 inline-block text-gray-700 uppercase">Explore</a>
                 </div>
               </div>
             </div>
@@ -437,7 +439,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
                   <p class="mt-2 text-lg">{dining.excerpt?.[locale] ?? ''}</p>
                   <div class="flex-grow"></div>
                   {/* Explore button for each experience */}
-                  <a href="#" class="text-lg mt-4 inline-block text-gray-700 uppercase">Explore</a>
+                  <a href={`/${locale}/experience/${dining.slug}`} class="text-lg mt-4 inline-block text-gray-700 uppercase">Explore</a>
                 </div>
               </div>
             </div>

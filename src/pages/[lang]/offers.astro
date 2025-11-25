@@ -24,7 +24,7 @@ const pageDetails = await client.fetch(`*[_type == "page" && _id == "2ff8dda1-8c
 }`);
 
 // Fetch all offers from Sanity CMS, ordered by 'order'
-const offers = await client.fetch(`*[_type == "offer"] | order(orderNumber desc){
+const offers = await client.fetch(`*[_type == "offer"] | order(orderNumber asc){
   "slug": slug.current, title, excerpt,
   mainImage { asset->{url} }, mainImageAlt,
   secondImage { asset->{url} }, secondImageAlt
