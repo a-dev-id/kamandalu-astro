@@ -1,0 +1,40 @@
+---
+import ErrorPage from "../../components/ErrorPage.astro";
+
+export async function getStaticPaths() {
+  return ["404", "500", "403", "401"].map((code) => ({ params: { code } }));
+}
+
+const { code } = Astro.params;
+
+const map = {
+  "404": {
+    title: "Page Not Found",
+    message: "We’re sorry, the page you’re looking for doesn’t exist or has been moved.",
+  },
+  "500": {
+    title: "Please Try Again",
+    message: "Something went wrong on our side. Please try again in a moment.",
+  },
+  "403": {
+    title: "Access Restricted",
+    message: "You don’t have permission to access this page.",
+  },
+  "401": {
+    title: "Authorization Required",
+    message: "Please sign in to continue.",
+  },
+};
+
+const content = map[code] ?? {
+  title: "Something Went Wrong",
+  message: "An unexpected error occurred. Please return to the homepage.",
+};
+---
+<ErrorPage
+  code={Number(code)}
+  title={content.title}
+  message={content.message}
+  homeUrl="/en/"
+  buttonLabel="Back to Home"
+/>

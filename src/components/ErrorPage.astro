@@ -1,0 +1,60 @@
+---
+const {
+  code = 404,
+  title = "Page Not Found",
+  message = "We’re sorry, the page you’re looking for doesn’t exist or has been moved.",
+  homeUrl = "/en/",
+  buttonLabel = "Back to Home",
+} = Astro.props;
+---
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>{code} — {title}</title>
+    <meta name="robots" content="noindex" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+        background: #faf7ef;
+        color: #2f2f2f;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        text-align: center;
+      }
+      .box { max-width: 560px; padding: 44px 24px; }
+      .code { letter-spacing: .2em; opacity: .6; font-size: 12px; margin-bottom: 14px; }
+      h1 {
+        font-size: 28px;
+        letter-spacing: .15em;
+        font-weight: 400;
+        margin: 0 0 12px;
+        text-transform: uppercase;
+      }
+      p { font-size: 16px; opacity: .85; margin: 0 0 32px; line-height: 1.6; }
+      a {
+        display: inline-block;
+        padding: 12px 24px;
+        border: 1px solid #000;
+        text-decoration: none;
+        color: #000;
+        letter-spacing: .12em;
+        font-size: 12px;
+        transition: all .3s ease;
+        text-transform: uppercase;
+      }
+      a:hover { background: #916b2c; color: #fff; border-color: transparent; }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <div class="code">ERROR {code}</div>
+      <h1>{title}</h1>
+      <p>{message}</p>
+      <a href={homeUrl}>{buttonLabel}</a>
+    </div>
+  </body>
+</html>

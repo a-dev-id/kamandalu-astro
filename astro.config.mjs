@@ -4,6 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   output: "static",
+  outDir: "./public_html", // ✅ correct place
   build: {
     format: "directory",
   },

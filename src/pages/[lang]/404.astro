@@ -1,0 +1,20 @@
+---
+import ErrorPage from "../../components/ErrorPage.astro";
+
+export async function getStaticPaths() {
+  return ["en", "ko", "zh"].map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params;
+const supported = new Set(["en", "ko", "zh"]);
+const safeLang = supported.has(lang) ? lang : "en";
+
+Astro.response.status = 404;
+---
+<ErrorPage
+  code={404}
+  title="Page Not Found"
+  message="We’re sorry, the page you’re looking for doesn’t exist or has been moved."
+  homeUrl={`/${safeLang}/`}
+  buttonLabel="Back to Home"
+/>
