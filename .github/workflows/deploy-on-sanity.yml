@@ -2,11 +2,14 @@ name: Deploy from Sanity Webhook
 
 on:
   repository_dispatch:
-    types: [sanity_publish]
+    types: [sanity_update]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    concurrency:
+      group: deploy-from-sanity
+      cancel-in-progress: true
 
     steps:
       - name: Checkout
