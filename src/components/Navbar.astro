@@ -21,14 +21,14 @@ const locale = getLocale(lang);
   <!-- Top Section: Language Selector & Logo -->
   <div class="flex items-center px-6 py-1 justify-between w-full relative">
     <!-- Language Dropdown (hidden on mobile, shown on md+) -->
-    <label for="languageSelect" class="sr-only">Language Selection</label>
+    <!-- <label for="languageSelect" class="sr-only">Language Selection</label>
     <div class="hidden md:block">
       <select id="languageSelect" class="bg-transparent text-white focus:outline-none text-lg">
         <option value="en" class="text-black">English</option>
         <option value="ko" class="text-black">한국어</option>
         <option value="zh" class="text-black">中文</option>
       </select>
-    </div>
+    </div> -->
     <!-- Logo: centered using flex grow -->
     <div class="flex-1 flex justify-center">
       <a href={`/${locale}`}>
@@ -43,7 +43,7 @@ const locale = getLocale(lang);
       </a>
     </div>
     <!-- Member Button (hidden on mobile, shown on md+) -->
-    <div class="hidden md:flex items-center justify-end w-32">
+    <!-- <div class="hidden md:flex items-center justify-end w-32">
       <a
         href={`/${locale}/member`}
         id="memberBtn"
@@ -51,7 +51,7 @@ const locale = getLocale(lang);
       >
         Member
       </a>
-    </div>
+    </div> -->
   </div>
 
   <!-- Bottom Section: Main Navigation & Reserve Button -->
