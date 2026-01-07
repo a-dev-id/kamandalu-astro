@@ -1,4 +1,4 @@
-name: Deploy new.kamandaluresort.com (Astro) via FTP
+name: Deploy kamandaluresort.com (Astro) via FTP
 
 on:
   push:
