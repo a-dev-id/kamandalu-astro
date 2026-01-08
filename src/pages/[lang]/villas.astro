@@ -26,7 +26,7 @@ const pageDetails = await client.fetch(`*[_type == "page" && _id == "3e09def0-f5
 // Fetch all villas from Sanity CMS
 const villas = await client.fetch(`*[_type == "villa"] | order(order asc){
   "slug": slug.current, title, excerpt, villaSize, bedSize, view,
-  secondImage { asset->{url} }, secondImageAlt
+  secondImage { asset->{url} }, secondImageAlt, buttonValue, buttonLabel,
 }`);
 
 // Prepare meta and description data
@@ -102,10 +102,11 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
           </div>
           {/* Action buttons: Book Now and Details */}
           <div class="flex gap-4">
-            <a
-              href="https://www.book-secure.com/index.php?s=results&property=idbal31692&locale=en_GB&currency=IDR&stid=986w12cwy"
-              class="bg-[#916B2C] border border-[#916B2C] uppercase text-white px-4 py-3 md:px-6 md:py-4 text-xs md:text-sm font-title tracking-widest transition-colors duration-300 hover:border hover:border-gray-700 hover:bg-white hover:text-gray-700 inline-block"
-            >Book Now</a>
+{(villa?.buttonValue) ? (
+  <a href={villa.buttonValue} class="bg-[#916B2C] border border-[#916B2C] uppercase text-white px-4 py-3 md:px-6 md:py-4 text-xs md:text-sm font-title tracking-widest transition-colors duration-300 hover:border hover:border-gray-700 hover:bg-white hover:text-gray-700 inline-block">Book Now</a>
+) : (
+  <a href="https://www.book-secure.com/index.php?s=results&property=idbal31692&locale=en_GB&currency=IDR&stid=986w12cwy" class="bg-[#916B2C] border border-[#916B2C] uppercase text-white px-4 py-3 md:px-6 md:py-4 text-xs md:text-sm font-title tracking-widest transition-colors duration-300 hover:border hover:border-gray-700 hover:bg-white hover:text-gray-700 inline-block">Book Now</a>
+)}
             <a
               href={`/${lang}/villa/${villa.slug}`}
               class="bg-white uppercase text-gray-700 px-4 py-3 md:px-6 md:py-4 text-xs md:text-sm font-title tracking-widest transition-colors duration-300 border border-gray-700 hover:bg-[#916B2C] hover:text-white hover:border-transparent inline-block"
