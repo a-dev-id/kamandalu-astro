@@ -98,9 +98,10 @@ const locale = getLocale(lang);
     class="fixed top-0 left-0 h-full w-64 bg-white text-black shadow-lg transform -translate-x-full transition-transform duration-300 z-40 flex flex-col"
   >
     <!-- Offcanvas Top: Language Selector (mobile only) -->
-    <label for="languageSelectOffcanvas" class="sr-only">Language Selection offcanvas</label>
-    <div class="relative flex justify-end p-4 border-b border-gray-200">
-      <select
+    <!-- <label for="languageSelectOffcanvas" class="sr-only">Language Selection offcanvas</label> -->
+    <!-- <div class="relative flex justify-end p-4 border-b border-gray-200"> -->
+    <div class="relative flex justify-end p-4">
+      <!-- <select
   id="languageSelectOffcanvas"
   class="absolute left-4 top-1/2 -translate-y-1/2 md:hidden block bg-transparent text-black focus:outline-none text-sm"
 >
@@ -112,7 +113,7 @@ const locale = getLocale(lang);
         <svg class="w-6 h-6 text-black hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
         </svg>
-      </button>
+      </button> -->
     </div>
     <!-- Offcanvas Navigation Links -->
     <nav class="flex-1 px-6 pb-6 mt-6 space-y-4 overflow-y-auto font-normal">
@@ -138,8 +139,8 @@ const locale = getLocale(lang);
       <a href={`/${locale}/experiences`} class="block text-xl">Unique Experiences</a>
       <a href={`/${locale}/wedding-events`} class="block text-xl">Wedding & Events</a>
       <a href={`/${locale}/our-story`} class="block text-xl">Our Story</a>
-      <hr class="my-6" />
-      <a href={`/${locale}/member`} class="block text-xl">Member</a>
+      <!-- <hr class="my-6" /> -->
+      <!-- <a href={`/${locale}/member`} class="block text-xl">Member</a> -->
       <!-- More Dropdown (Mobile) -->
       <!-- <div>
         <button aria-label="More Dropdown" id="more-mobile-toggle" class="block text-xl w-full text-left flex items-center gap-1 justify-between">

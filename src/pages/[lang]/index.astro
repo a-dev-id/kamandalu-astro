@@ -189,7 +189,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
       <!-- Subtitle -->
       <p class="text-xl sm:text-2xl md:text-3xl mb-6 md:mb-12">{pageDetails?.subtitle?.[locale] ?? ''}</p>
       <!-- Description -->
-      <div class="mb-12 md:mb-36 text-lg" set:html={pageDescription}></div>
+      <div class="mb-12 md:mb-12 text-lg" set:html={pageDescription}></div>
       <!-- Check Rates Button -->
       <a href="https://www.book-secure.com/index.php?s=results&property=idbal31692&locale=en_GB&currency=IDR&stid=986w12cwy" class="bg-white text-gray-700 px-4 py-3 md:px-6 md:py-4 text-xs md:text-sm font-title tracking-widest transition-colors duration-300 border border-black hover:bg-[#916B2C] hover:text-white hover:border-transparent inline-block">CHECK RATES</a>
     </div>
@@ -203,7 +203,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
       <p class="mb-10 md:mb-20 text-lg">{villaDetails?.description?.[locale] ?? ''}</p>
     </div>
     <!-- Villa Carousel (Splide) -->
-    <div id="villa-carousel" class="splide mb-8 md:mb-12" role="region" aria-label="Villa Carousel">
+    <div id="villa-carousel" class="splide mb-4" role="region" aria-label="Villa Carousel">
       <div class="splide__track">
         <div class="splide__list">
           {villas.map((villa, i) => (
@@ -234,7 +234,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
       </div>
     </div>
     <!-- Carousel Navigation Buttons -->
-    <div class="flex items-center gap-4 md:gap-6 mt-4 md:mt-8 justify-start">
+    <div class="flex items-center gap-4 md:gap-6 mt-4 justify-start">
       {/* Previous Villa Button */}
       <button aria-label="Previous Villa" id="villa-prev" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="44" y1="12" x2="4" y2="12" /><polyline points="12 20 4 12 12 4" /></svg>
@@ -254,7 +254,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
       <p class="mb-10 md:mb-20 text-lg">{offerDetails?.description?.[locale] ?? ''}</p>
     </div>
     <!-- Offers Carousel (Splide) -->
-    <div id="offer-carousel" class="splide mb-8 md:mb-12" role="region" aria-label="Villa Carousel">
+    <div id="offer-carousel" class="splide mb-4" role="region" aria-label="Villa Carousel">
       <div class="splide__track">
         <div class="splide__list">
           {offers.map((offer, i) => (
@@ -274,7 +274,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
                 {/* Offer Info */}
                 <div class="py-4 md:py-6 flex flex-col flex-1">
                   <h3 class="text-lg tracking-widest uppercase font-title">{offer.title?.[locale] ?? offer.title?.en}</h3>
-                  <p class="mt-2 text-lg">{offer.excerpt?.[locale] ?? offer.excerpt?.en}</p>
+                  <p class="mt-2 text-lg">{/*offer.excerpt?.[locale] ?? offer.excerpt?.en*/}</p>
                   <div class="flex-grow"></div>
                   {/* Explore Button */}
                   <a href={`/${locale}/offer/${offer.slug}`} class="text-lg mt-4 inline-block text-gray-700 uppercase">{translations.btnexplore[locale]}</a>
@@ -286,7 +286,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
       </div>
     </div>
     <!-- Carousel Navigation Buttons -->
-    <div class="flex items-center gap-4 md:gap-6 mt-4 md:mt-8 justify-start">
+    <div class="flex items-center gap-4 md:gap-6 mt-4 justify-start">
       {/* Previous Offer Button */}
       <button aria-label="Previous Offer" id="offer-prev" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="44" y1="12" x2="4" y2="12" /><polyline points="12 20 4 12 12 4" /></svg>
@@ -308,7 +308,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
       <p class="mb-10 md:mb-20 text-lg">{wellnessDetails?.description?.[locale] ?? ''}</p>
     </div>
     {/* Wellness carousel using Splide */}
-    <div id="wellness-carousel" class="splide mb-8 md:mb-12" role="region" aria-label="Wellness Carousel">
+    <div id="wellness-carousel" class="splide mb-4" role="region" aria-label="Wellness Carousel">
       <div class="splide__track">
         <div class="splide__list">
           {/* Loop through wellnessVenue items to create each slide */}
@@ -328,7 +328,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
                 {/* Wellness venue info */}
                 <div class="py-4 md:py-6 flex flex-col flex-1">
                   <h3 class="text-lg tracking-widest uppercase font-title">{venue?.title?.[locale] ?? ''}</h3>
-                  <p class="mt-2 text-lg">{venue?.excerpt?.[locale] ?? ''}</p>
+                  <p class="mt-2 text-lg">{/*venue?.excerpt?.[locale] ?? ''*/}</p>
                   <div class="flex-grow"></div>
                   {/* Explore button for each wellness venue */}
                   <a href={`/${locale}/spa-wellness/${venue.slug}`} class="text-lg mt-4 inline-block text-gray-700 uppercase">Explore</a>
@@ -340,7 +340,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
       </div>
     </div>
     {/* Carousel navigation buttons */}
-    <div class="flex items-center gap-4 md:gap-6 mt-4 md:mt-8 justify-start">
+    <div class="flex items-center gap-4 md:gap-6 mt-4 justify-start">
       {/* Previous Wellness Slide Button */}
       <button aria-label="Previous Wellness Slide" id="wellness-prev" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="44" y1="12" x2="4" y2="12" /><polyline points="12 20 4 12 12 4" /></svg>
@@ -362,7 +362,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
       <p class="mb-10 md:mb-20 text-lg">{culinaryDetails?.description?.[locale] ?? ''}</p>
     </div>
     {/* Culinary carousel using Splide */}
-    <div id="culinary-carousel" class="splide mb-8 md:mb-12" role="region" aria-label="Culinary Carousel">
+    <div id="culinary-carousel" class="splide mb-4" role="region" aria-label="Culinary Carousel">
       <div class="splide__track">
         <div class="splide__list">
           {/* Loop through culinaryJourney items to create each slide */}
@@ -382,7 +382,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
                 {/* Dining experience info */}
                 <div class="py-4 md:py-6 flex flex-col flex-1">
                   <h3 class="text-lg tracking-widest uppercase font-title">{dining.title?.[locale] ?? ''}</h3>
-                  <p class="mt-2 text-lg">{dining.excerpt?.[locale] ?? ''}</p>
+                  <p class="mt-2 text-lg">{/*dining.excerpt?.[locale] ?? ''*/}</p>
                   <div class="flex-grow"></div>
                   {/* Explore button for each dining experience */}
                   <a href={`/${locale}/dining/${dining.slug}`} class="text-lg mt-4 inline-block text-gray-700 uppercase">Explore</a>
@@ -394,7 +394,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
       </div>
     </div>
     {/* Carousel navigation buttons */}
-    <div class="flex items-center gap-4 md:gap-6 mt-4 md:mt-8 justify-start">
+    <div class="flex items-center gap-4 md:gap-6 mt-4 justify-start">
       {/* Previous Culinary Slide Button */}
       <button aria-label="Previous Culinary Slide" id="culinary-prev" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="44" y1="12" x2="4" y2="12" /><polyline points="12 20 4 12 12 4" /></svg>
@@ -416,7 +416,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
       <p class="mb-10 md:mb-20 text-lg">{experienceDetails?.description?.[locale] ?? ''}</p>
     </div>
     <!-- Experience carousel using Splide -->
-    <div id="experience-carousel" class="splide mb-8 md:mb-12" role="region" aria-label="Experience Carousel">
+    <div id="experience-carousel" class="splide mb-4" role="region" aria-label="Experience Carousel">
       <div class="splide__track">
         <div class="splide__list">
           {/* Loop through rareExperiences items to create each experience slide */}
@@ -436,7 +436,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
                 {/* Experience info */}
                 <div class="py-4 md:py-6 flex flex-col flex-1">
                   <h3 class="text-lg tracking-widest uppercase font-title">{dining.title?.[locale] ?? ''}</h3>
-                  <p class="mt-2 text-lg">{dining.excerpt?.[locale] ?? ''}</p>
+                  <p class="mt-2 text-lg">{/*dining.excerpt?.[locale] ?? ''*/}</p>
                   <div class="flex-grow"></div>
                   {/* Explore button for each experience */}
                   <a href={`/${locale}/experience/${dining.slug}`} class="text-lg mt-4 inline-block text-gray-700 uppercase">Explore</a>
@@ -448,7 +448,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
       </div>
     </div>
     <!-- Carousel navigation buttons -->
-    <div class="flex items-center gap-4 md:gap-6 mt-4 md:mt-8 justify-start">
+    <div class="flex items-center gap-4 md:gap-6 mt-4justify-start">
       {/* Previous Experience Slide Button */}
       <button aria-label="Previous Experience Slide" id="experience-prev" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="44" y1="12" x2="4" y2="12" /><polyline points="12 20 4 12 12 4" /></svg>

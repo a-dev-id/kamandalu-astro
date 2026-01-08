@@ -217,20 +217,22 @@ const keywords = wellness.metaKeywords?.[locale] ?? '';
                   </button>
 
                   <div
-                    id={id}
-                    class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 hidden"
-                    role="region"
-                    aria-labelledby={id}
-                  >
-                    {pkgDescription && (
-                      <div class="space-y-4">
-                        <div class="text-lg max-w-none" set:html={pkgDescription}></div>
-                      </div>
-                    )}
-                    {pkgInclusion && (
-                      <div class="text-lg max-w-none" set:html={pkgInclusion}></div>
-                    )}
-                  </div>
+  id={id}
+  class="pb-6 hidden"
+  role="region"
+  aria-labelledby={id}
+>
+  <div class="w-full">
+    {pkgDescription && (
+      <div class="text-lg max-w-none" set:html={pkgDescription}></div>
+    )}
+
+    {pkgInclusion && (
+      <div class="text-lg max-w-none mt-4" set:html={pkgInclusion}></div>
+    )}
+  </div>
+</div>
+
                 </div>
               )
               : null;
