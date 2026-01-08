@@ -19,13 +19,13 @@ const safeArray = arr => Array.isArray(arr) ? arr : [];
 
 // Fetch page details from Sanity CMS
 const pageDetails = await client.fetch(`*[_type == "page" && _id == "2ff8dda1-8c5a-4622-b79c-e217495e327f"][0]{
-  title, subtitle, description, metaTitle, metaDescription, metaKeywords, buttonLabel, buttonValue,
+  title, subtitle, description, metaTitle, metaDescription, metaKeywords,
   mainImageAlt, mainImage { asset->{url} }
 }`);
 
 // Fetch all offers from Sanity CMS, ordered by 'order'
 const offers = await client.fetch(`*[_type == "offer"] | order(orderNumber asc){
-  "slug": slug.current, title, excerpt,
+  "slug": slug.current, title, excerpt, buttonLabel, buttonValue,
   mainImage { asset->{url} }, mainImageAlt,
   secondImage { asset->{url} }, secondImageAlt
 }`);
@@ -87,6 +87,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
                 href={`/${locale}/offer/${offer.slug}`}
                 class="bg-white text-black px-4 py-3 md:px-4 md:py-2 text-xs font-title tracking-widest transition-colors duration-300 border border-black hover:bg-[#916B2C] hover:text-white hover:border-transparent inline-block text-center"
               >DETAILS</a>
+
 {(offer?.buttonValue) ? (
               <a
                 href={offer.buttonValue}
