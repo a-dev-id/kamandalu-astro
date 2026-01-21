@@ -58,6 +58,7 @@ const [
 
 // Prepare meta tags and Open Graph data for the page
 const pageDescription = toHTML(safeArray(pageDetails.description?.[locale]));
+const pageSubtitle = toHTML(safeArray(pageDetails.subtitle?.[locale]));
 const title = pageDetails?.metaTitle?.[locale] ?? '';
 const description = pageDetails?.metaDescription?.[locale] ?? '';
 const url = new URL(Astro.request.url).href;
@@ -187,7 +188,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
       <!-- Main Title -->
       <h1 class="font-title text-3xl sm:text-4xl md:text-5xl uppercase mb-4 md:mb-6 tracking-widest font-light">{pageDetails?.title?.[locale] ?? ''}</h1>
       <!-- Subtitle -->
-      <p class="text-xl sm:text-2xl md:text-3xl mb-6 md:mb-12">{pageDetails?.subtitle?.[locale] ?? ''}</p>
+      <div class="text-xl sm:text-2xl md:text-3xl mb-6 md:mb-12" set:html={pageSubtitle}></div>
       <!-- Description -->
       <div class="mb-12 md:mb-12 text-lg" set:html={pageDescription}></div>
       <!-- Check Rates Button -->
