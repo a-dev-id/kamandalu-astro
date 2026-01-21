@@ -30,6 +30,7 @@ const safeArray = arr => Array.isArray(arr) ? arr : [];
 let wellness = await client.fetch(
   `*[_type == "wellnessExperience" && slug.current == $slug][0]{
     _type, title, excerpt, description, mainImage { asset->{url} }, mainImageAlt,
+    sliderImages[]{ asset->{url} },
     metaTitle, metaDescription, metaKeywords,
     "details": details[$locale], "contactBooking": contactBooking[$locale],
     packages[]{
@@ -46,6 +47,7 @@ if (!wellness) {
   wellness = await client.fetch(
     `*[_type == "wellnessVenue" && slug.current == $slug][0]{
       _type, title, excerpt, description, mainImage { asset->{url} }, mainImageAlt,
+      sliderImages[]{ asset->{url} },
       metaTitle, metaDescription, metaKeywords,
       "details": details[$locale], "contactBooking": contactBooking[$locale], "policy": policy[$locale],
       packages[]{
@@ -83,6 +85,15 @@ const detailsHTML = toHTML(safeArray(wellness.details), htmlOpts);
 const contactHTML = toHTML(safeArray(wellness.contactBooking), htmlOpts);
 const policyHTML = toHTML(safeArray(wellness.policy), htmlOpts);
 
+// Combine mainImage with sliderImages for the hero slider
+const heroImages = [
+  wellness.mainImage?.asset?.url,
+  ...safeArray(wellness.sliderImages).map(img => img?.asset?.url)
+].filter(Boolean);
+
+console.log('Hero Images:', heroImages);
+console.log('Hero Images Length:', heroImages.length);
+
 // Prepare meta and package data
 const packages = safeArray(wellness.packages);
 const title = wellness?.metaTitle?.[locale] ?? '';
@@ -94,18 +105,86 @@ const keywords = wellness.metaKeywords?.[locale] ?? '';
 ---
 
 <Layout {title} {description} {url} {ogImage} {keywords}>
-  {/* Hero section with main image */}
+  {/* Hero section with slider */}
   <section class="relative w-full h-[50vh] md:h-[60vh] lg:h-[75vh] overflow-hidden">
-    <OptimizedImage
-      src={wellness.mainImage.asset.url}
-      alt={wellness.mainImageAlt?.[locale] ?? ''}
-      width={1600}
-      height={900}
-      quality={75}
-      className="w-full h-full object-cover"
-    />
-    <div class="absolute inset-0 bg-black/25 z-20"></div>
+    {heroImages.length > 1 ? (
+      <div class="wellness-slider relative w-full h-full" id="wellness-hero-slider">
+        <div class="slider-wrapper relative w-full h-full">
+          {heroImages.map((imageUrl, idx) => (
+            <div class={`slider-slide absolute inset-0 transition-opacity duration-700 ${idx === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'}`} data-slide-index={idx}>
+              <OptimizedImage
+                src={imageUrl}
+                alt={wellness.mainImageAlt?.[locale] ?? wellness?.title?.[locale] ?? ''}
+                width={1600}
+                height={900}
+                quality={75}
+                className="w-full h-full object-cover"
+              />
+            </div>
+          ))}
+        </div>
+        
+        {/* Previous button */}
+        <button 
+          class="slider-prev absolute left-4 top-1/2 -translate-y-1/2 z-30 bg-white/80 hover:bg-white/95 rounded-full p-3 transition-all"
+          aria-label="Previous slide"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+          </svg>
+        </button>
+        
+        {/* Next button */}
+        <button 
+          class="slider-next absolute right-4 top-1/2 -translate-y-1/2 z-30 bg-white/80 hover:bg-white/95 rounded-full p-3 transition-all"
+          aria-label="Next slide"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+        </button>
+        
+        {/* Pagination dots */}
+        <div class="slider-pagination absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex gap-2">
+          {heroImages.map((_, idx) => (
+            <button 
+              class={`slider-dot w-2 h-2 rounded-full transition-all ${idx === 0 ? 'bg-white w-8' : 'bg-white/50'}`}
+              data-slide-index={idx}
+              aria-label={`Go to slide ${idx + 1}`}
+            ></button>
+          ))}
+        </div>
+      </div>
+    ) : (
+      <OptimizedImage
+        src={wellness.mainImage.asset.url}
+        alt={wellness.mainImageAlt?.[locale] ?? ''}
+        width={1600}
+        height={900}
+        quality={75}
+        className="w-full h-full object-cover"
+      />
+    )}
+    <div class="absolute inset-0 bg-black/25 z-20 pointer-events-none"></div>
   </section>
+
+  {/* Custom slider styles */}
+  <style>
+    .wellness-slider .slider-slide {
+      transition: opacity 700ms ease-in-out;
+    }
+    
+    .wellness-slider .slider-prev,
+    .wellness-slider .slider-next {
+      opacity: 0;
+      transition: opacity 300ms;
+    }
+    
+    .wellness-slider:hover .slider-prev,
+    .wellness-slider:hover .slider-next {
+      opacity: 1;
+    }
+  </style>
 
   {/* Title and description section */}
   <!-- <section class="container mx-auto px-4 xl:px-10 2xl:px-0 pt-16 md:pt-24">
@@ -316,6 +395,99 @@ Jl1YsAI3Q89IphvIh9EaWH5/rR9rpWP5oZGG1iQmSO++ry/KI23A2fxnmfn6klsACCzk/ZMpUOuMyG9T
   );
 })()}
 
+
+  {/* Custom hero slider script */}
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', function() {
+      const slider = document.getElementById('wellness-hero-slider');
+      if (!slider) return;
+      
+      const slides = slider.querySelectorAll('.slider-slide');
+      const dots = slider.querySelectorAll('.slider-dot');
+      const prevBtn = slider.querySelector('.slider-prev');
+      const nextBtn = slider.querySelector('.slider-next');
+      
+      if (slides.length <= 1) return;
+      
+      let currentIndex = 0;
+      let autoSlideInterval;
+      
+      function goToSlide(index) {
+        // Hide all slides
+        slides.forEach((slide, i) => {
+          if (i === index) {
+            slide.classList.remove('opacity-0', 'z-0');
+            slide.classList.add('opacity-100', 'z-10');
+          } else {
+            slide.classList.remove('opacity-100', 'z-10');
+            slide.classList.add('opacity-0', 'z-0');
+          }
+        });
+        
+        // Update dots
+        dots.forEach((dot, i) => {
+          if (i === index) {
+            dot.classList.remove('bg-white/50', 'w-2');
+            dot.classList.add('bg-white', 'w-8');
+          } else {
+            dot.classList.remove('bg-white', 'w-8');
+            dot.classList.add('bg-white/50', 'w-2');
+          }
+        });
+        
+        currentIndex = index;
+      }
+      
+      function nextSlide() {
+        const next = (currentIndex + 1) % slides.length;
+        goToSlide(next);
+      }
+      
+      function prevSlide() {
+        const prev = (currentIndex - 1 + slides.length) % slides.length;
+        goToSlide(prev);
+      }
+      
+      function startAutoSlide() {
+        stopAutoSlide();
+        autoSlideInterval = setInterval(nextSlide, 3000);
+      }
+      
+      function stopAutoSlide() {
+        if (autoSlideInterval) {
+          clearInterval(autoSlideInterval);
+        }
+      }
+      
+      // Button clicks
+      if (nextBtn) {
+        nextBtn.addEventListener('click', function() {
+          nextSlide();
+          startAutoSlide();
+        });
+      }
+      
+      if (prevBtn) {
+        prevBtn.addEventListener('click', function() {
+          prevSlide();
+          startAutoSlide();
+        });
+      }
+      
+      // Dot clicks
+      dots.forEach((dot, index) => {
+        dot.addEventListener('click', function() {
+          goToSlide(index);
+          startAutoSlide();
+        });
+      });
+      
+      // Start auto sliding
+      startAutoSlide();
+      
+      console.log('Custom wellness slider initialized with ' + slides.length + ' slides');
+    });
+  </script>
 
   {/* Accordion toggle script */}
   <script is:inline>

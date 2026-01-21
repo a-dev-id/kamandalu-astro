@@ -23,6 +23,7 @@ const [
   villas,                // List of villas for villa carousel
   offers,                // List of offers for offers carousel
   wellnessVenue,         // List of wellness venues for wellness carousel
+  wellnessExperience,    // List of wellness experiences for wellness carousel
   culinaryJourney,
   rareExperiences,
   diningVenue,
@@ -35,8 +36,9 @@ const [
   experienceDetails      // Section details for experience carousel
 ] = await Promise.all([
   client.fetch(`*[_type == "villa"] | order(order asc){ "slug": slug.current, title, excerpt, secondImageAlt, secondImage { asset-> { url } } }`),
-  client.fetch(`*[_type == "offer"] | order(order asc){ "slug": slug.current, title, excerpt, mainImageAlt, mainImage { asset-> { url } } }`),
+  client.fetch(`*[_type == "offer"] | order(orderNumber asc){ "slug": slug.current, title, excerpt, mainImageAlt, mainImage { asset-> { url } } }`),
   client.fetch(`*[_type == "wellnessVenue"] | order(order asc){ "slug": slug.current, title, excerpt, secondImageAlt, secondImage { asset-> { url } } }`),
+  client.fetch(`*[_type == "wellnessExperience"] | order(order asc){ "slug": slug.current, title, excerpt, secondImageAlt, secondImage { asset-> { url } } }`),
   client.fetch(`*[_type == "experienceUnique" && category=="culinaryJourney"] | order(order asc){ "slug": slug.current, title, excerpt, secondImageAlt, secondImage { asset-> { url } } }`),
   client.fetch(`*[_type == "experienceUnique" && category=="rareExperiences"] | order(order asc){ "slug": slug.current, title, excerpt, secondImageAlt, secondImage { asset-> { url } } }`),
   client.fetch(`*[_type == "diningVenue"] | order(order asc){ "slug": slug.current, title, excerpt, secondImageAlt, secondImage { asset-> { url } } }`),
@@ -60,6 +62,10 @@ const [
 const pageDescription = toHTML(safeArray(pageDetails.description?.[locale]));
 const pageSubtitle = toHTML(safeArray(pageDetails.subtitle?.[locale]));
 const villaDescription = toHTML(safeArray(villaDetails.description?.[locale]));
+const offerDescription = toHTML(safeArray(offerDetails.description?.[locale]));
+const wellnessDescription = toHTML(safeArray(wellnessDetails.description?.[locale]));
+const culinaryDescription = toHTML(safeArray(culinaryDetails.description?.[locale]));
+const experienceDescription = toHTML(safeArray(experienceDetails.description?.[locale]));
 const title = pageDetails?.metaTitle?.[locale] ?? '';
 const description = pageDetails?.metaDescription?.[locale] ?? '';
 const url = new URL(Astro.request.url).href;
@@ -202,7 +208,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
     <!-- Section Title and Description -->
     <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
       <h2 class="font-title text-2xl md:text-4xl uppercase mb-4 md:mb-6 tracking-widest font-light">{villaDetails?.title?.[locale] ?? ''}</h2>
-      <p class="mb-10 md:mb-20 text-lg" set:html={villaDescription}></p>
+      <div class="mb-10 md:mb-20 text-lg" set:html={villaDescription}></div>
     </div>
     <!-- Villa Carousel (Splide) -->
     <div id="villa-carousel" class="splide mb-4" role="region" aria-label="Villa Carousel">
@@ -253,7 +259,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
     <!-- Section Title and Description -->
     <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
       <h2 class="font-title text-2xl md:text-3xl uppercase mb-4 md:mb-6 tracking-widest font-light">{offerDetails?.title?.[locale] ?? ''}</h2>
-      <p class="mb-10 md:mb-20 text-lg">{offerDetails?.description?.[locale] ?? ''}</p>
+      <div class="mb-10 md:mb-20 text-lg" set:html={offerDescription}></div>
     </div>
     <!-- Offers Carousel (Splide) -->
     <div id="offer-carousel" class="splide mb-4" role="region" aria-label="Villa Carousel">
@@ -307,7 +313,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
     {/* Section title and description */}
     <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
       <h2 class="font-title text-2xl md:text-3xl uppercase mb-4 md:mb-6 tracking-widest font-light">{wellnessDetails?.title?.[locale] ?? ''}</h2>
-      <p class="mb-10 md:mb-20 text-lg">{wellnessDetails?.description?.[locale] ?? ''}</p>
+      <div class="mb-10 md:mb-20 text-lg" set:html={wellnessDescription}></div>
     </div>
     {/* Wellness carousel using Splide */}
     <div id="wellness-carousel" class="splide mb-4" role="region" aria-label="Wellness Carousel">
@@ -338,6 +344,30 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
               </div>
             </div>
           ))}
+          {wellnessExperience.map((experiences, i) => (
+            <div class="splide__slide transition-transform duration-500 ease-in-out" role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${wellnessExperience.length}`}>
+              <div class="bg-white overflow-hidden flex flex-col h-full">
+                {/* Wellness experiences image */}
+                <OptimizedImage
+                  src={experiences.secondImage.asset.url}
+                  alt={experiences.secondImageAlt?.[locale]}
+                  width={800}
+                  height={600}
+                  quality={75}
+                  loading="lazy"
+                  className="w-full h-auto aspect-[4/3] md:aspect-[16/9] 2xl:aspect-[4/3] transition duration-500"
+                />
+                {/* Wellness experiences info */}
+                <div class="py-4 md:py-6 flex flex-col flex-1">
+                  <h3 class="text-lg tracking-widest uppercase font-title">{experiences?.title?.[locale] ?? ''}</h3>
+                  <p class="mt-2 text-lg">{/*experiences?.excerpt?.[locale] ?? ''*/}</p>
+                  <div class="flex-grow"></div>
+                  {/* Explore button for each wellness experiences */}
+                  <a href={`/${locale}/spa-wellness/${experiences.slug}`} class="text-lg mt-4 inline-block text-gray-700 uppercase">Explore</a>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>
@@ -361,7 +391,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
     {/* Section title and description */}
     <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
       <h2 class="font-title text-2xl md:text-3xl uppercase mb-4 md:mb-6 tracking-widest font-light">{culinaryDetails?.title?.[locale] ?? ''}</h2>
-      <p class="mb-10 md:mb-20 text-lg">{culinaryDetails?.description?.[locale] ?? ''}</p>
+      <div class="mb-10 md:mb-20 text-lg" set:html={culinaryDescription}></div>
     </div>
     {/* Culinary carousel using Splide */}
     <div id="culinary-carousel" class="splide mb-4" role="region" aria-label="Culinary Carousel">
@@ -415,7 +445,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
     <!-- Section title and description -->
     <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
       <h2 class="font-title text-2xl md:text-3xl uppercase mb-4 md:mb-6 tracking-widest font-light">{experienceDetails?.title?.[locale] ?? ''}</h2>
-      <p class="mb-10 md:mb-20 text-lg">{experienceDetails?.description?.[locale] ?? ''}</p>
+      <div class="mb-10 md:mb-20 text-lg" set:html={experienceDescription}></div>
     </div>
     <!-- Experience carousel using Splide -->
     <div id="experience-carousel" class="splide mb-4" role="region" aria-label="Experience Carousel">
