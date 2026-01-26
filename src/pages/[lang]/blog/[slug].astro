@@ -44,6 +44,14 @@ const blog = await client.fetch(`*[_type == "blog" && slug.current == $slug][0]{
 // Convert description to HTML
 const blogDescription = toHTML(safeArray(blog.description?.[locale]), {
   components: {
+    block: {
+      h2: ({ children }) =>
+        `<h2 class="text-3xl font-bold mt-10 mb-6 text-primary">${children}</h2>`,
+      h3: ({ children }) =>
+        `<h3 class="text-2xl font-semibold mt-8 mb-4 text-primary">${children}</h3>`,
+      normal: ({ children }) =>
+        `<p class="mb-4">${children}</p>`, // Add margin-bottom to paragraphs
+    },
     list: ({ children, value }) =>
       value?.listItem === 'bullet' || value?.style === 'normal'
         ? `<ul class="list-disc ml-6 space-y-2">${children}</ul>`

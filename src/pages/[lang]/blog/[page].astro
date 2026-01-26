@@ -27,7 +27,15 @@ const allBlogs = await client.fetch(`*[_type == "blog"] | order(order asc){
   mainImage { asset->{url} }, mainImageAlt,
   secondImage { asset->{url} }, secondImageAlt
 }`);
-const blog = allBlogs.slice(start, end);
+const blog = allBlogs
+  .map((item) => ({
+    ...item,
+    title: item.title?.[locale] ?? item.title?.en,
+    excerpt: item.excerpt?.[locale] ?? item.excerpt?.en,
+    mainImageAlt: item.mainImageAlt?.[locale] ?? item.mainImageAlt?.en ?? '',
+    secondImageAlt: item.secondImageAlt?.[locale] ?? item.secondImageAlt?.en ?? '',
+  }))
+  .slice(start, end);
 const totalPages = Math.ceil(allBlogs.length / perPage);
 
 // SEO
