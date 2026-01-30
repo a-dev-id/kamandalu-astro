@@ -1,0 +1,78 @@
+---
+const {
+  image = '',
+  waLink = 'https://wa.me/628113984566',
+  delay = 500,
+} = Astro.props;
+---
+
+<div
+  id="popup-backdrop"
+  class="fixed inset-0 z-[9999] hidden items-center justify-center bg-black/70 backdrop-blur-sm px-4"
+>
+  <div class="relative w-full max-w-3xl overflow-hidden rounded-2xl bg-black shadow-2xl">
+    <button
+      id="popup-close"
+      class="absolute right-4 top-4 z-10 text-white/70 hover:text-white"
+      aria-label="Close"
+      type="button"
+    >
+      ✕
+    </button>
+
+    <img
+      src={image}
+      alt="Promotion"
+      class="w-full object-cover"
+      loading="eager"
+    />
+
+    <div class="flex items-center justify-center bg-black px-6 py-5">
+      <a
+        href={waLink}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="hover:bg-white hover:text-gray-700 px-4 py-3 md:px-6 md:py-4 text-xs md:text-sm font-title tracking-widest transition-colors duration-300 border hover:border-black bg-[#916B2C] text-white border-transparent inline-block"
+      >
+        RESERVE
+      </a>
+    </div>
+  </div>
+</div>
+
+<script is:inline define:vars={{ delay }}>
+  function initPopup() {
+    const backdrop = document.getElementById('popup-backdrop');
+    const closeBtn = document.getElementById('popup-close');
+
+    if (!backdrop || !closeBtn) return;
+
+    const showPopup = () => {
+      backdrop.classList.remove('hidden');
+      backdrop.classList.add('flex');
+    };
+
+    const hidePopup = () => {
+      backdrop.classList.add('hidden');
+      backdrop.classList.remove('flex');
+    };
+
+    // Prevent multiple listeners if init runs again
+    closeBtn.onclick = hidePopup;
+    backdrop.onclick = (e) => {
+      if (e.target === backdrop) hidePopup();
+    };
+
+    window.setTimeout(showPopup, Number(delay) || 0);
+  }
+
+  // Initial load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPopup, { once: true });
+  } else {
+    initPopup();
+  }
+
+  // If Astro View Transitions is enabled, this fires on every navigation
+  document.addEventListener('astro:page-load', initPopup);
+</script>

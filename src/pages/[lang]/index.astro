@@ -6,6 +6,8 @@ import { translations } from '../../i18n/translations.js';
 import OptimizedImage from '../../components/OptimizedImage.astro';
 import { toHTML } from '@portabletext/to-html';
 
+import PopupBanner from '../../components/PopupBanner.astro';
+
 // Define static paths for supported languages
 export async function getStaticPaths() {
   return ['en', 'ko', 'zh'].map(lang => ({ params: { lang } }));
@@ -490,6 +492,16 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="44" y2="12" /><polyline points="36 4 44 12 36 20" /></svg>
       </button>
     </div>
+
+<!-- pop up -->
+<PopupBanner
+  image="https://kamandaluresort.com/images/Pop-up-Web-2.jpg"
+  waLink="https://wa.me/628113984566"
+  delay={800}
+/>
+
+
+
   <!-- SCRIPTS -->
 
   <!-- Flatpickr Date Picker Library -->
