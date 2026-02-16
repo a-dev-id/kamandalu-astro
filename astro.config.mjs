@@ -7,6 +7,10 @@ export default defineConfig({
   site: "https://kamandaluresort.com",
   output: "static",
   outDir: "./public_html",
+  i18n: {
+    defaultLocale: "en",
+    locales: ["en"], // only build English
+  },
   build: {
     format: "directory",
   },
