@@ -25,7 +25,7 @@ const pageDetails = await client.fetch(`*[_type == "page" && _id == "2ff8dda1-8c
 
 // Fetch all offers from Sanity CMS, ordered by 'order'
 const offers = await client.fetch(`*[_type == "offer"] | order(orderNumber asc){
-  "slug": slug.current, title, excerpt, buttonLabel, buttonValue,
+  "slug": slug.current, title, subtitle, excerpt, buttonLabel, buttonValue,
   mainImage { asset->{url} }, mainImageAlt,
   secondImage { asset->{url} }, secondImageAlt
 }`);
@@ -77,9 +77,11 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
             <h3 class="text-lg tracking-widest uppercase font-title">
               {offer.title?.[locale] ?? offer.title?.en}
             </h3>
-            {/* <p class="mt-2 text-lg"> */}
-              {/*offer.excerpt?.[locale] ?? offer.excerpt?.en*/}
-            {/* </p> */}
+{(offer.subtitle?.[locale] ?? offer.subtitle?.en) && (
+  <h4 class="mt-2 text-lg">
+    {offer.subtitle?.[locale] ?? offer.subtitle?.en}
+  </h4>
+)}
             <div class="flex-grow"></div>
             {/* Offer action buttons */}
             <div class="mt-6 flex flex-wrap gap-4 lg:mb-20 mb-10">
