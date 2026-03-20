@@ -23,6 +23,7 @@ const safeArray = arr => Array.isArray(arr) ? arr : [];
 // Fetch offer data from Sanity CMS for the current slug and locale
 const offer = await client.fetch(`*[_type == "offer" && slug.current == $slug][0]{
   title,
+  subtitle,
   excerpt,
   description,
   offerStart,
@@ -45,9 +46,9 @@ const offer = await client.fetch(`*[_type == "offer" && slug.current == $slug][0
 const htmlListComponents = {
   list: ({ children, value }) =>
     value?.listItem === 'bullet' || value?.style === 'normal'
-      ? `<ul class="list-disc ml-6 space-y-2 mb-6">${children}</ul>`
-      : `<ol class="list-decimal ml-6 space-y-2">${children}</ol>`,
-  listItem: ({ children }) => `<li>${children}</li>`,
+      ? `<ul class="list-disc ml-6">${children}</ul>`
+      : `<ol class="list-decimal ml-6">${children}</ol>`,
+  listItem: ({ children }) => `<li class="mt-1">${children}</li>`,
 };
 
 const inclusionHTML = toHTML(safeArray(offer.inclusion), {
@@ -88,7 +89,31 @@ const keywords = offer.metaKeywords?.[locale] ?? '';
       <h1 class="font-title text-3xl sm:text-4xl md:text-5xl uppercase mb-4 md:mb-6 tracking-widest font-light">
         {offer?.title?.[locale] ?? ''}
       </h1>
-      <div class="text-lg prose max-w-none" set:html={offerDescription}></div>
+      <!-- <div class="text-lg prose max-w-none" set:html={offerDescription}></div> -->
+<div class="offer-description prose max-w-none" set:html={offerDescription}></div>
+
+<style is:global>
+  .offer-description h2 {
+    font-size: 1.8rem;
+    line-height: 2rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .offer-description p {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .offer-inclusion h6 {
+    font-size: 1.5rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .offer-inclusion li {
+  }
+</style>
     </div>
   </section>
 
@@ -98,7 +123,7 @@ const keywords = offer.metaKeywords?.[locale] ?? '';
       {/* Inclusion list */}
       <div class="lg:w-4/5">
         <h3 class="font-title text-xl md:text-2xl uppercase mb-6">What's Included</h3>
-        <div class="text-lg max-w-none" set:html={inclusionHTML}></div>
+        <div class="text-lg max-w-none offer-inclusion" set:html={inclusionHTML}></div>
       </div>
       {/* Offer validity and booking button */}
       <div class="lg:w-1/5 flex flex-col items-end">

@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+import typography from "@tailwindcss/typography";
+
 export default {
   content: [
     "./src/**/*.{astro,html,js,jsx,ts,tsx}", // Scan all Astro pages and components
@@ -19,5 +21,5 @@ export default {
       },
     },
   },
-  plugins: [require("@tailwindcss/typography")],
+  plugins: [typography],
 };
