@@ -90,28 +90,75 @@ const keywords = offer.metaKeywords?.[locale] ?? '';
         {offer?.title?.[locale] ?? ''}
       </h1>
       <!-- <div class="text-lg prose max-w-none" set:html={offerDescription}></div> -->
-<div class="offer-description prose max-w-none" set:html={offerDescription}></div>
+{
+  slug === 'best-rate-guarantee' ? (
+    <div class="featured-offer prose max-w-none" set:html={offerDescription}></div>
+  ) : (
+    <div class="offer-description prose max-w-none" set:html={offerDescription}></div>
+  )
+}
 
 <style is:global>
-  .offer-description h2 {
-    font-size: 1.8rem;
-    line-height: 2rem;
-    margin-top: 1.5rem;
+  .offer-description h2,
+  .featured-offer h2 {
+    font-size: 1.5rem;
+    line-height: 1.3;
+    margin-top: 1.25rem;
     margin-bottom: 0.5rem;
   }
 
-  .offer-description p {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+  .offer-description p,
+  .featured-offer p {
+    margin-top: 0.875rem;
+    margin-bottom: 0.875rem;
+    font-size: 1rem;
+    line-height: 1.75;
   }
 
   .offer-inclusion h6 {
-    font-size: 1.5rem;
+    font-size: 1.125rem;
     margin-top: 1rem;
     margin-bottom: 1rem;
+    line-height: 1.4;
   }
 
-  .offer-inclusion li {
+  @media (min-width: 768px) {
+    .offer-description h2,
+    .featured-offer h2 {
+      font-size: 2rem;
+    }
+
+    .offer-description p {
+      font-size: 1.05rem;
+    }
+
+    .featured-offer p {
+      font-size: 1.35rem;
+    }
+
+    .offer-inclusion h6 {
+      font-size: 1.25rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .offer-description h2,
+    .featured-offer h2 {
+      font-size: 2.5rem;
+      line-height: 1.2;
+    }
+
+    .offer-description p {
+      font-size: 1.125rem;
+    }
+
+    .featured-offer p {
+      font-size: 1.8rem;
+    }
+
+    .offer-inclusion h6 {
+      font-size: 1.5rem;
+    }
   }
 </style>
     </div>
