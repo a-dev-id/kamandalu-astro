@@ -16,8 +16,18 @@ const experience = await client.fetch(`*[_type == "experienceUnique" && slug.cur
   title,
   excerpt,
   description,
-  mainImage { asset->{url} },
+  mainImage {
+    asset->{url}
+  },
   mainImageAlt,
+  headerImages[]{
+    image {
+      asset->{url}
+    },
+    alt,
+    title,
+    order
+  },
   metaTitle,
   metaDescription,
   metaKeywords,
@@ -34,21 +44,42 @@ export async function getStaticPaths() {
   return languages.flatMap(lang => slugs.map(experience => ({ params: { lang, slug: experience.slug } })));
 }
 
+// Prepare experience header slider images
+const experienceHeaderSlides =
+  Array.isArray(experience?.headerImages) && experience.headerImages.length
+    ? experience.headerImages
+        .filter(slide => slide?.image?.asset?.url)
+        .sort((a, b) => (a.order ?? 999) - (b.order ?? 999))
+    : experience?.mainImage?.asset?.url
+      ? [
+          {
+            image: experience.mainImage,
+            alt: experience.mainImageAlt,
+            title: experience.title,
+            order: 1,
+          },
+        ]
+      : [];
+
 // Convert Portable Text fields to HTML for rendering
 const detailHTML = toHTML(safeArray(experience.detail), {
   components: {
-    list: ({ children, value }) => (value?.listItem === 'bullet' || value?.style === 'normal'
-      ? `<ul class="list-disc ml-6 space-y-2">${children}</ul>`
-      : `<ol class="list-decimal ml-6 space-y-2">${children}</ol>`),
+    list: ({ children, value }) => (
+      value?.listItem === 'bullet' || value?.style === 'normal'
+        ? `<ul class="list-disc ml-6 space-y-2">${children}</ul>`
+        : `<ol class="list-decimal ml-6 space-y-2">${children}</ol>`
+    ),
     listItem: ({ children }) => `<li>${children}</li>`,
   }
 });
 
 const menuHTML = toHTML(safeArray(experience.menu), {
   components: {
-    list: ({ children, value }) => (value?.listItem === 'bullet' || value?.style === 'normal'
-      ? `<ul class="list-disc ml-6 space-y-2">${children}</ul>`
-      : `<ol class="list-decimal ml-6 space-y-2">${children}</ol>`),
+    list: ({ children, value }) => (
+      value?.listItem === 'bullet' || value?.style === 'normal'
+        ? `<ul class="list-disc ml-6 space-y-2">${children}</ul>`
+        : `<ol class="list-decimal ml-6 space-y-2">${children}</ol>`
+    ),
     listItem: ({ children }) => `<li>${children}</li>`,
   }
 });
@@ -73,22 +104,58 @@ const title = experience?.metaTitle?.[locale] ?? '';
 const description = experience?.metaDescription?.[locale] ?? '';
 const baseUrl = new URL(Astro.request.url);
 const url = baseUrl.href;
-const ogImage = experience.mainImage?.asset?.url ?? '';
+const ogImage =
+  experienceHeaderSlides[0]?.image?.asset?.url ??
+  experience.mainImage?.asset?.url ??
+  '';
 const keywords = experience.metaKeywords?.[locale] ?? '';
 ---
 
 <Layout {title} {description} {url} {ogImage} {keywords}>
-  {/* Hero section with main image */}
+  {/* Hero section with header slider */}
   <section class="relative w-full h-[50vh] md:h-[60vh] lg:h-[75vh] overflow-hidden">
-    <OptimizedImage
-      src={experience.mainImage.asset.url}
-      alt={experience.mainImageAlt?.[locale] ?? ''}
-      width={1600}
-      height={900}
-      quality={75}
-      className="w-full h-full object-cover"
-    />
-    <div class="absolute inset-0 bg-black/25 z-20"></div>
+    <div id="experience-detail-header-carousel" class="w-full h-full relative">
+      {experienceHeaderSlides.map((slide, i) => (
+        <div
+          class={`experience-detail-header-slide w-full h-full absolute inset-0 transition-opacity duration-1000 ${
+            i === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'
+          }`}
+        >
+          <OptimizedImage
+            src={slide.image?.asset?.url ?? ''}
+            alt={slide.alt?.[locale] ?? slide.title?.[locale] ?? experience.mainImageAlt?.[locale] ?? ''}
+            width={1600}
+            height={900}
+            quality={75}
+            className="w-full h-full object-cover"
+            fetchpriority={i === 0 ? 'high' : 'auto'}
+            loading={i === 0 ? 'eager' : 'lazy'}
+          />
+        </div>
+      ))}
+
+      <div class="absolute inset-0 bg-black/25 z-20"></div>
+
+      {experienceHeaderSlides.length > 1 && (
+        <>
+          <button
+            aria-label="Previous Experience Detail Header Slide"
+            id="experienceDetailHeaderPrev"
+            class="absolute left-4 top-1/2 -translate-y-1/2 text-white text-3xl z-30"
+          >
+            ❮
+          </button>
+
+          <button
+            aria-label="Next Experience Detail Header Slide"
+            id="experienceDetailHeaderNext"
+            class="absolute right-4 top-1/2 -translate-y-1/2 text-white text-3xl z-30"
+          >
+            ❯
+          </button>
+        </>
+      )}
+    </div>
   </section>
 
   {/* Title and description section */}
@@ -111,10 +178,11 @@ const keywords = experience.metaKeywords?.[locale] ?? '';
         <h3 class="font-title text-xl md:text-2xl uppercase mb-6">Details</h3>
         <div class="text-lg max-w-none" set:html={detailHTML}></div>
       </div>
+
       {/* Reservation and contact info */}
       <div class="lg:w-2/5 flex flex-col items-end">
         <div>
-          <h3 class="font-title text-xl md:text-2xl uppercase mb-6">Reserve your experience</h3>
+          <h3 class="font-title text-xl md:text-2xl mb-6">Reserve This Experience</h3>
           <div class="text-lg mb-6" set:html={contactHTML}></div>
           <a
             href={`https://wa.me/+628113984566`}
@@ -122,7 +190,7 @@ const keywords = experience.metaKeywords?.[locale] ?? '';
             target="_blank"
             rel="noopener noreferrer"
           >
-            BOOK NOW
+            Enquire & Reserve
           </a>
         </div>
       </div>
@@ -142,12 +210,26 @@ const keywords = experience.metaKeywords?.[locale] ?? '';
             aria-controls="accordion-1"
           >
             More Information
-            {/* Accordion arrow icon */}
-            <svg class="w-5 h-5 transition-transform duration-300" data-icon data-target="accordion-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+
+            <svg
+              class="w-5 h-5 transition-transform duration-300"
+              data-icon
+              data-target="accordion-1"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
             </svg>
           </button>
-          <div id="accordion-1" class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 hidden" role="region" aria-labelledby="accordion-1">
+
+          <div
+            id="accordion-1"
+            class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 hidden"
+            role="region"
+            aria-labelledby="accordion-1"
+          >
             <div class="text-lg max-w-none" set:html={menuHTML}></div>
           </div>
         </div>
@@ -155,6 +237,57 @@ const keywords = experience.metaKeywords?.[locale] ?? '';
     )
     : null
   }
+
+  {/* Experience Detail Header Carousel Script */}
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      const slides = document.querySelectorAll('.experience-detail-header-slide');
+      const prevButton = document.getElementById('experienceDetailHeaderPrev');
+      const nextButton = document.getElementById('experienceDetailHeaderNext');
+
+      if (!slides.length) return;
+
+      let currentSlide = 0;
+
+      function showExperienceDetailHeaderSlide(index) {
+        slides.forEach((slide, i) => {
+          if (i === index) {
+            slide.classList.add('opacity-100', 'z-10');
+            slide.classList.remove('opacity-0', 'z-0');
+          } else {
+            slide.classList.add('opacity-0', 'z-0');
+            slide.classList.remove('opacity-100', 'z-10');
+          }
+        });
+      }
+
+      function nextExperienceDetailHeaderSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showExperienceDetailHeaderSlide(currentSlide);
+      }
+
+      function prevExperienceDetailHeaderSlide() {
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        showExperienceDetailHeaderSlide(currentSlide);
+      }
+
+      prevButton?.addEventListener('click', e => {
+        e.stopPropagation();
+        prevExperienceDetailHeaderSlide();
+      });
+
+      nextButton?.addEventListener('click', e => {
+        e.stopPropagation();
+        nextExperienceDetailHeaderSlide();
+      });
+
+      if (slides.length > 1) {
+        setInterval(nextExperienceDetailHeaderSlide, 5000);
+      }
+
+      showExperienceDetailHeaderSlide(currentSlide);
+    });
+  </script>
 
   {/* Accordion toggle script */}
   <script is:inline>
@@ -165,6 +298,7 @@ const keywords = experience.metaKeywords?.[locale] ?? '';
           const panel = document.getElementById(targetId);
           const icon = document.querySelector(`svg[data-icon][data-target="${targetId}"]`);
           const expanded = btn.getAttribute('aria-expanded') === 'true';
+
           btn.setAttribute('aria-expanded', String(!expanded));
           panel.classList.toggle('hidden');
           icon.classList.toggle('rotate-180');

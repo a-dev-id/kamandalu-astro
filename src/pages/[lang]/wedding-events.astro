@@ -19,34 +19,111 @@ const safeArray = arr => Array.isArray(arr) ? arr : [];
 
 // Fetch page details from Sanity
 const pageDetails = await client.fetch(`*[_type == "page" && _id == "a0943009-62ff-4fb0-8de0-6e8c62288528"][0]{
-  title, subtitle, description, metaTitle, metaDescription, metaKeywords, mainImageAlt,
-  mainImage { asset->{url} }
+  title,
+  subtitle,
+  description,
+  metaTitle,
+  metaDescription,
+  metaKeywords,
+  mainImageAlt,
+  mainImage {
+    asset->{url}
+  },
+  headerImages[]{
+    image {
+      asset->{url}
+    },
+    alt,
+    title,
+    order
+  }
 }`);
 
 // Fetch wedding venue data from Sanity
 const weddingVenue = await client.fetch(`*[_type == "weddingVenue"] | order(order asc){
-  "slug": slug.current, title, excerpt, secondImage { asset->{url} }, secondImageAlt
+  "slug": slug.current,
+  title,
+  excerpt,
+  secondImage {
+    asset->{url}
+  },
+  secondImageAlt
 }`);
+
+// Prepare wedding header slider images
+const weddingHeaderSlides =
+  Array.isArray(pageDetails?.headerImages) && pageDetails.headerImages.length
+    ? pageDetails.headerImages
+        .filter(slide => slide?.image?.asset?.url)
+        .sort((a, b) => (a.order ?? 999) - (b.order ?? 999))
+    : pageDetails?.mainImage?.asset?.url
+      ? [
+          {
+            image: pageDetails.mainImage,
+            alt: pageDetails.mainImageAlt,
+            title: pageDetails.title,
+            order: 1,
+          },
+        ]
+      : [];
 
 // Prepare page meta and description
 const pageDescription = toHTML(safeArray(pageDetails.description?.[locale]));
 const title = pageDetails?.metaTitle?.[locale] ?? '';
 const description = pageDetails?.metaDescription?.[locale] ?? '';
 const url = new URL(Astro.request.url).href;
-const ogImage = pageDetails.mainImage?.asset?.url ?? '';
+const ogImage =
+  weddingHeaderSlides[0]?.image?.asset?.url ??
+  pageDetails.mainImage?.asset?.url ??
+  '';
 const keywords = pageDetails.metaKeywords?.[locale] ?? '';
 ---
 
 <Layout {title} {description} {url} {ogImage} {keywords}>
-  {/* Hero section with main image */}
+  {/* Hero section with header slider */}
   <section class="relative w-full h-[50vh] md:h-[60vh] lg:h-[75vh] overflow-hidden">
-    <OptimizedImage
-      src={pageDetails.mainImage?.asset?.url}
-      alt={pageDetails.mainImageAlt?.[locale] ?? ''}
-      width={1600} height={900} quality={75}
-      className="w-full h-full object-cover"
-    />
-    <div class="absolute inset-0 bg-black/25 z-20"></div>
+    <div id="wedding-header-carousel" class="w-full h-full relative">
+      {weddingHeaderSlides.map((slide, i) => (
+        <div
+          class={`wedding-header-slide w-full h-full absolute inset-0 transition-opacity duration-1000 ${
+            i === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'
+          }`}
+        >
+          <OptimizedImage
+            src={slide.image?.asset?.url ?? ''}
+            alt={slide.alt?.[locale] ?? slide.title?.[locale] ?? pageDetails.mainImageAlt?.[locale] ?? ''}
+            width={1600}
+            height={900}
+            quality={75}
+            className="w-full h-full object-cover"
+            fetchpriority={i === 0 ? 'high' : 'auto'}
+            loading={i === 0 ? 'eager' : 'lazy'}
+          />
+        </div>
+      ))}
+
+      <div class="absolute inset-0 bg-black/25 z-20"></div>
+
+      {weddingHeaderSlides.length > 1 && (
+        <>
+          <button
+            aria-label="Previous Wedding Header Slide"
+            id="weddingHeaderPrev"
+            class="absolute left-4 top-1/2 -translate-y-1/2 text-white text-3xl z-30"
+          >
+            ❮
+          </button>
+
+          <button
+            aria-label="Next Wedding Header Slide"
+            id="weddingHeaderNext"
+            class="absolute right-4 top-1/2 -translate-y-1/2 text-white text-3xl z-30"
+          >
+            ❯
+          </button>
+        </>
+      )}
+    </div>
   </section>
 
   {/* Page title and description */}
@@ -59,25 +136,92 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
     </div>
   </section>
 
-  {/* Wedding venue carousel section */}
-   <section class="container mx-auto px-4 py-8">
+  {/* Wedding venue section */}
+  <section class="container mx-auto px-4 py-8">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {weddingVenue.map((data, i) => (
+      {weddingVenue.map((data) => (
         <div class="overflow-hidden flex flex-col h-full">
           <OptimizedImage
-            src={data.secondImage.asset.url}
-            alt={data.secondImageAlt?.[locale]}
-            width={800} height={600} quality={75} loading="lazy"
+            src={data.secondImage?.asset?.url ?? ''}
+            alt={data.secondImageAlt?.[locale] ?? ''}
+            width={800}
+            height={600}
+            quality={75}
+            loading="lazy"
             className="w-full h-auto aspect-[4/3] md:aspect-[16/9] 2xl:aspect-[4/3] transition duration-500"
           />
+
           <div class="py-4 md:py-6 flex flex-col flex-1">
-            <h3 class="text-lg tracking-widest uppercase font-title">{data?.title?.[locale] ?? ''}</h3>
-            <p class="mt-2 text-lg">{/*data?.excerpt?.[locale] ?? ''*/}</p>
+            <h3 class="text-lg tracking-widest uppercase font-title">
+              {data?.title?.[locale] ?? ''}
+            </h3>
+
+            <p class="mt-2 text-lg">
+              {/*data?.excerpt?.[locale] ?? ''*/}
+            </p>
+
             <div class="flex-grow"></div>
-            <a href={`/${locale}/wedding-event/${data.slug}`} class="text-lg mt-4 inline-block text-gray-700 uppercase mb-12">Details</a>
+
+            <a
+              href={`/${locale}/wedding-event/${data.slug}`}
+              class="text-lg mt-4 inline-block text-gray-700 uppercase mb-12"
+            >
+              Details
+            </a>
           </div>
         </div>
       ))}
     </div>
   </section>
+
+  {/* Wedding Header Carousel Script */}
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      const slides = document.querySelectorAll('.wedding-header-slide');
+      const prevButton = document.getElementById('weddingHeaderPrev');
+      const nextButton = document.getElementById('weddingHeaderNext');
+
+      if (!slides.length) return;
+
+      let currentSlide = 0;
+
+      function showWeddingHeaderSlide(index) {
+        slides.forEach((slide, i) => {
+          if (i === index) {
+            slide.classList.add('opacity-100', 'z-10');
+            slide.classList.remove('opacity-0', 'z-0');
+          } else {
+            slide.classList.add('opacity-0', 'z-0');
+            slide.classList.remove('opacity-100', 'z-10');
+          }
+        });
+      }
+
+      function nextWeddingHeaderSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showWeddingHeaderSlide(currentSlide);
+      }
+
+      function prevWeddingHeaderSlide() {
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        showWeddingHeaderSlide(currentSlide);
+      }
+
+      prevButton?.addEventListener('click', e => {
+        e.stopPropagation();
+        prevWeddingHeaderSlide();
+      });
+
+      nextButton?.addEventListener('click', e => {
+        e.stopPropagation();
+        nextWeddingHeaderSlide();
+      });
+
+      if (slides.length > 1) {
+        setInterval(nextWeddingHeaderSlide, 5000);
+      }
+
+      showWeddingHeaderSlide(currentSlide);
+    });
+  </script>
 </Layout>

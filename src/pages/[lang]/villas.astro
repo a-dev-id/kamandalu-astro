@@ -19,37 +19,116 @@ const safeArray = arr => Array.isArray(arr) ? arr : [];
 
 // Fetch page details from Sanity CMS
 const pageDetails = await client.fetch(`*[_type == "page" && _id == "3e09def0-f5fd-4b6a-b749-8757187239e9"][0]{
-  title, subtitle, description, metaTitle, metaDescription, metaKeywords, mainImageAlt,
-  mainImage { asset->{url} }
+  title,
+  subtitle,
+  description,
+  metaTitle,
+  metaDescription,
+  metaKeywords,
+  mainImageAlt,
+  mainImage {
+    asset->{url}
+  },
+  headerImages[]{
+    image {
+      asset->{url}
+    },
+    alt,
+    title,
+    order
+  }
 }`);
 
 // Fetch all villas from Sanity CMS
 const villas = await client.fetch(`*[_type == "villa"] | order(order asc){
-  "slug": slug.current, title, excerpt, villaSize, bedSize, view,
-  secondImage { asset->{url} }, secondImageAlt, buttonValue, buttonLabel,
+  "slug": slug.current,
+  title,
+  excerpt,
+  villaSize,
+  bedSize,
+  view,
+  secondImage {
+    asset->{url}
+  },
+  secondImageAlt,
+  buttonValue,
+  buttonLabel,
 }`);
+
+// Prepare villa header slider images
+const villaHeaderSlides =
+  Array.isArray(pageDetails?.headerImages) && pageDetails.headerImages.length
+    ? pageDetails.headerImages
+        .filter(slide => slide?.image?.asset?.url)
+        .sort((a, b) => (a.order ?? 999) - (b.order ?? 999))
+    : pageDetails?.mainImage?.asset?.url
+      ? [
+          {
+            image: pageDetails.mainImage,
+            alt: pageDetails.mainImageAlt,
+            title: pageDetails.title,
+            order: 1,
+          },
+        ]
+      : [];
 
 // Prepare meta and description data
 const pageDescription = toHTML(safeArray(pageDetails.description?.[locale]));
 const title = pageDetails?.metaTitle?.[locale] ?? '';
 const description = pageDetails?.metaDescription?.[locale] ?? '';
 const url = new URL(Astro.request.url).href;
-const ogImage = pageDetails.mainImage?.asset?.url ?? '';
+const ogImage =
+  villaHeaderSlides[0]?.image?.asset?.url ??
+  pageDetails.mainImage?.asset?.url ??
+  '';
 const keywords = pageDetails.metaKeywords?.[locale] ?? '';
 ---
 
 <Layout {title} {description} {url} {ogImage} {keywords}>
-  {/* Hero section with main image */}
+  {/* Hero section with header slider */}
   <section class="relative w-full h-[50vh] md:h-[60vh] lg:h-[75vh] overflow-hidden">
-    <OptimizedImage
-      src={pageDetails.mainImage?.asset?.url}
-      alt={pageDetails.mainImageAlt?.[locale] ?? ''}
-      width={1600}
-      height={900}
-      quality={75}
-      className="w-full h-full object-cover"
-    />
-    <div class="absolute inset-0 bg-black/25 z-20"></div>
+    <div id="villa-header-carousel" class="w-full h-full relative">
+      {villaHeaderSlides.map((slide, i) => (
+        <div
+          class={`villa-header-slide w-full h-full absolute inset-0 transition-opacity duration-1000 ${
+            i === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'
+          }`}
+        >
+          <OptimizedImage
+            src={slide.image?.asset?.url ?? ''}
+            alt={slide.alt?.[locale] ?? slide.title?.[locale] ?? pageDetails.mainImageAlt?.[locale] ?? ''}
+            width={1600}
+            height={900}
+            quality={75}
+            className="w-full h-full object-cover"
+            fetchpriority={i === 0 ? 'high' : 'auto'}
+            loading={i === 0 ? 'eager' : 'lazy'}
+          />
+        </div>
+      ))}
+
+      <div class="absolute inset-0 bg-black/25 z-20"></div>
+
+      {villaHeaderSlides.length > 1 && (
+        <>
+          <button
+            aria-label="Previous Villa Header Slide"
+            id="villaHeaderPrev"
+            class="absolute left-4 top-1/2 -translate-y-1/2 text-white text-3xl z-30"
+          >
+            ❮
+          </button>
+
+          <button
+            aria-label="Next Villa Header Slide"
+            id="villaHeaderNext"
+            class="absolute right-4 top-1/2 -translate-y-1/2 text-white text-3xl z-30"
+          >
+            ❯
+          </button>
+        </>
+      )}
+    </div>
   </section>
 
   {/* Page title and description */}
@@ -69,7 +148,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
         {/* Villa image */}
         <div class="relative">
           <OptimizedImage
-            src={villa.secondImage.asset.url}
+            src={villa.secondImage?.asset?.url ?? ''}
             alt={villa.secondImageAlt?.[locale] ?? ''}
             width={800}
             height={600}
@@ -77,43 +156,113 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
             className="w-full h-auto object-cover aspect-[16/9] transition duration-500"
           />
         </div>
+
         {/* Villa details */}
         <div class="flex flex-col justify-center px-2">
           <h2 class="text-2xl md:text-3xl font-title tracking-wide uppercase mb-4">
             {villa.title?.[locale] ?? ''}
           </h2>
+
           <p class="mb-6 text-lg">
             {villa.excerpt?.[locale] ?? ''}
           </p>
+
           {/* Villa features: size, bed, view */}
           <div class="flex flex-wrap gap-8 text-sm text-[#1C2A39] mb-8">
             <div class="flex items-center gap-2">
               <img src="/images/villas/area.png" alt="Room size" class="w-5 h-5" loading="lazy" />
               <span>{villa.villaSize?.[locale] ?? ''}</span>
             </div>
+
             <div class="flex items-center gap-2">
               <img src="/images/villas/bed.png" alt="Bed type" class="w-5 h-5" loading="lazy" />
               <span>{villa.bedSize?.[locale] ?? ''}</span>
             </div>
+
             <div class="flex items-center gap-2">
               <img src="/images/villas/interface.png" alt="View" class="w-5 h-5" loading="lazy" />
               <span>{villa.view?.[locale] ?? ''}</span>
             </div>
           </div>
+
           {/* Action buttons: Book Now and Details */}
           <div class="flex gap-4">
-{(villa?.buttonValue) ? (
-  <a href={villa.buttonValue} class="bg-[#916B2C] border border-[#916B2C] uppercase text-white px-4 py-3 md:px-6 md:py-4 text-xs md:text-sm font-title tracking-widest transition-colors duration-300 hover:border hover:border-gray-700 hover:bg-white hover:text-gray-700 inline-block">Book Now</a>
-) : (
-  <a href="https://www.book-secure.com/index.php?s=results&property=idbal31692&locale=en_GB&currency=IDR&stid=986w12cwy" class="bg-[#916B2C] border border-[#916B2C] uppercase text-white px-4 py-3 md:px-6 md:py-4 text-xs md:text-sm font-title tracking-widest transition-colors duration-300 hover:border hover:border-gray-700 hover:bg-white hover:text-gray-700 inline-block">Book Now</a>
-)}
+            {(villa?.buttonValue) ? (
+              <a
+                href={villa.buttonValue}
+                class="bg-[#916B2C] border border-[#916B2C] uppercase text-white px-4 py-3 md:px-6 md:py-4 text-xs md:text-sm font-title tracking-widest transition-colors duration-300 hover:border hover:border-gray-700 hover:bg-white hover:text-gray-700 inline-block"
+              >
+                Book Now
+              </a>
+            ) : (
+              <a
+                href="https://www.book-secure.com/index.php?s=results&property=idbal31692&locale=en_GB&currency=IDR&stid=986w12cwy"
+                class="bg-[#916B2C] border border-[#916B2C] uppercase text-white px-4 py-3 md:px-6 md:py-4 text-xs md:text-sm font-title tracking-widest transition-colors duration-300 hover:border hover:border-gray-700 hover:bg-white hover:text-gray-700 inline-block"
+              >
+                Book Now
+              </a>
+            )}
+
             <a
               href={`/${lang}/villa/${villa.slug}`}
               class="bg-white uppercase text-gray-700 px-4 py-3 md:px-6 md:py-4 text-xs md:text-sm font-title tracking-widest transition-colors duration-300 border border-gray-700 hover:bg-[#916B2C] hover:text-white hover:border-transparent inline-block"
-            >Details</a>
+            >
+              Details
+            </a>
           </div>
         </div>
       </div>
     ))}
   </section>
+
+  {/* Villa Header Carousel Script */}
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      const slides = document.querySelectorAll('.villa-header-slide');
+      const prevButton = document.getElementById('villaHeaderPrev');
+      const nextButton = document.getElementById('villaHeaderNext');
+
+      if (!slides.length) return;
+
+      let currentSlide = 0;
+
+      function showVillaHeaderSlide(index) {
+        slides.forEach((slide, i) => {
+          if (i === index) {
+            slide.classList.add('opacity-100', 'z-10');
+            slide.classList.remove('opacity-0', 'z-0');
+          } else {
+            slide.classList.add('opacity-0', 'z-0');
+            slide.classList.remove('opacity-100', 'z-10');
+          }
+        });
+      }
+
+      function nextVillaHeaderSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showVillaHeaderSlide(currentSlide);
+      }
+
+      function prevVillaHeaderSlide() {
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        showVillaHeaderSlide(currentSlide);
+      }
+
+      prevButton?.addEventListener('click', e => {
+        e.stopPropagation();
+        prevVillaHeaderSlide();
+      });
+
+      nextButton?.addEventListener('click', e => {
+        e.stopPropagation();
+        nextVillaHeaderSlide();
+      });
+
+      if (slides.length > 1) {
+        setInterval(nextVillaHeaderSlide, 5000);
+      }
+
+      showVillaHeaderSlide(currentSlide);
+    });
+  </script>
 </Layout>

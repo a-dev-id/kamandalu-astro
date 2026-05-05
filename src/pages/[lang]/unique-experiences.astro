@@ -12,30 +12,108 @@ const { lang } = Astro.params;
 const locale = getLocale(lang);
 
 const pageDetails = await client.fetch(`*[_type == "page" && _id == "2d19ccbc-5362-4587-9ba0-89f25afc136e"][0]{
-  title, subtitle, description, note,metaTitle, metaDescription, metaKeywords, mainImageAlt,
-  mainImage { asset->{url} }
+  title,
+  subtitle,
+  description,
+  note,
+  metaTitle,
+  metaDescription,
+  metaKeywords,
+  mainImageAlt,
+  mainImage {
+    asset->{url}
+  },
+  headerImages[]{
+    image {
+      asset->{url}
+    },
+    alt,
+    title,
+    order
+  }
 }`);
 
 const venues = await client.fetch(`*[_type == "diningVenue"] | order(order asc){
-  "slug": slug.current, title, excerpt, secondImage { asset->{url} }, secondImageAlt
+  "slug": slug.current,
+  title,
+  excerpt,
+  secondImage {
+    asset->{url}
+  },
+  secondImageAlt
 }`);
+
+const experienceHeaderSlides =
+  Array.isArray(pageDetails?.headerImages) && pageDetails.headerImages.length
+    ? pageDetails.headerImages
+        .filter(slide => slide?.image?.asset?.url)
+        .sort((a, b) => (a.order ?? 999) - (b.order ?? 999))
+    : pageDetails?.mainImage?.asset?.url
+      ? [
+          {
+            image: pageDetails.mainImage,
+            alt: pageDetails.mainImageAlt,
+            title: pageDetails.title,
+            order: 1,
+          },
+        ]
+      : [];
 
 const title = pageDetails?.metaTitle?.[locale] ?? '';
 const description = pageDetails?.metaDescription?.[locale] ?? '';
 const url = new URL(Astro.request.url).href;
-const ogImage = pageDetails.mainImage?.asset?.url ?? '';
+const ogImage =
+  experienceHeaderSlides[0]?.image?.asset?.url ??
+  pageDetails.mainImage?.asset?.url ??
+  '';
 const keywords = pageDetails.metaKeywords?.[locale] ?? '';
 ---
 
 <Layout {title} {description} {url} {ogImage} {keywords}>
+  {/* Hero section with header slider */}
   <section class="relative w-full h-[50vh] md:h-[60vh] lg:h-[75vh] overflow-hidden">
-    <OptimizedImage
-      src={pageDetails.mainImage?.asset?.url}
-      alt={pageDetails.mainImageAlt?.[locale] ?? ''}
-      width={1600} height={900} quality={75}
-      className="w-full h-full object-cover"
-    />
-    <div class="absolute inset-0 bg-black/25 z-20"></div>
+    <div id="experience-header-carousel" class="w-full h-full relative">
+      {experienceHeaderSlides.map((slide, i) => (
+        <div
+          class={`experience-header-slide w-full h-full absolute inset-0 transition-opacity duration-1000 ${
+            i === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'
+          }`}
+        >
+          <OptimizedImage
+            src={slide.image?.asset?.url ?? ''}
+            alt={slide.alt?.[locale] ?? slide.title?.[locale] ?? pageDetails.mainImageAlt?.[locale] ?? ''}
+            width={1600}
+            height={900}
+            quality={75}
+            className="w-full h-full object-cover"
+            fetchpriority={i === 0 ? 'high' : 'auto'}
+            loading={i === 0 ? 'eager' : 'lazy'}
+          />
+        </div>
+      ))}
+
+      <div class="absolute inset-0 bg-black/25 z-20"></div>
+
+      {experienceHeaderSlides.length > 1 && (
+        <>
+          <button
+            aria-label="Previous Experience Header Slide"
+            id="experienceHeaderPrev"
+            class="absolute left-4 top-1/2 -translate-y-1/2 text-white text-3xl z-30"
+          >
+            ❮
+          </button>
+
+          <button
+            aria-label="Next Experience Header Slide"
+            id="experienceHeaderNext"
+            class="absolute right-4 top-1/2 -translate-y-1/2 text-white text-3xl z-30"
+          >
+            ❯
+          </button>
+        </>
+      )}
+    </div>
   </section>
 
   <section class="container mx-auto px-4 py-16 md:py-24">
@@ -43,9 +121,11 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
       <h1 class="font-title text-3xl sm:text-4xl md:text-5xl uppercase mb-4 md:mb-6 tracking-widest font-light">
         {pageDetails?.title?.[locale] ?? ''}
       </h1>
+
       <p class="mb-5 text-base md:text-lg">
         {pageDetails?.description?.[locale] ?? ''}
       </p>
+
       <p class="mb-12 md:mb-18 text-base md:text-lg italic">
         {pageDetails?.note?.[locale] ?? ''}
       </p>
@@ -57,19 +137,40 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
       <div class="splide__track">
         <div class="splide__list">
           {venues.map((data, i) => (
-            <div class="splide__slide transition-transform duration-500 ease-in-out" role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${venues.length}`}>
+            <div
+              class="splide__slide transition-transform duration-500 ease-in-out"
+              role="group"
+              aria-roledescription="slide"
+              aria-label={`${i + 1} of ${venues.length}`}
+            >
               <div class="bg-white overflow-hidden flex flex-col h-full">
                 <OptimizedImage
-                  src={data.secondImage.asset.url}
-                  alt={data.secondImageAlt?.[locale]}
-                  width={800} height={600} quality={75} loading="lazy"
+                  src={data.secondImage?.asset?.url ?? ''}
+                  alt={data.secondImageAlt?.[locale] ?? ''}
+                  width={800}
+                  height={600}
+                  quality={75}
+                  loading="lazy"
                   className="w-full h-auto aspect-[4/3] md:aspect-[16/9] 2xl:aspect-[4/3] transition duration-500"
                 />
+
                 <div class="py-4 md:py-6 flex flex-col flex-1">
-                  <h3 class="text-base md:text-lg tracking-widest uppercase font-title">{data?.title?.[locale] ?? ''}</h3>
-                  <p class="mt-2 text-sm md:text-base">{data?.excerpt?.[locale] ?? ''}</p>
+                  <h3 class="text-base md:text-lg tracking-widest uppercase font-title">
+                    {data?.title?.[locale] ?? ''}
+                  </h3>
+
+                  <p class="mt-2 text-sm md:text-base">
+                    {data?.excerpt?.[locale] ?? ''}
+                  </p>
+
                   <div class="flex-grow"></div>
-                  <a href={`/${locale}/dining/${data.slug}`} class="text-base md:text-lg mt-4 inline-block text-black uppercase">Details</a>
+
+                  <a
+                    href={`/${locale}/dining/${data.slug}`}
+                    class="text-base md:text-lg mt-4 inline-block text-black uppercase"
+                  >
+                    Details
+                  </a>
                 </div>
               </div>
             </div>
@@ -77,36 +178,126 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
         </div>
       </div>
     </div>
+
     <div class="flex items-center gap-4 md:gap-6 mt-4 md:mt-8 justify-center md:hidden">
-      <button aria-label="Previous venue Slide" id="venue-prev" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="44" y1="12" x2="4" y2="12" /><polyline points="12 20 4 12 12 4" /></svg>
+      <button
+        aria-label="Previous venue Slide"
+        id="venue-prev"
+        class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="44" y1="12" x2="4" y2="12" />
+          <polyline points="12 20 4 12 12 4" />
+        </svg>
       </button>
-      <button aria-label="Next venue Slide" id="venue-next" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="44" y2="12" /><polyline points="36 4 44 12 36 20" /></svg>
+
+      <button
+        aria-label="Next venue Slide"
+        id="venue-next"
+        class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="4" y1="12" x2="44" y2="12" />
+          <polyline points="36 4 44 12 36 20" />
+        </svg>
       </button>
     </div>
   </section>
 
+  {/* Experience Header Carousel Script */}
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      const slides = document.querySelectorAll('.experience-header-slide');
+      const prevButton = document.getElementById('experienceHeaderPrev');
+      const nextButton = document.getElementById('experienceHeaderNext');
+
+      if (!slides.length) return;
+
+      let currentSlide = 0;
+
+      function showExperienceHeaderSlide(index) {
+        slides.forEach((slide, i) => {
+          if (i === index) {
+            slide.classList.add('opacity-100', 'z-10');
+            slide.classList.remove('opacity-0', 'z-0');
+          } else {
+            slide.classList.add('opacity-0', 'z-0');
+            slide.classList.remove('opacity-100', 'z-10');
+          }
+        });
+      }
+
+      function nextExperienceHeaderSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showExperienceHeaderSlide(currentSlide);
+      }
+
+      function prevExperienceHeaderSlide() {
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        showExperienceHeaderSlide(currentSlide);
+      }
+
+      prevButton?.addEventListener('click', e => {
+        e.stopPropagation();
+        prevExperienceHeaderSlide();
+      });
+
+      nextButton?.addEventListener('click', e => {
+        e.stopPropagation();
+        nextExperienceHeaderSlide();
+      });
+
+      if (slides.length > 1) {
+        setInterval(nextExperienceHeaderSlide, 5000);
+      }
+
+      showExperienceHeaderSlide(currentSlide);
+    });
+  </script>
+
   <script>
     import "@splidejs/splide/css";
     import Splide from "@splidejs/splide";
+
     [
       {
-        id: "#venue-carousel", prev: "venue-prev", next: "venue-next",
-        options: { type: "slide", perPage: 3, gap: "4rem", speed: 800, easing: "ease-in-out", arrows: false, pagination: false, breakpoints: { 1366: { gap: "2rem"}, 1024: { gap: "2rem", perPage: 2 }, 768: { perPage: 1, gap: "2rem" }, 640: { perPage: 1 } } }
+        id: "#venue-carousel",
+        prev: "venue-prev",
+        next: "venue-next",
+        options: {
+          type: "slide",
+          perPage: 3,
+          gap: "4rem",
+          speed: 800,
+          easing: "ease-in-out",
+          arrows: false,
+          pagination: false,
+          breakpoints: {
+            1366: { gap: "2rem" },
+            1024: { gap: "2rem", perPage: 2 },
+            768: { perPage: 1, gap: "2rem" },
+            640: { perPage: 1 },
+          },
+        },
       },
     ].forEach(({ id, prev, next, options }) => {
       const splide = new Splide(id, options);
+
       splide.on('mounted move', () => {
-        const prevBtn = document.getElementById(prev), nextBtn = document.getElementById(next);
+        const prevBtn = document.getElementById(prev);
+        const nextBtn = document.getElementById(next);
+
         prevBtn.disabled = splide.index === 0;
         prevBtn.classList.toggle('opacity-30', splide.index === 0);
         prevBtn.classList.toggle('cursor-not-allowed', splide.index === 0);
+
         nextBtn.disabled = splide.index >= splide.length - splide.options.perPage;
         nextBtn.classList.toggle('opacity-30', splide.index >= splide.length - splide.options.perPage);
         nextBtn.classList.toggle('cursor-not-allowed', splide.index >= splide.length - splide.options.perPage);
       });
+
       splide.mount();
+
       document.getElementById(prev).onclick = () => splide.go("<");
       document.getElementById(next).onclick = () => splide.go(">");
     });

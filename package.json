@@ -9,14 +9,14 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/sitemap": "^3.7.0",
+    "@astrojs/sitemap": "^3.7.2",
     "@portabletext/to-html": "^2.0.14",
     "@sanity/client": "^7.5.0",
     "@splidejs/splide": "^4.1.4",
     "@tailwindcss/vite": "^4.1.8",
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
-    "astro": "^5.18.0",
+    "astro": "^6.2.2",
     "astro-carousel": "^3.0.2"
   },
   "devDependencies": {
