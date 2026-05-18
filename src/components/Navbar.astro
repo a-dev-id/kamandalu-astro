@@ -16,42 +16,42 @@ const venues = await client.fetch(`*[_type == "diningVenue"] | order(order asc){
 // Get locale from URL param
 const { lang } = Astro.params;
 const locale = getLocale(lang);
+
+const experienceCategories = [
+  {
+    title: 'Signature Experiences',
+    url: `/${locale}/experiences/signature-experiences`,
+  },
+  {
+    title: 'Leisure & Family',
+    url: `/${locale}/experiences/leisure-family`,
+  },
+  {
+    title: 'Cultural & Spiritual',
+    url: `/${locale}/experiences/cultural-spiritual`,
+  },
+  {
+    title: 'Activities & Day Experiences',
+    url: `/${locale}/experiences/ubud-activities-day-experiences`,
+  },
+];
 ---
 <header id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-transparent text-white overflow-visible">
   <!-- Top Section: Language Selector & Logo -->
   <div class="flex items-center px-6 py-1 justify-between w-full relative">
-    <!-- Language Dropdown (hidden on mobile, shown on md+) -->
-    <!-- <label for="languageSelect" class="sr-only">Language Selection</label>
-    <div class="hidden md:block">
-      <select id="languageSelect" class="bg-transparent text-white focus:outline-none text-lg">
-        <option value="en" class="text-black">English</option>
-        <option value="ko" class="text-black">한국어</option>
-        <option value="zh" class="text-black">中文</option>
-      </select>
-    </div> -->
     <!-- Logo: centered using flex grow -->
     <div class="flex-1 flex justify-center">
       <a href={`/${locale}`}>
-      <img
-        id="navbar-logo"
-        src="/images/kamandalu-logo.png"
-        alt="Kamandalu Logo"
-        class="w-36 h-auto transition-all duration-300 mt-2 logo brightness-0 invert-[1]"
-        fetchpriority="high"
-        loading="eager"
-      />
+        <img
+          id="navbar-logo"
+          src="/images/kamandalu-logo.png"
+          alt="Kamandalu Logo"
+          class="w-36 h-auto transition-all duration-300 mt-2 logo brightness-0 invert-[1]"
+          fetchpriority="high"
+          loading="eager"
+        />
       </a>
     </div>
-    <!-- Member Button (hidden on mobile, shown on md+) -->
-    <!-- <div class="hidden md:flex items-center justify-end w-32">
-      <a
-        href={`/${locale}/member`}
-        id="memberBtn"
-        class="uppercase underline text-sm font-title tracking-widest px-4 py-2 text-white bg-transparent hover:bg-white hover:text-black transition-colors duration-300"
-      >
-        Member
-      </a>
-    </div> -->
   </div>
 
   <!-- Bottom Section: Main Navigation & Reserve Button -->
@@ -68,17 +68,19 @@ const locale = getLocale(lang);
       <a href={`/${locale}/offers`} class="uppercase">Offers</a>
       <a href={`/${locale}/villas`} class="uppercase">Our Villas</a>
       <a href={`/${locale}/spa-wellness`} class="uppercase">Spa & Wellness</a>
+
       <!-- Dining Dropdown Trigger -->
       <div id="dining-trigger" class="relative group">
-      <a href={`/${locale}/dining`} class="inline-block px-2 uppercase">Dining</a>
+        <a href={`/${locale}/dining`} class="inline-block px-2 uppercase">Dining</a>
       </div>
-      <a href={`/${locale}/experiences`} class="uppercase">Unique Experiences</a>
+
+      <!-- Experiences Dropdown Trigger -->
+      <div id="experiences-trigger" class="relative group">
+        <a href={`/${locale}/experiences`} class="inline-block px-2 uppercase">Unique Experiences</a>
+      </div>
+
       <a href={`/${locale}/wedding-events`} class="uppercase">Wedding & Events</a>
       <a href={`/${locale}/our-story`} class="uppercase">Our Story</a>
-      <!-- More Dropdown Trigger -->
-      <!-- <div id="more-trigger" class="relative group">
-      <a href="#" class="inline-block px-2 uppercase">More</a>
-      </div> -->
     </nav>
 
     <!-- Reserve Button -->
@@ -97,30 +99,21 @@ const locale = getLocale(lang);
     id="offcanvas"
     class="fixed top-0 left-0 h-full w-64 bg-white text-black shadow-lg transform -translate-x-full transition-transform duration-300 z-40 flex flex-col"
   >
-    <!-- Offcanvas Top: Language Selector (mobile only) -->
-    <!-- <label for="languageSelectOffcanvas" class="sr-only">Language Selection offcanvas</label> -->
-    <!-- <div class="relative flex justify-end p-4 border-b border-gray-200"> -->
     <div class="relative flex justify-end p-4">
-      <!-- <select
-  id="languageSelectOffcanvas"
-  class="absolute left-4 top-1/2 -translate-y-1/2 md:hidden block bg-transparent text-black focus:outline-none text-sm"
->
-        <option value="en" class="text-black">English</option>
-        <option value="ko" class="text-black">한국어</option>
-        <option value="zh" class="text-black">中文</option>
-      </select>
       <button id="closeOffcanvas" aria-label="Close menu" class="ml-2">
         <svg class="w-6 h-6 text-black hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
         </svg>
-      </button> -->
+      </button>
     </div>
+
     <!-- Offcanvas Navigation Links -->
     <nav class="flex-1 px-6 pb-6 mt-6 space-y-4 overflow-y-auto font-normal">
       <a href={`/${locale}/offers`} class="block text-xl">Offers</a>
       <a href={`/${locale}/villas`} class="block text-xl">Our Villas</a>
       <a href={`/${locale}/spa-wellness`} class="block text-xl">Spa & Wellness</a>
-      <!-- Dining Dropdown (Mobile) -->
+
+      <!-- Dining Dropdown Mobile -->
       <div>
         <button aria-label="Dining Dropdown" id="dining-mobile-toggle" class="block text-xl w-full text-left flex items-center gap-1 justify-between">
           <span class="flex items-center">
@@ -130,43 +123,57 @@ const locale = getLocale(lang);
             </svg>
           </span>
         </button>
+
         <div id="dining-mobile-dropdown" class="pl-4 space-y-2 hidden mt-3">
           {venues.map((data) => (
-          <a href={`/${locale}/dining/${data.slug}`} class="block text-xl">{data.title?.[locale]}</a>
+            <a href={`/${locale}/dining/${data.slug}`} class="block text-xl">{data.title?.[locale]}</a>
           ))}
         </div>
       </div>
-      <a href={`/${locale}/experiences`} class="block text-xl">Unique Experiences</a>
-      <a href={`/${locale}/wedding-events`} class="block text-xl">Wedding & Events</a>
-      <a href={`/${locale}/our-story`} class="block text-xl">Our Story</a>
-      <!-- <hr class="my-6" /> -->
-      <!-- <a href={`/${locale}/member`} class="block text-xl">Member</a> -->
-      <!-- More Dropdown (Mobile) -->
-      <!-- <div>
-        <button aria-label="More Dropdown" id="more-mobile-toggle" class="block text-xl w-full text-left flex items-center gap-1 justify-between">
+
+      <!-- Experiences Dropdown Mobile -->
+      <div>
+        <button aria-label="Experiences Dropdown" id="experiences-mobile-toggle" class="block text-xl w-full text-left flex items-center gap-1 justify-between">
           <span class="flex items-center">
-            More
+            Unique Experiences
             <svg class="w-4 h-4 ml-1 inline-block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
             </svg>
           </span>
         </button>
-        <div id="more-mobile-dropdown" class="pl-4 space-y-2 hidden mt-3">
-          <a href="#" class="block text-xl">Member</a>
-          <a href="#" class="block text-xl">Contact</a>
+
+        <div id="experiences-mobile-dropdown" class="pl-4 space-y-2 hidden mt-3">
+          {experienceCategories.map((item) => (
+            <a href={item.url} class="block text-xl">{item.title}</a>
+          ))}
         </div>
-      </div> -->
+      </div>
+
+      <a href={`/${locale}/wedding-events`} class="block text-xl">Wedding & Events</a>
+      <a href={`/${locale}/our-story`} class="block text-xl">Our Story</a>
     </nav>
   </div>
 
   <!-- Desktop Dining Dropdown -->
   <div
     id="dining-dropdown"
-    class="hidden absolute left-0 right-0 top-[100%] bg-white text-black z-40 shadow-md transition-all duration-200 opacity-0 group-hover:opacity-100"
+    class="hidden absolute left-0 right-0 top-[100%] bg-white text-black z-40 shadow-md transition-all duration-200 opacity-0"
   >
     <div class="max-w-screen-xl mx-auto px-2 flex justify-center space-x-6 py-3 font-normal text-xl">
       {venues.map((data) => (
-      <a href={`/${locale}/dining/${data.slug}`} class="hover:underline uppercase text-base">{data.title?.[locale]}</a>
+        <a href={`/${locale}/dining/${data.slug}`} class="hover:underline uppercase text-base">{data.title?.[locale]}</a>
+      ))}
+    </div>
+  </div>
+
+  <!-- Desktop Experiences Dropdown -->
+  <div
+    id="experiences-dropdown"
+    class="hidden absolute left-0 right-0 top-[100%] bg-white text-black z-40 shadow-md transition-all duration-200 opacity-0"
+  >
+    <div class="max-w-screen-xl mx-auto px-2 flex justify-center space-x-6 py-3 font-normal text-xl">
+      {experienceCategories.map((item) => (
+        <a href={item.url} class="hover:underline uppercase text-base">{item.title}</a>
       ))}
     </div>
   </div>
@@ -174,7 +181,7 @@ const locale = getLocale(lang);
   <!-- Desktop More Dropdown -->
   <div
     id="more-dropdown"
-    class="hidden absolute left-0 right-0 top-[100%] bg-white text-black z-40 shadow-md transition-all duration-200 opacity-0 group-hover:opacity-100"
+    class="hidden absolute left-0 right-0 top-[100%] bg-white text-black z-40 shadow-md transition-all duration-200 opacity-0"
   >
     <div class="max-w-screen-xl mx-auto px-2 flex justify-center space-x-6 py-3 font-normal text-xl">
       <a href="#" class="hover:underline uppercase text-base">Member</a>
@@ -187,140 +194,169 @@ const locale = getLocale(lang);
       const navRect = element.getBoundingClientRect();
       dropdown.style.top = navRect.bottom + 'px';
     }
-  
+
+    function openDesktopDropdown(navbar, dropdown) {
+      if (!navbar || !dropdown) return;
+
+      updateDropdownPosition(navbar, dropdown);
+      dropdown.classList.remove("hidden", "opacity-0");
+      dropdown.classList.add("opacity-100", "block");
+    }
+
+    function closeDesktopDropdown(dropdown) {
+      if (!dropdown) return;
+
+      dropdown.classList.add("opacity-0", "hidden");
+      dropdown.classList.remove("opacity-100", "block");
+    }
+
+    function setupDesktopDropdown(navbar, trigger, dropdown) {
+      if (!navbar || !trigger || !dropdown) return;
+
+      trigger.addEventListener("mouseenter", () => {
+        openDesktopDropdown(navbar, dropdown);
+      });
+
+      trigger.addEventListener("mouseleave", () => {
+        setTimeout(() => {
+          if (!dropdown.matches(":hover")) {
+            closeDesktopDropdown(dropdown);
+          }
+        }, 100);
+      });
+
+      dropdown.addEventListener("mouseenter", () => {
+        openDesktopDropdown(navbar, dropdown);
+      });
+
+      dropdown.addEventListener("mouseleave", () => {
+        closeDesktopDropdown(dropdown);
+      });
+    }
+
     document.addEventListener("DOMContentLoaded", () => {
       const navbar = document.querySelector("#navbar");
-      const dropdown = document.querySelector("#dining-dropdown");
-      const trigger = document.querySelector("#dining-trigger");
+
+      const diningDropdown = document.querySelector("#dining-dropdown");
+      const diningTrigger = document.querySelector("#dining-trigger");
+
+      const experiencesDropdown = document.querySelector("#experiences-dropdown");
+      const experiencesTrigger = document.querySelector("#experiences-trigger");
+
       const moreDropdown = document.querySelector("#more-dropdown");
       const moreTrigger = document.querySelector("#more-trigger");
+
       const hamburger = document.getElementById("hamburger");
       const offcanvas = document.getElementById("offcanvas");
       const closeBtn = document.getElementById("closeOffcanvas");
-  
+
       const diningMobileToggle = document.getElementById("dining-mobile-toggle");
       const diningMobileDropdown = document.getElementById("dining-mobile-dropdown");
+
+      const experiencesMobileToggle = document.getElementById("experiences-mobile-toggle");
+      const experiencesMobileDropdown = document.getElementById("experiences-mobile-dropdown");
+
       const moreMobileToggle = document.getElementById("more-mobile-toggle");
       const moreMobileDropdown = document.getElementById("more-mobile-dropdown");
-  
+
       const memberBtn = document.getElementById("memberBtn");
       const languageSelect = document.getElementById("languageSelect");
       const reserveBtn = document.getElementById("reserveBtn");
       const logo = document.getElementById("navbar-logo");
-  
+
       // Scroll-based navbar style change
       window.addEventListener("scroll", () => {
         const scrolled = window.scrollY > 50;
+
         navbar.classList.toggle("bg-white", scrolled);
         navbar.classList.toggle("text-black", scrolled);
         navbar.classList.toggle("shadow-md", scrolled);
         navbar.classList.toggle("bg-transparent", !scrolled);
         navbar.classList.toggle("text-white", !scrolled);
-  
+
         memberBtn?.classList.toggle("text-black", scrolled);
         memberBtn?.classList.toggle("text-white", !scrolled);
-  
+
         languageSelect?.classList.toggle("text-black", scrolled);
         languageSelect?.classList.toggle("text-white", !scrolled);
-  
+
         reserveBtn?.classList.toggle("bg-[#916B2C]", scrolled);
         reserveBtn?.classList.toggle("text-white", scrolled);
         reserveBtn?.classList.toggle("border-transparent", scrolled);
         reserveBtn?.classList.toggle("bg-white", !scrolled);
         reserveBtn?.classList.toggle("text-black", !scrolled);
         reserveBtn?.classList.toggle("border-white", !scrolled);
-  
+
         logo?.classList.toggle("w-28", scrolled);
         logo?.classList.toggle("h-16", scrolled);
         logo?.classList.toggle("w-36", !scrolled);
         logo?.classList.toggle("h-20", !scrolled);
         logo?.classList.toggle("brightness-0", !scrolled);
         logo?.classList.toggle("invert-[1]", !scrolled);
-  
-        if (!dropdown?.classList.contains("hidden")) updateDropdownPosition(navbar, dropdown);
-        if (!moreDropdown?.classList.contains("hidden")) updateDropdownPosition(navbar, moreDropdown);
+
+        if (!diningDropdown?.classList.contains("hidden")) {
+          updateDropdownPosition(navbar, diningDropdown);
+        }
+
+        if (!experiencesDropdown?.classList.contains("hidden")) {
+          updateDropdownPosition(navbar, experiencesDropdown);
+        }
+
+        if (!moreDropdown?.classList.contains("hidden")) {
+          updateDropdownPosition(navbar, moreDropdown);
+        }
       });
-  
+
       // Hamburger toggle
       hamburger?.addEventListener("click", () => {
         offcanvas?.classList.toggle("-translate-x-full");
       });
+
       closeBtn?.addEventListener("click", () => {
         offcanvas?.classList.add("-translate-x-full");
       });
-  
-      // Desktop dropdown: Dining
-      trigger?.addEventListener("mouseenter", () => {
-        if (!dropdown) return;
-        updateDropdownPosition(navbar, dropdown);
-        dropdown.classList.remove("hidden", "opacity-0");
-        dropdown.classList.add("opacity-100", "block");
-      });
-      trigger?.addEventListener("mouseleave", () => {
-        setTimeout(() => {
-          if (!dropdown?.matches(":hover")) {
-            dropdown.classList.add("opacity-0", "hidden");
-            dropdown.classList.remove("opacity-100");
-          }
-        }, 100);
-      });
-      dropdown?.addEventListener("mouseenter", () => {
-        dropdown.classList.remove("hidden", "opacity-0");
-        dropdown.classList.add("opacity-100");
-      });
-      dropdown?.addEventListener("mouseleave", () => {
-        dropdown.classList.add("opacity-0", "hidden");
-        dropdown.classList.remove("opacity-100");
-      });
-  
-      // Desktop dropdown: More
-      moreTrigger?.addEventListener("mouseenter", () => {
-        if (!moreDropdown) return;
-        updateDropdownPosition(navbar, moreDropdown);
-        moreDropdown.classList.remove("hidden", "opacity-0");
-        moreDropdown.classList.add("opacity-100", "block");
-      });
-      moreTrigger?.addEventListener("mouseleave", () => {
-        setTimeout(() => {
-          if (!moreDropdown?.matches(":hover")) {
-            moreDropdown.classList.add("opacity-0", "hidden");
-            moreDropdown.classList.remove("opacity-100");
-          }
-        }, 100);
-      });
-      moreDropdown?.addEventListener("mouseenter", () => {
-        moreDropdown.classList.remove("hidden", "opacity-0");
-        moreDropdown.classList.add("opacity-100");
-      });
-      moreDropdown?.addEventListener("mouseleave", () => {
-        moreDropdown.classList.add("opacity-0", "hidden");
-        moreDropdown.classList.remove("opacity-100");
-      });
-  
+
+      // Desktop dropdowns
+      setupDesktopDropdown(navbar, diningTrigger, diningDropdown);
+      setupDesktopDropdown(navbar, experiencesTrigger, experiencesDropdown);
+      setupDesktopDropdown(navbar, moreTrigger, moreDropdown);
+
       // Mobile dropdowns
       diningMobileToggle?.addEventListener("click", (e) => {
         e.stopPropagation();
         diningMobileDropdown?.classList.toggle("hidden");
       });
+
+      experiencesMobileToggle?.addEventListener("click", (e) => {
+        e.stopPropagation();
+        experiencesMobileDropdown?.classList.toggle("hidden");
+      });
+
       moreMobileToggle?.addEventListener("click", (e) => {
         e.stopPropagation();
         moreMobileDropdown?.classList.toggle("hidden");
       });
-  
-      // Close offcanvas if a link is clicked (except dropdown toggles)
+
+      // Close offcanvas if a link is clicked, except dropdown toggles/dropdown areas
       const offcanvasItems = offcanvas?.querySelectorAll("a, button") || [];
+
       offcanvasItems.forEach((item) => {
         item.addEventListener("click", (e) => {
           if (
             e.target.closest("#dining-mobile-toggle") ||
             e.target.closest("#dining-mobile-dropdown") ||
+            e.target.closest("#experiences-mobile-toggle") ||
+            e.target.closest("#experiences-mobile-dropdown") ||
             e.target.closest("#more-mobile-toggle") ||
             e.target.closest("#more-mobile-dropdown")
-          ) return;
+          ) {
+            return;
+          }
+
           offcanvas.classList.add("-translate-x-full");
         });
       });
-  
+
       // Language selector syncing
       const selectDesktop = document.getElementById('languageSelect');
       const selectOffcanvas = document.getElementById('languageSelectOffcanvas');
@@ -328,39 +364,42 @@ const locale = getLocale(lang);
       const pathParts = currentPath.split('/');
       const currentLang = pathParts[1];
       const lang = ['en', 'ko', 'zh'].includes(currentLang) ? currentLang : 'en';
-  
+
       if (selectDesktop) selectDesktop.value = lang;
       if (selectOffcanvas) selectOffcanvas.value = lang;
-  
+
       const handleLangChange = (selectedLang) => {
         const newPath = currentPath.replace(/^\/(en|ko|zh)/, `/${selectedLang}`);
         const finalPath = ['en', 'ko', 'zh'].includes(currentLang)
           ? newPath
           : `/${selectedLang}${currentPath}`;
+
         window.location.href = finalPath;
       };
-  
+
       selectDesktop?.addEventListener('change', (e) => {
         if (selectOffcanvas) selectOffcanvas.value = e.target.value;
         handleLangChange(e.target.value);
       });
-  
+
       selectOffcanvas?.addEventListener('change', (e) => {
         if (selectDesktop) selectDesktop.value = e.target.value;
         handleLangChange(e.target.value);
       });
     });
-  
+
     // Close offcanvas when clicking outside of it
     document.addEventListener("click", (e) => {
       const offcanvas = document.getElementById("offcanvas");
       const hamburger = document.getElementById("hamburger");
+
       if (!offcanvas || !hamburger) return;
+
       const isClickInside = offcanvas.contains(e.target) || hamburger.contains(e.target);
+
       if (!isClickInside && !offcanvas.classList.contains("-translate-x-full")) {
         offcanvas.classList.add("-translate-x-full");
       }
     });
   </script>
-  
 </header>

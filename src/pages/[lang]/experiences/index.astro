@@ -1,0 +1,372 @@
+---
+// Import dependencies and components
+import Layout from '../../../layouts/Base.astro';
+import client from '../../../lib/sanityClient';
+import { getLocale } from '../../../utils/getLocale';
+import OptimizedImage from '../../../components/OptimizedImage.astro';
+import { toHTML } from '@portabletext/to-html';
+
+// Generate static paths for each language
+export async function getStaticPaths() {
+  return ['en', 'ko', 'zh'].map(lang => ({ params: { lang } }));
+}
+
+// Get language and locale
+const { lang } = Astro.params;
+const locale = getLocale(lang);
+
+// Helper to ensure array type
+const safeArray = arr => Array.isArray(arr) ? arr : [];
+
+// Fetch Experience page details from Sanity CMS
+const pageDetails = await client.fetch(`*[
+  _type == "page"
+  && _id == $pageId
+][0]{
+  title,
+  subtitle,
+  description,
+  note,
+  metaTitle,
+  metaDescription,
+  metaKeywords,
+  mainImageAlt,
+  mainImage {
+    asset->{url}
+  },
+  headerImages[]{
+    image {
+      asset->{url}
+    },
+    alt,
+    title,
+    order
+  }
+}`, {
+  pageId: '13b4a24f-03d9-49bc-8539-4689a2a75743',
+});
+
+// Fetch Experience Categories from Sanity CMS
+const categories = await client.fetch(`*[
+  _type == "experienceCategory"
+  && defined(slug.current)
+  && isActive != false
+] | order(order asc){
+  "slug": slug.current,
+  title,
+  excerpt,
+  description,
+  mainImage {
+    asset->{url}
+  },
+  mainImageAlt,
+  order
+}`);
+
+// Prepare header slider images
+const experienceHeaderSlides =
+  Array.isArray(pageDetails?.headerImages) && pageDetails.headerImages.length
+    ? pageDetails.headerImages
+        .filter(slide => slide?.image?.asset?.url)
+        .sort((a, b) => (a.order ?? 999) - (b.order ?? 999))
+    : pageDetails?.mainImage?.asset?.url
+      ? [
+          {
+            image: pageDetails.mainImage,
+            alt: pageDetails.mainImageAlt,
+            title: pageDetails.title,
+            order: 1,
+          },
+        ]
+      : [];
+
+// Prepare meta and content variables
+const pageDescription = toHTML(safeArray(pageDetails?.description?.[locale]));
+
+const title =
+  pageDetails?.metaTitle?.[locale] ??
+  pageDetails?.title?.[locale] ??
+  'Unique Experiences';
+
+const description =
+  pageDetails?.metaDescription?.[locale] ??
+  pageDetails?.subtitle?.[locale] ??
+  pageDetails?.title?.[locale] ??
+  'Unique Experiences';
+
+const url = new URL(Astro.request.url).href;
+
+const ogImage =
+  experienceHeaderSlides[0]?.image?.asset?.url ??
+  pageDetails?.mainImage?.asset?.url ??
+  '';
+
+const keywords =
+  typeof pageDetails?.metaKeywords === 'string'
+    ? pageDetails.metaKeywords
+    : pageDetails?.metaKeywords?.[locale] ?? '';
+---
+
+<Layout {title} {description} {url} {ogImage} {keywords}>
+  {/* Hero section with header slider */}
+  {experienceHeaderSlides.length > 0 && (
+    <section class="relative w-full h-[50vh] md:h-[60vh] lg:h-[75vh] overflow-hidden">
+      <div id="experience-header-carousel" class="w-full h-full relative">
+        {experienceHeaderSlides.map((slide, i) => (
+          <div
+            class={`experience-header-slide w-full h-full absolute inset-0 transition-opacity duration-1000 ${
+              i === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'
+            }`}
+          >
+            <OptimizedImage
+              src={slide.image?.asset?.url ?? ''}
+              alt={slide.alt?.[locale] ?? slide.title?.[locale] ?? pageDetails?.mainImageAlt?.[locale] ?? ''}
+              width={1600}
+              height={900}
+              quality={75}
+              className="w-full h-full object-cover"
+              fetchpriority={i === 0 ? 'high' : 'auto'}
+              loading={i === 0 ? 'eager' : 'lazy'}
+            />
+          </div>
+        ))}
+
+        <div class="absolute inset-0 bg-black/25 z-20"></div>
+
+        {experienceHeaderSlides.length > 1 && (
+          <>
+            <button
+              aria-label="Previous Experience Header Slide"
+              id="experienceHeaderPrev"
+              class="absolute left-4 top-1/2 -translate-y-1/2 text-white text-3xl z-30"
+            >
+              ❮
+            </button>
+
+            <button
+              aria-label="Next Experience Header Slide"
+              id="experienceHeaderNext"
+              class="absolute right-4 top-1/2 -translate-y-1/2 text-white text-3xl z-30"
+            >
+              ❯
+            </button>
+          </>
+        )}
+      </div>
+    </section>
+  )}
+
+  {/* Page title, description, and note */}
+  <section class={`container mx-auto px-4 py-16 md:py-24 ${experienceHeaderSlides.length === 0 ? 'pt-36 md:pt-44' : ''}`}>
+    <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
+      <h1 class="font-title text-3xl sm:text-4xl md:text-5xl uppercase mb-4 md:mb-6 tracking-widest font-light">
+        {pageDetails?.title?.[locale] ?? 'Unique Experiences'}
+      </h1>
+
+      {pageDescription && (
+        <div class="mb-5 text-lg" set:html={pageDescription}></div>
+      )}
+
+      {pageDetails?.note?.[locale] && (
+        <p class="text-lg italic">
+          {pageDetails.note[locale]}
+        </p>
+      )}
+    </div>
+  </section>
+
+  {/* Experience categories carousel */}
+  <section class="container mx-auto px-4 space-y-18">
+    {categories.length > 0 ? (
+      <>
+        <div
+          id="experience-category-carousel"
+          class="splide mb-8 md:mb-12"
+          role="region"
+          aria-label="Experience Category Carousel"
+        >
+          <div class="splide__track">
+            <div class="splide__list">
+              {categories.map((data, i) => (
+                <div
+                  class="splide__slide transition-transform duration-500 ease-in-out"
+                  role="group"
+                  aria-roledescription="slide"
+                  aria-label={`${i + 1} of ${categories.length}`}
+                >
+                  <div class="bg-white overflow-hidden flex flex-col h-full">
+                    <OptimizedImage
+                      src={data.mainImage?.asset?.url ?? ''}
+                      alt={data.mainImageAlt?.[locale] ?? data.title?.[locale] ?? ''}
+                      width={800}
+                      height={600}
+                      quality={75}
+                      loading="lazy"
+                      className="w-full h-auto aspect-[4/3] md:aspect-[16/9] 2xl:aspect-[4/3] object-cover transition duration-500"
+                    />
+
+                    <div class="py-4 md:py-6 flex flex-col flex-1">
+                      <h3 class="text-lg tracking-widest uppercase font-title">
+                        {data?.title?.[locale] ?? ''}
+                      </h3>
+
+                      {/* {data?.excerpt?.[locale] && (
+                        <p class="mt-2 text-lg">
+                          {data.excerpt[locale]}
+                        </p>
+                      )} */}
+
+                      <div class="flex-grow"></div>
+
+                      <a
+                        href={`/${locale}/experiences/${data.slug}`}
+                        class="text-lg mt-4 inline-block text-gray-700 uppercase"
+                      >
+                        Details
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Carousel navigation buttons */}
+        <div class="flex items-center gap-4 md:gap-6 mt-4 md:mt-8 justify-start">
+          <button
+            aria-label="Previous Experience Category Slide"
+            id="experience-category-prev"
+            class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="44" y1="12" x2="4" y2="12" />
+              <polyline points="12 20 4 12 12 4" />
+            </svg>
+          </button>
+
+          <button
+            aria-label="Next Experience Category Slide"
+            id="experience-category-next"
+            class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="4" y1="12" x2="44" y2="12" />
+              <polyline points="36 4 44 12 36 20" />
+            </svg>
+          </button>
+        </div>
+      </>
+    ) : (
+      <div class="text-center py-12">
+        <p class="text-lg text-gray-600">
+          No experience categories available yet.
+        </p>
+      </div>
+    )}
+  </section>
+
+  {/* Header Carousel Script */}
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      const slides = document.querySelectorAll('.experience-header-slide');
+      const prevButton = document.getElementById('experienceHeaderPrev');
+      const nextButton = document.getElementById('experienceHeaderNext');
+
+      if (!slides.length) return;
+
+      let currentSlide = 0;
+
+      function showExperienceHeaderSlide(index) {
+        slides.forEach((slide, i) => {
+          if (i === index) {
+            slide.classList.add('opacity-100', 'z-10');
+            slide.classList.remove('opacity-0', 'z-0');
+          } else {
+            slide.classList.add('opacity-0', 'z-0');
+            slide.classList.remove('opacity-100', 'z-10');
+          }
+        });
+      }
+
+      function nextExperienceHeaderSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showExperienceHeaderSlide(currentSlide);
+      }
+
+      function prevExperienceHeaderSlide() {
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        showExperienceHeaderSlide(currentSlide);
+      }
+
+      prevButton?.addEventListener('click', e => {
+        e.stopPropagation();
+        prevExperienceHeaderSlide();
+      });
+
+      nextButton?.addEventListener('click', e => {
+        e.stopPropagation();
+        nextExperienceHeaderSlide();
+      });
+
+      if (slides.length > 1) {
+        setInterval(nextExperienceHeaderSlide, 5000);
+      }
+
+      showExperienceHeaderSlide(currentSlide);
+    });
+  </script>
+
+  {/* Splide carousel initialization script */}
+  <script>
+    import "@splidejs/splide/css";
+    import Splide from "@splidejs/splide";
+
+    const carousel = document.querySelector("#experience-category-carousel");
+
+    if (carousel) {
+      const splide = new Splide("#experience-category-carousel", {
+        type: "slide",
+        perPage: 3,
+        perMove: 1,
+        gap: "4rem",
+        speed: 800,
+        easing: "ease-in-out",
+        arrows: false,
+        pagination: false,
+        breakpoints: {
+          1366: { gap: "2rem" },
+          1024: { gap: "2rem", perPage: 2 },
+          768: { perPage: 1, gap: "2rem" },
+          640: { perPage: 1 },
+        },
+      });
+
+      const prevBtn = document.getElementById("experience-category-prev");
+      const nextBtn = document.getElementById("experience-category-next");
+
+      function updateButtons() {
+        if (!prevBtn || !nextBtn) return;
+
+        const perPage = Number(splide.options.perPage || 1);
+        const isFirst = splide.index === 0;
+        const isLast = splide.index >= splide.length - perPage;
+
+        prevBtn.disabled = isFirst;
+        prevBtn.classList.toggle("opacity-30", isFirst);
+        prevBtn.classList.toggle("cursor-not-allowed", isFirst);
+
+        nextBtn.disabled = isLast;
+        nextBtn.classList.toggle("opacity-30", isLast);
+        nextBtn.classList.toggle("cursor-not-allowed", isLast);
+      }
+
+      splide.on("mounted move resized updated", updateButtons);
+
+      splide.mount();
+
+      prevBtn?.addEventListener("click", () => splide.go("<"));
+      nextBtn?.addEventListener("click", () => splide.go(">"));
+    }
+  </script>
+</Layout>

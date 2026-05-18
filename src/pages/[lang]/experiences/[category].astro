@@ -1,0 +1,395 @@
+---
+// Import dependencies and components
+import Layout from '../../../layouts/Base.astro';
+import client from '../../../lib/sanityClient';
+import { getLocale } from '../../../utils/getLocale';
+import OptimizedImage from '../../../components/OptimizedImage.astro';
+import { toHTML } from '@portabletext/to-html';
+
+// Generate static paths for each language and experience category
+export async function getStaticPaths() {
+  const categories = await client.fetch(`*[
+    _type == "experienceCategory"
+    && defined(slug.current)
+    && isActive != false
+  ] | order(order asc){
+    "slug": slug.current
+  }`);
+
+  return ['en', 'ko', 'zh'].flatMap(lang =>
+    categories.map(category => ({
+      params: {
+        lang,
+        category: category.slug,
+      },
+    }))
+  );
+}
+
+// Get language, locale, and category slug
+const { lang, category } = Astro.params;
+const locale = getLocale(lang);
+const categorySlug = category;
+
+// Helper to ensure array type
+const safeArray = arr => Array.isArray(arr) ? arr : [];
+
+// Fetch category details from Sanity CMS
+const categoryDetails = await client.fetch(`*[
+  _type == "experienceCategory"
+  && slug.current == $categorySlug
+  && isActive != false
+][0]{
+  _id,
+  title,
+  subtitle,
+  excerpt,
+  description,
+  metaTitle,
+  metaDescription,
+  metaKeywords,
+  mainImageAlt,
+  mainImage {
+    asset->{url}
+  },
+  headerImages[]{
+    image {
+      asset->{url}
+    },
+    alt,
+    title,
+    order
+  }
+}`, {
+  categorySlug,
+});
+
+if (!categoryDetails) {
+  return Astro.redirect(`/${locale}/experiences`);
+}
+
+// Fetch all experience items based on this category
+const experiences = await client.fetch(`*[
+  _type == "experienceUnique"
+  && defined(slug.current)
+  && isActive != false
+  && category._ref == $categoryId
+] | order(order asc){
+  "slug": slug.current,
+  title,
+  subtitle,
+  excerpt,
+  mainImage {
+    asset->{url}
+  },
+  mainImageAlt,
+  secondImage {
+    asset->{url}
+  },
+  secondImageAlt,
+  order
+}`, {
+  categoryId: categoryDetails._id,
+});
+
+// Prepare category header slider images
+const categoryHeaderSlides =
+  Array.isArray(categoryDetails?.headerImages) && categoryDetails.headerImages.length
+    ? categoryDetails.headerImages
+        .filter(slide => slide?.image?.asset?.url)
+        .sort((a, b) => (a.order ?? 999) - (b.order ?? 999))
+    : categoryDetails?.mainImage?.asset?.url
+      ? [
+          {
+            image: categoryDetails.mainImage,
+            alt: categoryDetails.mainImageAlt,
+            title: categoryDetails.title,
+            order: 1,
+          },
+        ]
+      : [];
+
+// Prepare meta and content variables
+const categoryDescription = toHTML(safeArray(categoryDetails?.description?.[locale]));
+
+const title =
+  categoryDetails?.metaTitle?.[locale] ??
+  categoryDetails?.title?.[locale] ??
+  'Unique Experiences';
+
+const description =
+  categoryDetails?.metaDescription?.[locale] ??
+  categoryDetails?.excerpt?.[locale] ??
+  categoryDetails?.subtitle?.[locale] ??
+  categoryDetails?.title?.[locale] ??
+  'Unique Experiences';
+
+const url = new URL(Astro.request.url).href;
+
+const ogImage =
+  categoryHeaderSlides[0]?.image?.asset?.url ??
+  categoryDetails?.mainImage?.asset?.url ??
+  '';
+
+const keywords =
+  typeof categoryDetails?.metaKeywords === 'string'
+    ? categoryDetails.metaKeywords
+    : categoryDetails?.metaKeywords?.[locale] ?? '';
+
+const initialVisibleItems = 9;
+---
+
+<Layout {title} {description} {url} {ogImage} {keywords}>
+  {/* Hero section with header slider */}
+  {categoryHeaderSlides.length > 0 && (
+    <section class="relative w-full h-[50vh] md:h-[60vh] lg:h-[75vh] overflow-hidden">
+      <div id="experience-category-header-carousel" class="w-full h-full relative">
+        {categoryHeaderSlides.map((slide, i) => (
+          <div
+            class={`experience-category-header-slide w-full h-full absolute inset-0 transition-opacity duration-1000 ${
+              i === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'
+            }`}
+          >
+            <OptimizedImage
+              src={slide.image?.asset?.url ?? ''}
+              alt={slide.alt?.[locale] ?? slide.title?.[locale] ?? categoryDetails?.mainImageAlt?.[locale] ?? ''}
+              width={1600}
+              height={900}
+              quality={75}
+              className="w-full h-full object-cover"
+              fetchpriority={i === 0 ? 'high' : 'auto'}
+              loading={i === 0 ? 'eager' : 'lazy'}
+            />
+          </div>
+        ))}
+
+        <div class="absolute inset-0 bg-black/25 z-20"></div>
+
+        {categoryHeaderSlides.length > 1 && (
+          <>
+            <button
+              aria-label="Previous Experience Category Header Slide"
+              id="experienceCategoryHeaderPrev"
+              class="absolute left-4 top-1/2 -translate-y-1/2 text-white text-3xl z-30"
+            >
+              ❮
+            </button>
+
+            <button
+              aria-label="Next Experience Category Header Slide"
+              id="experienceCategoryHeaderNext"
+              class="absolute right-4 top-1/2 -translate-y-1/2 text-white text-3xl z-30"
+            >
+              ❯
+            </button>
+          </>
+        )}
+      </div>
+    </section>
+  )}
+
+  {/* Category title and description */}
+  <section class={`container mx-auto px-4 py-16 md:py-24 ${categoryHeaderSlides.length === 0 ? 'pt-36 md:pt-44' : ''}`}>
+    <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
+      <h1 class="font-title text-3xl sm:text-4xl md:text-5xl uppercase mb-4 md:mb-6 tracking-widest font-light">
+        {categoryDetails?.title?.[locale] ?? ''}
+      </h1>
+
+      {categoryDetails?.subtitle?.[locale] && (
+        <p class="text-lg md:text-xl uppercase tracking-widest mb-5">
+          {categoryDetails.subtitle[locale]}
+        </p>
+      )}
+
+      {categoryDescription && (
+        <div class="mb-5 text-lg" set:html={categoryDescription}></div>
+      )}
+    </div>
+  </section>
+
+  {/* Experiences grid */}
+  <section class="container mx-auto px-4 pb-20">
+    {experiences.length > 0 ? (
+      <>
+        <div
+          id="experience-grid"
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-14 md:gap-y-16"
+        >
+          {experiences.map((data, i) => {
+            const cardImage =
+              data.secondImage?.asset?.url ??
+              data.mainImage?.asset?.url ??
+              '';
+
+            const cardImageAlt =
+              data.secondImageAlt?.[locale] ??
+              data.mainImageAlt?.[locale] ??
+              data.title?.[locale] ??
+              '';
+
+            return (
+              <article
+                class={`experience-card bg-white overflow-hidden flex flex-col h-full ${
+                  i >= initialVisibleItems ? 'hidden' : ''
+                }`}
+                data-experience-card
+                data-index={i}
+              >
+                <a href={`/${locale}/experiences/${categorySlug}/${data.slug}`} class="block overflow-hidden">
+                  <OptimizedImage
+                    src={cardImage}
+                    alt={cardImageAlt}
+                    width={800}
+                    height={600}
+                    quality={75}
+                    loading={i < initialVisibleItems ? 'eager' : 'lazy'}
+                    className="w-full h-auto aspect-[4/3] md:aspect-[16/9] 2xl:aspect-[4/3] object-cover transition duration-500 hover:scale-105"
+                  />
+                </a>
+
+                <div class="py-4 md:py-6 flex flex-col flex-1">
+                  <h3 class="text-lg tracking-widest uppercase font-title">
+                    <a href={`/${locale}/experiences/${categorySlug}/${data.slug}`}>
+                      {data?.title?.[locale] ?? ''}
+                    </a>
+                  </h3>
+
+                  {/* {data?.excerpt?.[locale] && (
+                    <p class="mt-2 text-lg">
+                      {data.excerpt[locale]}
+                    </p>
+                  )} */}
+
+                  <div class="flex-grow"></div>
+
+                  <a
+                    href={`/${locale}/experiences/${categorySlug}/${data.slug}`}
+                    class="text-lg mt-4 inline-block text-gray-700 uppercase"
+                  >
+                    Details
+                  </a>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+
+        {experiences.length > initialVisibleItems && (
+          <div class="flex justify-center mt-14 md:mt-16">
+            <button
+              id="load-more-experiences"
+              type="button"
+              class="inline-block rounded-none border border-[#1f2f46] px-8 py-3 text-sm md:text-base uppercase tracking-widest font-title text-[#1f2f46] hover:border-[#916B2C] hover:bg-[#916B2C] hover:text-white transition-colors duration-300"
+              data-visible-count={initialVisibleItems}
+              data-total-count={experiences.length}
+            >
+              Explore All Experiences
+            </button>
+          </div>
+        )}
+      </>
+    ) : (
+      <div class="text-center py-12">
+        <p class="text-lg text-gray-600">
+          No experiences available in this category yet.
+        </p>
+      </div>
+    )}
+  </section>
+
+  {/* Experience Category Header Carousel Script */}
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      const slides = document.querySelectorAll('.experience-category-header-slide');
+      const prevButton = document.getElementById('experienceCategoryHeaderPrev');
+      const nextButton = document.getElementById('experienceCategoryHeaderNext');
+
+      if (!slides.length) return;
+
+      let currentSlide = 0;
+
+      function showExperienceCategoryHeaderSlide(index) {
+        slides.forEach((slide, i) => {
+          if (i === index) {
+            slide.classList.add('opacity-100', 'z-10');
+            slide.classList.remove('opacity-0', 'z-0');
+          } else {
+            slide.classList.add('opacity-0', 'z-0');
+            slide.classList.remove('opacity-100', 'z-10');
+          }
+        });
+      }
+
+      function nextExperienceCategoryHeaderSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showExperienceCategoryHeaderSlide(currentSlide);
+      }
+
+      function prevExperienceCategoryHeaderSlide() {
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        showExperienceCategoryHeaderSlide(currentSlide);
+      }
+
+      prevButton?.addEventListener('click', e => {
+        e.stopPropagation();
+        prevExperienceCategoryHeaderSlide();
+      });
+
+      nextButton?.addEventListener('click', e => {
+        e.stopPropagation();
+        nextExperienceCategoryHeaderSlide();
+      });
+
+      if (slides.length > 1) {
+        setInterval(nextExperienceCategoryHeaderSlide, 5000);
+      }
+
+      showExperienceCategoryHeaderSlide(currentSlide);
+    });
+  </script>
+
+  {/* Load more experiences script */}
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      const loadMoreButton = document.getElementById('load-more-experiences');
+      const cards = Array.from(document.querySelectorAll('[data-experience-card]'));
+
+      if (!loadMoreButton || !cards.length) return;
+
+      const batchSize = 9;
+      const totalCount = cards.length;
+
+      function hideLoadMoreButton() {
+        loadMoreButton.classList.add('hidden');
+        loadMoreButton.style.display = 'none';
+      }
+
+      function showNextBatch(visibleCount) {
+        cards.forEach((card, index) => {
+          if (index < visibleCount) {
+            card.classList.remove('hidden');
+          }
+        });
+      }
+
+      const initialVisibleCount = Number(loadMoreButton.dataset.visibleCount || batchSize);
+
+      if (initialVisibleCount >= totalCount) {
+        hideLoadMoreButton();
+      }
+
+      loadMoreButton.addEventListener('click', () => {
+        const currentVisibleCount = Number(loadMoreButton.dataset.visibleCount || batchSize);
+        const nextVisibleCount = currentVisibleCount + batchSize;
+
+        showNextBatch(nextVisibleCount);
+
+        loadMoreButton.dataset.visibleCount = String(nextVisibleCount);
+
+        if (nextVisibleCount >= totalCount) {
+          hideLoadMoreButton();
+        }
+      });
+    });
+  </script>
+</Layout>
