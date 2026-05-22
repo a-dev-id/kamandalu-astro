@@ -194,6 +194,10 @@ const keywords =
                   aria-roledescription="slide"
                   aria-label={`${i + 1} of ${categories.length}`}
                 >
+                  <a
+                        href={`/${locale}/ubud-experiences-and-activities/${data.slug}`}
+                        
+                      >
                   <div class="bg-white overflow-hidden flex flex-col h-full">
                     <OptimizedImage
                       src={data.mainImage?.asset?.url ?? ''}
@@ -206,6 +210,7 @@ const keywords =
                     />
 
                     <div class="py-4 md:py-6 flex flex-col flex-1">
+                    
                       <h3 class="text-lg tracking-widest uppercase font-title">
                         {data?.title?.[locale] ?? ''}
                       </h3>
@@ -219,14 +224,16 @@ const keywords =
                       <div class="flex-grow"></div>
 
                       <a
-                        href={`/${locale}/experiences/${data.slug}`}
+                        href={`/${locale}/ubud-experiences-and-activities/${data.slug}`}
                         class="text-lg mt-4 inline-block text-gray-700 uppercase"
                       >
                         Details
                       </a>
                     </div>
                   </div>
+                  </a>
                 </div>
+                
               ))}
             </div>
           </div>
