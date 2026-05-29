@@ -164,7 +164,7 @@ const keywords =
       </h1>
 
       {pageDescription && (
-        <div class="mb-5 text-xl" set:html={pageDescription}></div>
+        <div class="mb-5 text-lg md:text-2xl" set:html={pageDescription}></div>
       )}
 
       {pageDetails?.note?.[locale] && (
@@ -189,30 +189,32 @@ const keywords =
             <div class="splide__list">
               {categories.map((data, i) => (
                 <div
-                  class="splide__slide transition-transform duration-500 ease-in-out"
+                  class="splide__slide transition-transform duration-500 ease-in-out flex h-auto"
                   role="group"
                   aria-roledescription="slide"
                   aria-label={`${i + 1} of ${categories.length}`}
                 >
-                  <a
-                        href={`/${locale}/ubud-experiences-and-activities/${data.slug}`}
-                        
-                      >
-                  <div class="bg-white overflow-hidden flex flex-col h-full">
-                    <OptimizedImage
-                      src={data.mainImage?.asset?.url ?? ''}
-                      alt={data.mainImageAlt?.[locale] ?? data.title?.[locale] ?? ''}
-                      width={800}
-                      height={600}
-                      quality={75}
-                      loading="lazy"
-                      className="w-full h-auto aspect-[4/3] md:aspect-[16/9] 2xl:aspect-[4/3] object-cover transition duration-500"
-                    />
+                  <article class="bg-white overflow-hidden flex flex-col h-full w-full">
+                    <a
+                      href={`/${locale}/ubud-experiences-and-activities/${data.slug}`}
+                      class="block overflow-hidden"
+                    >
+                      <OptimizedImage
+                        src={data.mainImage?.asset?.url ?? ''}
+                        alt={data.mainImageAlt?.[locale] ?? data.title?.[locale] ?? ''}
+                        width={800}
+                        height={600}
+                        quality={75}
+                        loading="lazy"
+                        className="w-full h-auto aspect-[4/3] md:aspect-[16/9] 2xl:aspect-[4/3] object-cover transition duration-500"
+                      />
+                    </a>
 
                     <div class="py-4 md:py-6 flex flex-col flex-1">
-                    
                       <h3 class="text-lg tracking-widest uppercase font-title">
-                        {data?.title?.[locale] ?? ''}
+                        <a href={`/${locale}/ubud-experiences-and-activities/${data.slug}`}>
+                          {data?.title?.[locale] ?? ''}
+                        </a>
                       </h3>
 
                       {/* {data?.excerpt?.[locale] && (
@@ -221,17 +223,14 @@ const keywords =
                         </p>
                       )} */}
 
-                      <div class="flex-grow"></div>
-
                       <a
                         href={`/${locale}/ubud-experiences-and-activities/${data.slug}`}
-                        class="text-lg mt-4 inline-block text-gray-700 uppercase"
+                        class="text-lg mt-auto pt-4 inline-block text-gray-700 uppercase"
                       >
-                        Details
+                        Discover
                       </a>
                     </div>
-                  </div>
-                  </a>
+                  </article>
                 </div>
                 
               ))}
@@ -240,7 +239,7 @@ const keywords =
         </div>
 
         {/* Carousel navigation buttons */}
-        <div class="flex items-center gap-4 md:gap-6 mt-4 md:mt-8 justify-start">
+        <div class="flex items-center gap-4 md:gap-6 mt-4 md:mt-8 justify-end">
           <button
             aria-label="Previous Experience Category Slide"
             id="experience-category-prev"

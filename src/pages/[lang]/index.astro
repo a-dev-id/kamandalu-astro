@@ -27,7 +27,7 @@ const [
   wellnessVenue,         // List of wellness venues for wellness carousel
   wellnessExperience,    // List of wellness experiences for wellness carousel
   culinaryJourney,
-  rareExperiences,
+  experienceCategories,
   diningVenue,
   homeSliders,           // Home page hero slider images
   pageDetails,           // Main page meta and content details
@@ -42,7 +42,7 @@ const [
   client.fetch(`*[_type == "wellnessVenue"] | order(order asc){ "slug": slug.current, title, excerpt, secondImageAlt, secondImage { asset-> { url } } }`),
   client.fetch(`*[_type == "wellnessExperience"] | order(order asc){ "slug": slug.current, title, excerpt, secondImageAlt, secondImage { asset-> { url } } }`),
   client.fetch(`*[_type == "experienceUnique" && category=="culinaryJourney"] | order(order asc){ "slug": slug.current, title, excerpt, secondImageAlt, secondImage { asset-> { url } } }`),
-  client.fetch(`*[_type == "experienceUnique" && category=="rareExperiences"] | order(order asc){ "slug": slug.current, title, excerpt, secondImageAlt, secondImage { asset-> { url } } }`),
+  client.fetch(`*[_type == "experienceCategory" && defined(slug.current) && isActive != false] | order(order asc){ "slug": slug.current, title, excerpt, mainImageAlt, mainImage { asset-> { url } } }`),
   client.fetch(`*[_type == "diningVenue"] | order(order asc){ "slug": slug.current, title, excerpt, secondImageAlt, secondImage { asset-> { url } } }`),
   client.fetch(`*[_type == "homeSlider"] | order(order asc){ title, image { asset-> { url } } }`),
   // Fetching page details for the main page
@@ -244,7 +244,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
       </div>
     </div>
     <!-- Carousel Navigation Buttons -->
-    <div class="flex items-center gap-4 md:gap-6 mt-4 justify-start">
+    <div class="flex items-center gap-4 md:gap-6 mt-4 justify-end">
       {/* Previous Villa Button */}
       <button aria-label="Previous Villa" id="villa-prev" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="44" y1="12" x2="4" y2="12" /><polyline points="12 20 4 12 12 4" /></svg>
@@ -296,7 +296,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
       </div>
     </div>
     <!-- Carousel Navigation Buttons -->
-    <div class="flex items-center gap-4 md:gap-6 mt-4 justify-start">
+    <div class="flex items-center gap-4 md:gap-6 mt-4 justify-end">
       {/* Previous Offer Button */}
       <button aria-label="Previous Offer" id="offer-prev" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="44" y1="12" x2="4" y2="12" /><polyline points="12 20 4 12 12 4" /></svg>
@@ -374,7 +374,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
       </div>
     </div>
     {/* Carousel navigation buttons */}
-    <div class="flex items-center gap-4 md:gap-6 mt-4 justify-start">
+    <div class="flex items-center gap-4 md:gap-6 mt-4 justify-end">
       {/* Previous Wellness Slide Button */}
       <button aria-label="Previous Wellness Slide" id="wellness-prev" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="44" y1="12" x2="4" y2="12" /><polyline points="12 20 4 12 12 4" /></svg>
@@ -428,7 +428,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
       </div>
     </div>
     {/* Carousel navigation buttons */}
-    <div class="flex items-center gap-4 md:gap-6 mt-4 justify-start">
+    <div class="flex items-center gap-4 md:gap-6 mt-4 justify-end">
       {/* Previous Culinary Slide Button */}
       <button aria-label="Previous Culinary Slide" id="culinary-prev" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="44" y1="12" x2="4" y2="12" /><polyline points="12 20 4 12 12 4" /></svg>
@@ -453,14 +453,14 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
     <div id="experience-carousel" class="splide mb-4" role="region" aria-label="Experience Carousel">
       <div class="splide__track">
         <div class="splide__list">
-          {/* Loop through rareExperiences items to create each experience slide */}
-          {rareExperiences.map((dining, i) => (
-            <div class="splide__slide transition-transform duration-500 ease-in-out" role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${rareExperiences.length}`}>
+          {/* Loop through experience categories to create each experience slide */}
+          {experienceCategories.map((category, i) => (
+            <div class="splide__slide transition-transform duration-500 ease-in-out flex h-auto" role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${experienceCategories.length}`}>
               <div class="bg-white overflow-hidden flex flex-col h-full">
                 {/* Experience image */}
                 <OptimizedImage
-                  src={dining.secondImage.asset.url}
-                  alt={dining.secondImageAlt?.[locale]}
+                  src={category.mainImage?.asset?.url ?? ''}
+                  alt={category.mainImageAlt?.[locale] ?? category.title?.[locale] ?? ''}
                   width={800}
                   height={600}
                   quality={75}
@@ -469,11 +469,10 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
                 />
                 {/* Experience info */}
                 <div class="py-4 md:py-6 flex flex-col flex-1">
-                  <h3 class="text-lg tracking-widest uppercase font-title">{dining.title?.[locale] ?? ''}</h3>
-                  <p class="mt-2 text-lg">{/*dining.excerpt?.[locale] ?? ''*/}</p>
-                  <div class="flex-grow"></div>
+                  <h3 class="text-lg tracking-widest uppercase font-title">{category.title?.[locale] ?? ''}</h3>
+                  <p class="mt-2 text-lg">{/*category.excerpt?.[locale] ?? ''*/}</p>
                   {/* Explore button for each experience */}
-                  <a href={`/${locale}/experience/${dining.slug}`} class="text-lg mt-4 inline-block text-gray-700 uppercase">Explore</a>
+                  <a href={`/${locale}/ubud-experiences-and-activities/${category.slug}`} class="text-lg mt-auto pt-4 inline-block text-gray-700 uppercase">Explore</a>
                 </div>
               </div>
             </div>
@@ -482,7 +481,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
       </div>
     </div>
     <!-- Carousel navigation buttons -->
-    <div class="flex items-center gap-4 md:gap-6 mt-4justify-start">
+    <div class="flex items-center gap-4 md:gap-6 mt-4 justify-end">
       {/* Previous Experience Slide Button */}
       <button aria-label="Previous Experience Slide" id="experience-prev" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="44" y1="12" x2="4" y2="12" /><polyline points="12 20 4 12 12 4" /></svg>
