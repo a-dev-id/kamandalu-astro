@@ -100,8 +100,8 @@ const detailHTML = toHTML(safeArray(experience.detail), {
   components: {
     list: ({ children, value }) => (
       value?.listItem === 'bullet' || value?.style === 'normal'
-        ? `<ul class="list-disc ml-6 space-y-2">${children}</ul>`
-        : `<ol class="list-decimal ml-6 space-y-2">${children}</ol>`
+        ? `<ul class="list-disc ml-6">${children}</ul>`
+        : `<ol class="list-decimal ml-6">${children}</ol>`
     ),
     listItem: ({ children }) => `<li>${children}</li>`,
   }
@@ -111,8 +111,8 @@ const menuHTML = toHTML(safeArray(experience.menu), {
   components: {
     list: ({ children, value }) => (
       value?.listItem === 'bullet' || value?.style === 'normal'
-        ? `<ul class="list-disc ml-6 space-y-2">${children}</ul>`
-        : `<ol class="list-decimal ml-6 space-y-2">${children}</ol>`
+        ? `<ul class="list-disc ml-6">${children}</ul>`
+        : `<ol class="list-decimal ml-6">${children}</ol>`
     ),
     listItem: ({ children }) => `<li>${children}</li>`,
   }
@@ -124,8 +124,8 @@ const htmlOpts = {
     list: ({ children, value }) => {
       const type = value?.listItem === 'bullet' || value?.style === 'normal' ? 'bullet' : 'number';
       return type === 'bullet'
-        ? `<ul class="list-disc ml-6 space-y-2">${children}</ul>`
-        : `<ol class="list-decimal ml-6 space-y-2">${children}</ol>`;
+        ? `<ul class="list-disc ml-6">${children}</ul>`
+        : `<ol class="list-decimal ml-6">${children}</ol>`;
     },
     listItem: ({ children }) => `<li>${children}</li>`,
   }
@@ -209,22 +209,22 @@ const keywords = experience?.metaKeywords?.[locale] ?? '';
     <div class="flex flex-col lg:flex-row justify-between gap-12">
       {/* Experience details */}
       <div class="lg:w-3/5">
-        <h3 class="font-title text-xl md:text-2xl uppercase mb-6">Details</h3>
-        <div class="text-lg max-w-none" set:html={detailHTML}></div>
+        <h3 class="font-title text-xl md:text-2xl uppercase mb-6 tracking-widest font-light">INCLUSIONS & DETAILS</h3>
+        <div class="experience-rich-text max-w-none" set:html={detailHTML}></div>
       </div>
 
       {/* Reservation and contact info */}
       <div class="lg:w-2/5 flex flex-col items-end">
         <div>
-          <h3 class="font-title text-xl md:text-2xl mb-6">Reserve This Experience</h3>
-          <div class="text-lg mb-6" set:html={contactHTML}></div>
+          <h3 class="font-title text-xl md:text-2xl mb-6 tracking-widest font-light">Reserve This Experience</h3>
+          <div class="experience-rich-text mb-6" set:html={contactHTML}></div>
           <a
             href={`https://wa.me/+628113984566`}
             class="inline-block px-4 py-3 md:px-4 md:py-2 text-xs font-title tracking-widest border bg-[#916B2C] text-white border-transparent hover:bg-white hover:text-black hover:border-black transition-colors duration-300 text-center"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Enquire & Reserve
+            Inquire & Reserve
           </a>
         </div>
       </div>
@@ -264,7 +264,7 @@ const keywords = experience?.metaKeywords?.[locale] ?? '';
             role="region"
             aria-labelledby="accordion-1"
           >
-            <div class="text-lg max-w-none" set:html={menuHTML}></div>
+            <div class="experience-rich-text max-w-none" set:html={menuHTML}></div>
           </div>
         </div>
       </section>
@@ -346,4 +346,78 @@ const keywords = experience?.metaKeywords?.[locale] ?? '';
       });
     });
   </script>
+
+  <style>
+    .experience-rich-text {
+      color: #1f2a44;
+      font-size: 1rem;
+      line-height: 1.5;
+      letter-spacing: 0.035em;
+    }
+
+    .experience-rich-text :global(p) {
+      margin: 0;
+    }
+
+    .experience-rich-text :global(p + p) {
+      margin-top: 0.18rem;
+    }
+
+    .experience-rich-text :global(p:empty),
+    .experience-rich-text :global(p:has(> br:only-child)) {
+      display: none;
+    }
+
+    .experience-rich-text :global(strong) {
+      display: inline-block;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .experience-rich-text :global(p:has(> strong:only-child)) {
+      margin-top: 0.75rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .experience-rich-text :global(p:first-child:has(> strong:only-child)) {
+      margin-top: 0;
+    }
+
+    .experience-rich-text :global(ul + p:has(> strong:only-child)),
+    .experience-rich-text :global(ol + p:has(> strong:only-child)) {
+      margin-top: 0.75rem;
+    }
+
+    .experience-rich-text :global(p:not(:has(> strong:only-child)) + p:has(> strong:only-child)) {
+      margin-top: 0.85rem;
+    }
+
+    .experience-rich-text :global(ul),
+    .experience-rich-text :global(ol) {
+      margin: 0.15rem 0 0.45rem 1.25rem !important;
+      padding: 0 !important;
+    }
+
+    .experience-rich-text :global(li) {
+      padding-left: 0.25rem !important;
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+    }
+
+    .experience-rich-text :global(ul > :not([hidden]) ~ :not([hidden])),
+    .experience-rich-text :global(ol > :not([hidden]) ~ :not([hidden])) {
+      margin-top: 0.08rem !important;
+    }
+
+    .experience-rich-text :global(li::marker) {
+      font-size: 0.75em;
+      color: #1f2a44;
+    }
+
+    @media (min-width: 768px) {
+      .experience-rich-text {
+        font-size: 1.0625rem;
+      }
+    }
+  </style>
 </Layout>
