@@ -97,7 +97,6 @@ const keywords = venue.metaKeywords?.[locale] ?? '';
             alt={slide.alt?.[locale] ?? slide.title?.[locale] ?? venue.mainImageAlt?.[locale] ?? ''}
             width={1600}
             height={900}
-            quality={75}
             className="w-full h-full object-cover"
             fetchpriority={i === 0 ? 'high' : 'auto'}
             loading={i === 0 ? 'eager' : 'lazy'}
@@ -251,7 +250,6 @@ const keywords = venue.metaKeywords?.[locale] ?? '';
                       alt={`${venue.mainImageAlt?.[locale] ?? ''} - ${i + 1}`}
                       width={800}
                       height={600}
-                      quality={75}
                       loading="lazy"
                       className="w-full h-auto aspect-[4/3] md:aspect-[16/9] 2xl:aspect-[4/3] transition duration-500"
                     />
@@ -263,7 +261,7 @@ const keywords = venue.metaKeywords?.[locale] ?? '';
         </div>
 
         {/* Gallery navigation buttons */}
-        <div class="flex items-center gap-4 md:gap-6 mt-4 md:mt-8 justify-start">
+        <div class="flex items-center gap-4 md:gap-6 mt-4 md:mt-8 justify-end">
           <button
             aria-label="Previous venue Slide"
             id="venue-prev"

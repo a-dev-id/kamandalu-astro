@@ -155,7 +155,6 @@ const initialVisibleItems = 9;
               alt={slide.alt?.[locale] ?? slide.title?.[locale] ?? categoryDetails?.mainImageAlt?.[locale] ?? ''}
               width={1600}
               height={900}
-              quality={75}
               className="w-full h-full object-cover"
               fetchpriority={i === 0 ? 'high' : 'auto'}
               loading={i === 0 ? 'eager' : 'lazy'}
@@ -196,13 +195,13 @@ const initialVisibleItems = 9;
       </h1>
 
       {categoryDetails?.subtitle?.[locale] && (
-        <p class="text-lg md:text-xl uppercase tracking-widest mb-5">
+        <p class="text-lg md:text-2xl uppercase tracking-widest mb-5">
           {categoryDetails.subtitle[locale]}
         </p>
       )}
 
       {categoryDescription && (
-        <div class="mb-5 text-lg" set:html={categoryDescription}></div>
+        <div class="mb-5 text-lg md:text-2xl" set:html={categoryDescription}></div>
       )}
     </div>
   </section>
@@ -241,7 +240,6 @@ const initialVisibleItems = 9;
                     alt={cardImageAlt}
                     width={800}
                     height={600}
-                    quality={75}
                     loading={i < initialVisibleItems ? 'eager' : 'lazy'}
                     className="w-full h-auto aspect-[4/3] md:aspect-[16/9] 2xl:aspect-[4/3] object-cover transition duration-500"
                   />
@@ -272,7 +270,7 @@ const initialVisibleItems = 9;
                     href={`/${locale}/ubud-experiences-and-activities/${categorySlug}/${data.slug}`}
                     class="text-lg mt-4 inline-block text-gray-700 uppercase"
                   >
-                    Details
+                    Discover
                   </a>
                 </div>
               </article>

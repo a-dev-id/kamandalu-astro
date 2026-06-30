@@ -126,7 +126,6 @@ const keywords = wedding.metaKeywords?.[locale] ?? '';
             alt={slide.alt?.[locale] ?? slide.title?.[locale] ?? wedding.mainImageAlt?.[locale] ?? ''}
             width={1600}
             height={900}
-            quality={75}
             className="w-full h-full object-cover"
             fetchpriority={i === 0 ? 'high' : 'auto'}
             loading={i === 0 ? 'eager' : 'lazy'}
@@ -260,7 +259,6 @@ const keywords = wedding.metaKeywords?.[locale] ?? '';
                       alt={pkg.title?.[locale] ?? ''}
                       width={400}
                       height={300}
-                      quality={75}
                       className="w-full h-auto mb-4 md:mb-0"
                     />
                   </div>

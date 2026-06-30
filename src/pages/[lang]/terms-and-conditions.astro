@@ -74,7 +74,6 @@ const htmlItems = (pageDetails?.items ?? []).map((it) => ({
         alt={pageDetails?.mainImageAlt?.[locale] ?? ''}
         width={1600}
         height={900}
-        quality={75}
         loading="eager"
         decoding="async"
         sizes="100vw"
@@ -93,7 +92,7 @@ const htmlItems = (pageDetails?.items ?? []).map((it) => ({
       {pageDetails?.subtitle?.[locale] && (
         <p class="text-xl mb-4">{pageDetails.subtitle[locale]}</p>
       )}
-      <div class="max-w-none text-lg mx-auto" set:html={pageDescription}></div>
+      <div class="max-w-none text-xl mx-auto" set:html={pageDescription}></div>
     </div>
   </section>
 

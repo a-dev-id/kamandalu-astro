@@ -113,7 +113,6 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
             alt={slide.alt?.[locale] ?? slide.title?.[locale] ?? pageDetails.mainImageAlt?.[locale] ?? ''}
             width={1600}
             height={900}
-            quality={75}
             className="w-full h-full object-cover"
             fetchpriority={i === 0 ? 'high' : 'auto'}
             loading={i === 0 ? 'eager' : 'lazy'}
@@ -151,7 +150,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
       <h1 class="font-title text-3xl sm:text-4xl md:text-5xl uppercase mb-4 md:mb-6 tracking-widest font-light">
         {pageDetails?.title?.[locale] ?? ''}
       </h1>
-      <div class="mb-12 md:mb-18 text-lg" set:html={pageDescription}></div>
+      <div class="mb-12 md:mb-18 text-xl" set:html={pageDescription}></div>
     </div>
   </section>
 
@@ -173,7 +172,6 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
                   alt={data.secondImageAlt?.[locale] ?? ''}
                   width={800}
                   height={600}
-                  quality={75}
                   loading="lazy"
                   className="w-full h-auto aspect-[4/3] md:aspect-[16/9] 2xl:aspect-[4/3] transition duration-500"
                 />
@@ -201,7 +199,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
     </div>
 
     {/* Venue carousel navigation buttons */}
-    <div class="flex items-center gap-4 md:gap-6 mt-4 md:mt-8 justify-start">
+    <div class="flex items-center gap-4 md:gap-6 mt-4 md:mt-8 justify-end">
       <button
         aria-label="Previous venue slide"
         id="venue-prev"
@@ -251,7 +249,6 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
                   alt={data.secondImageAlt?.[locale] ?? ''}
                   width={800}
                   height={600}
-                  quality={75}
                   loading="lazy"
                   className="w-full h-auto aspect-[4/3] transition duration-500"
                 />
@@ -279,7 +276,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
     </div>
 
     {/* Wellness carousel navigation buttons */}
-    <div class="flex items-center gap-4 md:gap-6 mt-4 md:mt-8 justify-start">
+    <div class="flex items-center gap-4 md:gap-6 mt-4 md:mt-8 justify-end">
       <button
         aria-label="Previous wellness slide"
         id="wellness-prev"

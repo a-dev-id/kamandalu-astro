@@ -95,40 +95,37 @@ const experienceHeaderSlides =
         ]
       : [];
 
+const portableTextComponents = {
+  block: ({ children, value }) => {
+    if (!children?.trim()) return '';
+
+    const style = value?.style;
+    if (/^h[1-6]$/.test(style)) {
+      return `<${style}>${children}</${style}>`;
+    }
+
+    return `<p>${children.replace(/\n/g, '<br>')}</p>`;
+  },
+  list: ({ children, value }) => {
+    const type = value?.listItem ?? value?.type;
+    return type === 'number'
+      ? `<ol class="list-decimal ml-6">${children}</ol>`
+      : `<ul class="list-disc ml-6">${children}</ul>`;
+  },
+  listItem: ({ children }) => `<li>${children}</li>`,
+};
+
 // Convert Portable Text fields to HTML for rendering
 const detailHTML = toHTML(safeArray(experience.detail), {
-  components: {
-    list: ({ children, value }) => (
-      value?.listItem === 'bullet' || value?.style === 'normal'
-        ? `<ul class="list-disc ml-6">${children}</ul>`
-        : `<ol class="list-decimal ml-6">${children}</ol>`
-    ),
-    listItem: ({ children }) => `<li>${children}</li>`,
-  }
+  components: portableTextComponents,
 });
 
 const menuHTML = toHTML(safeArray(experience.menu), {
-  components: {
-    list: ({ children, value }) => (
-      value?.listItem === 'bullet' || value?.style === 'normal'
-        ? `<ul class="list-disc ml-6">${children}</ul>`
-        : `<ol class="list-decimal ml-6">${children}</ol>`
-    ),
-    listItem: ({ children }) => `<li>${children}</li>`,
-  }
+  components: portableTextComponents,
 });
 
 const htmlOpts = {
-  components: {
-    block: ({ children }) => `<p>${children.replace(/\n/g, '<br>')}</p>`,
-    list: ({ children, value }) => {
-      const type = value?.listItem === 'bullet' || value?.style === 'normal' ? 'bullet' : 'number';
-      return type === 'bullet'
-        ? `<ul class="list-disc ml-6">${children}</ul>`
-        : `<ol class="list-decimal ml-6">${children}</ol>`;
-    },
-    listItem: ({ children }) => `<li>${children}</li>`,
-  }
+  components: portableTextComponents,
 };
 
 const contactHTML = toHTML(safeArray(experience.contact), htmlOpts);
@@ -198,7 +195,7 @@ const keywords = experience?.metaKeywords?.[locale] ?? '';
         {experience?.title?.[locale] ?? ''}
       </h1>
       <div class="text-xl sm:text-2xl md:text-3xl mb-4 md:mb-6 tracking-widest font-light">{experience?.subtitle?.[locale] ?? ''}</div>
-      <p class="text-lg">
+      <p class="text-lg md:text-2xl">
         {experience?.description?.[locale] ?? ''}
       </p>
     </div>
@@ -394,7 +391,7 @@ const keywords = experience?.metaKeywords?.[locale] ?? '';
 
     .experience-rich-text :global(ul),
     .experience-rich-text :global(ol) {
-      margin: 0.15rem 0 0.45rem 1.25rem !important;
+      margin: 0.15rem 0 1.6rem 1.25rem !important;
       padding: 0 !important;
     }
 

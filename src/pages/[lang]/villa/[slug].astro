@@ -20,6 +20,14 @@ const safeArray = arr => Array.isArray(arr) ? arr : [];
 // Fetch villa data from Sanity
 const villa = await client.fetch(`*[_type == "villa" && slug.current == $slug][0]{
   title, excerpt, description, mainImage { asset->{url} }, mainImageAlt,
+  headerImages[]{
+    image {
+      asset->{url}
+    },
+    alt,
+    title,
+    order
+  },
   villaGallery[] { asset->{url} }, villaFeatures, inVillaEntertainment,
   complimentaries, area, maximumOccupancy, others,
   metaTitle, metaDescription, metaKeywords, buttonValue, buttonLabel,
@@ -58,25 +66,79 @@ const htmlFields = {
 
 // Prepare meta and description fields
 const villaDescription = toHTML(safeArray(villa.description?.[locale]));
+const villaHeaderSlides =
+  Array.isArray(villa?.headerImages) && villa.headerImages.length
+    ? villa.headerImages
+        .filter(slide => slide?.image?.asset?.url)
+        .sort((a, b) => (a.order ?? 999) - (b.order ?? 999))
+    : villa?.mainImage?.asset?.url
+      ? [
+          {
+            image: villa.mainImage,
+            alt: villa.mainImageAlt,
+            title: villa.title,
+            order: 1,
+          },
+        ]
+      : [];
 const title = villa?.metaTitle?.[locale] ?? '';
 const description = villa?.metaDescription?.[locale] ?? '';
 const url = new URL(Astro.request.url).href;
-const ogImage = villa.mainImage?.asset?.url ?? '';
+const ogImage =
+  villaHeaderSlides[0]?.image?.asset?.url ??
+  villa.mainImage?.asset?.url ??
+  '';
 const keywords = villa.metaKeywords?.[locale] ?? '';
 ---
 
 <Layout {title} {description} {url} {ogImage} {keywords}>
-  {/* Hero section with main villa image */}
+  {/* Hero section with header slider */}
   <section class="relative w-full h-[50vh] md:h-[60vh] lg:h-[75vh] overflow-hidden">
-    <OptimizedImage
-      src={villa.mainImage.asset.url}
-      alt={villa.mainImageAlt?.[locale] ?? ''}
-      width={1600}
-      height={900}
-      quality={75}
-      className="w-full h-full object-cover"
-    />
-    <div class="absolute inset-0 bg-black/25 z-20"></div>
+    <div id="villa-detail-header-carousel" class="w-full h-full relative">
+      {villaHeaderSlides.map((slide, i) => (
+        <div
+          class={`villa-detail-header-slide w-full h-full absolute inset-0 transition-opacity duration-1000 ${
+            i === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'
+          }`}
+        >
+          <OptimizedImage
+            src={slide.image?.asset?.url ?? ''}
+            alt={slide.alt?.[locale] ?? slide.title?.[locale] ?? villa.mainImageAlt?.[locale] ?? ''}
+            width={1600}
+            height={900}
+            className="w-full h-full object-cover"
+            fetchpriority={i === 0 ? 'high' : 'auto'}
+            loading={i === 0 ? 'eager' : 'lazy'}
+          />
+        </div>
+      ))}
+
+      <div class="absolute inset-0 bg-black/25 z-20"></div>
+
+      {villaHeaderSlides.length > 1 && (
+        <>
+          <button
+            aria-label="Previous Villa Detail Header Slide"
+            id="villaDetailHeaderPrev"
+            class="absolute left-4 top-1/2 -translate-y-1/2 text-white z-30"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+
+          <button
+            aria-label="Next Villa Detail Header Slide"
+            id="villaDetailHeaderNext"
+            class="absolute right-4 top-1/2 -translate-y-1/2 text-white z-30"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </>
+      )}
+    </div>
   </section>
 
   {/* Villa title, description, and booking button */}
@@ -259,6 +321,57 @@ const keywords = villa.metaKeywords?.[locale] ?? '';
           icon.classList.toggle('rotate-180');
         });
       });
+    });
+  </script>
+
+  {/* Villa Detail Header Carousel Script */}
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      const slides = document.querySelectorAll('.villa-detail-header-slide');
+      const prevButton = document.getElementById('villaDetailHeaderPrev');
+      const nextButton = document.getElementById('villaDetailHeaderNext');
+
+      if (!slides.length) return;
+
+      let currentSlide = 0;
+
+      function showVillaDetailHeaderSlide(index) {
+        slides.forEach((slide, i) => {
+          if (i === index) {
+            slide.classList.add('opacity-100', 'z-10');
+            slide.classList.remove('opacity-0', 'z-0');
+          } else {
+            slide.classList.add('opacity-0', 'z-0');
+            slide.classList.remove('opacity-100', 'z-10');
+          }
+        });
+      }
+
+      function nextVillaDetailHeaderSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showVillaDetailHeaderSlide(currentSlide);
+      }
+
+      function prevVillaDetailHeaderSlide() {
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        showVillaDetailHeaderSlide(currentSlide);
+      }
+
+      prevButton?.addEventListener('click', e => {
+        e.stopPropagation();
+        prevVillaDetailHeaderSlide();
+      });
+
+      nextButton?.addEventListener('click', e => {
+        e.stopPropagation();
+        nextVillaDetailHeaderSlide();
+      });
+
+      if (slides.length > 1) {
+        setInterval(nextVillaDetailHeaderSlide, 5000);
+      }
+
+      showVillaDetailHeaderSlide(currentSlide);
     });
   </script>
 

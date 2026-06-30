@@ -84,7 +84,6 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
             alt={slide.alt?.[locale] ?? slide.title?.[locale] ?? pageDetails.mainImageAlt?.[locale] ?? ''}
             width={1600}
             height={900}
-            quality={75}
             className="w-full h-full object-cover"
             fetchpriority={i === 0 ? 'high' : 'auto'}
             loading={i === 0 ? 'eager' : 'lazy'}
@@ -149,7 +148,6 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
                   alt={data.secondImageAlt?.[locale] ?? ''}
                   width={800}
                   height={600}
-                  quality={75}
                   loading="lazy"
                   className="w-full h-auto aspect-[4/3] md:aspect-[16/9] 2xl:aspect-[4/3] transition duration-500"
                 />
