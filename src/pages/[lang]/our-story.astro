@@ -21,28 +21,94 @@ const safeArray = arr => Array.isArray(arr) ? arr : [];
 // Fetch page details from Sanity CMS
 const pageDetails = await client.fetch(`*[_type == "page" && _id == "deb2d017-8818-477c-8680-bbc7e0fb4f0b"][0]{
   title, subtitle, description, metaTitle, metaDescription, metaKeywords,
-  mainImageAlt, mainImage { asset->{url} }
+  mainImageAlt, mainImage { asset->{url} },
+  headerImages[]{
+    image {
+      asset->{url}
+    },
+    alt,
+    title,
+    order
+  }
 }`);
+
+// Prepare our story header slider images
+const ourStoryHeaderSlides =
+  Array.isArray(pageDetails?.headerImages) && pageDetails.headerImages.length
+    ? pageDetails.headerImages
+        .filter(slide => slide?.image?.asset?.url)
+        .sort((a, b) => (a.order ?? 999) - (b.order ?? 999))
+    : pageDetails?.mainImage?.asset?.url
+      ? [
+          {
+            image: pageDetails.mainImage,
+            alt: pageDetails.mainImageAlt,
+            title: pageDetails.title,
+            order: 1,
+          },
+        ]
+      : [];
 
 // Prepare content and meta data for the page
 const pageDescription = toHTML(safeArray(pageDetails.description?.[locale]));
 const title = pageDetails?.metaTitle?.[locale] ?? '';
 const description = pageDetails?.metaDescription?.[locale] ?? '';
 const url = new URL(Astro.request.url).href;
-const ogImage = pageDetails.mainImage?.asset?.url ?? '';
+const ogImage =
+  ourStoryHeaderSlides[0]?.image?.asset?.url ??
+  pageDetails.mainImage?.asset?.url ??
+  '';
 const keywords = pageDetails.metaKeywords?.[locale] ?? '';
 ---
 
 <Layout {title} {description} {url} {ogImage} {keywords}>
-  {/* Hero section with background image */}
+  {/* Hero section with header slider */}
   <section class="relative w-full h-[50vh] md:h-[60vh] lg:h-[75vh] overflow-hidden">
-    <OptimizedImage
-      src={pageDetails.mainImage.asset.url}
-      alt={pageDetails.mainImageAlt?.[locale] ?? ''}
-      width={1600} height={900}
-      className="w-full h-full object-cover"
-    />
-    <div class="absolute inset-0 bg-black/25 z-20"></div>
+    <div id="our-story-header-carousel" class="w-full h-full relative">
+      {ourStoryHeaderSlides.map((slide, i) => (
+        <div
+          class={`our-story-header-slide w-full h-full absolute inset-0 transition-opacity duration-1000 ${
+            i === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'
+          }`}
+        >
+          <OptimizedImage
+            src={slide.image?.asset?.url ?? ''}
+            alt={slide.alt?.[locale] ?? slide.title?.[locale] ?? pageDetails.mainImageAlt?.[locale] ?? ''}
+            width={1600}
+            height={900}
+            className="w-full h-full object-cover"
+            fetchpriority={i === 0 ? 'high' : 'auto'}
+            loading={i === 0 ? 'eager' : 'lazy'}
+          />
+        </div>
+      ))}
+
+      <div class="absolute inset-0 bg-black/25 z-20"></div>
+
+      {ourStoryHeaderSlides.length > 1 && (
+        <>
+          <button
+            aria-label="Previous Our Story Header Slide"
+            id="ourStoryHeaderPrev"
+            class="absolute left-4 top-1/2 -translate-y-1/2 z-30 flex h-12 w-8 items-center justify-start text-white"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="32" viewBox="0 0 18 32" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="14 4 4 16 14 28" />
+            </svg>
+          </button>
+
+          <button
+            aria-label="Next Our Story Header Slide"
+            id="ourStoryHeaderNext"
+            class="absolute right-4 top-1/2 -translate-y-1/2 z-30 flex h-12 w-8 items-center justify-end text-white"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="32" viewBox="0 0 18 32" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="4 4 14 16 4 28" />
+            </svg>
+          </button>
+        </>
+      )}
+    </div>
   </section>
 
   {/* Main content section with title, description, and YouTube video */}
@@ -56,4 +122,55 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
       <iframe width="560" height="315" src="https://www.youtube.com/embed/Of9B46ypeWo?si=T7nRva4omArn_ViK" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="text-center m-auto"></iframe>
     </div>
   </section>
+
+  {/* Our Story Header Carousel Script */}
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      const slides = document.querySelectorAll('.our-story-header-slide');
+      const prevButton = document.getElementById('ourStoryHeaderPrev');
+      const nextButton = document.getElementById('ourStoryHeaderNext');
+
+      if (!slides.length) return;
+
+      let currentSlide = 0;
+
+      function showOurStoryHeaderSlide(index) {
+        slides.forEach((slide, i) => {
+          if (i === index) {
+            slide.classList.add('opacity-100', 'z-10');
+            slide.classList.remove('opacity-0', 'z-0');
+          } else {
+            slide.classList.add('opacity-0', 'z-0');
+            slide.classList.remove('opacity-100', 'z-10');
+          }
+        });
+      }
+
+      function nextOurStoryHeaderSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showOurStoryHeaderSlide(currentSlide);
+      }
+
+      function prevOurStoryHeaderSlide() {
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        showOurStoryHeaderSlide(currentSlide);
+      }
+
+      prevButton?.addEventListener('click', e => {
+        e.stopPropagation();
+        prevOurStoryHeaderSlide();
+      });
+
+      nextButton?.addEventListener('click', e => {
+        e.stopPropagation();
+        nextOurStoryHeaderSlide();
+      });
+
+      if (slides.length > 1) {
+        setInterval(nextOurStoryHeaderSlide, 5000);
+      }
+
+      showOurStoryHeaderSlide(currentSlide);
+    });
+  </script>
 </Layout>

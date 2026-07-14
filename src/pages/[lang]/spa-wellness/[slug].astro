@@ -31,6 +31,14 @@ let wellness = await client.fetch(
   `*[_type == "wellnessExperience" && slug.current == $slug][0]{
     _type, title, excerpt, description, mainImage { asset->{url} }, mainImageAlt,
     sliderImages[]{ asset->{url} },
+    headerImages[]{
+      image {
+        asset->{url}
+      },
+      alt,
+      title,
+      order
+    },
     metaTitle, metaDescription, metaKeywords,
     "details": details[$locale], "contactBooking": contactBooking[$locale],
     packages[]{
@@ -48,6 +56,14 @@ if (!wellness) {
     `*[_type == "wellnessVenue" && slug.current == $slug][0]{
       _type, title, excerpt, description, mainImage { asset->{url} }, mainImageAlt,
       sliderImages[]{ asset->{url} },
+      headerImages[]{
+        image {
+          asset->{url}
+        },
+        alt,
+        title,
+        order
+      },
       metaTitle, metaDescription, metaKeywords,
       "details": details[$locale], "contactBooking": contactBooking[$locale], "policy": policy[$locale],
       packages[]{
@@ -85,14 +101,30 @@ const detailsHTML = toHTML(safeArray(wellness.details), htmlOpts);
 const contactHTML = toHTML(safeArray(wellness.contactBooking), htmlOpts);
 const policyHTML = toHTML(safeArray(wellness.policy), htmlOpts);
 
-// Combine mainImage with sliderImages for the hero slider
-const heroImages = [
-  wellness.mainImage?.asset?.url,
-  ...safeArray(wellness.sliderImages).map(img => img?.asset?.url)
-].filter(Boolean);
-
-console.log('Hero Images:', heroImages);
-console.log('Hero Images Length:', heroImages.length);
+// Prepare wellness detail header slider images
+const wellnessHeaderSlides =
+  Array.isArray(wellness?.headerImages) && wellness.headerImages.length
+    ? wellness.headerImages
+        .filter(slide => slide?.image?.asset?.url)
+        .sort((a, b) => (a.order ?? 999) - (b.order ?? 999))
+    : [
+        wellness?.mainImage?.asset?.url
+          ? {
+              image: wellness.mainImage,
+              alt: wellness.mainImageAlt,
+              title: wellness.title,
+              order: 1,
+            }
+          : null,
+        ...safeArray(wellness?.sliderImages)
+          .filter(image => image?.asset?.url)
+          .map((image, index) => ({
+            image,
+            alt: wellness.mainImageAlt,
+            title: wellness.title,
+            order: index + 2,
+          })),
+      ].filter(Boolean);
 
 // Prepare meta and package data
 const packages = safeArray(wellness.packages);
@@ -100,89 +132,62 @@ const title = wellness?.metaTitle?.[locale] ?? '';
 const description = wellness?.metaDescription?.[locale] ?? '';
 const baseUrl = new URL(Astro.request.url);
 const url = baseUrl.href;
-const ogImage = wellness.mainImage?.asset?.url ?? '';
+const ogImage =
+  wellnessHeaderSlides[0]?.image?.asset?.url ??
+  wellness.mainImage?.asset?.url ??
+  '';
 const keywords = wellness.metaKeywords?.[locale] ?? '';
 ---
 
 <Layout {title} {description} {url} {ogImage} {keywords}>
-  {/* Hero section with slider */}
+  {/* Hero section with header slider */}
   <section class="relative w-full h-[50vh] md:h-[60vh] lg:h-[75vh] overflow-hidden">
-    {heroImages.length > 1 ? (
-      <div class="wellness-slider relative w-full h-full" id="wellness-hero-slider">
-        <div class="slider-wrapper relative w-full h-full">
-          {heroImages.map((imageUrl, idx) => (
-            <div class={`slider-slide absolute inset-0 transition-opacity duration-700 ${idx === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'}`} data-slide-index={idx}>
-              <OptimizedImage
-                src={imageUrl}
-                alt={wellness.mainImageAlt?.[locale] ?? wellness?.title?.[locale] ?? ''}
-                width={1600}
-                height={900}
-                className="w-full h-full object-cover"
-              />
-            </div>
-          ))}
-        </div>
-        
-        {/* Previous button */}
-        <button 
-          class="slider-prev absolute left-4 top-1/2 -translate-y-1/2 z-30 bg-white/80 hover:bg-white/95 rounded-full p-3 transition-all"
-          aria-label="Previous slide"
+    <div id="wellness-detail-header-carousel" class="w-full h-full relative">
+      {wellnessHeaderSlides.map((slide, i) => (
+        <div
+          class={`wellness-detail-header-slide w-full h-full absolute inset-0 transition-opacity duration-1000 ${
+            i === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'
+          }`}
         >
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-          </svg>
-        </button>
-        
-        {/* Next button */}
-        <button 
-          class="slider-next absolute right-4 top-1/2 -translate-y-1/2 z-30 bg-white/80 hover:bg-white/95 rounded-full p-3 transition-all"
-          aria-label="Next slide"
-        >
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-          </svg>
-        </button>
-        
-        {/* Pagination dots */}
-        <div class="slider-pagination absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex gap-2">
-          {heroImages.map((_, idx) => (
-            <button 
-              class={`slider-dot w-2 h-2 rounded-full transition-all ${idx === 0 ? 'bg-white w-8' : 'bg-white/50'}`}
-              data-slide-index={idx}
-              aria-label={`Go to slide ${idx + 1}`}
-            ></button>
-          ))}
+          <OptimizedImage
+            src={slide.image?.asset?.url ?? ''}
+            alt={slide.alt?.[locale] ?? slide.title?.[locale] ?? wellness.mainImageAlt?.[locale] ?? ''}
+            width={1600}
+            height={900}
+            className="w-full h-full object-cover"
+            fetchpriority={i === 0 ? 'high' : 'auto'}
+            loading={i === 0 ? 'eager' : 'lazy'}
+          />
         </div>
-      </div>
-    ) : (
-      <OptimizedImage
-        src={wellness.mainImage.asset.url}
-        alt={wellness.mainImageAlt?.[locale] ?? ''}
-        width={1600}
-        height={900}
-        className="w-full h-full object-cover"
-      />
-    )}
-    <div class="absolute inset-0 bg-black/25 z-20 pointer-events-none"></div>
-  </section>
+      ))}
 
-  {/* Custom slider styles */}
-  <style>
-    .wellness-slider .slider-slide {
-      transition: opacity 700ms ease-in-out;
-    }
-    
-    .wellness-slider .slider-prev,
-    .wellness-slider .slider-next {
-      opacity: 0;
-      transition: opacity 300ms;
-    }
-    
-    .wellness-slider:hover .slider-prev,
-    .wellness-slider:hover .slider-next {
-      opacity: 1;
-    }
-  </style>
+      <div class="absolute inset-0 bg-black/25 z-20"></div>
+
+      {wellnessHeaderSlides.length > 1 && (
+        <>
+          <button
+            aria-label="Previous Wellness Detail Header Slide"
+            id="wellnessDetailHeaderPrev"
+            class="absolute left-4 top-1/2 -translate-y-1/2 z-30 flex h-12 w-8 items-center justify-start text-white"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="32" viewBox="0 0 18 32" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="14 4 4 16 14 28" />
+            </svg>
+          </button>
+
+          <button
+            aria-label="Next Wellness Detail Header Slide"
+            id="wellnessDetailHeaderNext"
+            class="absolute right-4 top-1/2 -translate-y-1/2 z-30 flex h-12 w-8 items-center justify-end text-white"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="32" viewBox="0 0 18 32" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="4 4 14 16 4 28" />
+            </svg>
+          </button>
+        </>
+      )}
+    </div>
+  </section>
 
   {/* Title and description section */}
   <!-- <section class="container mx-auto px-4 xl:px-10 2xl:px-0 pt-16 md:pt-24">
@@ -394,96 +399,54 @@ Jl1YsAI3Q89IphvIh9EaWH5/rR9rpWP5oZGG1iQmSO++ry/KI23A2fxnmfn6klsACCzk/ZMpUOuMyG9T
 })()}
 
 
-  {/* Custom hero slider script */}
+  {/* Wellness Detail Header Carousel Script */}
   <script is:inline>
-    document.addEventListener('DOMContentLoaded', function() {
-      const slider = document.getElementById('wellness-hero-slider');
-      if (!slider) return;
-      
-      const slides = slider.querySelectorAll('.slider-slide');
-      const dots = slider.querySelectorAll('.slider-dot');
-      const prevBtn = slider.querySelector('.slider-prev');
-      const nextBtn = slider.querySelector('.slider-next');
-      
-      if (slides.length <= 1) return;
-      
-      let currentIndex = 0;
-      let autoSlideInterval;
-      
-      function goToSlide(index) {
-        // Hide all slides
+    document.addEventListener('DOMContentLoaded', () => {
+      const slides = document.querySelectorAll('.wellness-detail-header-slide');
+      const prevButton = document.getElementById('wellnessDetailHeaderPrev');
+      const nextButton = document.getElementById('wellnessDetailHeaderNext');
+
+      if (!slides.length) return;
+
+      let currentSlide = 0;
+
+      function showWellnessDetailHeaderSlide(index) {
         slides.forEach((slide, i) => {
           if (i === index) {
-            slide.classList.remove('opacity-0', 'z-0');
             slide.classList.add('opacity-100', 'z-10');
+            slide.classList.remove('opacity-0', 'z-0');
           } else {
-            slide.classList.remove('opacity-100', 'z-10');
             slide.classList.add('opacity-0', 'z-0');
+            slide.classList.remove('opacity-100', 'z-10');
           }
         });
-        
-        // Update dots
-        dots.forEach((dot, i) => {
-          if (i === index) {
-            dot.classList.remove('bg-white/50', 'w-2');
-            dot.classList.add('bg-white', 'w-8');
-          } else {
-            dot.classList.remove('bg-white', 'w-8');
-            dot.classList.add('bg-white/50', 'w-2');
-          }
-        });
-        
-        currentIndex = index;
       }
-      
-      function nextSlide() {
-        const next = (currentIndex + 1) % slides.length;
-        goToSlide(next);
+
+      function nextWellnessDetailHeaderSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showWellnessDetailHeaderSlide(currentSlide);
       }
-      
-      function prevSlide() {
-        const prev = (currentIndex - 1 + slides.length) % slides.length;
-        goToSlide(prev);
+
+      function prevWellnessDetailHeaderSlide() {
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        showWellnessDetailHeaderSlide(currentSlide);
       }
-      
-      function startAutoSlide() {
-        stopAutoSlide();
-        autoSlideInterval = setInterval(nextSlide, 3000);
-      }
-      
-      function stopAutoSlide() {
-        if (autoSlideInterval) {
-          clearInterval(autoSlideInterval);
-        }
-      }
-      
-      // Button clicks
-      if (nextBtn) {
-        nextBtn.addEventListener('click', function() {
-          nextSlide();
-          startAutoSlide();
-        });
-      }
-      
-      if (prevBtn) {
-        prevBtn.addEventListener('click', function() {
-          prevSlide();
-          startAutoSlide();
-        });
-      }
-      
-      // Dot clicks
-      dots.forEach((dot, index) => {
-        dot.addEventListener('click', function() {
-          goToSlide(index);
-          startAutoSlide();
-        });
+
+      prevButton?.addEventListener('click', e => {
+        e.stopPropagation();
+        prevWellnessDetailHeaderSlide();
       });
-      
-      // Start auto sliding
-      startAutoSlide();
-      
-      console.log('Custom wellness slider initialized with ' + slides.length + ' slides');
+
+      nextButton?.addEventListener('click', e => {
+        e.stopPropagation();
+        nextWellnessDetailHeaderSlide();
+      });
+
+      if (slides.length > 1) {
+        setInterval(nextWellnessDetailHeaderSlide, 5000);
+      }
+
+      showWellnessDetailHeaderSlide(currentSlide);
     });
   </script>
 
