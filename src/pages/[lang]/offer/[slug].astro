@@ -142,7 +142,7 @@ const keywords = offer.metaKeywords?.[locale] ?? '';
   .reserve-section h3,
   .reserve-section h4 {
     font-family: "PlantinLight", sans-serif;
-    font-size: 1.5rem;
+    font-size: 1.375rem;
     line-height: 1.3;
     margin-bottom: 0.5rem;
   }
@@ -195,14 +195,14 @@ const keywords = offer.metaKeywords?.[locale] ?? '';
 
   {/* What's Included and Booking section */}
   <section class="container mx-auto px-4 xl:px-10 2xl:px-0 pb-8 md:pb-10">
-    <div class="flex flex-col lg:flex-row justify-between gap-12">
+    <div class="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16 xl:gap-24">
       {/* Inclusion list */}
-      <div class="lg:w-4/5">
+      <div class="min-w-0">
         <h3 class="font-title text-xl md:text-2xl uppercase mb-6">{offer.inclusionTitle}</h3>
         <div class="text-lg max-w-none offer-inclusion" set:html={inclusionHTML}></div>
       </div>
       {/* Offer validity and booking button */}
-      <div class="lg:w-1/5 flex flex-col items-end">
+      <div class="flex flex-col lg:items-end">
         <div>
           <!-- <h3 class="font-title text-xl md:text-2xl uppercase mb-2">Offer Valid</h3>
           <p class="text-lg mb-6">
@@ -241,7 +241,7 @@ const keywords = offer.metaKeywords?.[locale] ?? '';
         <button
           id="accordion-trigger-additional-info"
           type="button"
-          class="w-full flex justify-between items-center py-4 font-title text-left text-lg uppercase toggle-btn"
+          class="w-full flex justify-between items-center py-4 font-title font-bold text-left text-lg uppercase toggle-btn"
           data-target="accordion-additional-info"
           aria-expanded="false"
           aria-controls="accordion-additional-info"
@@ -251,7 +251,7 @@ const keywords = offer.metaKeywords?.[locale] ?? '';
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
           </svg>
         </button>
-        <div id="accordion-additional-info" class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 hidden" role="region" aria-labelledby="accordion-trigger-additional-info">
+        <div id="accordion-additional-info" class="grid grid-cols-1 gap-6 pb-6 hidden" role="region" aria-labelledby="accordion-trigger-additional-info">
           <div class="text-lg max-w-none" set:html={additionalInfoHTML}></div>
         </div>
       </div>
@@ -261,7 +261,7 @@ const keywords = offer.metaKeywords?.[locale] ?? '';
         <button
           id="accordion-trigger-faq"
           type="button"
-          class="w-full flex justify-between items-center py-4 font-title text-left text-lg uppercase toggle-btn"
+          class="w-full flex justify-between items-center py-4 font-title font-bold text-left text-lg uppercase toggle-btn"
           data-target="accordion-faq"
           aria-expanded="false"
           aria-controls="accordion-faq"
@@ -271,7 +271,7 @@ const keywords = offer.metaKeywords?.[locale] ?? '';
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
           </svg>
         </button>
-        <div id="accordion-faq" class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 hidden" role="region" aria-labelledby="accordion-trigger-faq">
+        <div id="accordion-faq" class="grid grid-cols-1 gap-6 pb-6 hidden" role="region" aria-labelledby="accordion-trigger-faq">
           <div class="text-lg max-w-none" set:html={faqHTML}></div>
         </div>
       </div>
@@ -280,7 +280,7 @@ const keywords = offer.metaKeywords?.[locale] ?? '';
       <button
         id="accordion-trigger-policy"
         type="button"
-        class="w-full flex justify-between items-center py-4 font-title text-left text-lg uppercase toggle-btn"
+        class="w-full flex justify-between items-center py-4 font-title font-bold text-left text-lg uppercase toggle-btn"
         data-target="accordion-1"
         aria-expanded="false"
         aria-controls="accordion-1"
@@ -291,7 +291,7 @@ const keywords = offer.metaKeywords?.[locale] ?? '';
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
         </svg>
       </button>
-      <div id="accordion-1" class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 hidden" role="region" aria-labelledby="accordion-trigger-policy">
+      <div id="accordion-1" class="grid grid-cols-1 gap-6 pb-6 hidden" role="region" aria-labelledby="accordion-trigger-policy">
         <div class="text-lg max-w-none" set:html={cancelPolicyHTML}></div>
       </div>
     </div>
