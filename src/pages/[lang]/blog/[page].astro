@@ -80,7 +80,7 @@ export async function getStaticPaths() {
   {/* Page Header */}
   <section class="container mx-auto px-4 xl:px-10 2xl:px-0 pt-16 md:pt-24">
     <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
-      <h1 class="font-title text-3xl sm:text-4xl md:text-5xl uppercase mb-4 md:mb-6 tracking-widest font-light">
+      <h1 class="font-title text-3xl sm:text-4xl md:text-5xl mb-4 md:mb-6 tracking-widest font-light">
         {pageDetails?.title?.[locale] ?? ''}
       </h1>
       <div class="mb-12 md:mb-18 text-xl" set:html={pageDescription}></div>
@@ -110,7 +110,7 @@ export async function getStaticPaths() {
               <a
                 href={`/${locale}/blog/${data.slug}`}
                 class="bg-white text-black px-4 py-3 md:px-4 md:py-2 text-xs font-title tracking-widest transition-colors duration-300 border border-black hover:bg-[#916B2C] hover:text-white hover:border-transparent inline-block text-center"
-              >READ MORE</a>
+              >Read More</a>
             </div>
           </div>
         </div>

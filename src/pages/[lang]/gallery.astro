@@ -66,7 +66,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
   {/* Main content section with title, description, and YouTube video */}
   <section class="container mx-auto px-4 xl:px-10 2xl:px-56 pt-16 md:pt-24">
     <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
-      <h1 class="font-title text-3xl sm:text-4xl md:text-5xl uppercase mb-4 md:mb-6 tracking-widest font-light">
+      <h1 class="font-title text-3xl sm:text-4xl md:text-5xl mb-4 md:mb-6 tracking-widest font-light">
         {pageDetails?.title?.[locale] ?? ''}
       </h1>
       <div class="mb-12 md:mb-18 text-xl" set:html={pageDescription}></div>
@@ -76,11 +76,11 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
 <section class="container mx-auto px-4 py-24">
   <!-- Filter Buttons -->
   <div class="text-center mb-10 flex flex-wrap justify-center gap-2">
-    <button data-filter="all" class="filter-btn bg-white text-black px-4 py-2 text-xs font-title tracking-widest transition-colors duration-300 border border-black hover:bg-[#916B2C] hover:text-white hover:border-transparent">ALL</button>
-    <button data-filter="pool" class="filter-btn bg-white text-black px-4 py-2 text-xs font-title tracking-widest transition-colors duration-300 border border-black hover:bg-[#916B2C] hover:text-white hover:border-transparent">POOL</button>
-    <button data-filter="resort" class="filter-btn bg-white text-black px-4 py-2 text-xs font-title tracking-widest transition-colors duration-300 border border-black hover:bg-[#916B2C] hover:text-white hover:border-transparent">RESORT</button>
-    <button data-filter="villa" class="filter-btn bg-white text-black px-4 py-2 text-xs font-title tracking-widest transition-colors duration-300 border border-black hover:bg-[#916B2C] hover:text-white hover:border-transparent">Our VILLAS</button>
-    <button data-filter="experience" class="filter-btn bg-white text-black px-4 py-2 text-xs font-title tracking-widest transition-colors duration-300 border border-black hover:bg-[#916B2C] hover:text-white hover:border-transparent">EXPERIENCES</button>
+    <button data-filter="all" class="filter-btn bg-white text-black px-4 py-2 text-xs font-title tracking-widest transition-colors duration-300 border border-black hover:bg-[#916B2C] hover:text-white hover:border-transparent">All</button>
+    <button data-filter="pool" class="filter-btn bg-white text-black px-4 py-2 text-xs font-title tracking-widest transition-colors duration-300 border border-black hover:bg-[#916B2C] hover:text-white hover:border-transparent">Pool</button>
+    <button data-filter="resort" class="filter-btn bg-white text-black px-4 py-2 text-xs font-title tracking-widest transition-colors duration-300 border border-black hover:bg-[#916B2C] hover:text-white hover:border-transparent">Resort</button>
+    <button data-filter="villa" class="filter-btn bg-white text-black px-4 py-2 text-xs font-title tracking-widest transition-colors duration-300 border border-black hover:bg-[#916B2C] hover:text-white hover:border-transparent">Our Villas</button>
+    <button data-filter="experience" class="filter-btn bg-white text-black px-4 py-2 text-xs font-title tracking-widest transition-colors duration-300 border border-black hover:bg-[#916B2C] hover:text-white hover:border-transparent">Experiences</button>
   </div>
 
   <!-- Gallery Grid -->

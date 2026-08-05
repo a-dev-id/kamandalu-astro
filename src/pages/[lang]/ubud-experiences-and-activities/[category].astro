@@ -33,6 +33,11 @@ const categorySlug = category;
 
 // Helper to ensure array type
 const safeArray = arr => Array.isArray(arr) ? arr : [];
+const formatCardTitle = value =>
+  String(value ?? '')
+    .replace(/(?:<br\s*\/?>|&lt;br\s*\/?&gt;|\(br\))/gi, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
 
 // Fetch category details from Sanity CMS
 const categoryDetails = await client.fetch(`*[
@@ -190,7 +195,7 @@ const initialVisibleItems = 9;
   {/* Category title and description */}
   <section class={`container mx-auto px-4 py-16 md:py-24 ${categoryHeaderSlides.length === 0 ? 'pt-36 md:pt-44' : ''}`}>
     <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
-      <h1 class="font-title text-3xl sm:text-4xl md:text-5xl uppercase mb-4 md:mb-6 tracking-widest font-light">
+      <h1 class="font-title text-3xl sm:text-4xl md:text-5xl mb-4 md:mb-6 tracking-widest font-light">
         {categoryDetails?.title?.[locale] ?? ''}
       </h1>
 
@@ -248,7 +253,7 @@ const initialVisibleItems = 9;
                 <div class="py-4 md:py-6 flex flex-col flex-1">
                   <h3 class="text-lg tracking-widest uppercase font-title">
                     <a href={`/${locale}/ubud-experiences-and-activities/${categorySlug}/${data.slug}`}>
-                      {data?.title?.[locale] ?? ''}
+                      {formatCardTitle(data?.title?.[locale])}
                     </a>
                   </h3>
 

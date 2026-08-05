@@ -38,7 +38,12 @@ const offer = await client.fetch(`*[_type == "offer" && slug.current == $slug][0
   order,
   buttonLabel,
   buttonValue,
+  "reserveSection": reserveSection[$locale],
+  "inclusionTitle": inclusionTitle[$locale],
   "inclusion": inclusion[$locale],
+  "additionalInfoTitle": additionalInfoTitle[$locale],
+  "additionalInfo": additionalInfo[$locale],
+  "faq": faq[$locale],
   "cancelPolicy": cancelPolicy[$locale],
 }`, { slug, locale });
 
@@ -52,6 +57,18 @@ const htmlListComponents = {
 };
 
 const inclusionHTML = toHTML(safeArray(offer.inclusion), {
+  components: htmlListComponents,
+});
+
+const reserveSectionHTML = toHTML(safeArray(offer.reserveSection), {
+  components: htmlListComponents,
+});
+
+const additionalInfoHTML = toHTML(safeArray(offer.additionalInfo), {
+  components: htmlListComponents,
+});
+
+const faqHTML = toHTML(safeArray(offer.faq), {
   components: htmlListComponents,
 });
 
@@ -85,7 +102,7 @@ const keywords = offer.metaKeywords?.[locale] ?? '';
   {/* Offer title and description */}
   <section class="container mx-auto px-4 xl:px-10 2xl:px-0 py-16 md:py-24">
     <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
-      <h1 class="font-title text-3xl sm:text-4xl md:text-5xl uppercase mb-4 md:mb-6 tracking-widest font-light">
+      <h1 class="font-title text-3xl sm:text-4xl md:text-5xl mb-4 md:mb-6 tracking-widest font-light">
         {offer?.title?.[locale] ?? ''}
       </h1>
       <!-- <div class="text-lg prose max-w-none" set:html={offerDescription}></div> -->
@@ -119,6 +136,19 @@ const keywords = offer.metaKeywords?.[locale] ?? '';
     margin-top: 1rem;
     margin-bottom: 1rem;
     line-height: 1.4;
+  }
+
+  .reserve-section h2,
+  .reserve-section h3,
+  .reserve-section h4 {
+    font-family: "PlantinLight", sans-serif;
+    font-size: 1.5rem;
+    line-height: 1.3;
+    margin-bottom: 0.5rem;
+  }
+
+  .reserve-section p {
+    margin-bottom: 0.5rem;
   }
 
   @media (min-width: 768px) {
@@ -164,11 +194,11 @@ const keywords = offer.metaKeywords?.[locale] ?? '';
   </section>
 
   {/* What's Included and Booking section */}
-  <section class="container mx-auto px-4 xl:px-10 2xl:px-0 pb-16 md:pb-24">
+  <section class="container mx-auto px-4 xl:px-10 2xl:px-0 pb-8 md:pb-10">
     <div class="flex flex-col lg:flex-row justify-between gap-12">
       {/* Inclusion list */}
       <div class="lg:w-4/5">
-        <h3 class="font-title text-xl md:text-2xl uppercase mb-6">What's Included</h3>
+        <h3 class="font-title text-xl md:text-2xl uppercase mb-6">{offer.inclusionTitle}</h3>
         <div class="text-lg max-w-none offer-inclusion" set:html={inclusionHTML}></div>
       </div>
       {/* Offer validity and booking button */}
@@ -178,10 +208,7 @@ const keywords = offer.metaKeywords?.[locale] ?? '';
           <p class="text-lg mb-6">
             {offer.offerStart ? formatDate(offer.offerStart) : ''} - {offer.offerEnd ? formatDate(offer.offerEnd) : ''}
           </p> -->
-          <h3 class="font-title text-xl md:text-2xl uppercase mb-2">Reserve the special offers</h3>
-          <p class="text-lg mb-6">
-            Tel: +62 361 975825
-          </p>
+          <div class="reserve-section text-lg mb-6" set:html={reserveSectionHTML}></div>
 {(offer?.buttonLabel?.[locale] && offer?.buttonValue) ? (
   <a
             href={offer.buttonValue}
@@ -207,23 +234,64 @@ const keywords = offer.metaKeywords?.[locale] ?? '';
     </div>
   </section>
 
-  {/* Accordion for cancellation policy */}
+  {/* Accordions for additional information and cancellation policy */}
   <section class="container mx-auto px-4 xl:px-10 2xl:px-0 pb-12">
-    <div class="border-t border-b border-gray-300">
+    {(offer.additionalInfoTitle || safeArray(offer.additionalInfo).length > 0) && (
+      <div class="border-b border-gray-300">
+        <button
+          id="accordion-trigger-additional-info"
+          type="button"
+          class="w-full flex justify-between items-center py-4 font-title text-left text-lg uppercase toggle-btn"
+          data-target="accordion-additional-info"
+          aria-expanded="false"
+          aria-controls="accordion-additional-info"
+        >
+          {offer.additionalInfoTitle}
+          <svg class="w-5 h-5 transition-transform duration-300" data-icon data-target="accordion-additional-info" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        <div id="accordion-additional-info" class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 hidden" role="region" aria-labelledby="accordion-trigger-additional-info">
+          <div class="text-lg max-w-none" set:html={additionalInfoHTML}></div>
+        </div>
+      </div>
+    )}
+    {safeArray(offer.faq).length > 0 && (
+      <div class="border-b border-gray-300">
+        <button
+          id="accordion-trigger-faq"
+          type="button"
+          class="w-full flex justify-between items-center py-4 font-title text-left text-lg uppercase toggle-btn"
+          data-target="accordion-faq"
+          aria-expanded="false"
+          aria-controls="accordion-faq"
+        >
+          Frequently Asked Questions
+          <svg class="w-5 h-5 transition-transform duration-300" data-icon data-target="accordion-faq" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        <div id="accordion-faq" class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 hidden" role="region" aria-labelledby="accordion-trigger-faq">
+          <div class="text-lg max-w-none" set:html={faqHTML}></div>
+        </div>
+      </div>
+    )}
+    <div class="border-b border-gray-300">
       <button
+        id="accordion-trigger-policy"
         type="button"
         class="w-full flex justify-between items-center py-4 font-title text-left text-lg uppercase toggle-btn"
         data-target="accordion-1"
         aria-expanded="false"
         aria-controls="accordion-1"
       >
-        Terms & Conditions
+        Policies, Terms & Conditions
         {/* SVG icon for accordion toggle */}
         <svg class="w-5 h-5 transition-transform duration-300" data-icon data-target="accordion-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
         </svg>
       </button>
-      <div id="accordion-1" class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 hidden" role="region" aria-labelledby="accordion-1">
+      <div id="accordion-1" class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 hidden" role="region" aria-labelledby="accordion-trigger-policy">
         <div class="text-lg max-w-none" set:html={cancelPolicyHTML}></div>
       </div>
     </div>

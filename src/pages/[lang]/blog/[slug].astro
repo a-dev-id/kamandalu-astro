@@ -83,7 +83,7 @@ const ogImage = blog.secondImage?.asset?.url ?? blog.mainImage?.asset?.url ?? ''
   {/* Blog title and content */}
   <section class="container mx-auto px-4 xl:px-10 2xl:px-56 py-16 md:py-24">
     <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
-      <h1 class="font-title text-3xl sm:text-4xl md:text-5xl uppercase mb-4 md:mb-6 tracking-widest font-light">
+      <h1 class="font-title text-3xl sm:text-4xl md:text-5xl mb-4 md:mb-6 tracking-widest font-light">
         {blog?.title?.[locale] ?? ''}
       </h1>
       {blog.publishedAt && (

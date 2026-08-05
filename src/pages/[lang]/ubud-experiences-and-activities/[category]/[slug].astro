@@ -130,6 +130,10 @@ const htmlOpts = {
 
 const contactHTML = toHTML(safeArray(experience.contact), htmlOpts);
 
+// Render CMS-authored break tags in the title as real line breaks.
+const experienceTitle = experience?.title?.[locale] ?? '';
+const experienceTitleLines = experienceTitle.split(/(?:<br\s*\/?>|&lt;br\s*\/?&gt;)/i);
+
 // Prepare meta tags and Open Graph data
 const title = experience?.metaTitle?.[locale] ?? experience?.title?.[locale] ?? '';
 const description = experience?.metaDescription?.[locale] ?? experience?.description?.[locale] ?? experience?.excerpt?.[locale] ?? '';
@@ -191,8 +195,18 @@ const keywords = experience?.metaKeywords?.[locale] ?? '';
   {/* Title and description section */}
   <section class="container mx-auto px-4 xl:px-10 2xl:px-0 py-16 md:py-24">
     <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
-      <h1 class="font-title text-3xl sm:text-4xl md:text-5xl uppercase mb-4 md:mb-6 tracking-widest font-light">
-        {experience?.title?.[locale] ?? ''}
+      <h1 class="font-title text-3xl sm:text-4xl md:text-5xl mb-4 md:mb-6 tracking-widest font-light">
+        {experienceTitleLines.map((line, index) => (
+          <>
+            {index > 0 && (
+              <>
+                <span class="hidden md:inline xl:hidden"><br /></span>
+                <span class="md:hidden xl:inline"> </span>
+              </>
+            )}
+            {line}
+          </>
+        ))}
       </h1>
       <div class="text-xl sm:text-2xl md:text-3xl mb-4 md:mb-6 tracking-widest font-light">{experience?.subtitle?.[locale] ?? ''}</div>
       <p class="text-lg md:text-2xl">
@@ -206,7 +220,7 @@ const keywords = experience?.metaKeywords?.[locale] ?? '';
     <div class="flex flex-col lg:flex-row justify-between gap-12">
       {/* Experience details */}
       <div class="lg:w-3/5">
-        <h3 class="font-title text-xl md:text-2xl uppercase mb-6 tracking-widest font-light">INCLUSIONS & DETAILS</h3>
+        <h3 class="font-title text-xl md:text-2xl uppercase mb-6 tracking-widest font-light">Inclusions & Details</h3>
         <div class="experience-rich-text max-w-none" set:html={detailHTML}></div>
       </div>
 

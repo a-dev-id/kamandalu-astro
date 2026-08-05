@@ -1,6 +1,51 @@
 @import "tailwindcss";
 @import "@splidejs/splide/dist/css/splide.min.css";
 
+/* Preserve the intentional title casing from page and CMS content. */
+.uppercase {
+  text-transform: none;
+}
+
+/* Navigation and interactive controls retain the original uppercase treatment. */
+#navbar nav a,
+#navbar nav button,
+#reserveBtn,
+button:not(.toggle-btn),
+a.font-title,
+a.uppercase,
+a[class*="border"][class*="px-"] {
+  text-transform: uppercase;
+}
+
+/* The mobile side-panel menu uses natural title casing. */
+#offcanvas nav a,
+#offcanvas nav button {
+  text-transform: lowercase;
+}
+
+#offcanvas nav a::first-letter,
+#offcanvas nav button::first-letter {
+  text-transform: uppercase;
+}
+
+/* Page titles use a subtler letter spacing than the wider UI labels. */
+h1.tracking-widest {
+  font-size: 1.75rem;
+  letter-spacing: 0.025em;
+}
+
+@media (min-width: 640px) {
+  h1.tracking-widest {
+    font-size: 2.125rem;
+  }
+}
+
+@media (min-width: 768px) {
+  h1.tracking-widest {
+    font-size: 2.75rem;
+  }
+}
+
 /* Font-face rules */
 @font-face {
   font-family: "Plantin";
