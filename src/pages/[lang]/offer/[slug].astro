@@ -30,6 +30,14 @@ const offer = await client.fetch(`*[_type == "offer" && slug.current == $slug][0
   offerEnd,
   mainImage { asset->{url} },
   mainImageAlt,
+  headerImages[]{
+    image {
+      asset->{url}
+    },
+    alt,
+    title,
+    order
+  },
   minNights,
   promoCode,
   metaTitle,
@@ -46,6 +54,23 @@ const offer = await client.fetch(`*[_type == "offer" && slug.current == $slug][0
   "faq": faq[$locale],
   "cancelPolicy": cancelPolicy[$locale],
 }`, { slug, locale });
+
+// Prepare offer header slider images, falling back to the main image.
+const offerHeaderSlides =
+  Array.isArray(offer?.headerImages) && offer.headerImages.length
+    ? offer.headerImages
+        .filter(slide => slide?.image?.asset?.url)
+        .sort((a, b) => (a.order ?? 999) - (b.order ?? 999))
+    : offer?.mainImage?.asset?.url
+      ? [
+          {
+            image: offer.mainImage,
+            alt: offer.mainImageAlt,
+            title: offer.title,
+            order: 1,
+          },
+        ]
+      : [];
 
 // Convert inclusion and cancel policy fields to HTML using Portable Text
 const htmlListComponents = {
@@ -82,21 +107,57 @@ const title = offer?.metaTitle?.[locale] ?? '';
 const description = offer?.metaDescription?.[locale] ?? '';
 const baseUrl = new URL(Astro.request.url);
 const url = baseUrl.href;
-const ogImage = offer.mainImage?.asset?.url ?? '';
+const ogImage =
+  offerHeaderSlides[0]?.image?.asset?.url ??
+  offer.mainImage?.asset?.url ??
+  '';
 const keywords = offer.metaKeywords?.[locale] ?? '';
 ---
 
 <Layout {title} {description} {url} {ogImage} {keywords}>
-  {/* Hero section with main offer image */}
+  {/* Hero section with offer header slider */}
   <section class="relative w-full h-[50vh] md:h-[60vh] lg:h-[75vh] overflow-hidden">
-    <OptimizedImage
-      src={offer.mainImage.asset.url}
-      alt={offer.mainImageAlt?.[locale] ?? ''}
-      width={1600}
-      height={900}
-      className="w-full h-full object-cover"
-    />
-    <div class="absolute inset-0 bg-black/25 z-20"></div>
+    <div id="offer-detail-header-carousel" class="w-full h-full relative">
+      {offerHeaderSlides.map((slide, i) => (
+        <div
+          class={`offer-detail-header-slide w-full h-full absolute inset-0 transition-opacity duration-1000 ${
+            i === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'
+          }`}
+        >
+          <OptimizedImage
+            src={slide.image?.asset?.url ?? ''}
+            alt={slide.alt?.[locale] ?? slide.title?.[locale] ?? offer.mainImageAlt?.[locale] ?? ''}
+            width={1600}
+            height={900}
+            className="w-full h-full object-cover"
+            fetchpriority={i === 0 ? 'high' : 'auto'}
+            loading={i === 0 ? 'eager' : 'lazy'}
+          />
+        </div>
+      ))}
+
+      <div class="absolute inset-0 bg-black/25 z-20"></div>
+
+      {offerHeaderSlides.length > 1 && (
+        <>
+          <button
+            aria-label="Previous Offer Header Slide"
+            id="offerDetailHeaderPrev"
+            class="absolute left-4 top-1/2 -translate-y-1/2 text-white text-3xl z-30"
+          >
+            &#10094;
+          </button>
+
+          <button
+            aria-label="Next Offer Header Slide"
+            id="offerDetailHeaderNext"
+            class="absolute right-4 top-1/2 -translate-y-1/2 text-white text-3xl z-30"
+          >
+            &#10095;
+          </button>
+        </>
+      )}
+    </div>
   </section>
 
   {/* Offer title and description */}
@@ -296,6 +357,57 @@ const keywords = offer.metaKeywords?.[locale] ?? '';
       </div>
     </div>
   </section>
+
+  {/* Offer Header Carousel Script */}
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      const slides = document.querySelectorAll('.offer-detail-header-slide');
+      const prevButton = document.getElementById('offerDetailHeaderPrev');
+      const nextButton = document.getElementById('offerDetailHeaderNext');
+
+      if (!slides.length) return;
+
+      let currentSlide = 0;
+
+      function showOfferHeaderSlide(index) {
+        slides.forEach((slide, i) => {
+          if (i === index) {
+            slide.classList.add('opacity-100', 'z-10');
+            slide.classList.remove('opacity-0', 'z-0');
+          } else {
+            slide.classList.add('opacity-0', 'z-0');
+            slide.classList.remove('opacity-100', 'z-10');
+          }
+        });
+      }
+
+      function nextOfferHeaderSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showOfferHeaderSlide(currentSlide);
+      }
+
+      function prevOfferHeaderSlide() {
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        showOfferHeaderSlide(currentSlide);
+      }
+
+      prevButton?.addEventListener('click', event => {
+        event.stopPropagation();
+        prevOfferHeaderSlide();
+      });
+
+      nextButton?.addEventListener('click', event => {
+        event.stopPropagation();
+        nextOfferHeaderSlide();
+      });
+
+      if (slides.length > 1) {
+        setInterval(nextOfferHeaderSlide, 5000);
+      }
+
+      showOfferHeaderSlide(currentSlide);
+    });
+  </script>
 
   {/* Inline script for accordion toggle functionality */}
   <script is:inline>
