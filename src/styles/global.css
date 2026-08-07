@@ -60,13 +60,6 @@ section.container:has(h1.tracking-widest) iframe {
   h1.tracking-widest {
     font-size: 2.5rem;
   }
-
-  section.container:has(h1.tracking-widest) + section.container {
-    width: 100%;
-    max-width: none;
-    padding-right: 6vw;
-    padding-left: 6vw;
-  }
 }
 
 /* Font-face rules */
