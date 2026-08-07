@@ -13,6 +13,13 @@ const venues = await client.fetch(`*[_type == "diningVenue"] | order(order asc){
   "slug": slug.current, title
 }`);
 
+const mobileDiningTitles: Record<string, string> = {
+  'petulu-restaurant': 'Petulu Restaurant',
+  'aira-cafe': 'Aira Café',
+  'awana-pool-lounge': 'Awana Pool & Lounge',
+  'awana-pool-and-lounge': 'Awana Pool & Lounge',
+};
+
 // Get locale from URL param
 const { lang } = Astro.params;
 const locale = getLocale(lang);
@@ -27,11 +34,11 @@ const experienceCategories = [
     url: `/${locale}/ubud-experiences-and-activities/leisure-family`,
   },
   {
-    title: 'Activities & Day Experiences',
+    title: 'Ubud Experiences',
     url: `/${locale}/ubud-experiences-and-activities/ubud-activities-day-experiences`,
   },
   {
-    title: 'Cultural & Spiritual',
+    title: 'Culture & Spirituality',
     url: `/${locale}/ubud-experiences-and-activities/cultural-spiritual`,
   },
   
@@ -67,7 +74,7 @@ const experienceCategories = [
     <!-- Desktop Navigation Menu -->
     <nav class="hidden xl:flex md:space-x-6 xl:space-x-8 text-base font-normal w-full justify-center overflow-visible relative">
       <a href={`/${locale}/offers`} class="uppercase">Offers</a>
-      <a href={`/${locale}/villas`} class="uppercase">Our Villas</a>
+      <a href={`/${locale}/villas`} class="uppercase">Villas</a>
       <a href={`/${locale}/spa-wellness`} class="uppercase">Spa & Wellness</a>
 
       <!-- Dining Dropdown Trigger -->
@@ -77,10 +84,10 @@ const experienceCategories = [
 
       <!-- Experiences Dropdown Trigger -->
       <div id="experiences-trigger" class="relative group">
-        <a href={`/${locale}/ubud-experiences-and-activities`} class="inline-block px-2 uppercase">Unique Experiences</a>
+        <a href={`/${locale}/ubud-experiences-and-activities`} class="inline-block px-2 uppercase">Experiences</a>
       </div>
 
-      <a href={`/${locale}/wedding-events`} class="uppercase">Wedding & Events</a>
+      <a href={`/${locale}/wedding-events`} class="uppercase">Weddings & Events</a>
       <a href={`/${locale}/our-story`} class="uppercase">Our Story</a>
     </nav>
 
@@ -111,7 +118,7 @@ const experienceCategories = [
     <!-- Offcanvas Navigation Links -->
     <nav class="flex-1 px-6 pb-6 mt-6 space-y-4 overflow-y-auto font-normal">
       <a href={`/${locale}/offers`} class="block text-xl">Offers</a>
-      <a href={`/${locale}/villas`} class="block text-xl">Our Villas</a>
+      <a href={`/${locale}/villas`} class="block text-xl">Villas</a>
       <a href={`/${locale}/spa-wellness`} class="block text-xl">Spa & Wellness</a>
 
       <!-- Dining Dropdown Mobile -->
@@ -127,7 +134,9 @@ const experienceCategories = [
 
         <div id="dining-mobile-dropdown" class="pl-4 space-y-2 hidden mt-3">
           {venues.map((data) => (
-            <a href={`/${locale}/dining/${data.slug}`} class="block text-xl">{data.title?.[locale]}</a>
+            <a href={`/${locale}/dining/${data.slug}`} class="block text-xl">
+              {mobileDiningTitles[data.slug] ?? data.title?.[locale]}
+            </a>
           ))}
         </div>
       </div>
@@ -136,7 +145,7 @@ const experienceCategories = [
       <div>
         <button aria-label="Experiences Dropdown" id="experiences-mobile-toggle" class="block text-xl w-full text-left flex items-center gap-1 justify-between">
           <span class="flex items-center">
-            Unique Experiences
+            Experiences
             <svg class="w-4 h-4 ml-1 inline-block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
             </svg>
@@ -150,7 +159,7 @@ const experienceCategories = [
         </div>
       </div>
 
-      <a href={`/${locale}/wedding-events`} class="block text-xl">Wedding & Events</a>
+      <a href={`/${locale}/wedding-events`} class="block text-xl">Weddings & Events</a>
       <a href={`/${locale}/our-story`} class="block text-xl">Our Story</a>
     </nav>
   </div>

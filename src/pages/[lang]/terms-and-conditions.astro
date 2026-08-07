@@ -84,7 +84,7 @@ const htmlItems = (pageDetails?.items ?? []).map((it) => ({
   </section>
 
   {/* Heading + intro */}
-  <section class="container mx-auto px-4 py-16 md:py-24">
+  <section class="container mx-auto px-4 pt-16 md:pt-24">
     <div class="text-center px-2 sm:px-6 md:px-8 mx-auto max-w-4xl">
       <h1 class="font-title text-3xl sm:text-4xl md:text-5xl mb-4 md:mb-6 tracking-widest font-light">
         {pageDetails?.title?.[locale] ?? 'Terms & Conditions'}
@@ -92,7 +92,7 @@ const htmlItems = (pageDetails?.items ?? []).map((it) => ({
       {pageDetails?.subtitle?.[locale] && (
         <p class="text-xl mb-4">{pageDetails.subtitle[locale]}</p>
       )}
-      <div class="max-w-none text-xl mx-auto" set:html={pageDescription}></div>
+      <div class="mx-auto max-w-3xl text-xl" set:html={pageDescription}></div>
     </div>
   </section>
 

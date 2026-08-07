@@ -193,7 +193,7 @@ const initialVisibleItems = 9;
   )}
 
   {/* Category title and description */}
-  <section class={`container mx-auto px-4 py-16 md:py-24 ${categoryHeaderSlides.length === 0 ? 'pt-36 md:pt-44' : ''}`}>
+  <section class={`container mx-auto px-4 pt-16 md:pt-24 ${categoryHeaderSlides.length === 0 ? 'pt-36 md:pt-44' : ''}`}>
     <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
       <h1 class="font-title text-3xl sm:text-4xl md:text-5xl mb-4 md:mb-6 tracking-widest font-light">
         {categoryDetails?.title?.[locale] ?? ''}
@@ -206,7 +206,7 @@ const initialVisibleItems = 9;
       )}
 
       {categoryDescription && (
-        <div class="mb-5 text-lg md:text-2xl" set:html={categoryDescription}></div>
+        <div class="mx-auto mb-5 max-w-3xl text-lg md:text-2xl" set:html={categoryDescription}></div>
       )}
     </div>
   </section>
@@ -246,7 +246,7 @@ const initialVisibleItems = 9;
                     width={800}
                     height={600}
                     loading={i < initialVisibleItems ? 'eager' : 'lazy'}
-                    className="w-full h-auto aspect-[4/3] md:aspect-[16/9] 2xl:aspect-[4/3] object-cover transition duration-500"
+                    className="w-full h-auto aspect-[4/3] object-cover transition duration-500"
                   />
                 </a>
 

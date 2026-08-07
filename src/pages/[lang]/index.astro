@@ -106,7 +106,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
     </div>
     
     <!-- BOOKING FORM SECTION (overlaid on carousel) -->
-    <div class="absolute bottom-24 left-1/2 -translate-x-1/2 z-30 w-full max-w-4xl px-4">
+    <div class="absolute bottom-24 left-1/2 -translate-x-1/2 z-30 w-full max-w-[48rem] px-4">
       <form class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 text-sm md:text-base text-white w-full">
         <!-- Date Picker Field -->
         <div class="flex flex-col w-full md:w-auto">
@@ -196,9 +196,9 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
       <!-- Main Title -->
       <h1 class="font-title text-3xl sm:text-4xl md:text-5xl mb-4 md:mb-6 tracking-widest font-light">{pageDetails?.title?.[locale] ?? ''}</h1>
       <!-- Subtitle -->
-      <div class="text-xl sm:text-2xl md:text-3xl mb-6 md:mb-12" set:html={pageSubtitle}></div>
+      <div class="text-xl sm:text-2xl md:text-3xl mb-6 md:mb-12 max-w-[48rem] mx-auto" set:html={pageSubtitle}></div>
       <!-- Description -->
-      <div class="mb-12 md:mb-12 text-xl" set:html={pageDescription}></div>
+      <div class="mx-auto mb-12 max-w-3xl text-xl md:mb-12" set:html={pageDescription}></div>
       <!-- Check Rates Button -->
       <a href="https://www.book-secure.com/index.php?s=results&property=idbal31692&locale=en_GB&currency=IDR&stid=986w12cwy" class="bg-white text-gray-700 px-4 py-3 md:px-6 md:py-4 text-xs md:text-sm font-title tracking-widest transition-colors duration-300 border border-black hover:bg-[#916B2C] hover:text-white hover:border-transparent inline-block">Check Rates</a>
     </div>
@@ -209,7 +209,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
     <!-- Section Title and Description -->
     <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
       <h2 class="font-title text-2xl md:text-4xl uppercase mb-4 md:mb-6 tracking-widest font-light">{villaDetails?.title?.[locale] ?? ''}</h2>
-      <div class="mb-10 md:mb-20 text-xl" set:html={villaDescription}></div>
+      <div class="mx-auto mb-10 max-w-3xl text-xl md:mb-20" set:html={villaDescription}></div>
     </div>
     <!-- Villa Carousel (Splide) -->
     <div id="villa-carousel" class="splide mb-4" role="region" aria-label="Villa Carousel">
@@ -225,7 +225,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
                   alt={villa.secondImageAlt?.[locale] ?? 'Villa image'}
                   width={800}
                   height={600}
-                  className="w-full h-auto aspect-[4/3] md:aspect-[16/9] 2xl:aspect-[4/3] transition duration-500"
+                  className="w-full h-auto aspect-[4/3] md:aspect-[3/2] transition duration-500"
                 />
                 {/* Villa Info */}
                 <div class="py-4 md:py-6 flex flex-col flex-1">
@@ -259,7 +259,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
     <!-- Section Title and Description -->
     <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
       <h2 class="font-title text-2xl md:text-3xl uppercase mb-4 md:mb-6 tracking-widest font-light">{offerDetails?.title?.[locale] ?? ''}</h2>
-      <div class="mb-10 md:mb-20 text-xl" set:html={offerDescription}></div>
+      <div class="mx-auto mb-10 max-w-3xl text-xl md:mb-20" set:html={offerDescription}></div>
     </div>
     <!-- Offers Carousel (Splide) -->
     <div id="offer-carousel" class="splide mb-4" role="region" aria-label="Villa Carousel">
@@ -276,7 +276,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
                   width={800}
                   height={600}
                   loading="lazy"
-                  className="w-full h-auto aspect-[4/3] transition duration-500"
+                  className="w-full h-auto aspect-[4/3] md:aspect-[3/2] transition duration-500"
                 />
                 {/* Offer Info */}
                 <div class="py-4 md:py-6 flex flex-col flex-1">
@@ -297,7 +297,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
       {/* Previous Offer Button */}
       <button aria-label="Previous Offer" id="offer-prev" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="44" y1="12" x2="4" y2="12" /><polyline points="12 20 4 12 12 4" /></svg>
-      </button>
+      </button> 
       {/* Next Offer Button */}
       <button aria-label="Next Offer" id="offer-next" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 48 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="44" y2="12" /><polyline points="36 4 44 12 36 20" /></svg>
@@ -308,11 +308,11 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
   <!-- WELLNESS CAROUSEL SECTION -->
   <section class="container mx-auto px-4 xl:px-10 2xl:px-0 pt-24">
     {/* Section image for wellness carousel */}
-    <img src={wellnessDetails?.mainImage?.asset?.url} width="800" height="450" alt={wellnessDetails?.mainImageAlt?.[locale] ?? ''} loading="lazy" class="w-full h-auto object-cover aspect-[4/3] md:aspect-[16/6] 2xl:aspect-[16/7] mb-10 md:mb-20" />
+    <img src={wellnessDetails?.mainImage?.asset?.url} width="800" height="450" alt={wellnessDetails?.mainImageAlt?.[locale] ?? ''} loading="lazy" class="w-full h-auto object-cover aspect-[16/7] 2] mb-10 md:mb-20" />
     {/* Section title and description */}
     <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
       <h2 class="font-title text-2xl md:text-3xl uppercase mb-4 md:mb-6 tracking-widest font-light">{wellnessDetails?.title?.[locale] ?? ''}</h2>
-      <div class="mb-10 md:mb-20 text-xl" set:html={wellnessDescription}></div>
+      <div class="mx-auto mb-10 max-w-3xl text-xl md:mb-20" set:html={wellnessDescription}></div>
     </div>
     {/* Wellness carousel using Splide */}
     <div id="wellness-carousel" class="splide mb-4" role="region" aria-label="Wellness Carousel">
@@ -329,7 +329,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
                   width={800}
                   height={600}
                   loading="lazy"
-                  className="w-full h-auto aspect-[4/3] md:aspect-[16/9] 2xl:aspect-[4/3] transition duration-500"
+                  className="w-full h-auto aspect-[4/3] md:aspect-[3/2] transition duration-500"
                 />
                 {/* Wellness venue info */}
                 <div class="py-4 md:py-6 flex flex-col flex-1">
@@ -352,7 +352,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
                   width={800}
                   height={600}
                   loading="lazy"
-                  className="w-full h-auto aspect-[4/3] md:aspect-[16/9] 2xl:aspect-[4/3] transition duration-500"
+                  className="w-full h-auto aspect-[4/3] md:aspect-[3/2] transition duration-500"
                 />
                 {/* Wellness experiences info */}
                 <div class="py-4 md:py-6 flex flex-col flex-1">
@@ -384,11 +384,11 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
   <!-- CULINARY CAROUSEL SECTION -->
   <section class="container mx-auto px-4 xl:px-10 2xl:px-0 pt-24">
     {/* Section image for culinary carousel */}
-    <img src={culinaryDetails?.mainImage?.asset?.url} width="800" height="450" alt={culinaryDetails?.mainImageAlt?.[locale] ?? ''} loading="lazy" class="w-full h-auto object-cover aspect-[4/3] md:aspect-[16/6] 2xl:aspect-[16/7] mb-10 md:mb-20" />
+    <img src={culinaryDetails?.mainImage?.asset?.url} width="800" height="450" alt={culinaryDetails?.mainImageAlt?.[locale] ?? ''} loading="lazy" class="w-full h-auto object-cover aspect-[16/7] 2] mb-10 md:mb-20" />
     {/* Section title and description */}
     <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
       <h2 class="font-title text-2xl md:text-3xl uppercase mb-4 md:mb-6 tracking-widest font-light">{culinaryDetails?.title?.[locale] ?? ''}</h2>
-      <div class="mb-10 md:mb-20 text-lg" set:html={culinaryDescription}></div>
+      <div class="mx-auto mb-10 max-w-3xl text-lg md:mb-20" set:html={culinaryDescription}></div>
     </div>
     {/* Culinary carousel using Splide */}
     <div id="culinary-carousel" class="splide mb-4" role="region" aria-label="Culinary Carousel">
@@ -405,7 +405,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
                   width={800}
                   height={600}
                   loading="lazy"
-                  className="w-full h-auto aspect-[4/3] transition duration-500"
+                  className="w-full h-auto aspect-[4/3] md:aspect-[3/2] transition duration-500"
                 />
                 {/* Dining experience info */}
                 <div class="py-4 md:py-6 flex flex-col flex-1">
@@ -437,11 +437,11 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
   <!-- EXPERIENCE CAROUSEL SECTION -->
   <section class="container mx-auto px-4 xl:px-10 2xl:px-0 pt-24">
     <!-- Section image for experience carousel -->
-    <img src={experienceDetails?.mainImage?.asset?.url} width="800" height="450" alt={experienceDetails?.mainImageAlt?.[locale] ?? ''} loading="lazy" class="w-full h-auto object-cover aspect-[4/3] md:aspect-[16/6] 2xl:aspect-[16/7] mb-10 md:mb-20" />
+    <img src={experienceDetails?.mainImage?.asset?.url} width="800" height="450" alt={experienceDetails?.mainImageAlt?.[locale] ?? ''} loading="lazy" class="w-full h-auto object-cover aspect-[16/7] 2] mb-10 md:mb-20" />
     <!-- Section title and description -->
     <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
       <h2 class="font-title text-2xl md:text-3xl uppercase mb-4 md:mb-6 tracking-widest font-light">{experienceDetails?.title?.[locale] ?? ''}</h2>
-      <div class="mb-10 md:mb-20 text-lg" set:html={experienceDescription}></div>
+      <div class="mx-auto mb-10 max-w-3xl text-lg md:mb-20" set:html={experienceDescription}></div>
     </div>
     <!-- Experience carousel using Splide -->
     <div id="experience-carousel" class="splide mb-4" role="region" aria-label="Experience Carousel">
@@ -458,7 +458,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
                   width={800}
                   height={600}
                   loading="lazy"
-                  className="w-full h-auto aspect-[4/3] transition duration-500"
+                  className="w-full h-auto aspect-[4/3] md:aspect-[3/2] transition duration-500"
                 />
                 {/* Experience info */}
                 <div class="py-4 md:py-6 flex flex-col flex-1">

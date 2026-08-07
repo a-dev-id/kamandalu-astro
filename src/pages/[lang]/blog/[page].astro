@@ -83,12 +83,12 @@ export async function getStaticPaths() {
       <h1 class="font-title text-3xl sm:text-4xl md:text-5xl mb-4 md:mb-6 tracking-widest font-light">
         {pageDetails?.title?.[locale] ?? ''}
       </h1>
-      <div class="mb-12 md:mb-18 text-xl" set:html={pageDescription}></div>
+      <div class="mx-auto max-w-3xl text-xl" set:html={pageDescription}></div>
     </div>
   </section>
 
   {/* Blog Grid */}
-  <section class="container mx-auto px-4 xl:px-10 2xl:px-0 py-12">
+  <section class="container mx-auto px-4 pt-16 pb-12 xl:px-10 2xl:px-0">
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
       {blog.map((data) => (
         <div class="transition-transform duration-500 ease-in-out bg-white overflow-hidden flex flex-col h-full">

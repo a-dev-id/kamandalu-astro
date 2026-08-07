@@ -69,11 +69,11 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
       <h1 class="font-title text-3xl sm:text-4xl md:text-5xl mb-4 md:mb-6 tracking-widest font-light">
         {pageDetails?.title?.[locale] ?? ''}
       </h1>
-      <div class="mb-12 md:mb-18 text-xl" set:html={pageDescription}></div>
+      <div class="mx-auto max-w-3xl text-xl" set:html={pageDescription}></div>
     </div>
   </section>
 
-<section class="container mx-auto px-4 py-24">
+<section class="container mx-auto px-4 pt-16 pb-24">
   <!-- Filter Buttons -->
   <div class="text-center mb-10 flex flex-wrap justify-center gap-2">
     <button data-filter="all" class="filter-btn bg-white text-black px-4 py-2 text-xs font-title tracking-widest transition-colors duration-300 border border-black hover:bg-[#916B2C] hover:text-white hover:border-transparent">All</button>

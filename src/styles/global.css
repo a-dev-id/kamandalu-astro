@@ -17,32 +17,55 @@ a[class*="border"][class*="px-"] {
   text-transform: uppercase;
 }
 
-/* The mobile side-panel menu uses natural title casing. */
+/* Preserve the exact casing authored for the mobile side-panel menu. */
 #offcanvas nav a,
 #offcanvas nav button {
-  text-transform: lowercase;
+  text-transform: none;
 }
 
-#offcanvas nav a::first-letter,
-#offcanvas nav button::first-letter {
-  text-transform: uppercase;
+/* Shared title-and-intro standard for every page template. */
+section.container:has(h1.tracking-widest):not([class*="pt-36"]) {
+  padding-top: 4rem;
+  padding-bottom: 0;
+  text-align: center;
 }
 
-/* Page titles use a subtler letter spacing than the wider UI labels. */
 h1.tracking-widest {
-  font-size: 1.75rem;
+  margin-bottom: 1.375rem;
+  font-size: 2rem;
+  line-height: 1.15;
   letter-spacing: 0.025em;
+  text-align: center;
 }
 
-@media (min-width: 640px) {
-  h1.tracking-widest {
-    font-size: 2.125rem;
-  }
+/* Page and section intro copy: 896px, 17px type, and comfortable leading. */
+.max-w-3xl {
+  max-width: 56rem;
+  font-size: 1.0625rem;
+  line-height: 1.7;
+}
+
+/* Keep one consistent 64px transition from intro copy to main content. */
+section.container:has(h1.tracking-widest) + section.container {
+  margin-top: 4rem;
+  padding-top: 0;
+}
+
+/* Our Story keeps its media inside the intro section rather than a sibling. */
+section.container:has(h1.tracking-widest) iframe {
+  margin-top: 4rem;
 }
 
 @media (min-width: 768px) {
   h1.tracking-widest {
-    font-size: 2.75rem;
+    font-size: 2.5rem;
+  }
+
+  section.container:has(h1.tracking-widest) + section.container {
+    width: 100%;
+    max-width: none;
+    padding-right: 6vw;
+    padding-left: 6vw;
   }
 }
 
