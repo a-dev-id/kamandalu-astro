@@ -46,24 +46,31 @@ const experienceCategories = [
 ---
 <header id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-transparent text-white overflow-visible">
   <!-- Top Section: Language Selector & Logo -->
-  <div class="flex items-center px-6 py-1 justify-between w-full relative">
-    <!-- Logo: centered using flex grow -->
-    <div class="flex-1 flex justify-center">
-      <a href={`/${locale}`}>
+  <div id="navbar-logo-row" class="flex items-center justify-center px-6 pt-8 pb-2 w-full relative transition-[padding] duration-300">
+    <!-- Keep both navbar logo states anchored to the exact viewport center. -->
+    <div class="flex items-center justify-center">
+      <a href={`/${locale}`} aria-label="Kamandalu Ubud home" class="flex items-center justify-center">
         <img
-          id="navbar-logo"
+          id="navbar-logo-full"
           src="/images/kamandalu-logo.png"
           alt="Kamandalu Logo"
-          class="w-36 h-auto transition-all duration-300 mt-2 logo brightness-0 invert-[1]"
+          class="w-36 h-auto transition-all duration-300 logo brightness-0 invert-[1]"
           fetchpriority="high"
           loading="eager"
+        />
+        <img
+          id="navbar-logo-mark"
+          src="/images/logo-icon-only.svg"
+          alt=""
+          class="hidden w-20 h-20 object-contain"
+          aria-hidden="true"
         />
       </a>
     </div>
   </div>
 
   <!-- Bottom Section: Main Navigation & Reserve Button -->
-  <div class="flex justify-between items-center px-6 py-3 border-b border-white/50">
+  <div class="relative flex justify-between items-center px-6 py-3 border-b-[0.5px] border-white/25">
     <!-- Hamburger for Mobile -->
     <button id="hamburger" aria-label="Open Mobile Menu">
       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -72,19 +79,19 @@ const experienceCategories = [
     </button>
 
     <!-- Desktop Navigation Menu -->
-    <nav class="hidden xl:flex md:space-x-6 xl:space-x-8 text-base font-normal w-full justify-center overflow-visible relative">
+    <nav class="hidden xl:flex absolute left-1/2 -translate-x-1/2 w-max gap-8 text-base font-normal justify-center overflow-visible">
       <a href={`/${locale}/offers`} class="uppercase">Offers</a>
       <a href={`/${locale}/villas`} class="uppercase">Villas</a>
       <a href={`/${locale}/spa-wellness`} class="uppercase">Spa & Wellness</a>
 
       <!-- Dining Dropdown Trigger -->
       <div id="dining-trigger" class="relative group">
-        <a href={`/${locale}/dining`} class="inline-block px-2 uppercase">Dining</a>
+        <a href={`/${locale}/dining`} class="inline-block uppercase">Dining</a>
       </div>
 
       <!-- Experiences Dropdown Trigger -->
       <div id="experiences-trigger" class="relative group">
-        <a href={`/${locale}/ubud-experiences-and-activities`} class="inline-block px-2 uppercase">Experiences</a>
+        <a href={`/${locale}/ubud-experiences-and-activities`} class="inline-block uppercase">Experiences</a>
       </div>
 
       <a href={`/${locale}/wedding-events`} class="uppercase">Weddings & Events</a>
@@ -167,7 +174,7 @@ const experienceCategories = [
   <!-- Desktop Dining Dropdown -->
   <div
     id="dining-dropdown"
-    class="hidden absolute left-0 right-0 top-[100%] bg-white text-black z-40 shadow-md transition-all duration-200 opacity-0"
+    class="hidden absolute left-0 right-0 top-[100%] bg-white/80 backdrop-blur-[2px] text-black z-40 shadow-md transition-all duration-200 opacity-0"
   >
     <div class="max-w-screen-xl mx-auto px-2 flex justify-center space-x-6 py-3 font-normal text-xl">
       {venues.map((data) => (
@@ -179,7 +186,7 @@ const experienceCategories = [
   <!-- Desktop Experiences Dropdown -->
   <div
     id="experiences-dropdown"
-    class="hidden absolute left-0 right-0 top-[100%] bg-white text-black z-40 shadow-md transition-all duration-200 opacity-0"
+    class="hidden absolute left-0 right-0 top-[100%] bg-white/80 backdrop-blur-[2px] text-black z-40 shadow-md transition-all duration-200 opacity-0"
   >
     <div class="max-w-screen-xl mx-auto px-2 flex justify-center space-x-6 py-3 font-normal text-xl">
       {experienceCategories.map((item) => (
@@ -191,7 +198,7 @@ const experienceCategories = [
   <!-- Desktop More Dropdown -->
   <div
     id="more-dropdown"
-    class="hidden absolute left-0 right-0 top-[100%] bg-white text-black z-40 shadow-md transition-all duration-200 opacity-0"
+    class="hidden absolute left-0 right-0 top-[100%] bg-white/80 backdrop-blur-[2px] text-black z-40 shadow-md transition-all duration-200 opacity-0"
   >
     <div class="max-w-screen-xl mx-auto px-2 flex justify-center space-x-6 py-3 font-normal text-xl">
       <a href="#" class="hover:underline uppercase text-base">Member</a>
@@ -272,10 +279,12 @@ const experienceCategories = [
       const memberBtn = document.getElementById("memberBtn");
       const languageSelect = document.getElementById("languageSelect");
       const reserveBtn = document.getElementById("reserveBtn");
-      const logo = document.getElementById("navbar-logo");
+      const logoRow = document.getElementById("navbar-logo-row");
+      const fullLogo = document.getElementById("navbar-logo-full");
+      const logoMark = document.getElementById("navbar-logo-mark");
 
       // Scroll-based navbar style change
-      window.addEventListener("scroll", () => {
+      const syncNavbarState = () => {
         const scrolled = window.scrollY > 50;
 
         navbar.classList.toggle("bg-white", scrolled);
@@ -297,12 +306,15 @@ const experienceCategories = [
         reserveBtn?.classList.toggle("text-black", !scrolled);
         reserveBtn?.classList.toggle("border-white", !scrolled);
 
-        logo?.classList.toggle("w-28", scrolled);
-        logo?.classList.toggle("h-16", scrolled);
-        logo?.classList.toggle("w-36", !scrolled);
-        logo?.classList.toggle("h-20", !scrolled);
-        logo?.classList.toggle("brightness-0", !scrolled);
-        logo?.classList.toggle("invert-[1]", !scrolled);
+        fullLogo?.classList.toggle("hidden", scrolled);
+        logoMark?.classList.toggle("hidden", !scrolled);
+        logoMark?.classList.toggle("block", scrolled);
+
+        logoRow?.classList.toggle("pt-8", !scrolled);
+        logoRow?.classList.toggle("pb-2", !scrolled);
+        logoRow?.classList.toggle("pt-2", scrolled);
+        logoRow?.classList.toggle("pb-0", scrolled);
+        logoRow?.classList.toggle("-mb-4", scrolled);
 
         if (!diningDropdown?.classList.contains("hidden")) {
           updateDropdownPosition(navbar, diningDropdown);
@@ -315,7 +327,10 @@ const experienceCategories = [
         if (!moreDropdown?.classList.contains("hidden")) {
           updateDropdownPosition(navbar, moreDropdown);
         }
-      });
+      };
+
+      window.addEventListener("scroll", syncNavbarState, { passive: true });
+      syncNavbarState();
 
       // Hamburger toggle
       hamburger?.addEventListener("click", () => {
