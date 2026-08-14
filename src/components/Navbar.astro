@@ -176,7 +176,7 @@ const experienceCategories = [
     id="dining-dropdown"
     class="hidden absolute left-0 right-0 top-[100%] bg-white/80 backdrop-blur-[2px] text-black z-40 shadow-md transition-all duration-200 opacity-0"
   >
-    <div class="max-w-screen-xl mx-auto px-2 flex justify-center space-x-6 py-3 font-normal text-xl">
+    <div class="max-w-screen-xl mx-auto px-2 flex justify-center gap-8 py-3 font-normal text-xl">
       {venues.map((data) => (
         <a href={`/${locale}/dining/${data.slug}`} class="hover:underline uppercase text-base">{data.title?.[locale]}</a>
       ))}
@@ -188,7 +188,7 @@ const experienceCategories = [
     id="experiences-dropdown"
     class="hidden absolute left-0 right-0 top-[100%] bg-white/80 backdrop-blur-[2px] text-black z-40 shadow-md transition-all duration-200 opacity-0"
   >
-    <div class="max-w-screen-xl mx-auto px-2 flex justify-center space-x-6 py-3 font-normal text-xl">
+    <div class="max-w-screen-xl mx-auto px-2 flex justify-center gap-8 py-3 font-normal text-xl">
       {experienceCategories.map((item) => (
         <a href={item.url} class="hover:underline uppercase text-base">{item.title}</a>
       ))}
@@ -200,7 +200,7 @@ const experienceCategories = [
     id="more-dropdown"
     class="hidden absolute left-0 right-0 top-[100%] bg-white/80 backdrop-blur-[2px] text-black z-40 shadow-md transition-all duration-200 opacity-0"
   >
-    <div class="max-w-screen-xl mx-auto px-2 flex justify-center space-x-6 py-3 font-normal text-xl">
+    <div class="max-w-screen-xl mx-auto px-2 flex justify-center gap-8 py-3 font-normal text-xl">
       <a href="#" class="hover:underline uppercase text-base">Member</a>
       <a href="#" class="hover:underline uppercase text-base">Contact</a>
     </div>
