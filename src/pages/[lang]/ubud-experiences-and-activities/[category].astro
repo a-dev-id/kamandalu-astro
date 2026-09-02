@@ -81,6 +81,7 @@ const experiences = await client.fetch(`*[
   && category._ref == $categoryId
 ] | order(order asc){
   "slug": slug.current,
+  "bookingLink": coalesce(booking_link, bookingLink),
   title,
   subtitle,
   excerpt,
@@ -220,6 +221,7 @@ const initialVisibleItems = 9;
           class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-14 md:gap-y-16"
         >
           {experiences.map((data, i) => {
+            const detailUrl = `/${locale}/ubud-experiences-and-activities/${categorySlug}/${data.slug}`;
             const cardImage =
               data.secondImage?.asset?.url ??
               data.mainImage?.asset?.url ??
@@ -239,7 +241,7 @@ const initialVisibleItems = 9;
                 data-experience-card
                 data-index={i}
               >
-                <a href={`/${locale}/ubud-experiences-and-activities/${categorySlug}/${data.slug}`} class="block overflow-hidden">
+                <a href={detailUrl} class="block overflow-hidden">
                   <OptimizedImage
                     src={cardImage}
                     alt={cardImageAlt}
@@ -252,7 +254,7 @@ const initialVisibleItems = 9;
 
                 <div class="py-4 md:py-6 flex flex-col flex-1">
                   <h3 class="text-lg tracking-widest uppercase font-title">
-                    <a href={`/${locale}/ubud-experiences-and-activities/${categorySlug}/${data.slug}`}>
+                    <a href={detailUrl}>
                       {formatCardTitle(data?.title?.[locale])}
                     </a>
                   </h3>
@@ -272,7 +274,7 @@ const initialVisibleItems = 9;
                   <div class="flex-grow"></div>
 
                   <a
-                    href={`/${locale}/ubud-experiences-and-activities/${categorySlug}/${data.slug}`}
+                    href={detailUrl}
                     class="text-lg mt-4 inline-block text-gray-700 uppercase"
                   >
                     Discover

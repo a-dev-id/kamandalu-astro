@@ -42,6 +42,7 @@ const pageDetails = await client.fetch(`*[_type == "page" && _id == "fecdf097-9b
 // Fetch unique experiences from Sanity
 const experienceUnique = await client.fetch(`*[_type == "experienceUnique"] | order(order asc){
   "slug": slug.current,
+  "bookingLink": coalesce(booking_link, bookingLink),
   title,
   excerpt,
   secondImage {

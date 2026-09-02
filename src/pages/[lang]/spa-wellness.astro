@@ -49,6 +49,7 @@ const wellness = await client.fetch(`*[_type == "settingHome" && _id == "33910d6
 // Fetch wellness experiences for carousel
 const wellnessExperiences = await client.fetch(`*[_type == "wellnessExperience"] | order(order asc){
   "slug": slug.current,
+  "bookingLink": coalesce(booking_link, bookingLink),
   title,
   excerpt,
   secondImage {
@@ -60,6 +61,7 @@ const wellnessExperiences = await client.fetch(`*[_type == "wellnessExperience"]
 // Fetch venues for venue carousel
 const venues = await client.fetch(`*[_type == "wellnessVenue"] | order(order asc){
   "slug": slug.current,
+  "bookingLink": coalesce(booking_link, bookingLink),
   title,
   excerpt,
   secondImage {
