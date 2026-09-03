@@ -13,11 +13,13 @@ export async function getStaticPaths() {
     client.fetch(`*[_type == "wellnessExperience" && defined(slug.current)]{ "slug": slug.current }`),
     client.fetch(`*[_type == "wellnessVenue" && defined(slug.current)]{ "slug": slug.current }`)
   ]);
-  const allSlugs = [...experienceSlugs, ...venueSlugs];
+  const allSlugs = [...new Set(
+    [...venueSlugs, ...experienceSlugs].map(item => item.slug)
+  )];
   const languages = ['en', 'ko', 'zh'];
   return languages.flatMap(lang =>
-    allSlugs.map(item => ({
-      params: { lang, slug: item.slug }
+    allSlugs.map(slug => ({
+      params: { lang, slug }
     }))
   );
 }
@@ -27,10 +29,10 @@ const { lang, slug } = Astro.params;
 const locale = getLocale(lang);
 const safeArray = arr => Array.isArray(arr) ? arr : [];
 
-// Fetch wellnessExperience or fallback to wellnessVenue by slug
+// Prefer a wellnessVenue when both document types use the same slug.
 let wellness = await client.fetch(
-  `*[_type == "wellnessExperience" && slug.current == $slug][0]{
-    _type, title, "bookingLink": coalesce(booking_link, bookingLink), excerpt, description, mainImage { asset->{url} }, mainImageAlt,
+  `*[_type == "wellnessVenue" && slug.current == $slug][0]{
+    _type, title, "bookingLink": coalesce(booking_link, bookingLink), buttonLabel, buttonValue, excerpt, description, mainImage { asset->{url} }, mainImageAlt,
     sliderImages[]{ asset->{url} },
     headerImages[]{
       image {
@@ -41,8 +43,10 @@ let wellness = await client.fetch(
       order
     },
     metaTitle, metaDescription, metaKeywords,
-    "details": details[$locale], "contactBooking": contactBooking[$locale],
+    "details": details[$locale], "contactBooking": contactBooking[$locale], "policy": policy[$locale],
     packages[]{
+      category,
+      categoryDescription,
       title,
       "bookingLink": coalesce(booking_link, bookingLink),
       images[]{asset->{url}},
@@ -55,8 +59,8 @@ let wellness = await client.fetch(
 
 if (!wellness) {
   wellness = await client.fetch(
-    `*[_type == "wellnessVenue" && slug.current == $slug][0]{
-      _type, title, "bookingLink": coalesce(booking_link, bookingLink), excerpt, description, mainImage { asset->{url} }, mainImageAlt,
+    `*[_type == "wellnessExperience" && slug.current == $slug][0]{
+      _type, title, "bookingLink": coalesce(booking_link, bookingLink), buttonLabel, buttonValue, excerpt, description, mainImage { asset->{url} }, mainImageAlt,
       sliderImages[]{ asset->{url} },
       headerImages[]{
         image {
@@ -85,7 +89,13 @@ if (!wellness) {
 // Throw error if no document found
 if (!wellness) throw new Error(`No document found for slug: ${slug}`);
 
-const bookingUrl = getBookingUrl(wellness, 'https://wa.me/+628113984566');
+const reserveButtonLabel =
+  wellness?.buttonLabel?.[locale]?.trim() ||
+  wellness?.buttonLabel?.en?.trim() ||
+  'INQUIRE & RESERVE';
+const reserveButtonUrl =
+  wellness?.buttonValue?.trim() ||
+  getBookingUrl(wellness, 'https://wa.me/+628113984566');
 
 // Portable Text to HTML options for rendering rich text
 const htmlOpts = {
@@ -265,12 +275,12 @@ Jl1YsAI3Q89IphvIh9EaWH5/rR9rpWP5oZGG1iQmSO++ry/KI23A2fxnmfn6klsACCzk/ZMpUOuMyG9T
           <h3 class="font-title text-xl md:text-2xl mb-6">Reserve This Experience</h3>
           <div class="text-lg mb-6" set:html={contactHTML}></div>
           <a
-            href={bookingUrl}
+            href={reserveButtonUrl}
             class="inline-block px-4 py-3 md:px-4 md:py-2 text-xs font-title tracking-widest border bg-[#916B2C] text-white border-transparent hover:bg-white hover:text-black hover:border-black transition-colors duration-300 text-center"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Inquire & Reserve
+            {reserveButtonLabel}
           </a>
         </div>
       </div>
