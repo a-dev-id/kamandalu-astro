@@ -15,7 +15,10 @@ export async function getStaticPaths() {
 const { lang } = Astro.params;
 const locale = getLocale(lang);
 
-const { title, description, url, ogImage, keywords } = Astro.props;
+const { title, description, url, ogImage, keywords, structuredData } = Astro.props;
+const serializedStructuredData = structuredData
+  ? JSON.stringify(structuredData).replace(/</g, "\\u003c")
+  : '';
 ---
 
 <html lang="en">
@@ -35,6 +38,9 @@ const { title, description, url, ogImage, keywords } = Astro.props;
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
     <link rel="canonical" href={url} />
+    {serializedStructuredData && (
+      <script type="application/ld+json" is:inline set:html={serializedStructuredData}></script>
+    )}
     <link rel="icon" href="/images/favicon/ms-icon-144x144.png" />
     <link rel="preload" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
     <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" /></noscript>
@@ -110,22 +116,22 @@ const { title, description, url, ogImage, keywords } = Astro.props;
             <h3 class="uppercase tracking-widest font-title text-md 2xl:text-lg mb-4">Explore</h3>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 lg:gap-4">
               <ul class="space-y-2 col-span-1 max-w-[120px]">
-                <li><a class="text-lg" href={`/${locale}/offers`}>Offers</a></li>
-                <li><a class="text-lg" href={`/${locale}/villas`}>Our Villa</a></li>
-                <li><a class="text-lg" href={`/${locale}/spa-wellness`}>Spa &amp; Wellness</a></li>
-                <li><a class="text-lg" href={`/${locale}/dining`}>Dining</a></li>
+                <li><a class="text-lg" href={`/${locale}/offers/`}>Offers</a></li>
+                <li><a class="text-lg" href={`/${locale}/villas/`}>Our Villa</a></li>
+                <li><a class="text-lg" href={`/${locale}/spa-wellness/`}>Spa &amp; Wellness</a></li>
+                <li><a class="text-lg" href={`/${locale}/dining/`}>Dining</a></li>
               </ul>
               <ul class="space-y-2 col-span-1 sm:-ml-8 lg:-ml-2">
-                <li><a class="text-lg" href={`/${locale}/experiences`}>Unique Experiences</a></li>
-                <li><a class="text-lg" href={`/${locale}/wedding-events`}>Wedding &amp; Events</a></li>
-                <li><a class="text-lg" href={`/${locale}/our-story`}>Our Story</a></li>
-                <li><a class="text-lg" href={`/${locale}/gallery`}>Gallery</a></li>
+                <li><a class="text-lg" href={`/${locale}/ubud-experiences-and-activities/`}>Unique Experiences</a></li>
+                <li><a class="text-lg" href={`/${locale}/wedding-events/`}>Wedding &amp; Events</a></li>
+                <li><a class="text-lg" href={`/${locale}/our-story/`}>Our Story</a></li>
+                <li><a class="text-lg" href={`/${locale}/gallery/`}>Gallery</a></li>
               </ul>
               <ul class="space-y-2 col-span-1">
-                <li><a class="text-lg" href={`/${locale}/services-facilities`}>Facilities</a></li>
-                <li><a class="text-lg" href={`/${locale}/blog`}>Blog</a></li>
-                <li><a class="text-lg" href={`/${locale}/videos`}>Videos</a></li>
-                <li><a class="text-lg" href={`/${locale}/contact-us`}>Contact Us</a></li>
+                <li><a class="text-lg" href={`/${locale}/services-facilities/`}>Facilities</a></li>
+                <li><a class="text-lg" href={`/${locale}/blog/`}>Blog</a></li>
+                <li><a class="text-lg" href={`/${locale}/videos/`}>Videos</a></li>
+                <li><a class="text-lg" href={`/${locale}/contact-us/`}>Contact Us</a></li>
               </ul>
             </div>
           </div>
@@ -144,8 +150,8 @@ const { title, description, url, ogImage, keywords } = Astro.props;
 
       <div class="mx-auto px-4 xl:px-20 mt-12 grid grid-cols-1 xl:grid-cols-3 items-center gap-4 text-xs">
         <div class="flex gap-4 justify-center md:justify-start">
-          <a class="text-lg" href={`/${locale}/terms-and-conditions`}>Terms</a>
-          <a class="text-lg" href={`/${locale}/privacy-policy`}>Privacy</a>
+          <a class="text-lg" href={`/${locale}/terms-and-conditions/`}>Terms</a>
+          <a class="text-lg" href={`/${locale}/privacy-policy/`}>Privacy</a>
         </div>
         <div class="flex justify-center"><p class="text-center text-lg">&copy; 2026 Kamandalu Ubud. All Rights Reserved</p></div>
         <div></div>

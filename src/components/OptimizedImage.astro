@@ -8,11 +8,17 @@ const {
   fetchpriority = 'auto',
   loading = 'lazy',
 } = Astro.props;
+
+const resolvedAlt = typeof alt === 'string'
+  ? alt
+  : alt && typeof alt === 'object'
+    ? alt.en ?? Object.entries(alt).find(([key, value]) => key !== '_type' && typeof value === 'string')?.[1] ?? ''
+    : '';
 ---
 
 <img
   src={src}
-  alt={alt}
+  alt={resolvedAlt}
   width={width}
   height={height}
   loading={loading}

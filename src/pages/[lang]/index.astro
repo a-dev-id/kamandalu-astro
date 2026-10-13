@@ -73,9 +73,47 @@ const description = pageDetails?.metaDescription?.[locale] ?? '';
 const url = new URL(Astro.request.url).href;
 const ogImage = pageDetails.mainImage?.asset?.url ?? '';
 const keywords = pageDetails.metaKeywords?.[locale] ?? '';
+const structuredData = locale === 'en' ? {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Hotel',
+      '@id': 'https://kamandaluresort.com/en/#hotel',
+      name: 'Kamandalu Ubud',
+      alternateName: 'Kamandalu Ubud Resort',
+      url: 'https://kamandaluresort.com/en/',
+      description,
+      telephone: '+62 361 975825',
+      logo: 'https://kamandaluresort.com/images/kamandalu-logo.png',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'Jalan Andong, Banjar Nagi',
+        addressLocality: 'Ubud',
+        addressRegion: 'Bali',
+        postalCode: '80571',
+        addressCountry: 'ID',
+      },
+      sameAs: [
+        'https://www.facebook.com/kamandaluresort',
+        'https://www.instagram.com/kamandalu',
+        'https://www.tiktok.com/@kamandaluubud',
+      ],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': 'https://kamandaluresort.com/#website',
+      url: 'https://kamandaluresort.com/',
+      name: 'Kamandalu Ubud',
+      alternateName: 'Kamandalu Ubud Resort',
+      publisher: { '@id': 'https://kamandaluresort.com/en/#hotel' },
+      about: { '@id': 'https://kamandaluresort.com/en/#hotel' },
+      inLanguage: 'en',
+    },
+  ],
+} : undefined;
 ---
 
-<Layout {title} {description} {url} {ogImage} {keywords}>
+<Layout {title} {description} {url} {ogImage} {keywords} {structuredData}>
   <!-- HERO CAROUSEL SECTION -->
   <section class="relative w-full h-screen overflow-hidden">
     <!-- Carousel Images -->
@@ -84,7 +122,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
       <div class={`carousel-slide w-full h-full absolute inset-0 transition-opacity duration-1000 ${i === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
         <OptimizedImage
         src={homeSlider.image.asset.url}
-        alt={homeSlider.title}
+        alt={homeSlider.title?.[locale] ?? homeSlider.title?.en ?? ''}
         width={1600}
         height={900}
         className="w-full h-full"
@@ -229,11 +267,11 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
                 />
                 {/* Villa Info */}
                 <div class="py-4 md:py-6 flex flex-col flex-1">
-                  <h3 class="text-lg tracking-widest uppercase font-title">{villa.title?.[locale] ?? villa.title?.en ?? ''}</h3>
+                  <h3 class="text-lg tracking-widest uppercase font-title"><a href={`/${locale}/villa/${villa.slug}/`}>{villa.title?.[locale] ?? villa.title?.en ?? ''}</a></h3>
                   <p class="mt-2 text-lg">{/*villa.excerpt?.[locale] ?? villa.excerpt?.en ?? ''*/}</p>
                   <div class="flex-grow"></div>
                   {/* Explore Button */}
-                  <a href={`/${locale}/villa/${villa.slug}`} class="text-lg mt-4 inline-block text-gray-700 uppercase">{translations.btnexplore?.[locale] ?? 'Explore'}</a>
+                  <a href={`/${locale}/villa/${villa.slug}/`} aria-label={`Explore ${villa.title?.[locale] ?? villa.title?.en ?? 'villa'}`} class="text-lg mt-4 inline-block text-gray-700 uppercase">{translations.btnexplore?.[locale] ?? 'Explore'}</a>
                 </div>
               </div>
             </div>
@@ -284,7 +322,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
                   <p class="mt-2 text-lg">{/*offer.excerpt?.[locale] ?? offer.excerpt?.en*/}</p>
                   <div class="flex-grow"></div>
                   {/* Explore Button */}
-                  <a href={`/${locale}/offer/${offer.slug}`} class="text-lg mt-4 inline-block text-gray-700 uppercase">{translations.btnexplore[locale]}</a>
+                  <a href={`/${locale}/offer/${offer.slug}/`} aria-label={`Explore ${offer.title?.[locale] ?? offer.title?.en ?? 'offer'}`} class="text-lg mt-4 inline-block text-gray-700 uppercase">{translations.btnexplore[locale]}</a>
                 </div>
               </div>
             </div>
@@ -337,7 +375,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
                   <p class="mt-2 text-lg">{/*venue?.excerpt?.[locale] ?? ''*/}</p>
                   <div class="flex-grow"></div>
                   {/* Explore button for each wellness venue */}
-                  <a href={`/${locale}/spa-wellness/${venue.slug}`} class="text-lg mt-4 inline-block text-gray-700 uppercase">Explore</a>
+                  <a href={`/${locale}/spa-wellness/${venue.slug}/`} aria-label={`Explore ${venue.title?.[locale] ?? venue.title?.en ?? 'wellness venue'}`} class="text-lg mt-4 inline-block text-gray-700 uppercase">Explore</a>
                 </div>
               </div>
             </div>
@@ -360,7 +398,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
                   <p class="mt-2 text-lg">{/*experiences?.excerpt?.[locale] ?? ''*/}</p>
                   <div class="flex-grow"></div>
                   {/* Explore button for each wellness experiences */}
-                  <a href={`/${locale}/spa-wellness/${experiences.slug}`} class="text-lg mt-4 inline-block text-gray-700 uppercase">Explore</a>
+                  <a href={`/${locale}/spa-wellness/${experiences.slug}/`} aria-label={`Explore ${experiences.title?.[locale] ?? experiences.title?.en ?? 'wellness experience'}`} class="text-lg mt-4 inline-block text-gray-700 uppercase">Explore</a>
                 </div>
               </div>
             </div>
@@ -413,7 +451,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
                   <p class="mt-2 text-lg">{/*dining.excerpt?.[locale] ?? ''*/}</p>
                   <div class="flex-grow"></div>
                   {/* Explore button for each dining experience */}
-                  <a href={`/${locale}/dining/${dining.slug}`} class="text-lg mt-4 inline-block text-gray-700 uppercase">Explore</a>
+                  <a href={`/${locale}/dining/${dining.slug}/`} aria-label={`Explore ${dining.title?.[locale] ?? dining.title?.en ?? 'dining venue'}`} class="text-lg mt-4 inline-block text-gray-700 uppercase">Explore</a>
                 </div>
               </div>
             </div>
@@ -465,7 +503,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
                   <h3 class="text-lg tracking-widest uppercase font-title">{category.title?.[locale] ?? ''}</h3>
                   <p class="mt-2 text-lg">{/*category.excerpt?.[locale] ?? ''*/}</p>
                   {/* Explore button for each experience */}
-                  <a href={`/${locale}/ubud-experiences-and-activities/${category.slug}`} class="text-lg mt-auto pt-4 inline-block text-gray-700 uppercase">Explore</a>
+                  <a href={`/${locale}/ubud-experiences-and-activities/${category.slug}/`} aria-label={`Explore ${category.title?.[locale] ?? category.title?.en ?? 'experience'}`} class="text-lg mt-auto pt-4 inline-block text-gray-700 uppercase">Explore</a>
                 </div>
               </div>
             </div>
