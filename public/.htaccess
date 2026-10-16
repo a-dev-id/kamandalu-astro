@@ -1,0 +1,282 @@
+# Kamandalu Ubud - updated redirects (13 Oct 2026)
+# All mappings are permanent and apply to kamandaluresort.com / www.kamandaluresort.com.
+# IMPORTANT: Specific redirects must be before the generic fallback.
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresDefault "access plus 1 year"
+
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+</IfModule>
+
+Header set Cache-Control "public, max-age=31536000, immutable"
+
+Options -Indexes
+RewriteEngine On
+
+# Existing dedicated mail subdomain redirects
+RewriteCond %{HTTP_HOST} ^mail\.kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^en/ubud-experiences-and-activities/signature-experiences/romantic-flower-bath-ubud/?$ https://kamandaluresort.com/en/ubud-experiences-and-activities/signature-experiences/romantic-flower-bath-ubud/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^mail\.kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^en/ubud-experiences-and-activities/leisure-family/infinity-pool-day-pass-ubud/?$ https://kamandaluresort.com/en/ubud-experiences-and-activities/leisure-family/infinity-pool-day-pass-ubud/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^mail\.kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^en/ubud-experiences-and-activities/signature-experiences/private-chef-bbq-dinner-in-ubud/?$ https://kamandaluresort.com/en/ubud-experiences-and-activities/signature-experiences/private-chef-bbq-dinner-in-ubud/ [R=301,L]
+
+# BEGIN Kamandalu main-site redirects
+
+# NEW redirects from 13 October URL mapping
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^en/experience/koi-boat-experience-ubud/?$ https://kamandaluresort.com/en/ubud-experiences-and-activities/signature-experiences/the-original-koi-boat-experience/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^en/experience/starlit-cinema-ubud-s-cozy-bohemian-movie-nights-in-magical-paradise/?$ https://kamandaluresort.com/en/ubud-experiences-and-activities/signature-experiences/starlit-cinema-ubud/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^en/experience/a-magical-night-under-the-stars-candlelit-romantic-floating-dinner-in-ubud/?$ https://kamandaluresort.com/en/ubud-experiences-and-activities/signature-experiences/romantic-floating-dinner-in-ubud/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^accommodation\.html$ https://kamandaluresort.com/en/villas/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^aira-cafe\.html$ https://kamandaluresort.com/en/dining/aira-cafe/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^garden-pool-villa\.html$ https://kamandaluresort.com/en/villa/garden-pool-villa/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^index\.html$ https://kamandaluresort.com/en/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^junior-presidential-three-bedroom-pool-villa\.html$ https://kamandaluresort.com/en/villa/junior-presidential-3-bedroom-pool-villa/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^petulu-restaurant\.html$ https://kamandaluresort.com/en/dining/petulu-restaurant/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^two-bedroom-poolvilla\.html$ https://kamandaluresort.com/en/villa/two-bedroom-garden-pool-villa/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^en/experience/?$ https://kamandaluresort.com/en/ubud-experiences-and-activities/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^en/offer/eid-serenity-package-save-40-in-value-benefit/?$ https://kamandaluresort.com/en/offers/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^en/offer/romantic-escape/?$ https://kamandaluresort.com/en/offer/romance-undisturbed/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^en/villa/?$ https://kamandaluresort.com/en/villas/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^guest-experience-offer\.html$ https://kamandaluresort.com/en/ubud-experiences-and-activities/signature-experiences/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^about-us\.html$ https://kamandaluresort.com/en/our-story/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^balinese-royal-wedding\.html$ https://kamandaluresort.com/en/wedding-event/ubud-wedding-venue-and-package/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^daypass\.html$ https://kamandaluresort.com/en/ubud-experiences-and-activities/leisure-family/infinity-pool-day-pass-ubud/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^deluxe-poolvilla\.html$ https://kamandaluresort.com/en/villa/garden-pool-villa/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^en/experience/balinese-cooking-class/?$ https://kamandaluresort.com/en/ubud-experiences-and-activities/leisure-family/balinese-cooking-class-with-market-visit-ubud/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^en/offer/3-night-romantic-escape-save-45-in-value-benefits/?$ https://kamandaluresort.com/en/offer/romance-undisturbed/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^koi-pond-pre-wed\.html$ https://kamandaluresort.com/en/wedding-event/float-into-forever-bali-s-unique-pre-wedding-photos/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^m/villas\.html$ https://kamandaluresort.com/en/villas/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^plan-now-book-later\.html$ https://kamandaluresort.com/en/offer/ubud-reserved/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^romantic-flower-bath\.html$ https://kamandaluresort.com/en/ubud-experiences-and-activities/signature-experiences/romantic-flower-bath-ubud/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^royalvillage/rates\.html$ https://kamandaluresort.com/en/villas/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^royalvillage/spa\.html$ https://kamandaluresort.com/en/spa-wellness/chaya-spa/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^spa-offer\.html$ https://kamandaluresort.com/en/spa-wellness/spa-promo/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^special-offer\.html$ https://kamandaluresort.com/en/offers/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^chinese-new-year-package\.html$ https://kamandaluresort.com/en/offers/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^en/contact/?$ https://kamandaluresort.com/en/contact-us/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^en/offer/eid-serenity/?$ https://kamandaluresort.com/en/offers/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^en/offer/silent-day-package-nyepi/?$ https://kamandaluresort.com/en/offers/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^bali-brief/useful-info\.html$ https://kamandaluresort.com/en/services-facilities/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^booking_package\.php$ https://kamandaluresort.com/en/offers/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^m/terms\.html$ https://kamandaluresort.com/en/terms-and-conditions/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^picnic-lunch-boat\.html$ https://kamandaluresort.com/en/ubud-experiences-and-activities/signature-experiences/rice-fields-picnic-lunch-ubud/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^privacy\.html$ https://kamandaluresort.com/en/privacy-policy/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^royalvillage/de-villageclub\.html$ https://kamandaluresort.com/en/services-facilities/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^royalvillage/meeting-room\.html$ https://kamandaluresort.com/en/wedding-event/meeting-room-and-package/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^royalvillage/spa-policy\.html$ https://kamandaluresort.com/en/spa-wellness/chaya-spa/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^royalvillage/theme-dinner\.html$ https://kamandaluresort.com/en/wedding-event/theme-dinner/ [R=301,L]
+
+
+# EXISTING redirects retained (2 destinations updated per latest mapping)
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^en/experiences/?$ https://kamandaluresort.com/en/ubud-experiences-and-activities/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^en/experience/forest-dining/?$ https://kamandaluresort.com/en/ubud-experiences-and-activities/signature-experiences/dinner-above-the-forest/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^en/offer/all-inclusive-escape/?$ https://kamandaluresort.com/en/offers/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^en/offer/best-rate-guarantee/?$ https://kamandaluresort.com/en/offers/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^en/spa-wellness/spa-special-offer/?$ https://kamandaluresort.com/en/spa-wellness/spa-promo/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^en/offer/stay-longer-save-up-to-45/?$ https://kamandaluresort.com/en/offers/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^en/blog/laudantium-non-proi/?$ https://kamandaluresort.com/en/blog/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^en/blog/perang-api-fire-war-a-fiery-tradition-ignites-bali/?$ https://kamandaluresort.com/en/blog/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^en/blog/eius-provident-dolo/?$ https://kamandaluresort.com/en/blog/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^en/blog/sed-laborum-est-ve/?$ https://kamandaluresort.com/en/blog/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^en/blog/ad-aut-tempor-elit/?$ https://kamandaluresort.com/en/blog/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^images/contact-us\.php$ https://kamandaluresort.com/en/contact-us/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^en/offer/ubud-escape-at-kamandalu-free-floating-breakfast-awaits/?$ https://kamandaluresort.com/en/offers/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^en/experience/rice-fields-picnic-lunch-ubud/?$ https://kamandaluresort.com/en/ubud-experiences-and-activities/signature-experiences/rice-fields-picnic-lunch-ubud/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^en/experiencesv1/?$ https://kamandaluresort.com/en/ubud-experiences-and-activities/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^en/experience/romantic-dinner/?$ https://kamandaluresort.com/en/ubud-experiences-and-activities/signature-experiences/candlelit-grand-staircase-romantic-dinner-ubud/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^en/experience/kids-activities/?$ https://kamandaluresort.com/en/ubud-experiences-and-activities/leisure-family/kids-balinese-cultural-activities-ubud/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^en/experience/picnic-lunch/?$ https://kamandaluresort.com/en/ubud-experiences-and-activities/signature-experiences/rice-fields-picnic-lunch-ubud/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^en/experience/balinese-night-market/?$ https://kamandaluresort.com/en/dining/petulu-restaurant/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^en/experience/balinese-royal-dinner/?$ https://kamandaluresort.com/en/ubud-experiences-and-activities/signature-experiences/balinese-royal-dinner/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^en/experience/vedika-candlelight-dinner/?$ https://kamandaluresort.com/en/ubud-experiences-and-activities/signature-experiences/vedika-candlelight-dinner-ubud/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^en/experience/candlelight-garden-dinner/?$ https://kamandaluresort.com/en/ubud-experiences-and-activities/signature-experiences/candlelight-garden-dinner-tipi-ubud/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^en/experience/flower-pool-ubud/?$ https://kamandaluresort.com/en/ubud-experiences-and-activities/signature-experiences/flower-pool-ubud/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^en/experience/romantic-flower-bath/?$ https://kamandaluresort.com/en/ubud-experiences-and-activities/signature-experiences/romantic-flower-bath-ubud/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^images/newsletter/newsletter/?$ https://kamandaluresort.com/en/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^images/spa-menu09\.pdf$ https://kamandaluresort.com/en/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^images/kamandalu-sitemap\.pdf$ https://kamandaluresort.com/en/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^images/spa-guest-comment\.pdf$ https://kamandaluresort.com/en/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^images/kamandalu-wedding-package\.pdf$ https://kamandaluresort.com/en/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^en/experience/floating-breakfast-or-brunch/?$ https://kamandaluresort.com/en/ubud-experiences-and-activities/signature-experiences/private-floating-breakfast-in-ubud/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^en/experience/sip-savor-and-relax-a-luxurious-high-tea-experience-amidst-ubud-s-lush-rice-fields/?$ https://kamandaluresort.com/en/ubud-experiences-and-activities/signature-experiences/rice-fields-high-tea-ubud/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^en/experience/mount-batur-sunrise-jeep-tour/?$ https://kamandaluresort.com/en/ubud-experiences-and-activities/ubud-activities-day-experiences/mount-batur-sunrise-jeep-tour/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^en/experience/awana-pool-daypass/?$ https://kamandaluresort.com/en/ubud-experiences-and-activities/leisure-family/infinity-pool-day-pass-ubud/ [R=301,L]
+
+RewriteRule ^two-bedroom-poolvilla\.html$ /en/villa/two-bedroom-valley-pool-villa/ [R=301,L]
+RewriteRule ^deluxe-poolvilla\.html$ /en/villa/valley-pool-villa/ [R=301,L]
+RewriteRule ^en/experience/balinese-night-market/?$ /en/dining/ [R=301,L]
+RewriteRule ^picnic-lunch-boat\.html$ /en/ubud-experiences-and-activities/signature-experiences/the-original-koi-boat-experience/ [R=301,L]
+RewriteRule ^/en/offer/ubud-reserved$ /en/offer/ubud-planned-ahead/ [R=301,L]
+
+# Redirect remaining www requests to the HTTPS non-www domain.
+# Keep this after specific mappings and before the generic fallback.
+# The original path and query string are preserved.
+RewriteCond %{HTTP_HOST} ^www\.kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteRule ^ https://kamandaluresort.com%{REQUEST_URI} [R=301,L,NE]
+
+# No mapping was supplied for /cooking-demo-chef-wan.html; no specific rule added.
+# NOTE: The fallback below is preserved from the original .htaccess.
+# SEO improvement to consider separately: remove this fallback and return 404
+# for genuinely unknown URLs, rather than redirecting them all to the homepage.
+
+# Original generic fallback - LAST (otherwise it overrides specific redirects)
+RewriteCond %{HTTP_HOST} ^(www\.)?kamandaluresort\.com(?::[0-9]+)?$ [NC]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^.*$ /en [R=301,L]
+
+# END Kamandalu redirects

@@ -35,7 +35,10 @@ const pageDetails = await client.fetch(`*[_type == "page" && _id == "2ff8dda1-8c
 const offers = await client.fetch(`*[_type == "offer"] | order(orderNumber asc){
   "slug": slug.current, title, subtitle, excerpt, buttonLabel, buttonValue,
   mainImage { asset->{url} }, mainImageAlt,
-  secondImage { asset->{url} }, secondImageAlt
+  secondImage { asset->{url} }, secondImageAlt,
+  headerImages[]{
+    image { asset->{url} }, alt, title, order
+  }
 }`);
 
 // Prepare offers header slider images
@@ -126,16 +129,35 @@ const keywords = pageDetails.metaKeywords ?? '';
   {/* Offers grid section */}
 <section class="container mx-auto px-4 pt-16 pb-12 xl:px-10 2xl:px-0">
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-      {offers.map((offer) => (
-        // Single offer card
-        <div class="transition-transform duration-500 ease-in-out bg-white overflow-hidden flex flex-col h-full">
+      {offers.map((offer) => {
+        const isFeatured = offer.slug === 'ubud-planned-ahead';
+        const heroSlide = isFeatured
+          ? safeArray(offer.headerImages)
+              .filter(slide => slide?.image?.asset?.url)
+              .sort((a, b) => (a.order ?? 999) - (b.order ?? 999))[0]
+          : undefined;
+
+        return (
+        <div class:list={[
+          "transition-transform duration-500 ease-in-out bg-white overflow-hidden flex flex-col h-full",
+          { "col-span-full": isFeatured },
+        ]}>
           <OptimizedImage
-            src={offer.secondImage?.asset?.url ?? offer.mainImage?.asset?.url}
-            alt={offer.secondImageAlt?.[locale] ?? offer.mainImageAlt?.[locale] ?? 'Offer image'}
+            src={isFeatured
+              ? heroSlide?.image?.asset?.url ?? offer.mainImage?.asset?.url ?? offer.secondImage?.asset?.url
+              : offer.secondImage?.asset?.url ?? offer.mainImage?.asset?.url}
+            alt={isFeatured
+              ? heroSlide?.alt?.[locale] ?? heroSlide?.title?.[locale] ?? offer.mainImageAlt?.[locale] ?? offer.title?.[locale] ?? offer.title?.en ?? 'Offer image'
+              : offer.secondImageAlt?.[locale] ?? offer.mainImageAlt?.[locale] ?? 'Offer image'}
             width={800} height={600} loading="lazy"
-            className="w-full h-auto aspect-[4/3] transition duration-500"
+            className={`w-full transition duration-500 ${isFeatured
+              ? 'block mx-auto self-center h-[240px] sm:h-[320px] lg:h-[450px] object-center'
+              : 'h-auto aspect-[4/3]'}`}
           />
-          <div class="py-4 md:py-6 flex flex-col flex-1">
+          <div class:list={[
+            "py-4 md:py-6 flex flex-col flex-1",
+            { "text-center": isFeatured },
+          ]}>
             <h3 class="text-lg tracking-widest uppercase font-title">
               {offer.title?.[locale] ?? offer.title?.en}
             </h3>
@@ -146,7 +168,10 @@ const keywords = pageDetails.metaKeywords ?? '';
 )}
             <div class="flex-grow"></div>
             {/* Offer action buttons */}
-            <div class="mt-6 flex flex-wrap gap-4 lg:mb-20 mb-10">
+            <div class:list={[
+              "mt-6 flex flex-wrap gap-4 lg:mb-20 mb-10",
+              { "justify-center": isFeatured },
+            ]}>
               <a
                 href={`/${locale}/offer/${offer.slug}`}
                 class="bg-white text-black px-4 py-3 md:px-4 md:py-2 text-xs font-title tracking-widest transition-colors duration-300 border border-black hover:bg-[#916B2C] hover:text-white hover:border-transparent inline-block text-center"
@@ -156,13 +181,13 @@ const keywords = pageDetails.metaKeywords ?? '';
               <a
                 href={offer.buttonValue}
                 class="hover:bg-white hover:text-black px-4 py-3 md:px-4 md:py-2 text-xs font-title tracking-widest transition-colors duration-300 border hover:border-black bg-[#916B2C] text-white border-transparent inline-block text-center"
-                target="_blank" rel="noopener noreferrer"
+                rel="noopener noreferrer"
               >Book Now</a>
 ) : (
 <a
                 href={`https://www.book-secure.com/index.php?s=results&property=idbal31692&locale=${locale}_GB&stid=986w12cwy`}
                 class="hover:bg-white hover:text-black px-4 py-3 md:px-4 md:py-2 text-xs font-title tracking-widest transition-colors duration-300 border hover:border-black bg-[#916B2C] text-white border-transparent inline-block text-center"
-                target="_blank" rel="noopener noreferrer"
+                rel="noopener noreferrer"
               >Book Now</a>
 )}
 
@@ -170,7 +195,8 @@ const keywords = pageDetails.metaKeywords ?? '';
             </div>
           </div>
         </div>
-      ))}
+        );
+      })}
     </div>
   </section>
 

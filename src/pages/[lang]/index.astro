@@ -238,7 +238,7 @@ const structuredData = locale === 'en' ? {
       <!-- Description -->
       <div class="mx-auto mb-12 max-w-3xl text-xl md:mb-12" set:html={pageDescription}></div>
       <!-- Check Rates Button -->
-      <a href="https://www.book-secure.com/index.php?s=results&property=idbal31692&locale=en_GB&currency=IDR&stid=986w12cwy" class="bg-white text-gray-700 px-4 py-3 md:px-6 md:py-4 text-xs md:text-sm font-title tracking-widest transition-colors duration-300 border border-black hover:bg-[#916B2C] hover:text-white hover:border-transparent inline-block">Check Rates</a>
+      <a data-default-booking-dates href="https://www.book-secure.com/index.php?s=results&property=idbal31692&locale=en_GB&currency=IDR&stid=986w12cwy" class="bg-white text-gray-700 px-4 py-3 md:px-6 md:py-4 text-xs md:text-sm font-title tracking-widest transition-colors duration-300 border border-black hover:bg-[#916B2C] hover:text-white hover:border-transparent inline-block">Check Rates</a>
     </div>
   </section>
 
@@ -543,11 +543,11 @@ const structuredData = locale === 'en' ? {
     document.addEventListener('DOMContentLoaded', () => {
       // --- FLATPICKR DATE PICKER SETUP ---
       function getMonthsToShow() { return window.innerWidth < 640 ? 1 : 2; }
-      const today = new Date(), tomorrow = new Date(); tomorrow.setDate(today.getDate() + 1);
+      const today = new Date(), departureDate = new Date(); departureDate.setDate(today.getDate() + 2);
       flatpickr("#flatpickr-date", {
         mode: "range",
         minDate: "today",
-        defaultDate: [today, tomorrow],
+        defaultDate: [today, departureDate],
         dateFormat: "Y-m-d",
         altInput: true,
         altFormat: "M j",
