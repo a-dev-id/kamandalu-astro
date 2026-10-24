@@ -4,6 +4,7 @@ import Layout from '../../../layouts/Base.astro';
 import client from '../../../lib/sanityClient';
 import { getLocale } from '../../../utils/getLocale';
 import OptimizedImage from '../../../components/OptimizedImage.astro';
+import SupportingImage from '../../../components/SupportingImage.astro';
 import { toHTML } from '@portabletext/to-html';
 
 // Generate static paths for each language
@@ -56,9 +57,7 @@ const categories = await client.fetch(`*[
   title,
   excerpt,
   description,
-  mainImage {
-    asset->{url}
-  },
+  mainImage { ..., asset->{ _id, url, metadata { dimensions } } },
   mainImageAlt,
   order
 }`);
@@ -198,8 +197,9 @@ const keywords =
                       href={`/${locale}/ubud-experiences-and-activities/${data.slug}`}
                       class="block overflow-hidden"
                     >
-                      <OptimizedImage
-                        src={data.mainImage?.asset?.url ?? ''}
+                      <SupportingImage
+                        image={data.mainImage}
+                        layout="carousel-three"
                         alt={data.mainImageAlt?.[locale] ?? data.title?.[locale] ?? ''}
                         width={800}
                         height={600}
@@ -322,9 +322,7 @@ const keywords =
   </script>
 
   {/* Splide carousel initialization script */}
-  <script>
-    import "@splidejs/splide/css";
-    import Splide from "@splidejs/splide";
+  <script>    import Splide from "@splidejs/splide";
 
     const carousel = document.querySelector("#experience-category-carousel");
 

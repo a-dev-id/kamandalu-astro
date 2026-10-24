@@ -3,6 +3,8 @@ import Layout from '../../../layouts/Base.astro';
 import client from '../../../lib/sanityClient';
 import { getLocale } from '../../../utils/getLocale';
 import OptimizedImage from '../../../components/OptimizedImage.astro';
+import SupportingImage from '../../../components/SupportingImage.astro';
+import { firstSupportingImage } from '../../../utils/supportingImages.js';
 import { toHTML } from '@portabletext/to-html';
 
 // Params
@@ -24,8 +26,8 @@ const pageDetails = await client.fetch(`*[_type == "page" && _id == "da5b24b7-65
 // Fetch blogs
 const allBlogs = await client.fetch(`*[_type == "blog"] | order(order asc){
   "slug": slug.current, title, excerpt,
-  mainImage { asset->{url} }, mainImageAlt,
-  secondImage { asset->{url} }, secondImageAlt
+  mainImage { ..., asset->{ _id, url, metadata { dimensions } } }, mainImageAlt,
+  secondImage { ..., asset->{ _id, url, metadata { dimensions } } }, secondImageAlt
 }`);
 const blog = allBlogs
   .map((item) => ({
@@ -92,8 +94,9 @@ export async function getStaticPaths() {
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
       {blog.map((data) => (
         <div class="transition-transform duration-500 ease-in-out bg-white overflow-hidden flex flex-col h-full">
-          <OptimizedImage
-            src={data.secondImage?.asset?.url ?? data.mainImage?.asset?.url}
+          <SupportingImage
+            image={firstSupportingImage(data.secondImage, data.mainImage)}
+            layout="blog-page-grid"
             alt={data.secondImageAlt?.[locale] ?? data.mainImageAlt?.[locale] ?? 'Blog image'}
             width={800} height={600} loading="lazy"
             class="w-full h-auto aspect-[4/3] transition duration-500"

@@ -4,6 +4,8 @@ import Layout from '../../../layouts/Base.astro';
 import client from '../../../lib/sanityClient';
 import { getLocale } from '../../../utils/getLocale';
 import OptimizedImage from '../../../components/OptimizedImage.astro';
+import SupportingImage from '../../../components/SupportingImage.astro';
+import { firstSupportingImage } from '../../../utils/supportingImages.js';
 import { toHTML } from '@portabletext/to-html';
 
 // Generate static paths for each language and experience category
@@ -85,13 +87,9 @@ const experiences = await client.fetch(`*[
   title,
   subtitle,
   excerpt,
-  mainImage {
-    asset->{url}
-  },
+  mainImage { ..., asset->{ _id, url, metadata { dimensions } } },
   mainImageAlt,
-  secondImage {
-    asset->{url}
-  },
+  secondImage { ..., asset->{ _id, url, metadata { dimensions } } },
   secondImageAlt,
   order
 }`, {
@@ -143,6 +141,9 @@ const keywords =
     : categoryDetails?.metaKeywords?.[locale] ?? '';
 
 const initialVisibleItems = 9;
+
+// Reuse exact originals already requested by this page's protected hero slider.
+const supportingReuseUrls = categoryHeaderSlides.map(slide => slide.image?.asset?.url).filter(Boolean);
 ---
 
 <Layout {title} {description} {url} {ogImage} {keywords}>
@@ -222,10 +223,7 @@ const initialVisibleItems = 9;
         >
           {experiences.map((data, i) => {
             const detailUrl = `/${locale}/ubud-experiences-and-activities/${categorySlug}/${data.slug}`;
-            const cardImage =
-              data.secondImage?.asset?.url ??
-              data.mainImage?.asset?.url ??
-              '';
+            const cardImage = firstSupportingImage(data.secondImage, data.mainImage);
 
             const cardImageAlt =
               data.secondImageAlt?.[locale] ??
@@ -242,12 +240,14 @@ const initialVisibleItems = 9;
                 data-index={i}
               >
                 <a href={detailUrl} class="block overflow-hidden">
-                  <OptimizedImage
-                    src={cardImage}
+                  <SupportingImage
+                    reuseUrls={supportingReuseUrls}
+                    image={cardImage}
+                    layout="experience-grid"
                     alt={cardImageAlt}
                     width={800}
                     height={600}
-                    loading={i < initialVisibleItems ? 'eager' : 'lazy'}
+                    loading={categoryHeaderSlides.length === 0 && i < 3 ? 'eager' : 'lazy'}
                     className="w-full h-auto aspect-[4/3] object-cover transition duration-500"
                   />
                 </a>

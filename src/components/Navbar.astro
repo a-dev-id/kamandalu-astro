@@ -53,6 +53,8 @@ const experienceCategories = [
         <img
           id="navbar-logo-full"
           src="/images/kamandalu-logo.png"
+          width={653}
+          height={379}
           alt="Kamandalu Logo"
           class="w-36 h-auto transition-all duration-300 logo brightness-0 invert-[1]"
           fetchpriority="high"
@@ -284,37 +286,43 @@ const experienceCategories = [
       const logoMark = document.getElementById("navbar-logo-mark");
 
       // Scroll-based navbar style change
+      let previousScrolled;
+      let scrollFrame = 0;
       const syncNavbarState = () => {
+        scrollFrame = 0;
         const scrolled = window.scrollY > 50;
 
-        navbar.classList.toggle("bg-white", scrolled);
-        navbar.classList.toggle("text-black", scrolled);
-        navbar.classList.toggle("shadow-md", scrolled);
-        navbar.classList.toggle("bg-transparent", !scrolled);
-        navbar.classList.toggle("text-white", !scrolled);
+        if (scrolled !== previousScrolled) {
+          navbar.classList.toggle("bg-white", scrolled);
+          navbar.classList.toggle("text-black", scrolled);
+          navbar.classList.toggle("shadow-md", scrolled);
+          navbar.classList.toggle("bg-transparent", !scrolled);
+          navbar.classList.toggle("text-white", !scrolled);
 
-        memberBtn?.classList.toggle("text-black", scrolled);
-        memberBtn?.classList.toggle("text-white", !scrolled);
+          memberBtn?.classList.toggle("text-black", scrolled);
+          memberBtn?.classList.toggle("text-white", !scrolled);
 
-        languageSelect?.classList.toggle("text-black", scrolled);
-        languageSelect?.classList.toggle("text-white", !scrolled);
+          languageSelect?.classList.toggle("text-black", scrolled);
+          languageSelect?.classList.toggle("text-white", !scrolled);
 
-        reserveBtn?.classList.toggle("bg-[#916B2C]", scrolled);
-        reserveBtn?.classList.toggle("text-white", scrolled);
-        reserveBtn?.classList.toggle("border-transparent", scrolled);
-        reserveBtn?.classList.toggle("bg-white", !scrolled);
-        reserveBtn?.classList.toggle("text-black", !scrolled);
-        reserveBtn?.classList.toggle("border-white", !scrolled);
+          reserveBtn?.classList.toggle("bg-[#916B2C]", scrolled);
+          reserveBtn?.classList.toggle("text-white", scrolled);
+          reserveBtn?.classList.toggle("border-transparent", scrolled);
+          reserveBtn?.classList.toggle("bg-white", !scrolled);
+          reserveBtn?.classList.toggle("text-black", !scrolled);
+          reserveBtn?.classList.toggle("border-white", !scrolled);
 
-        fullLogo?.classList.toggle("hidden", scrolled);
-        logoMark?.classList.toggle("hidden", !scrolled);
-        logoMark?.classList.toggle("block", scrolled);
+          fullLogo?.classList.toggle("hidden", scrolled);
+          logoMark?.classList.toggle("hidden", !scrolled);
+          logoMark?.classList.toggle("block", scrolled);
 
-        logoRow?.classList.toggle("pt-8", !scrolled);
-        logoRow?.classList.toggle("pb-2", !scrolled);
-        logoRow?.classList.toggle("pt-2", scrolled);
-        logoRow?.classList.toggle("pb-0", scrolled);
-        logoRow?.classList.toggle("-mb-4", scrolled);
+          logoRow?.classList.toggle("pt-8", !scrolled);
+          logoRow?.classList.toggle("pb-2", !scrolled);
+          logoRow?.classList.toggle("pt-2", scrolled);
+          logoRow?.classList.toggle("pb-0", scrolled);
+          logoRow?.classList.toggle("-mb-4", scrolled);
+          previousScrolled = scrolled;
+        }
 
         if (!diningDropdown?.classList.contains("hidden")) {
           updateDropdownPosition(navbar, diningDropdown);
@@ -329,7 +337,9 @@ const experienceCategories = [
         }
       };
 
-      window.addEventListener("scroll", syncNavbarState, { passive: true });
+      window.addEventListener("scroll", () => {
+        if (!scrollFrame) scrollFrame = requestAnimationFrame(syncNavbarState);
+      }, { passive: true });
       syncNavbarState();
 
       // Hamburger toggle

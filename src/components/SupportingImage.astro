@@ -1,0 +1,34 @@
+---
+import { getSupportingImage } from '../utils/supportingImages.js';
+
+const {
+  image,
+  layout,
+  quality = 80,
+  alt = '',
+  width = 800,
+  height = 600,
+  className = '',
+  loading = 'lazy',
+  fetchpriority = 'auto',
+  reuseUrls = [],
+} = Astro.props;
+const sources = getSupportingImage(image, { layout, quality, reuseUrls });
+const resolvedAlt = typeof alt === 'string'
+  ? alt
+  : alt && typeof alt === 'object'
+    ? alt.en ?? Object.entries(alt).find(([key, value]) => key !== '_type' && typeof value === 'string')?.[1] ?? ''
+    : '';
+---
+
+<img
+  {...sources}
+  alt={resolvedAlt}
+  width={width}
+  height={height}
+  loading={loading}
+  fetchpriority={fetchpriority}
+  decoding="async"
+  class={`object-cover ${className}`}
+  data-image-layout={layout}
+/>

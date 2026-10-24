@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import "@splidejs/splide/dist/css/splide.min.css";
 
 /* Preserve the intentional title casing from page and CMS content. */
 .uppercase {
@@ -65,7 +64,8 @@ section.container:has(h1.tracking-widest) iframe {
 /* Font-face rules */
 @font-face {
   font-family: "Plantin";
-  src: url("/fonts/Plantin.ttf") format("truetype");
+  src: url("/fonts/Plantin.woff2") format("woff2"),
+       url("/fonts/Plantin.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -73,7 +73,8 @@ section.container:has(h1.tracking-widest) iframe {
 
 @font-face {
   font-family: "PlantinLight";
-  src: url("/fonts/PlantinLight.ttf") format("truetype");
+  src: url("/fonts/PlantinLight.woff2") format("woff2"),
+       url("/fonts/PlantinLight.ttf") format("truetype");
   font-weight: lighter;
   font-style: normal;
   font-display: swap;
@@ -81,7 +82,8 @@ section.container:has(h1.tracking-widest) iframe {
 
 @font-face {
   font-family: "MrEavesMod";
-  src: url("/fonts/MrEavesModOTReg.ttf") format("truetype");
+  src: url("/fonts/MrEavesModOTReg.woff2") format("woff2"),
+       url("/fonts/MrEavesModOTReg.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -89,7 +91,8 @@ section.container:has(h1.tracking-widest) iframe {
 
 @font-face {
   font-family: "MrEavesModBold";
-  src: url("/fonts/MrEavesModOTBold.ttf") format("truetype");
+  src: url("/fonts/MrEavesModOTBold.woff2") format("woff2"),
+       url("/fonts/MrEavesModOTBold.ttf") format("truetype");
   font-weight: bold;
   font-style: normal;
   font-display: swap;

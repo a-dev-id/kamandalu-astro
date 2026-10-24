@@ -1,0 +1,4595 @@
+{
+  "date": "2026-10-23",
+  "timezone": "Asia/Singapore",
+  "scope": "Investigation only. Phase 1, application source, dependencies, headers/heroes, CMS and production tracking unchanged. No deployment.",
+  "method": {
+    "node": "v22.23.4",
+    "versions": {
+      "astro": "7.4.2",
+      "@astrojs/sitemap": "3.7.4",
+      "astro-carousel": "3.0.2",
+      "@splidejs/splide": "4.1.4",
+      "@sanity/image-url": "2.1.1"
+    },
+    "lighthouse": "12.8.2",
+    "url": "http://127.0.0.1:4323/en/",
+    "settings": {
+      "formFactor": "mobile",
+      "screenEmulation": {
+        "mobile": true,
+        "width": 412,
+        "height": 823,
+        "deviceScaleFactor": 1.75,
+        "disabled": false
+      },
+      "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36",
+      "throttling": {
+        "rttMs": 150,
+        "throughputKbps": 1638.4,
+        "requestLatencyMs": 562.5,
+        "downloadThroughputKbps": 1474.5600000000002,
+        "uploadThroughputKbps": 675,
+        "cpuSlowdownMultiplier": 4
+      },
+      "throttlingMethod": "simulate",
+      "maxWaitForFcp": 30000,
+      "maxWaitForLoad": 45000,
+      "pauseAfterFcpMs": 1000,
+      "pauseAfterLoadMs": 1000,
+      "networkQuietThresholdMs": 1000,
+      "cpuQuietThresholdMs": 1000
+    },
+    "blockedDomains": [
+      "googletagmanager.com",
+      "google-analytics.com",
+      "analytics.google.com",
+      "googleadservices.com",
+      "googlesyndication.com",
+      "doubleclick.net",
+      "google.com/ccm",
+      "google.com/pagead",
+      "facebook.net",
+      "facebook.com/tr",
+      "contentsquare.net",
+      "contentsquare.com",
+      "triptease.io",
+      "hotjar.com",
+      "hotjar.io",
+      "clarity.ms",
+      "tiktok.com"
+    ],
+    "runs": {
+      "live": 10,
+      "blocked": 5
+    },
+    "construction": "Both variants use one existing Astro production build. Only the seven offer img tags are substituted with their recorded pre-Phase-1 tags in the original variant.",
+    "invariantHash": "aeaf724e78c31d31dfac6e68bb905d08127a306cb3d06fffe1880fb99cc2585c",
+    "htmlHashes": {
+      "original": "90055c3f608858cef45b05c49bf40e513d34e0073daf806864bb74b2da676b47",
+      "optimized": "647a3221cf7582acf1c1c196adc5d3f4808fa4fef00c097156de4eecaf1252e4"
+    },
+    "identicalScriptsAndLinks": true,
+    "identicalNonOfferImageTags": true,
+    "assetsHashCount": 11,
+    "sourceHashCount": 47,
+    "sourceSnapshotHash": "47aeac03f558e9b556663d2a4e19e24c2d2fc5838ace8156b33bd2b0359d7644",
+    "sourceAndBuildVerification": {
+      "sourceUnchanged": true,
+      "dependenciesUnchanged": true,
+      "buildAssetsUnchanged": true,
+      "completedRuns": 30
+    }
+  },
+  "definitions": {
+    "original": "Recorded pre-Phase-1 offer img tags inside the SAME current production document and assets.",
+    "optimized": "Unmodified current Phase-1 production document.",
+    "blocking": "Third-party attribution audit blocking time over its analysis window; not an exact allocation of the displayed simulated TBT. Do not add it to or subtract it from TBT.",
+    "cpu": "Lighthouse bootup/main-thread audit CPU timings under the configured simulated mobile slowdown.",
+    "statistics": "Linear-interpolated quartiles and even-sample median. Paired differences are optimized minus original. Bootstrap intervals are exploratory and do not eliminate host/network/remote-script variation."
+  },
+  "previousComparison": [
+    {
+      "version": "before",
+      "run": 1,
+      "score": 61,
+      "fcp": 2629.3624040515024,
+      "lcp": 2704.3624040515024,
+      "tbt": 1789.500000000001,
+      "speedIndex": 5286.141895708314,
+      "benchmarkIndex": 3296.5,
+      "lcpSelector": "div#navbar-logo-row > div.flex > a.flex > img#navbar-logo-full",
+      "weightedScores": [
+        {
+          "metric": "first-contentful-paint",
+          "weight": 10,
+          "points": 6.2
+        },
+        {
+          "metric": "largest-contentful-paint",
+          "weight": 25,
+          "points": 21.25
+        },
+        {
+          "metric": "total-blocking-time",
+          "weight": 30,
+          "points": 3
+        },
+        {
+          "metric": "cumulative-layout-shift",
+          "weight": 25,
+          "points": 25
+        },
+        {
+          "metric": "speed-index",
+          "weight": 10,
+          "points": 5.8
+        }
+      ]
+    },
+    {
+      "version": "before",
+      "run": 2,
+      "score": 60,
+      "fcp": 2706.5413340565633,
+      "lcp": 3006.5413340565638,
+      "tbt": 3576,
+      "speedIndex": 2706.5413340565633,
+      "benchmarkIndex": 1972.5,
+      "lcpSelector": "div#navbar-logo-row > div.flex > a.flex > img#navbar-logo-full",
+      "weightedScores": [
+        {
+          "metric": "first-contentful-paint",
+          "weight": 10,
+          "points": 6
+        },
+        {
+          "metric": "largest-contentful-paint",
+          "weight": 25,
+          "points": 19.5
+        },
+        {
+          "metric": "total-blocking-time",
+          "weight": 30,
+          "points": 0.3
+        },
+        {
+          "metric": "cumulative-layout-shift",
+          "weight": 25,
+          "points": 25
+        },
+        {
+          "metric": "speed-index",
+          "weight": 10,
+          "points": 9.6
+        }
+      ]
+    },
+    {
+      "version": "before",
+      "run": 3,
+      "score": 68,
+      "fcp": 2555.5479184094734,
+      "lcp": 2705.5479184094734,
+      "tbt": 1341.5,
+      "speedIndex": 2555.5479184094734,
+      "benchmarkIndex": 3133.5,
+      "lcpSelector": "div#navbar-logo-row > div.flex > a.flex > img#navbar-logo-full",
+      "weightedScores": [
+        {
+          "metric": "first-contentful-paint",
+          "weight": 10,
+          "points": 6.5
+        },
+        {
+          "metric": "largest-contentful-paint",
+          "weight": 25,
+          "points": 21.25
+        },
+        {
+          "metric": "total-blocking-time",
+          "weight": 30,
+          "points": 5.1000000000000005
+        },
+        {
+          "metric": "cumulative-layout-shift",
+          "weight": 25,
+          "points": 25
+        },
+        {
+          "metric": "speed-index",
+          "weight": 10,
+          "points": 9.7
+        }
+      ]
+    },
+    {
+      "version": "before",
+      "run": 4,
+      "score": 71,
+      "fcp": 2630.625108137443,
+      "lcp": 2705.625108137443,
+      "tbt": 902.4999999999991,
+      "speedIndex": 2816.3937416994954,
+      "benchmarkIndex": 3226.5,
+      "lcpSelector": "div#navbar-logo-row > div.flex > a.flex > img#navbar-logo-full",
+      "weightedScores": [
+        {
+          "metric": "first-contentful-paint",
+          "weight": 10,
+          "points": 6.2
+        },
+        {
+          "metric": "largest-contentful-paint",
+          "weight": 25,
+          "points": 21.25
+        },
+        {
+          "metric": "total-blocking-time",
+          "weight": 30,
+          "points": 9.3
+        },
+        {
+          "metric": "cumulative-layout-shift",
+          "weight": 25,
+          "points": 25
+        },
+        {
+          "metric": "speed-index",
+          "weight": 10,
+          "points": 9.6
+        }
+      ]
+    },
+    {
+      "version": "before",
+      "run": 5,
+      "score": 64,
+      "fcp": 2558.3585566901124,
+      "lcp": 2708.3585566901124,
+      "tbt": 2177,
+      "speedIndex": 2558.3585566901124,
+      "benchmarkIndex": 1744.5,
+      "lcpSelector": "div#navbar-logo-row > div.flex > a.flex > img#navbar-logo-full",
+      "weightedScores": [
+        {
+          "metric": "first-contentful-paint",
+          "weight": 10,
+          "points": 6.5
+        },
+        {
+          "metric": "largest-contentful-paint",
+          "weight": 25,
+          "points": 21.25
+        },
+        {
+          "metric": "total-blocking-time",
+          "weight": 30,
+          "points": 1.7999999999999998
+        },
+        {
+          "metric": "cumulative-layout-shift",
+          "weight": 25,
+          "points": 25
+        },
+        {
+          "metric": "speed-index",
+          "weight": 10,
+          "points": 9.7
+        }
+      ]
+    },
+    {
+      "version": "after",
+      "run": 1,
+      "score": 65,
+      "fcp": 2556.272687279075,
+      "lcp": 2706.272687279075,
+      "tbt": 1895,
+      "speedIndex": 2556.272687279075,
+      "benchmarkIndex": 3004.5,
+      "lcpSelector": "div#navbar-logo-row > div.flex > a.flex > img#navbar-logo-full",
+      "weightedScores": [
+        {
+          "metric": "first-contentful-paint",
+          "weight": 10,
+          "points": 6.5
+        },
+        {
+          "metric": "largest-contentful-paint",
+          "weight": 25,
+          "points": 21.25
+        },
+        {
+          "metric": "total-blocking-time",
+          "weight": 30,
+          "points": 2.4
+        },
+        {
+          "metric": "cumulative-layout-shift",
+          "weight": 25,
+          "points": 25
+        },
+        {
+          "metric": "speed-index",
+          "weight": 10,
+          "points": 9.7
+        }
+      ]
+    },
+    {
+      "version": "after",
+      "run": 2,
+      "score": 33,
+      "fcp": 3364.1122000000005,
+      "lcp": 10647.7213,
+      "tbt": 3512.499999999998,
+      "speedIndex": 6746.836433986636,
+      "benchmarkIndex": 1431.5,
+      "lcpSelector": "div#navbar-logo-row > div.flex > a.flex > img#navbar-logo-full",
+      "weightedScores": [
+        {
+          "metric": "first-contentful-paint",
+          "weight": 10,
+          "points": 3.8
+        },
+        {
+          "metric": "largest-contentful-paint",
+          "weight": 25,
+          "points": 0
+        },
+        {
+          "metric": "total-blocking-time",
+          "weight": 30,
+          "points": 0.3
+        },
+        {
+          "metric": "cumulative-layout-shift",
+          "weight": 25,
+          "points": 25
+        },
+        {
+          "metric": "speed-index",
+          "weight": 10,
+          "points": 3.5
+        }
+      ]
+    },
+    {
+      "version": "after",
+      "run": 3,
+      "score": 57.99999999999999,
+      "fcp": 2559.292826097615,
+      "lcp": 2559.292826097615,
+      "tbt": 4828,
+      "speedIndex": 5873.454531597121,
+      "benchmarkIndex": 1813,
+      "lcpSelector": "div#navbar-logo-row > div.flex > a.flex > img#navbar-logo-full",
+      "weightedScores": [
+        {
+          "metric": "first-contentful-paint",
+          "weight": 10,
+          "points": 6.5
+        },
+        {
+          "metric": "largest-contentful-paint",
+          "weight": 25,
+          "points": 22
+        },
+        {
+          "metric": "total-blocking-time",
+          "weight": 30,
+          "points": 0
+        },
+        {
+          "metric": "cumulative-layout-shift",
+          "weight": 25,
+          "points": 25
+        },
+        {
+          "metric": "speed-index",
+          "weight": 10,
+          "points": 4.8
+        }
+      ]
+    },
+    {
+      "version": "after",
+      "run": 4,
+      "score": 60,
+      "fcp": 2714.7695851434664,
+      "lcp": 2714.7695851434664,
+      "tbt": 2652,
+      "speedIndex": 4603.744364058146,
+      "benchmarkIndex": 575.5,
+      "lcpSelector": "div#navbar-logo-row > div.flex > a.flex > img#navbar-logo-full",
+      "weightedScores": [
+        {
+          "metric": "first-contentful-paint",
+          "weight": 10,
+          "points": 5.8999999999999995
+        },
+        {
+          "metric": "largest-contentful-paint",
+          "weight": 25,
+          "points": 21.25
+        },
+        {
+          "metric": "total-blocking-time",
+          "weight": 30,
+          "points": 1.2
+        },
+        {
+          "metric": "cumulative-layout-shift",
+          "weight": 25,
+          "points": 25
+        },
+        {
+          "metric": "speed-index",
+          "weight": 10,
+          "points": 7
+        }
+      ]
+    },
+    {
+      "version": "after",
+      "run": 5,
+      "score": 55.00000000000001,
+      "fcp": 2707.7241267792083,
+      "lcp": 3007.7241267792083,
+      "tbt": 5305,
+      "speedIndex": 5832.242005591312,
+      "benchmarkIndex": 1000.5,
+      "lcpSelector": "div#navbar-logo-row > div.flex > a.flex > img#navbar-logo-full",
+      "weightedScores": [
+        {
+          "metric": "first-contentful-paint",
+          "weight": 10,
+          "points": 6
+        },
+        {
+          "metric": "largest-contentful-paint",
+          "weight": 25,
+          "points": 19.5
+        },
+        {
+          "metric": "total-blocking-time",
+          "weight": 30,
+          "points": 0
+        },
+        {
+          "metric": "cumulative-layout-shift",
+          "weight": 25,
+          "points": 25
+        },
+        {
+          "metric": "speed-index",
+          "weight": 10,
+          "points": 4.9
+        }
+      ]
+    }
+  ],
+  "groups": {
+    "live-original": {
+      "score": {
+        "n": 10,
+        "min": 54,
+        "q1": 65.25,
+        "median": 66.5,
+        "q3": 71.25,
+        "max": 84
+      },
+      "fcp": {
+        "n": 10,
+        "min": 2553.7696656180888,
+        "q1": 2554.3884989573817,
+        "median": 2592.1738074052155,
+        "q3": 2704.804009857751,
+        "max": 2780.36093716932
+      },
+      "lcp": {
+        "n": 10,
+        "min": 2703.7696656180888,
+        "q1": 2704.384011964989,
+        "median": 2704.6353718002088,
+        "q3": 2704.8349396273297,
+        "max": 5340.3725601852375
+      },
+      "tbt": {
+        "n": 10,
+        "min": 341.5,
+        "q1": 576.125,
+        "median": 884.9999999999995,
+        "q3": 1298.1250000000002,
+        "max": 2055.030626542073
+      },
+      "cls": {
+        "n": 10,
+        "min": 0,
+        "q1": 0,
+        "median": 0,
+        "q3": 0,
+        "max": 0.00006163200694355026
+      },
+      "speedIndex": {
+        "n": 10,
+        "min": 2554.00425,
+        "q1": 2648.354581249298,
+        "median": 2704.853486144232,
+        "q3": 7187.989134687705,
+        "max": 8881.25472776465
+      },
+      "pageBytes": {
+        "n": 10,
+        "min": 9652557,
+        "q1": 9689744,
+        "median": 9845105,
+        "q3": 9901878.25,
+        "max": 10084817
+      },
+      "imageBytes": {
+        "n": 10,
+        "min": 8224081,
+        "q1": 8224091.25,
+        "median": 8224116,
+        "q3": 8224137.25,
+        "max": 8234080
+      },
+      "offerBytes": {
+        "n": 10,
+        "min": 2647714,
+        "q1": 2647782.25,
+        "median": 2647799.5,
+        "q3": 2647994.75,
+        "max": 2648064
+      },
+      "mainThread": {
+        "n": 10,
+        "min": 2699.9199999999882,
+        "q1": 3854.462999999958,
+        "median": 4127.777999999932,
+        "q3": 4961.999999999864,
+        "max": 6167.855999999878
+      },
+      "benchmarkIndex": {
+        "n": 10,
+        "min": 962,
+        "q1": 1159.75,
+        "median": 1222.25,
+        "q3": 1315.375,
+        "max": 3328.5
+      },
+      "longTaskCount": {
+        "n": 10,
+        "min": 12,
+        "q1": 15.25,
+        "median": 17,
+        "q3": 18.75,
+        "max": 19
+      },
+      "longestTask": {
+        "n": 10,
+        "min": 191,
+        "q1": 279.25,
+        "median": 323.5,
+        "q3": 399,
+        "max": 487
+      },
+      "work": {
+        "scriptEvaluation": {
+          "n": 10,
+          "min": 1287.9079999999944,
+          "q1": 1714.9979999999637,
+          "median": 2084.2219999999434,
+          "q3": 2548.029999999908,
+          "max": 3138.0679999998897
+        },
+        "other": {
+          "n": 10,
+          "min": 763.7079999999938,
+          "q1": 973.2879999999891,
+          "median": 1053.601999999978,
+          "q3": 1235.1719999999746,
+          "max": 1312.959999999984
+        },
+        "scriptParseCompile": {
+          "n": 10,
+          "min": 284.828,
+          "q1": 360.846,
+          "median": 434.84799999999996,
+          "q3": 562.958,
+          "max": 804.6279999999995
+        },
+        "styleLayout": {
+          "n": 10,
+          "min": 210.79999999999998,
+          "q1": 340.42600000000004,
+          "median": 408.6839999999999,
+          "q3": 495.36900000000014,
+          "max": 696.4359999999999
+        },
+        "paintCompositeRender": {
+          "n": 10,
+          "min": 95.60000000000001,
+          "q1": 130.34099999999995,
+          "median": 142.95000000000005,
+          "q3": 170.91099999999994,
+          "max": 190.6959999999996
+        },
+        "garbageCollection": {
+          "n": 10,
+          "min": 19.555999999999997,
+          "q1": 35.151999999999994,
+          "median": 57.25200000000001,
+          "q3": 65.53699999999995,
+          "max": 84.47200000000012
+        },
+        "parseHTML": {
+          "n": 10,
+          "min": 27.131999999999987,
+          "q1": 47.34900000000001,
+          "median": 50.07599999999999,
+          "q3": 54.67299999999999,
+          "max": 58.67999999999999
+        }
+      },
+      "parties": [
+        {
+          "entity": "Google Tag Manager",
+          "cpu": {
+            "n": 10,
+            "min": 758.500000000002,
+            "q1": 961.4520000000017,
+            "median": 1118.5620000000017,
+            "q3": 1751.997999999995,
+            "max": 2427.6639999999784
+          },
+          "blocking": {
+            "n": 10,
+            "min": 309.99999999999903,
+            "q1": 529.0000000000001,
+            "median": 674.499999999998,
+            "q3": 1228.0000000000005,
+            "max": 1863.0000000000039
+          }
+        },
+        {
+          "entity": "Facebook",
+          "cpu": {
+            "n": 10,
+            "min": 266.9039999999986,
+            "q1": 383.5079999999987,
+            "median": 545.702,
+            "q3": 627.7120000000016,
+            "max": 749.5800000000002
+          },
+          "blocking": {
+            "n": 10,
+            "min": 133.02745190051624,
+            "q1": 179.25,
+            "median": 277.8817512541542,
+            "q3": 375.7500000000002,
+            "max": 579.0000000000011
+          }
+        },
+        {
+          "entity": "triptease.io",
+          "cpu": {
+            "n": 10,
+            "min": 185.06800000000027,
+            "q1": 257.2020000000002,
+            "median": 404.5120000000006,
+            "q3": 436.3110000000005,
+            "max": 598.136000000002
+          },
+          "blocking": {
+            "n": 10,
+            "min": 21.992877331825987,
+            "q1": 44.993780208979864,
+            "median": 69.99538300412799,
+            "q3": 97.98841287224575,
+            "max": 145.9962882771419
+          }
+        },
+        {
+          "entity": "ContentSquare",
+          "cpu": {
+            "n": 10,
+            "min": 44.46400000000001,
+            "q1": 63.382,
+            "median": 92.32200000000003,
+            "q3": 120.93300000000002,
+            "max": 136.90000000000003
+          },
+          "blocking": {
+            "n": 10,
+            "min": 0,
+            "q1": 8.25,
+            "median": 31.99999999999998,
+            "q3": 58.499999999999986,
+            "max": 72.00000000000003
+          }
+        },
+        {
+          "entity": "JSDelivr CDN",
+          "cpu": {
+            "n": 10,
+            "min": 22.17599999999999,
+            "q1": 31.824999999999996,
+            "median": 36.163999999999994,
+            "q3": 43.068,
+            "max": 61.23200000000001
+          },
+          "blocking": {
+            "n": 10,
+            "min": 0,
+            "q1": 0,
+            "median": 0,
+            "q3": 0,
+            "max": 0
+          }
+        },
+        {
+          "entity": "Google/Doubleclick Ads",
+          "cpu": {
+            "n": 10,
+            "min": 6.831999999999997,
+            "q1": 8.481999999999998,
+            "median": 10.581999999999995,
+            "q3": 12.890999999999998,
+            "max": 16.12399999999999
+          },
+          "blocking": {
+            "n": 10,
+            "min": 0,
+            "q1": 0,
+            "median": 0,
+            "q3": 0,
+            "max": 0
+          }
+        },
+        {
+          "entity": "relay-t.io",
+          "cpu": {
+            "n": 10,
+            "min": 0,
+            "q1": 0,
+            "median": 0,
+            "q3": 0,
+            "max": 9.18
+          },
+          "blocking": {
+            "n": 10,
+            "min": 0,
+            "q1": 0,
+            "median": 0,
+            "q3": 0,
+            "max": 0
+          }
+        }
+      ],
+      "scripts": [
+        {
+          "url": "Unattributable",
+          "cpu": {
+            "n": 10,
+            "min": 648.8120000000018,
+            "q1": 859.0209999999952,
+            "median": 947.0679999999968,
+            "q3": 1082.6839999999934,
+            "max": 1177.9919999999925
+          },
+          "scripting": {
+            "n": 10,
+            "min": 72.476,
+            "q1": 116.41500000000016,
+            "median": 143.89600000000019,
+            "q3": 171.54799999999986,
+            "max": 256.43199999999996
+          },
+          "parseCompile": {
+            "n": 10,
+            "min": 0,
+            "q1": 0,
+            "median": 0,
+            "q3": 0,
+            "max": 0
+          },
+          "blocking": {
+            "n": 10,
+            "min": 0,
+            "q1": 0,
+            "median": 0,
+            "q3": 0,
+            "max": 0
+          },
+          "cpuReportedInRuns": 10
+        },
+        {
+          "url": "local/en/",
+          "cpu": {
+            "n": 10,
+            "min": 481.9760000000001,
+            "q1": 743.7860000000004,
+            "median": 849.252,
+            "q3": 942.7460000000005,
+            "max": 1182.9880000000003
+          },
+          "scripting": {
+            "n": 10,
+            "min": 39.003999999999984,
+            "q1": 57.40499999999998,
+            "median": 66.98599999999999,
+            "q3": 75.68700000000004,
+            "max": 96.95600000000002
+          },
+          "parseCompile": {
+            "n": 10,
+            "min": 5.747999999999998,
+            "q1": 9.504,
+            "median": 9.908,
+            "q3": 11.943,
+            "max": 14.423999999999996
+          },
+          "blocking": {
+            "n": 10,
+            "min": 0,
+            "q1": 0,
+            "median": 0,
+            "q3": 0,
+            "max": 0
+          },
+          "cpuReportedInRuns": 10
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-H09V6L9R0B",
+          "cpu": {
+            "n": 10,
+            "min": 241.10000000000014,
+            "q1": 334.47500000000116,
+            "median": 521.7580000000007,
+            "q3": 916.8139999999961,
+            "max": 1168.291999999997
+          },
+          "scripting": {
+            "n": 10,
+            "min": 173.86800000000014,
+            "q1": 237.91200000000117,
+            "median": 426.1400000000008,
+            "q3": 751.3929999999956,
+            "max": 984.0479999999967
+          },
+          "parseCompile": {
+            "n": 10,
+            "min": 48.74000000000001,
+            "q1": 81.32900000000001,
+            "median": 96.112,
+            "q3": 127.46000000000001,
+            "max": 186.752
+          },
+          "blocking": {
+            "n": 10,
+            "min": 132.14385249534504,
+            "q1": 200.57759378019762,
+            "median": 381.4999999999977,
+            "q3": 735.2499999999986,
+            "max": 960.0000000000034
+          },
+          "cpuReportedInRuns": 10
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-WRT2WJJ3E1",
+          "cpu": {
+            "n": 10,
+            "min": 119.30400000000034,
+            "q1": 327.37100000000027,
+            "median": 487.95000000000186,
+            "q3": 582.0160000000003,
+            "max": 785.3280000000004
+          },
+          "scripting": {
+            "n": 10,
+            "min": 81.16000000000035,
+            "q1": 237.45299999999958,
+            "median": 373.1600000000017,
+            "q3": 453.3270000000001,
+            "max": 555.1480000000006
+          },
+          "parseCompile": {
+            "n": 10,
+            "min": 35.864,
+            "q1": 67.033,
+            "median": 91.126,
+            "q3": 158.471,
+            "max": 222.868
+          },
+          "blocking": {
+            "n": 10,
+            "min": 25.999999999999964,
+            "q1": 195.25000000000006,
+            "median": 313.20967789886316,
+            "q3": 408.62083921308147,
+            "max": 619.0000000000008
+          },
+          "cpuReportedInRuns": 10
+        },
+        {
+          "url": "https://connect.facebook.net/en_US/fbevents.js",
+          "cpu": {
+            "n": 10,
+            "min": 108.88799999999993,
+            "q1": 198.08100000000016,
+            "median": 270.2120000000001,
+            "q3": 315.2060000000001,
+            "max": 374.6280000000007
+          },
+          "scripting": {
+            "n": 10,
+            "min": 76.35199999999993,
+            "q1": 159.43100000000018,
+            "median": 217.8420000000001,
+            "q3": 253.77400000000014,
+            "max": 272.52400000000074
+          },
+          "parseCompile": {
+            "n": 10,
+            "min": 27.724,
+            "q1": 32.331,
+            "median": 45.751999999999995,
+            "q3": 57.363,
+            "max": 95.672
+          },
+          "blocking": {
+            "n": 10,
+            "min": 42.99999999999987,
+            "q1": 73.49999999999994,
+            "median": 112.00000000000011,
+            "q3": 154.07262688123143,
+            "max": 281.99999999999966
+          },
+          "cpuReportedInRuns": 10
+        },
+        {
+          "url": "https://connect.facebook.net/signals/config/1772152629691333",
+          "cpu": {
+            "n": 10,
+            "min": 158.01600000000096,
+            "q1": 189.02799999999942,
+            "median": 267.0639999999993,
+            "q3": 316.40499999999986,
+            "max": 374.952
+          },
+          "scripting": {
+            "n": 10,
+            "min": 132.98000000000096,
+            "q1": 156.03199999999944,
+            "median": 223.22599999999932,
+            "q3": 256.44799999999975,
+            "max": 311.752
+          },
+          "parseCompile": {
+            "n": 10,
+            "min": 22.455999999999996,
+            "q1": 30.416999999999998,
+            "median": 39.519999999999996,
+            "q3": 53.595,
+            "max": 60.775999999999996
+          },
+          "blocking": {
+            "n": 10,
+            "min": 89.02745190051617,
+            "q1": 107.74999999999983,
+            "median": 149.49999999999977,
+            "q3": 248.50000000000017,
+            "max": 297.0000000000015
+          },
+          "cpuReportedInRuns": 10
+        },
+        {
+          "url": "https://onboard.triptease.io/bootstrap.js",
+          "cpu": {
+            "n": 10,
+            "min": 83.96399999999996,
+            "q1": 154.54799999999997,
+            "median": 247.26600000000022,
+            "q3": 292.88800000000015,
+            "max": 400.8360000000007
+          },
+          "scripting": {
+            "n": 10,
+            "min": 63.45599999999996,
+            "q1": 135.09499999999997,
+            "median": 208.11800000000017,
+            "q3": 244.69600000000017,
+            "max": 362.2440000000007
+          },
+          "parseCompile": {
+            "n": 10,
+            "min": 10.872,
+            "q1": 15.584,
+            "median": 19.86,
+            "q3": 29.936,
+            "max": 39.599999999999994
+          },
+          "blocking": {
+            "n": 10,
+            "min": 0.972548099483795,
+            "q1": 24.749999999999993,
+            "median": 41,
+            "q3": 74.25000000000006,
+            "max": 130.99999999999997
+          },
+          "cpuReportedInRuns": 10
+        },
+        {
+          "url": "local/_astro/splide.esm.Db3f94cN.js",
+          "cpu": {
+            "n": 10,
+            "min": 83.38400000000004,
+            "q1": 123.9400000000001,
+            "median": 141.34400000000005,
+            "q3": 216.65500000000014,
+            "max": 284.4160000000002
+          },
+          "scripting": {
+            "n": 10,
+            "min": 51.47600000000005,
+            "q1": 72.2300000000001,
+            "median": 82.28400000000005,
+            "q3": 126.32900000000014,
+            "max": 157.29200000000017
+          },
+          "parseCompile": {
+            "n": 10,
+            "min": 0.376,
+            "q1": 0.547,
+            "median": 0.638,
+            "q3": 0.731,
+            "max": 0.824
+          },
+          "blocking": {
+            "n": 10,
+            "min": 0,
+            "q1": 0,
+            "median": 0,
+            "q3": 0,
+            "max": 0
+          },
+          "cpuReportedInRuns": 10
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtm.js?id=GTM-PGV9J9LQ",
+          "cpu": {
+            "n": 10,
+            "min": 53.27200000000006,
+            "q1": 102.13099999999994,
+            "median": 114.10599999999998,
+            "q3": 138.59,
+            "max": 239.61599999999999
+          },
+          "scripting": {
+            "n": 10,
+            "min": 35.780000000000065,
+            "q1": 61.42399999999993,
+            "median": 75.328,
+            "q3": 93.478,
+            "max": 154.268
+          },
+          "parseCompile": {
+            "n": 10,
+            "min": 17.104,
+            "q1": 36.627,
+            "median": 39.763999999999996,
+            "q3": 47.400999999999996,
+            "max": 84.356
+          },
+          "blocking": {
+            "n": 10,
+            "min": 0,
+            "q1": 31.00000000000002,
+            "median": 41.999999999999986,
+            "q3": 59.25000000000001,
+            "max": 144.9999999999999
+          },
+          "cpuReportedInRuns": 10
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtm.js?id=GTM-TNCVRTH5",
+          "cpu": {
+            "n": 10,
+            "min": 53.86400000000008,
+            "q1": 97.77599999999995,
+            "median": 109.58399999999999,
+            "q3": 130.75500000000005,
+            "max": 236.96400000000006
+          },
+          "scripting": {
+            "n": 10,
+            "min": 35.93600000000008,
+            "q1": 59.55099999999992,
+            "median": 68.54000000000005,
+            "q3": 88.27300000000005,
+            "max": 160.33600000000004
+          },
+          "parseCompile": {
+            "n": 10,
+            "min": 17.636000000000003,
+            "q1": 31.490000000000002,
+            "median": 38.928000000000004,
+            "q3": 52.245999999999995,
+            "max": 83.48
+          },
+          "blocking": {
+            "n": 10,
+            "min": 0,
+            "q1": 26.000000000000046,
+            "median": 41.499999999999986,
+            "q3": 49.500000000000014,
+            "max": 146
+          },
+          "cpuReportedInRuns": 10
+        },
+        {
+          "url": "https://t.contentsquare.net/uxa/4a344b9d25af8.js",
+          "cpu": {
+            "n": 10,
+            "min": 0,
+            "q1": 63.382,
+            "median": 92.32200000000003,
+            "q3": 120.933,
+            "max": 136.90000000000006
+          },
+          "scripting": {
+            "n": 10,
+            "min": 0,
+            "q1": 56.536,
+            "median": 80.43200000000002,
+            "q3": 105.55400000000003,
+            "max": 119.70800000000007
+          },
+          "parseCompile": {
+            "n": 10,
+            "min": 0,
+            "q1": 4.349,
+            "median": 6.268000000000001,
+            "q3": 6.855,
+            "max": 9.66
+          },
+          "blocking": {
+            "n": 10,
+            "min": 0,
+            "q1": 8.25,
+            "median": 31.99999999999998,
+            "q3": 58.499999999999986,
+            "max": 72.00000000000003
+          },
+          "cpuReportedInRuns": 9
+        },
+        {
+          "url": "https://onboard.triptease.io/integrations/v11727.190322/default.js",
+          "cpu": {
+            "n": 10,
+            "min": 82.27199999999998,
+            "q1": 83.16699999999996,
+            "median": 89.058,
+            "q3": 94.125,
+            "max": 130.3000000000003
+          },
+          "scripting": {
+            "n": 10,
+            "min": 70.42399999999998,
+            "q1": 70.93599999999998,
+            "median": 73.44799999999995,
+            "q3": 79.08100000000002,
+            "max": 95.10400000000031
+          },
+          "parseCompile": {
+            "n": 10,
+            "min": 10.12,
+            "q1": 11.339000000000002,
+            "median": 12.862,
+            "q3": 14.035,
+            "max": 34.744
+          },
+          "blocking": {
+            "n": 10,
+            "min": 13.995649742092155,
+            "q1": 16.00693932366267,
+            "median": 21.492785798965638,
+            "q3": 21.994510867230744,
+            "max": 61.97556869066692
+          },
+          "cpuReportedInRuns": 10
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=AW-789859065",
+          "cpu": {
+            "n": 10,
+            "min": 0,
+            "q1": 0,
+            "median": 0,
+            "q3": 0,
+            "max": 176.4120000000002
+          },
+          "scripting": {
+            "n": 10,
+            "min": 0,
+            "q1": 0,
+            "median": 0,
+            "q3": 0,
+            "max": 127.85600000000021
+          },
+          "parseCompile": {
+            "n": 10,
+            "min": 0,
+            "q1": 0,
+            "median": 0,
+            "q3": 0,
+            "max": 47.896
+          },
+          "blocking": {
+            "n": 10,
+            "min": 0,
+            "q1": 0,
+            "median": 0,
+            "q3": 0,
+            "max": 73.99999999999986
+          },
+          "cpuReportedInRuns": 2
+        }
+      ],
+      "lcpElements": {
+        "div#navbar-logo-row > div.flex > a.flex > img#navbar-logo-full": 10
+      },
+      "lateVisualChangeRuns": [
+        "live-06-original",
+        "live-07-original",
+        "live-08-original",
+        "live-09-original"
+      ]
+    },
+    "live-optimized": {
+      "score": {
+        "n": 10,
+        "min": 65,
+        "q1": 67.5,
+        "median": 70.5,
+        "q3": 73,
+        "max": 74
+      },
+      "fcp": {
+        "n": 10,
+        "min": 2404.088908957961,
+        "q1": 2552.7800978624255,
+        "median": 2553.96126033088,
+        "q3": 2703.4137679329,
+        "max": 2704.2598976658423
+      },
+      "lcp": {
+        "n": 10,
+        "min": 2553.265664446512,
+        "q1": 2703.186049936435,
+        "median": 2703.6066081027457,
+        "q3": 2704.217150488872,
+        "max": 2704.6568562152484
+      },
+      "tbt": {
+        "n": 10,
+        "min": 408.04795153148643,
+        "q1": 800.625,
+        "median": 1003.5168814057965,
+        "q3": 1305.8749999999986,
+        "max": 2102.850413512705
+      },
+      "cls": {
+        "n": 10,
+        "min": 0,
+        "q1": 0,
+        "median": 0,
+        "q3": 0,
+        "max": 0.00006163200694355026
+      },
+      "speedIndex": {
+        "n": 10,
+        "min": 2479.3867884347783,
+        "q1": 2591.8119943951033,
+        "median": 2704.0069464695116,
+        "q3": 2976.96731671454,
+        "max": 11078.982113211665
+      },
+      "pageBytes": {
+        "n": 10,
+        "min": 7400353,
+        "q1": 7588143.25,
+        "median": 7619246,
+        "q3": 7651509.25,
+        "max": 7983658
+      },
+      "imageBytes": {
+        "n": 10,
+        "min": 5957009,
+        "q1": 5957027.5,
+        "median": 5957048.5,
+        "q3": 5957080.5,
+        "max": 5957134
+      },
+      "offerBytes": {
+        "n": 10,
+        "min": 380716,
+        "q1": 380724.5,
+        "median": 380736.5,
+        "q3": 380954.5,
+        "max": 380977
+      },
+      "mainThread": {
+        "n": 10,
+        "min": 3552.0719999999346,
+        "q1": 3887.1719999999423,
+        "median": 4070.66999999994,
+        "q3": 4693.182999999879,
+        "max": 5623.695999999916
+      },
+      "benchmarkIndex": {
+        "n": 10,
+        "min": 1266,
+        "q1": 1286.75,
+        "median": 1401.75,
+        "q3": 1411.5,
+        "max": 1489.5
+      },
+      "longTaskCount": {
+        "n": 10,
+        "min": 11,
+        "q1": 15.25,
+        "median": 17.5,
+        "q3": 18.75,
+        "max": 21
+      },
+      "longestTask": {
+        "n": 10,
+        "min": 172,
+        "q1": 289.75,
+        "median": 345,
+        "q3": 403.25,
+        "max": 542
+      },
+      "work": {
+        "scriptEvaluation": {
+          "n": 10,
+          "min": 1448.4120000000028,
+          "q1": 1930.4839999999506,
+          "median": 2179.7379999999484,
+          "q3": 2448.371999999892,
+          "max": 3222.92399999993
+        },
+        "other": {
+          "n": 10,
+          "min": 785.087999999994,
+          "q1": 836.2189999999922,
+          "median": 952.7319999999916,
+          "q3": 1067.8749999999775,
+          "max": 1176.1759999999877
+        },
+        "scriptParseCompile": {
+          "n": 10,
+          "min": 253.24800000000005,
+          "q1": 449.461,
+          "median": 474.304,
+          "q3": 558.0120000000001,
+          "max": 652.3199999999999
+        },
+        "styleLayout": {
+          "n": 10,
+          "min": 306.096,
+          "q1": 322.2829999999998,
+          "median": 347.682,
+          "q3": 556.494,
+          "max": 620.204
+        },
+        "paintCompositeRender": {
+          "n": 10,
+          "min": 96.60400000000004,
+          "q1": 108.94700000000012,
+          "median": 117.1400000000001,
+          "q3": 134.41900000000018,
+          "max": 235.53999999999985
+        },
+        "garbageCollection": {
+          "n": 10,
+          "min": 23.751999999999995,
+          "q1": 34.683,
+          "median": 57.933999999999955,
+          "q3": 69.38999999999999,
+          "max": 114.09999999999997
+        },
+        "parseHTML": {
+          "n": 10,
+          "min": 43.89600000000001,
+          "q1": 47.672999999999995,
+          "median": 49.44999999999998,
+          "q3": 54.08800000000001,
+          "max": 75.032
+        }
+      },
+      "parties": [
+        {
+          "entity": "Google Tag Manager",
+          "cpu": {
+            "n": 10,
+            "min": 727.1040000000022,
+            "q1": 1187.9820000000016,
+            "median": 1275.5579999999977,
+            "q3": 1633.561999999999,
+            "max": 1697.9439999999959
+          },
+          "blocking": {
+            "n": 10,
+            "min": 251.99999999999997,
+            "q1": 739.249999999999,
+            "median": 810.0000000000002,
+            "q3": 1064.0000000000027,
+            "max": 1191.9999999999943
+          }
+        },
+        {
+          "entity": "Facebook",
+          "cpu": {
+            "n": 10,
+            "min": 369.85999999999893,
+            "q1": 512.4130000000017,
+            "median": 568.3320000000015,
+            "q3": 619.0740000000015,
+            "max": 873.7480000000003
+          },
+          "blocking": {
+            "n": 10,
+            "min": 148.00000000000006,
+            "q1": 284.99999999999966,
+            "median": 366.5557047466981,
+            "q3": 397.7499999999982,
+            "max": 652.5520566731639
+          }
+        },
+        {
+          "entity": "triptease.io",
+          "cpu": {
+            "n": 10,
+            "min": 306.1840000000004,
+            "q1": 336.02900000000034,
+            "median": 388.6360000000003,
+            "q3": 394.8540000000004,
+            "max": 900.0440000000001
+          },
+          "blocking": {
+            "n": 10,
+            "min": 57.995372084412416,
+            "q1": 73.48655425890577,
+            "median": 97.49308971183827,
+            "q3": 111.2441599621421,
+            "max": 400.33815163131993
+          }
+        },
+        {
+          "entity": "ContentSquare",
+          "cpu": {
+            "n": 10,
+            "min": 48.39999999999996,
+            "q1": 79.80800000000004,
+            "median": 98.35600000000002,
+            "q3": 113.83200000000002,
+            "max": 124.91199999999998
+          },
+          "blocking": {
+            "n": 10,
+            "min": 0,
+            "q1": 21.000000000000014,
+            "median": 40.000000000000014,
+            "q3": 53,
+            "max": 60.99999999999998
+          }
+        },
+        {
+          "entity": "JSDelivr CDN",
+          "cpu": {
+            "n": 10,
+            "min": 23.699999999999996,
+            "q1": 40.275,
+            "median": 41.418,
+            "q3": 45.582,
+            "max": 52.488000000000014
+          },
+          "blocking": {
+            "n": 10,
+            "min": 0,
+            "q1": 0,
+            "median": 0,
+            "q3": 0,
+            "max": 0
+          }
+        },
+        {
+          "entity": "Google/Doubleclick Ads",
+          "cpu": {
+            "n": 10,
+            "min": 6.751999999999998,
+            "q1": 9.873999999999999,
+            "median": 11.653999999999998,
+            "q3": 13.510000000000002,
+            "max": 14.895999999999999
+          },
+          "blocking": {
+            "n": 10,
+            "min": 0,
+            "q1": 0,
+            "median": 0,
+            "q3": 0,
+            "max": 0
+          }
+        }
+      ],
+      "scripts": [
+        {
+          "url": "Unattributable",
+          "cpu": {
+            "n": 10,
+            "min": 639.2240000000006,
+            "q1": 713.7770000000006,
+            "median": 881.1619999999988,
+            "q3": 982.1349999999959,
+            "max": 1062.1919999999934
+          },
+          "scripting": {
+            "n": 10,
+            "min": 54.552000000000085,
+            "q1": 69.19399999999997,
+            "median": 107.52600000000008,
+            "q3": 160.53500000000014,
+            "max": 251.90000000000026
+          },
+          "parseCompile": {
+            "n": 10,
+            "min": 0,
+            "q1": 0,
+            "median": 0,
+            "q3": 0,
+            "max": 0
+          },
+          "blocking": {
+            "n": 10,
+            "min": 0,
+            "q1": 0,
+            "median": 0,
+            "q3": 0,
+            "max": 0
+          },
+          "cpuReportedInRuns": 10
+        },
+        {
+          "url": "local/en/",
+          "cpu": {
+            "n": 10,
+            "min": 618.1959999999999,
+            "q1": 663.3810000000001,
+            "median": 736.3719999999998,
+            "q3": 953.545,
+            "max": 1179.7799999999995
+          },
+          "scripting": {
+            "n": 10,
+            "min": 49.07599999999996,
+            "q1": 60.360999999999976,
+            "median": 61.028000000000006,
+            "q3": 69.14400000000006,
+            "max": 86.58000000000003
+          },
+          "parseCompile": {
+            "n": 10,
+            "min": 7.655999999999999,
+            "q1": 9.319999999999999,
+            "median": 9.537999999999997,
+            "q3": 11.735,
+            "max": 12.556000000000001
+          },
+          "blocking": {
+            "n": 10,
+            "min": 0,
+            "q1": 0,
+            "median": 0,
+            "q3": 0,
+            "max": 0
+          },
+          "cpuReportedInRuns": 10
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-H09V6L9R0B",
+          "cpu": {
+            "n": 10,
+            "min": 277.2360000000001,
+            "q1": 463.9680000000019,
+            "median": 614.4120000000012,
+            "q3": 779.0759999999982,
+            "max": 907.8319999999973
+          },
+          "scripting": {
+            "n": 10,
+            "min": 192.58400000000012,
+            "q1": 390.90300000000184,
+            "median": 489.7500000000014,
+            "q3": 577.9239999999982,
+            "max": 733.9559999999972
+          },
+          "parseCompile": {
+            "n": 10,
+            "min": 55.14,
+            "q1": 89.314,
+            "median": 114.50999999999999,
+            "q3": 154.44400000000002,
+            "max": 202.97199999999998
+          },
+          "blocking": {
+            "n": 10,
+            "min": 167.01257429221795,
+            "q1": 265.47399833989755,
+            "median": 444.50000000000045,
+            "q3": 597.7499999999993,
+            "max": 713.9999999999958
+          },
+          "cpuReportedInRuns": 10
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-WRT2WJJ3E1",
+          "cpu": {
+            "n": 10,
+            "min": 145.00000000000023,
+            "q1": 404.2200000000003,
+            "median": 470.8200000000022,
+            "q3": 559.947000000001,
+            "max": 590.6120000000012
+          },
+          "scripting": {
+            "n": 10,
+            "min": 97.40400000000021,
+            "q1": 313.4380000000016,
+            "median": 363.8940000000006,
+            "q3": 396.85000000000264,
+            "max": 508.66800000000103
+          },
+          "parseCompile": {
+            "n": 10,
+            "min": 46.872,
+            "q1": 72.868,
+            "median": 81.28999999999999,
+            "q3": 118.38499999999999,
+            "max": 168.38
+          },
+          "blocking": {
+            "n": 10,
+            "min": 46.99999999999994,
+            "q1": 262.9999999999999,
+            "median": 322.000000000004,
+            "q3": 400.0000000000008,
+            "max": 418.368002213469
+          },
+          "cpuReportedInRuns": 10
+        },
+        {
+          "url": "https://connect.facebook.net/signals/config/1772152629691333",
+          "cpu": {
+            "n": 10,
+            "min": 179.36400000000097,
+            "q1": 293.34799999999944,
+            "median": 333.98000000000036,
+            "q3": 351.70500000000095,
+            "max": 579.6920000000002
+          },
+          "scripting": {
+            "n": 10,
+            "min": 145.64800000000096,
+            "q1": 233.60899999999944,
+            "median": 275.66000000000037,
+            "q3": 291.0400000000012,
+            "max": 516.1400000000002
+          },
+          "parseCompile": {
+            "n": 10,
+            "min": 29.548,
+            "q1": 49.269999999999996,
+            "median": 52.666,
+            "q3": 54.941,
+            "max": 59.06
+          },
+          "blocking": {
+            "n": 10,
+            "min": 108.00000000000013,
+            "q1": 130.99999999999983,
+            "median": 233,
+            "q3": 264.0278523733475,
+            "max": 492.8207642116233
+          },
+          "cpuReportedInRuns": 10
+        },
+        {
+          "url": "https://onboard.triptease.io/bootstrap.js",
+          "cpu": {
+            "n": 10,
+            "min": 209.91199999999995,
+            "q1": 232.8140000000001,
+            "median": 241.10800000000012,
+            "q3": 261.77100000000024,
+            "max": 316.9600000000003
+          },
+          "scripting": {
+            "n": 10,
+            "min": 173.11599999999996,
+            "q1": 201.7460000000001,
+            "median": 211.6000000000001,
+            "q3": 215.2780000000002,
+            "max": 267.3160000000003
+          },
+          "parseCompile": {
+            "n": 10,
+            "min": 10.828,
+            "q1": 20.041,
+            "median": 27.486,
+            "q3": 33.734,
+            "max": 43.28
+          },
+          "blocking": {
+            "n": 10,
+            "min": 0,
+            "q1": 49.91644287995332,
+            "median": 78.77586318819135,
+            "q3": 92.50000000000003,
+            "max": 96.99999999999997
+          },
+          "cpuReportedInRuns": 10
+        },
+        {
+          "url": "https://connect.facebook.net/en_US/fbevents.js",
+          "cpu": {
+            "n": 10,
+            "min": 161.50800000000004,
+            "q1": 217.594,
+            "median": 233.62999999999997,
+            "q3": 244.90200000000004,
+            "max": 294.05600000000015
+          },
+          "scripting": {
+            "n": 10,
+            "min": 117.01600000000005,
+            "q1": 162.98499999999996,
+            "median": 169.54000000000002,
+            "q3": 186.36700000000005,
+            "max": 230.62800000000016
+          },
+          "parseCompile": {
+            "n": 10,
+            "min": 28.636000000000003,
+            "q1": 49.274,
+            "median": 51.682,
+            "q3": 56.986999999999995,
+            "max": 70.704
+          },
+          "blocking": {
+            "n": 10,
+            "min": 39.99999999999992,
+            "q1": 121.75000000000016,
+            "median": 133.49999999999974,
+            "q3": 152.74999999999994,
+            "max": 174.99999999999966
+          },
+          "cpuReportedInRuns": 10
+        },
+        {
+          "url": "local/_astro/splide.esm.Db3f94cN.js",
+          "cpu": {
+            "n": 10,
+            "min": 103.26399999999994,
+            "q1": 168.2490000000001,
+            "median": 182.0200000000002,
+            "q3": 212.5820000000002,
+            "max": 248.46800000000007
+          },
+          "scripting": {
+            "n": 10,
+            "min": 60.93199999999994,
+            "q1": 97.36700000000009,
+            "median": 106.86800000000022,
+            "q3": 122.66700000000007,
+            "max": 148.4240000000001
+          },
+          "parseCompile": {
+            "n": 10,
+            "min": 0.52,
+            "q1": 0.593,
+            "median": 0.626,
+            "q3": 0.679,
+            "max": 1.136
+          },
+          "blocking": {
+            "n": 10,
+            "min": 0,
+            "q1": 0,
+            "median": 0,
+            "q3": 0,
+            "max": 0
+          },
+          "cpuReportedInRuns": 10
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtm.js?id=GTM-PGV9J9LQ",
+          "cpu": {
+            "n": 10,
+            "min": 78.21600000000002,
+            "q1": 118.04900000000004,
+            "median": 132.92600000000004,
+            "q3": 136.12,
+            "max": 193.25600000000014
+          },
+          "scripting": {
+            "n": 10,
+            "min": 55.18400000000002,
+            "q1": 74.02900000000004,
+            "median": 82.04600000000002,
+            "q3": 90.41300000000001,
+            "max": 125.11600000000016
+          },
+          "parseCompile": {
+            "n": 10,
+            "min": 21.416,
+            "q1": 41.154,
+            "median": 45.644,
+            "q3": 51.63,
+            "max": 65.328
+          },
+          "blocking": {
+            "n": 10,
+            "min": 0,
+            "q1": 43.5000000000001,
+            "median": 54.49999999999987,
+            "q3": 58.50000000000001,
+            "max": 87.99999999999973
+          },
+          "cpuReportedInRuns": 10
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtm.js?id=GTM-TNCVRTH5",
+          "cpu": {
+            "n": 10,
+            "min": 72.31200000000004,
+            "q1": 109.66800000000002,
+            "median": 117.12200000000001,
+            "q3": 122.81800000000004,
+            "max": 130.656
+          },
+          "scripting": {
+            "n": 10,
+            "min": 44.44800000000003,
+            "q1": 72.29899999999998,
+            "median": 80.42400000000004,
+            "q3": 81.80300000000008,
+            "max": 87.56800000000003
+          },
+          "parseCompile": {
+            "n": 10,
+            "min": 27.408,
+            "q1": 33.488,
+            "median": 38.796,
+            "q3": 41.252,
+            "max": 42.396
+          },
+          "blocking": {
+            "n": 10,
+            "min": 7.999999999999999,
+            "q1": 36.49999999999988,
+            "median": 40.00000000000001,
+            "q3": 48.250000000000014,
+            "max": 53.00000000000012
+          },
+          "cpuReportedInRuns": 10
+        },
+        {
+          "url": "https://t.contentsquare.net/uxa/4a344b9d25af8.js",
+          "cpu": {
+            "n": 10,
+            "min": 0,
+            "q1": 79.80800000000002,
+            "median": 98.356,
+            "q3": 113.83200000000002,
+            "max": 124.91199999999996
+          },
+          "scripting": {
+            "n": 10,
+            "min": 0,
+            "q1": 69.42100000000003,
+            "median": 87.734,
+            "q3": 100.66600000000003,
+            "max": 108.93999999999997
+          },
+          "parseCompile": {
+            "n": 10,
+            "min": 0,
+            "q1": 5.3660000000000005,
+            "median": 5.986,
+            "q3": 6.5649999999999995,
+            "max": 7.46
+          },
+          "blocking": {
+            "n": 10,
+            "min": 0,
+            "q1": 21.000000000000014,
+            "median": 40.000000000000014,
+            "q3": 53,
+            "max": 60.99999999999998
+          },
+          "cpuReportedInRuns": 9
+        },
+        {
+          "url": "https://onboard.triptease.io/integrations/v11727.190322/default.js",
+          "cpu": {
+            "n": 10,
+            "min": 83.38399999999999,
+            "q1": 83.66799999999996,
+            "median": 84.96199999999999,
+            "q3": 93.36700000000002,
+            "max": 413.80399999999975
+          },
+          "scripting": {
+            "n": 10,
+            "min": 71.22399999999993,
+            "q1": 71.74899999999997,
+            "median": 72.58599999999998,
+            "q3": 80.96600000000001,
+            "max": 366.08799999999974
+          },
+          "parseCompile": {
+            "n": 10,
+            "min": 10.76,
+            "q1": 11.337,
+            "median": 11.764,
+            "q3": 13.764999999999999,
+            "max": 45.66
+          },
+          "blocking": {
+            "n": 10,
+            "min": 14.99441998884,
+            "q1": 15.244829621697335,
+            "median": 17.484343246151298,
+            "q3": 22.242361040005317,
+            "max": 279.99616870300054
+          },
+          "cpuReportedInRuns": 10
+        },
+        {
+          "url": "https://onboard.triptease.io/integrations/v11727.190322/cross-origin-tracking.js",
+          "cpu": {
+            "n": 10,
+            "min": 0,
+            "q1": 0,
+            "median": 0,
+            "q3": 0,
+            "max": 64.91999999999999
+          },
+          "scripting": {
+            "n": 10,
+            "min": 0,
+            "q1": 0,
+            "median": 0,
+            "q3": 0,
+            "max": 48.719999999999985
+          },
+          "parseCompile": {
+            "n": 10,
+            "min": 0,
+            "q1": 0,
+            "median": 0,
+            "q3": 0,
+            "max": 15.623999999999999
+          },
+          "blocking": {
+            "n": 10,
+            "min": 0,
+            "q1": 0,
+            "median": 0,
+            "q3": 0,
+            "max": 14.97508765454908
+          },
+          "cpuReportedInRuns": 1
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=AW-17389219279",
+          "cpu": {
+            "n": 10,
+            "min": 0,
+            "q1": 0,
+            "median": 0,
+            "q3": 0,
+            "max": 186.8999999999987
+          },
+          "scripting": {
+            "n": 10,
+            "min": 0,
+            "q1": 0,
+            "median": 0,
+            "q3": 0,
+            "max": 155.9479999999987
+          },
+          "parseCompile": {
+            "n": 10,
+            "min": 0,
+            "q1": 0,
+            "median": 0,
+            "q3": 0,
+            "max": 28.284
+          },
+          "blocking": {
+            "n": 10,
+            "min": 0,
+            "q1": 0,
+            "median": 0,
+            "q3": 0,
+            "max": 85.00000000000036
+          },
+          "cpuReportedInRuns": 1
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=AW-789859065",
+          "cpu": {
+            "n": 10,
+            "min": 0,
+            "q1": 0,
+            "median": 0,
+            "q3": 0,
+            "max": 93.95600000000015
+          },
+          "scripting": {
+            "n": 10,
+            "min": 0,
+            "q1": 0,
+            "median": 0,
+            "q3": 0,
+            "max": 70.40000000000015
+          },
+          "parseCompile": {
+            "n": 10,
+            "min": 0,
+            "q1": 0,
+            "median": 0,
+            "q3": 0,
+            "max": 23.195999999999998
+          },
+          "blocking": {
+            "n": 10,
+            "min": 0,
+            "q1": 0,
+            "median": 0,
+            "q3": 0,
+            "max": 8.999999999999988
+          },
+          "cpuReportedInRuns": 1
+        }
+      ],
+      "lcpElements": {
+        "div#navbar-logo-row > div.flex > a.flex > img#navbar-logo-full": 10
+      },
+      "lateVisualChangeRuns": [
+        "live-04-optimized",
+        "live-06-optimized"
+      ]
+    },
+    "blocked-original": {
+      "score": {
+        "n": 5,
+        "min": 85,
+        "q1": 85,
+        "median": 86,
+        "q3": 89,
+        "max": 90
+      },
+      "fcp": {
+        "n": 5,
+        "min": 2629.1735779511155,
+        "q1": 2629.2110804548993,
+        "median": 2630.3409844644075,
+        "q3": 2780.454213447222,
+        "max": 2780.847577954584
+      },
+      "lcp": {
+        "n": 5,
+        "min": 3005.3409844644075,
+        "q1": 3154.1735779511155,
+        "median": 3154.2110804548993,
+        "q3": 3155.454213447222,
+        "max": 3155.847577954584
+      },
+      "tbt": {
+        "n": 5,
+        "min": 17.5,
+        "q1": 37,
+        "median": 48,
+        "q3": 51,
+        "max": 81
+      },
+      "cls": {
+        "n": 5,
+        "min": 0,
+        "q1": 0,
+        "median": 0,
+        "q3": 0,
+        "max": 0
+      },
+      "speedIndex": {
+        "n": 5,
+        "min": 2630.3409844644075,
+        "q1": 2780.847577954584,
+        "median": 5040.246285699224,
+        "q3": 5059.785629996204,
+        "max": 5405.350414742446
+      },
+      "pageBytes": {
+        "n": 5,
+        "min": 8512431,
+        "q1": 8512451,
+        "median": 8512458,
+        "q3": 8512512,
+        "max": 8512537
+      },
+      "imageBytes": {
+        "n": 5,
+        "min": 8223872,
+        "q1": 8223932,
+        "median": 8223933,
+        "q3": 8223956,
+        "max": 8223960
+      },
+      "offerBytes": {
+        "n": 5,
+        "min": 2647757,
+        "q1": 2647763,
+        "median": 2647796,
+        "q3": 2648082,
+        "max": 2648106
+      },
+      "mainThread": {
+        "n": 5,
+        "min": 1547.231999999994,
+        "q1": 1603.4759999999956,
+        "median": 1696.3919999999937,
+        "q3": 1926.9559999999915,
+        "max": 2272.3759999999897
+      },
+      "benchmarkIndex": {
+        "n": 5,
+        "min": 1010.5,
+        "q1": 1016.5,
+        "median": 1034,
+        "q3": 1259,
+        "max": 1296
+      },
+      "longTaskCount": {
+        "n": 5,
+        "min": 3,
+        "q1": 4,
+        "median": 4,
+        "q3": 4,
+        "max": 7
+      },
+      "longestTask": {
+        "n": 5,
+        "min": 96,
+        "q1": 98,
+        "median": 111,
+        "q3": 186,
+        "max": 232
+      },
+      "work": {
+        "other": {
+          "n": 5,
+          "min": 746.891999999994,
+          "q1": 747.5239999999952,
+          "median": 798.0639999999906,
+          "q3": 854.555999999994,
+          "max": 873.26399999999
+        },
+        "styleLayout": {
+          "n": 5,
+          "min": 375.23599999999976,
+          "q1": 375.35199999999986,
+          "median": 402.25599999999986,
+          "q3": 645.6080000000003,
+          "max": 827.9039999999998
+        },
+        "scriptEvaluation": {
+          "n": 5,
+          "min": 214.80400000000031,
+          "q1": 232.01200000000026,
+          "median": 240.75600000000009,
+          "q3": 262.1880000000005,
+          "max": 295.9120000000004
+        },
+        "paintCompositeRender": {
+          "n": 5,
+          "min": 141.7319999999999,
+          "q1": 145.9360000000001,
+          "median": 149.38400000000001,
+          "q3": 156.97999999999996,
+          "max": 173.83200000000008
+        },
+        "parseHTML": {
+          "n": 5,
+          "min": 49.08,
+          "q1": 50.17600000000001,
+          "median": 50.49599999999999,
+          "q3": 52.403999999999996,
+          "max": 74.99999999999999
+        },
+        "scriptParseCompile": {
+          "n": 5,
+          "min": 18.392,
+          "q1": 19.668,
+          "median": 21.804,
+          "q3": 22.755999999999997,
+          "max": 26.464
+        }
+      },
+      "parties": [
+        {
+          "entity": "JSDelivr CDN",
+          "cpu": {
+            "n": 5,
+            "min": 38.931999999999995,
+            "q1": 42.168000000000006,
+            "median": 48.303999999999995,
+            "q3": 57.04800000000001,
+            "max": 57.41999999999999
+          },
+          "blocking": {
+            "n": 5,
+            "min": 0,
+            "q1": 0,
+            "median": 0,
+            "q3": 0,
+            "max": 4.163336342344337e-17
+          }
+        }
+      ],
+      "scripts": [
+        {
+          "url": "local/en/",
+          "cpu": {
+            "n": 5,
+            "min": 806.5480000000001,
+            "q1": 846.3839999999998,
+            "median": 869.7799999999997,
+            "q3": 1085.936,
+            "max": 1347.152
+          },
+          "scripting": {
+            "n": 5,
+            "min": 74.52000000000002,
+            "q1": 80.20000000000003,
+            "median": 89.16400000000002,
+            "q3": 92.44400000000005,
+            "max": 101.16399999999997
+          },
+          "parseCompile": {
+            "n": 5,
+            "min": 10.78,
+            "q1": 11.352,
+            "median": 11.584,
+            "q3": 12.679999999999998,
+            "max": 14.52
+          },
+          "blocking": {
+            "n": 5,
+            "min": 0,
+            "q1": 0,
+            "median": 0,
+            "q3": 0,
+            "max": 0
+          },
+          "cpuReportedInRuns": 5
+        },
+        {
+          "url": "Unattributable",
+          "cpu": {
+            "n": 5,
+            "min": 485.28000000000213,
+            "q1": 499.5640000000019,
+            "median": 541.2240000000018,
+            "q3": 541.9240000000005,
+            "max": 554.7400000000011
+          },
+          "scripting": {
+            "n": 5,
+            "min": 16.419999999999987,
+            "q1": 18.995999999999988,
+            "median": 21.547999999999995,
+            "q3": 22.379999999999985,
+            "max": 22.815999999999992
+          },
+          "parseCompile": {
+            "n": 5,
+            "min": 0,
+            "q1": 0,
+            "median": 0,
+            "q3": 0,
+            "max": 0
+          },
+          "blocking": {
+            "n": 5,
+            "min": 0,
+            "q1": 0,
+            "median": 0,
+            "q3": 0,
+            "max": 0
+          },
+          "cpuReportedInRuns": 5
+        },
+        {
+          "url": "local/_astro/splide.esm.Db3f94cN.js",
+          "cpu": {
+            "n": 5,
+            "min": 189.53600000000012,
+            "q1": 194.9560000000001,
+            "median": 215.72400000000027,
+            "q3": 220.2759999999999,
+            "max": 284.4480000000004
+          },
+          "scripting": {
+            "n": 5,
+            "min": 109.48000000000012,
+            "q1": 113.69200000000008,
+            "median": 128.39200000000028,
+            "q3": 129.9799999999999,
+            "max": 156.9120000000004
+          },
+          "parseCompile": {
+            "n": 5,
+            "min": 0.48,
+            "q1": 0.612,
+            "median": 0.712,
+            "q3": 0.776,
+            "max": 0.808
+          },
+          "blocking": {
+            "n": 5,
+            "min": 0,
+            "q1": 0,
+            "median": 0,
+            "q3": 0,
+            "max": 0
+          },
+          "cpuReportedInRuns": 5
+        }
+      ],
+      "lcpElements": {
+        "div#navbar-logo-row > div.flex > a.flex > img#navbar-logo-full": 5
+      },
+      "lateVisualChangeRuns": [
+        "blocked-01-original",
+        "blocked-02-original",
+        "blocked-03-original"
+      ]
+    },
+    "blocked-optimized": {
+      "score": {
+        "n": 5,
+        "min": 87,
+        "q1": 88,
+        "median": 89,
+        "q3": 89,
+        "max": 90
+      },
+      "fcp": {
+        "n": 5,
+        "min": 2628.3471607088504,
+        "q1": 2629.6010555390794,
+        "median": 2630.1543825949007,
+        "q3": 2778.665852462909,
+        "max": 2782.89405
+      },
+      "lcp": {
+        "n": 5,
+        "min": 3005.1543825949007,
+        "q1": 3153.3471607088504,
+        "median": 3154.6010555390794,
+        "q3": 3157.89405,
+        "max": 3303.665852462909
+      },
+      "tbt": {
+        "n": 5,
+        "min": 14.5,
+        "q1": 21,
+        "median": 23,
+        "q3": 33,
+        "max": 159.5596999999998
+      },
+      "cls": {
+        "n": 5,
+        "min": 0,
+        "q1": 0,
+        "median": 0,
+        "q3": 0,
+        "max": 0
+      },
+      "speedIndex": {
+        "n": 5,
+        "min": 2628.3471607088504,
+        "q1": 2629.6010555390794,
+        "median": 2630.1543825949007,
+        "q3": 2778.665852462909,
+        "max": 2782.89405
+      },
+      "pageBytes": {
+        "n": 5,
+        "min": 6170934,
+        "q1": 6258189,
+        "median": 6258193,
+        "q3": 6258215,
+        "max": 6258246
+      },
+      "imageBytes": {
+        "n": 5,
+        "min": 5869626,
+        "q1": 5956799,
+        "median": 5956825,
+        "q3": 5956856,
+        "max": 5956885
+      },
+      "offerBytes": {
+        "n": 5,
+        "min": 380684,
+        "q1": 380707,
+        "median": 380724,
+        "q3": 380753,
+        "max": 380963
+      },
+      "mainThread": {
+        "n": 5,
+        "min": 1377.1519999999994,
+        "q1": 1413.1119999999976,
+        "median": 1473.1159999999986,
+        "q3": 1505.1999999999944,
+        "max": 3101.995999999999
+      },
+      "benchmarkIndex": {
+        "n": 5,
+        "min": 528.5,
+        "q1": 1244.5,
+        "median": 1325,
+        "q3": 1343,
+        "max": 1406
+      },
+      "longTaskCount": {
+        "n": 5,
+        "min": 3,
+        "q1": 3,
+        "median": 4,
+        "q3": 4,
+        "max": 8
+      },
+      "longestTask": {
+        "n": 5,
+        "min": 83,
+        "q1": 92,
+        "median": 95,
+        "q3": 102,
+        "max": 255
+      },
+      "work": {
+        "other": {
+          "n": 5,
+          "min": 631.7559999999987,
+          "q1": 672.9679999999975,
+          "median": 723.7799999999943,
+          "q3": 736.9359999999981,
+          "max": 1225.963999999999
+        },
+        "styleLayout": {
+          "n": 5,
+          "min": 332.92800000000005,
+          "q1": 347.1039999999996,
+          "median": 365.18800000000016,
+          "q3": 368.68000000000006,
+          "max": 1033.9799999999998
+        },
+        "scriptEvaluation": {
+          "n": 5,
+          "min": 202.3560000000001,
+          "q1": 203.2480000000003,
+          "median": 207.82800000000054,
+          "q3": 212.7640000000002,
+          "max": 496.20400000000075
+        },
+        "paintCompositeRender": {
+          "n": 5,
+          "min": 98.74000000000002,
+          "q1": 106.35200000000016,
+          "median": 128.38400000000019,
+          "q3": 135.77200000000002,
+          "max": 195.23199999999989
+        },
+        "parseHTML": {
+          "n": 5,
+          "min": 49.864,
+          "q1": 52.72400000000001,
+          "median": 55.132000000000005,
+          "q3": 55.75600000000001,
+          "max": 114.15599999999999
+        },
+        "scriptParseCompile": {
+          "n": 5,
+          "min": 17.96399999999999,
+          "q1": 18.139999999999997,
+          "median": 18.791999999999994,
+          "q3": 20.915999999999997,
+          "max": 36.46
+        },
+        "garbageCollection": {
+          "n": 5,
+          "min": 0,
+          "q1": 0,
+          "median": 0,
+          "q3": 0,
+          "max": 4.508
+        }
+      },
+      "parties": [
+        {
+          "entity": "JSDelivr CDN",
+          "cpu": {
+            "n": 5,
+            "min": 39.788000000000004,
+            "q1": 41.824,
+            "median": 42.227999999999994,
+            "q3": 44.467999999999996,
+            "max": 72.81200000000001
+          },
+          "blocking": {
+            "n": 5,
+            "min": 0,
+            "q1": 0,
+            "median": 0,
+            "q3": 0,
+            "max": 7.66267400453162
+          }
+        }
+      ],
+      "scripts": [
+        {
+          "url": "local/en/",
+          "cpu": {
+            "n": 5,
+            "min": 707.2560000000003,
+            "q1": 719.3280000000003,
+            "median": 726.016,
+            "q3": 779.708,
+            "max": 1660.284
+          },
+          "scripting": {
+            "n": 5,
+            "min": 65.43199999999997,
+            "q1": 71.14800000000007,
+            "median": 74.11200000000004,
+            "q3": 74.64400000000005,
+            "max": 162.28800000000018
+          },
+          "parseCompile": {
+            "n": 5,
+            "min": 9.991999999999999,
+            "q1": 10.027999999999997,
+            "median": 10.936,
+            "q3": 11.543999999999997,
+            "max": 23.944000000000003
+          },
+          "blocking": {
+            "n": 5,
+            "min": 0,
+            "q1": 0,
+            "median": 0,
+            "q3": 0,
+            "max": 0
+          },
+          "cpuReportedInRuns": 5
+        },
+        {
+          "url": "Unattributable",
+          "cpu": {
+            "n": 5,
+            "min": 435.9160000000011,
+            "q1": 439.448000000001,
+            "median": 492.0360000000011,
+            "q3": 492.2440000000013,
+            "max": 818.3679999999996
+          },
+          "scripting": {
+            "n": 5,
+            "min": 15.335999999999988,
+            "q1": 18.81199999999999,
+            "median": 20.89199999999999,
+            "q3": 21.803999999999988,
+            "max": 27.64799999999999
+          },
+          "parseCompile": {
+            "n": 5,
+            "min": 0,
+            "q1": 0,
+            "median": 0,
+            "q3": 0,
+            "max": 0
+          },
+          "blocking": {
+            "n": 5,
+            "min": 0,
+            "q1": 0,
+            "median": 0,
+            "q3": 0,
+            "max": 0
+          },
+          "cpuReportedInRuns": 5
+        },
+        {
+          "url": "local/_astro/splide.esm.Db3f94cN.js",
+          "cpu": {
+            "n": 5,
+            "min": 166.46400000000014,
+            "q1": 170.13200000000003,
+            "median": 189.92000000000013,
+            "q3": 194.42800000000017,
+            "max": 511.3120000000004
+          },
+          "scripting": {
+            "n": 5,
+            "min": 96.98800000000016,
+            "q1": 99.33600000000004,
+            "median": 110.9480000000002,
+            "q3": 111.4680000000001,
+            "max": 288.4840000000004
+          },
+          "parseCompile": {
+            "n": 5,
+            "min": 0.616,
+            "q1": 0.632,
+            "median": 0.66,
+            "q3": 0.812,
+            "max": 0.896
+          },
+          "blocking": {
+            "n": 5,
+            "min": 0,
+            "q1": 0,
+            "median": 0,
+            "q3": 0,
+            "max": 0
+          },
+          "cpuReportedInRuns": 5
+        },
+        {
+          "url": "https://cdn.jsdelivr.net/npm/flatpickr",
+          "cpu": {
+            "n": 5,
+            "min": 0,
+            "q1": 0,
+            "median": 0,
+            "q3": 0,
+            "max": 51.148
+          },
+          "scripting": {
+            "n": 5,
+            "min": 0,
+            "q1": 0,
+            "median": 0,
+            "q3": 0,
+            "max": 4.587999999999998
+          },
+          "parseCompile": {
+            "n": 5,
+            "min": 0,
+            "q1": 0,
+            "median": 0,
+            "q3": 0,
+            "max": 0.3
+          },
+          "blocking": {
+            "n": 5,
+            "min": 0,
+            "q1": 0,
+            "median": 0,
+            "q3": 0,
+            "max": 7.66267400453162
+          },
+          "cpuReportedInRuns": 1
+        }
+      ],
+      "lcpElements": {
+        "div#navbar-logo-row > div.flex > a.flex > img#navbar-logo-full": 5
+      },
+      "lateVisualChangeRuns": []
+    }
+  },
+  "paired": {
+    "live": {
+      "score": {
+        "difference": {
+          "n": 10,
+          "min": -17,
+          "q1": 0.25,
+          "median": 2,
+          "q3": 6,
+          "max": 19
+        },
+        "medianDifference95PercentBootstrapInterval": [
+          -2.5,
+          7
+        ]
+      },
+      "lcp": {
+        "difference": {
+          "n": 10,
+          "min": -2637.2169632482132,
+          "q1": -113.83991528176068,
+          "median": -1.3054924717257563,
+          "q3": -0.13970368237676212,
+          "max": 0.3825384347783256
+        },
+        "medianDifference95PercentBootstrapInterval": [
+          -151.39607155919816,
+          -0.015670344908357947
+        ]
+      },
+      "tbt": {
+        "difference": {
+          "n": 10,
+          "min": -651,
+          "q1": -128.4880121171277,
+          "median": 94.74999999999955,
+          "q3": 400.59038197134305,
+          "max": 992.9999999999982
+        },
+        "medianDifference95PercentBootstrapInterval": [
+          -361.99133750529336,
+          411.350413512705
+        ]
+      },
+      "speedIndex": {
+        "difference": {
+          "n": 10,
+          "min": -5073.497621906154,
+          "q1": -2187.7053107578367,
+          "median": -37.60311669691146,
+          "q3": 154.69599841040667,
+          "max": 2197.727385447015
+        },
+        "medianDifference95PercentBootstrapInterval": [
+          -2866.936022766307,
+          539.8899616250317
+        ]
+      },
+      "offerBytes": {
+        "difference": {
+          "n": 10,
+          "min": -2267348,
+          "q1": -2267270.25,
+          "median": -2267053.5,
+          "q3": -2266825.25,
+          "max": -2266761
+        },
+        "medianDifference95PercentBootstrapInterval": [
+          -2267334,
+          -2266822
+        ]
+      }
+    },
+    "blocked": {
+      "score": {
+        "difference": {
+          "n": 5,
+          "min": -1,
+          "q1": -1,
+          "median": 2,
+          "q3": 3,
+          "max": 5
+        },
+        "medianDifference95PercentBootstrapInterval": [
+          -1,
+          5
+        ]
+      },
+      "lcp": {
+        "difference": {
+          "n": 5,
+          "min": -150.29983085232152,
+          "q1": -0.8264172422650518,
+          "median": 3.6829695451006046,
+          "q3": 147.81827450832498,
+          "max": 149.26007107467194
+        },
+        "medianDifference95PercentBootstrapInterval": [
+          -150.29983085232152,
+          149.26007107467194
+        ]
+      },
+      "tbt": {
+        "difference": {
+          "n": 5,
+          "min": -66.5,
+          "q1": -28,
+          "median": -27,
+          "q3": 15.5,
+          "max": 122.5596999999998
+        },
+        "medianDifference95PercentBootstrapInterval": [
+          -66.5,
+          122.5596999999998
+        ]
+      },
+      "speedIndex": {
+        "difference": {
+          "n": 5,
+          "min": -2622.4563647424466,
+          "q1": -2431.4384692873537,
+          "median": -2410.0919031043236,
+          "q3": -2.1817254916750244,
+          "max": -0.7399289253280585
+        },
+        "medianDifference95PercentBootstrapInterval": [
+          -2622.4563647424466,
+          -0.7399289253280585
+        ]
+      },
+      "offerBytes": {
+        "difference": {
+          "n": 5,
+          "min": -2267422,
+          "q1": -2267358,
+          "median": -2267056,
+          "q3": -2267043,
+          "max": -2266794
+        },
+        "medianDifference95PercentBootstrapInterval": [
+          -2267422,
+          -2266794
+        ]
+      }
+    }
+  },
+  "runs": [
+    {
+      "name": "live-01-original",
+      "mode": "live",
+      "pair": 1,
+      "version": "original",
+      "score": 84,
+      "fcp": 2629.5827646831726,
+      "lcp": 2704.5827646831726,
+      "tbt": 341.5,
+      "cls": 0,
+      "speedIndex": 2629.5827646831726,
+      "pageBytes": 9678654,
+      "imageBytes": 8224111,
+      "offerBytes": 2647714,
+      "mainThread": 2699.9199999999882,
+      "benchmarkIndex": 3328.5,
+      "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "warnings": [],
+      "lcpSelector": "div#navbar-logo-row > div.flex > a.flex > img#navbar-logo-full",
+      "lcpSnippet": "<img id=\"navbar-logo-full\" src=\"/images/kamandalu-logo.png\" alt=\"Kamandalu Logo\" class=\"w-36 h-auto transition-all duration-300 logo brightness-0 invert-[1]\" fetchpriority=\"high\" loading=\"eager\">",
+      "longTaskCount": 12,
+      "longestTask": 191,
+      "lcpObservedBreakdown": {
+        "timeToFirstByte": 4.902000122070312,
+        "resourceLoadDelay": 9.208999877929687,
+        "resourceLoadDuration": 11.762,
+        "elementRenderDelay": 60.636
+      },
+      "lcpSimulatedBreakdown": {
+        "TTFB": 451.52758822772415,
+        "Load Delay": 208.22816209115223,
+        "Load Time": 149.12737470510922,
+        "Render Delay": 1895.6996396591871
+      },
+      "observed": {
+        "observedFirstContentfulPaint": 87,
+        "observedLargestContentfulPaint": 87,
+        "observedDomContentLoaded": 526,
+        "observedTraceEnd": 4793,
+        "observedLastVisualChange": 1053,
+        "observedSpeedIndex": 948
+      }
+    },
+    {
+      "name": "live-01-optimized",
+      "mode": "live",
+      "pair": 1,
+      "version": "optimized",
+      "score": 67,
+      "fcp": 2703.2774089346676,
+      "lcp": 2703.2774089346676,
+      "tbt": 1334.4999999999982,
+      "cls": 0.00006163200694355026,
+      "speedIndex": 2703.2774089346676,
+      "pageBytes": 7652800,
+      "imageBytes": 5957027,
+      "offerBytes": 380953,
+      "mainThread": 5315.18399999989,
+      "benchmarkIndex": 1278.5,
+      "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "warnings": [],
+      "lcpSelector": "div#navbar-logo-row > div.flex > a.flex > img#navbar-logo-full",
+      "lcpSnippet": "<img id=\"navbar-logo-full\" src=\"/images/kamandalu-logo.png\" alt=\"Kamandalu Logo\" class=\"w-36 h-auto transition-all duration-300 logo brightness-0 invert-[1]\" fetchpriority=\"high\" loading=\"eager\">",
+      "longTaskCount": 18,
+      "longestTask": 395,
+      "lcpObservedBreakdown": {
+        "timeToFirstByte": 4.234,
+        "resourceLoadDelay": 17.616,
+        "resourceLoadDuration": 20.124,
+        "elementRenderDelay": 103.747
+      },
+      "lcpSimulatedBreakdown": {
+        "TTFB": 451.09246964488915,
+        "Load Delay": 152.87403066245287,
+        "Load Time": 174.6952293043861,
+        "Render Delay": 1924.6156793229395
+      },
+      "observed": {
+        "observedFirstContentfulPaint": 146,
+        "observedLargestContentfulPaint": 146,
+        "observedDomContentLoaded": 777,
+        "observedTraceEnd": 4577,
+        "observedLastVisualChange": 843,
+        "observedSpeedIndex": 530
+      }
+    },
+    {
+      "name": "live-02-optimized",
+      "mode": "live",
+      "pair": 2,
+      "version": "optimized",
+      "score": 65,
+      "fcp": 2554.6568562152484,
+      "lcp": 2704.6568562152484,
+      "tbt": 2102.850413512705,
+      "cls": 0,
+      "speedIndex": 2554.6568562152484,
+      "pageBytes": 7652921,
+      "imageBytes": 5957134,
+      "offerBytes": 380741,
+      "mainThread": 5623.695999999916,
+      "benchmarkIndex": 1436,
+      "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "warnings": [],
+      "lcpSelector": "div#navbar-logo-row > div.flex > a.flex > img#navbar-logo-full",
+      "lcpSnippet": "<img id=\"navbar-logo-full\" src=\"/images/kamandalu-logo.png\" alt=\"Kamandalu Logo\" class=\"w-36 h-auto transition-all duration-300 logo brightness-0 invert-[1]\" fetchpriority=\"high\" loading=\"eager\">",
+      "longTaskCount": 21,
+      "longestTask": 542,
+      "lcpObservedBreakdown": {
+        "timeToFirstByte": 5.775,
+        "resourceLoadDelay": 16.78,
+        "resourceLoadDuration": 20.753,
+        "elementRenderDelay": 100.966
+      },
+      "lcpSimulatedBreakdown": {
+        "TTFB": 451.55228540508267,
+        "Load Delay": 241.8119981737765,
+        "Load Time": 118.51643674393654,
+        "Render Delay": 1892.7761358924527
+      },
+      "observed": {
+        "observedFirstContentfulPaint": 144,
+        "observedLargestContentfulPaint": 144,
+        "observedDomContentLoaded": 727,
+        "observedTraceEnd": 5712,
+        "observedLastVisualChange": 780,
+        "observedSpeedIndex": 748
+      }
+    },
+    {
+      "name": "live-02-original",
+      "mode": "live",
+      "pair": 2,
+      "version": "original",
+      "score": 65,
+      "fcp": 2704.6700309476746,
+      "lcp": 2704.6700309476746,
+      "tbt": 1691.5,
+      "cls": 0,
+      "speedIndex": 2704.6700309476746,
+      "pageBytes": 9905092,
+      "imageBytes": 8224088,
+      "offerBytes": 2647775,
+      "mainThread": 6167.855999999878,
+      "benchmarkIndex": 1199,
+      "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "warnings": [],
+      "lcpSelector": "div#navbar-logo-row > div.flex > a.flex > img#navbar-logo-full",
+      "lcpSnippet": "<img id=\"navbar-logo-full\" src=\"/images/kamandalu-logo.png\" alt=\"Kamandalu Logo\" class=\"w-36 h-auto transition-all duration-300 logo brightness-0 invert-[1]\" fetchpriority=\"high\" loading=\"eager\">",
+      "longTaskCount": 19,
+      "longestTask": 418,
+      "lcpObservedBreakdown": {
+        "timeToFirstByte": 6.353999877929687,
+        "resourceLoadDelay": 18.729000122070314,
+        "resourceLoadDuration": 30.876,
+        "elementRenderDelay": 113.85
+      },
+      "lcpSimulatedBreakdown": {
+        "TTFB": 451.55667698255814,
+        "Load Delay": 151.6738240611108,
+        "Load Time": 288.0687247840938,
+        "Render Delay": 1813.370805119912
+      },
+      "observed": {
+        "observedFirstContentfulPaint": 170,
+        "observedLargestContentfulPaint": 170,
+        "observedDomContentLoaded": 840,
+        "observedTraceEnd": 5319,
+        "observedLastVisualChange": 910,
+        "observedSpeedIndex": 611
+      }
+    },
+    {
+      "name": "live-03-original",
+      "mode": "live",
+      "pair": 3,
+      "version": "original",
+      "score": 67,
+      "fcp": 2554.764850127258,
+      "lcp": 2704.7648501272574,
+      "tbt": 1391,
+      "cls": 0,
+      "speedIndex": 2615.307317403835,
+      "pageBytes": 9833587,
+      "imageBytes": 8224090,
+      "offerBytes": 2647794,
+      "mainThread": 4874.939999999884,
+      "benchmarkIndex": 1319,
+      "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "warnings": [],
+      "lcpSelector": "div#navbar-logo-row > div.flex > a.flex > img#navbar-logo-full",
+      "lcpSnippet": "<img id=\"navbar-logo-full\" src=\"/images/kamandalu-logo.png\" alt=\"Kamandalu Logo\" class=\"w-36 h-auto transition-all duration-300 logo brightness-0 invert-[1]\" fetchpriority=\"high\" loading=\"eager\">",
+      "longTaskCount": 17,
+      "longestTask": 444,
+      "lcpObservedBreakdown": {
+        "timeToFirstByte": 5.566000122070313,
+        "resourceLoadDelay": 17.13699987792969,
+        "resourceLoadDuration": 23.394,
+        "elementRenderDelay": 123.332
+      },
+      "lcpSimulatedBreakdown": {
+        "TTFB": 451.5882833757526,
+        "Load Delay": 177.09006965919394,
+        "Load Time": 107.21423313165701,
+        "Render Delay": 1968.872263960654
+      },
+      "observed": {
+        "observedFirstContentfulPaint": 169,
+        "observedLargestContentfulPaint": 169,
+        "observedDomContentLoaded": 785,
+        "observedTraceEnd": 5317,
+        "observedLastVisualChange": 1141,
+        "observedSpeedIndex": 1076
+      }
+    },
+    {
+      "name": "live-03-optimized",
+      "mode": "live",
+      "pair": 3,
+      "version": "optimized",
+      "score": 74,
+      "fcp": 2703.459220932311,
+      "lcp": 2703.459220932311,
+      "tbt": 740,
+      "cls": 0,
+      "speedIndex": 2797.0037672005456,
+      "pageBytes": 7422470,
+      "imageBytes": 5957031,
+      "offerBytes": 380965,
+      "mainThread": 4013.3159999999402,
+      "benchmarkIndex": 1489.5,
+      "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "warnings": [],
+      "lcpSelector": "div#navbar-logo-row > div.flex > a.flex > img#navbar-logo-full",
+      "lcpSnippet": "<img id=\"navbar-logo-full\" src=\"/images/kamandalu-logo.png\" alt=\"Kamandalu Logo\" class=\"w-36 h-auto transition-all duration-300 logo brightness-0 invert-[1]\" fetchpriority=\"high\" loading=\"eager\">",
+      "longTaskCount": 16,
+      "longestTask": 262,
+      "lcpObservedBreakdown": {
+        "timeToFirstByte": 3.83,
+        "resourceLoadDelay": 12.985,
+        "resourceLoadDuration": 17.37,
+        "elementRenderDelay": 98.785
+      },
+      "lcpSimulatedBreakdown": {
+        "TTFB": 451.15307364410353,
+        "Load Delay": 136.9514719083504,
+        "Load Time": 106.92255556174723,
+        "Render Delay": 2008.4321198181096
+      },
+      "observed": {
+        "observedFirstContentfulPaint": 133,
+        "observedLargestContentfulPaint": 133,
+        "observedDomContentLoaded": 707,
+        "observedTraceEnd": 4846,
+        "observedLastVisualChange": 757,
+        "observedSpeedIndex": 730
+      }
+    },
+    {
+      "name": "live-04-optimized",
+      "mode": "live",
+      "pair": 4,
+      "version": "optimized",
+      "score": 65,
+      "fcp": 2552.6549315042257,
+      "lcp": 2702.6549315042257,
+      "tbt": 1459.5,
+      "cls": 0,
+      "speedIndex": 3710.943581792589,
+      "pageBytes": 7983658,
+      "imageBytes": 5957081,
+      "offerBytes": 380732,
+      "mainThread": 4719.495999999866,
+      "benchmarkIndex": 1407,
+      "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "warnings": [],
+      "lcpSelector": "div#navbar-logo-row > div.flex > a.flex > img#navbar-logo-full",
+      "lcpSnippet": "<img id=\"navbar-logo-full\" src=\"/images/kamandalu-logo.png\" alt=\"Kamandalu Logo\" class=\"w-36 h-auto transition-all duration-300 logo brightness-0 invert-[1]\" fetchpriority=\"high\" loading=\"eager\">",
+      "longTaskCount": 21,
+      "longestTask": 406,
+      "lcpObservedBreakdown": {
+        "timeToFirstByte": 6.637,
+        "resourceLoadDelay": 16.291,
+        "resourceLoadDuration": 17.348,
+        "elementRenderDelay": 98.941
+      },
+      "lcpSimulatedBreakdown": {
+        "TTFB": 450.88497716807524,
+        "Load Delay": 289.944195111295,
+        "Load Time": 41.05903162620916,
+        "Render Delay": 1920.7667275986464
+      },
+      "observed": {
+        "observedFirstContentfulPaint": 139,
+        "observedLargestContentfulPaint": 139,
+        "observedDomContentLoaded": 488,
+        "observedTraceEnd": 5684,
+        "observedLastVisualChange": 5681,
+        "observedSpeedIndex": 1835
+      }
+    },
+    {
+      "name": "live-04-original",
+      "mode": "live",
+      "pair": 4,
+      "version": "original",
+      "score": 64,
+      "fcp": 2704.858302794021,
+      "lcp": 2704.858302794021,
+      "tbt": 2055.030626542073,
+      "cls": 0,
+      "speedIndex": 2704.858302794021,
+      "pageBytes": 9892237,
+      "imageBytes": 8224095,
+      "offerBytes": 2647805,
+      "mainThread": 5930.631999999874,
+      "benchmarkIndex": 962,
+      "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "warnings": [],
+      "lcpSelector": "div#navbar-logo-row > div.flex > a.flex > img#navbar-logo-full",
+      "lcpSnippet": "<img id=\"navbar-logo-full\" src=\"/images/kamandalu-logo.png\" alt=\"Kamandalu Logo\" class=\"w-36 h-auto transition-all duration-300 logo brightness-0 invert-[1]\" fetchpriority=\"high\" loading=\"eager\">",
+      "longTaskCount": 19,
+      "longestTask": 487,
+      "lcpObservedBreakdown": {
+        "timeToFirstByte": 13.509,
+        "resourceLoadDelay": 19.864,
+        "resourceLoadDuration": 23.746,
+        "elementRenderDelay": 125.486
+      },
+      "lcpSimulatedBreakdown": {
+        "TTFB": 451.6194342646735,
+        "Load Delay": 282.5976532043021,
+        "Load Time": 111.86489979200473,
+        "Render Delay": 1858.7763155330404
+      },
+      "observed": {
+        "observedFirstContentfulPaint": 183,
+        "observedLargestContentfulPaint": 183,
+        "observedDomContentLoaded": 836,
+        "observedTraceEnd": 5263,
+        "observedLastVisualChange": 913,
+        "observedSpeedIndex": 540
+      }
+    },
+    {
+      "name": "live-05-original",
+      "mode": "live",
+      "pair": 5,
+      "version": "original",
+      "score": 69,
+      "fcp": 2704.8486694944436,
+      "lcp": 3004.8486694944436,
+      "tbt": 972.9999999999991,
+      "cls": 0,
+      "speedIndex": 2704.8486694944436,
+      "pageBytes": 9856623,
+      "imageBytes": 8224170,
+      "offerBytes": 2648064,
+      "mainThread": 3889.907999999941,
+      "benchmarkIndex": 1172.5,
+      "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "warnings": [],
+      "lcpSelector": "div#navbar-logo-row > div.flex > a.flex > img#navbar-logo-full",
+      "lcpSnippet": "<img id=\"navbar-logo-full\" src=\"/images/kamandalu-logo.png\" alt=\"Kamandalu Logo\" class=\"w-36 h-auto transition-all duration-300 logo brightness-0 invert-[1]\" fetchpriority=\"high\" loading=\"eager\">",
+      "longTaskCount": 17,
+      "longestTask": 342,
+      "lcpObservedBreakdown": {
+        "timeToFirstByte": 5.368,
+        "resourceLoadDelay": 17.406,
+        "resourceLoadDuration": 22.676,
+        "elementRenderDelay": 95.855
+      },
+      "lcpSimulatedBreakdown": {
+        "TTFB": 451.6162231648145,
+        "Load Delay": 288.4265109508252,
+        "Load Time": 226.45082105649806,
+        "Render Delay": 2038.3551143223058
+      },
+      "observed": {
+        "observedFirstContentfulPaint": 141,
+        "observedLargestContentfulPaint": 141,
+        "observedDomContentLoaded": 559,
+        "observedTraceEnd": 5338,
+        "observedLastVisualChange": 718,
+        "observedSpeedIndex": 606
+      }
+    },
+    {
+      "name": "live-05-optimized",
+      "mode": "live",
+      "pair": 5,
+      "version": "optimized",
+      "score": 72,
+      "fcp": 2704.2598976658423,
+      "lcp": 2704.2598976658423,
+      "tbt": 844.5,
+      "cls": 0,
+      "speedIndex": 2704.2598976658423,
+      "pageBytes": 7583906,
+      "imageBytes": 5957089,
+      "offerBytes": 380718,
+      "mainThread": 3858.323999999947,
+      "benchmarkIndex": 1401.5,
+      "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "warnings": [],
+      "lcpSelector": "div#navbar-logo-row > div.flex > a.flex > img#navbar-logo-full",
+      "lcpSnippet": "<img id=\"navbar-logo-full\" src=\"/images/kamandalu-logo.png\" alt=\"Kamandalu Logo\" class=\"w-36 h-auto transition-all duration-300 logo brightness-0 invert-[1]\" fetchpriority=\"high\" loading=\"eager\">",
+      "longTaskCount": 15,
+      "longestTask": 353,
+      "lcpObservedBreakdown": {
+        "timeToFirstByte": 4.958,
+        "resourceLoadDelay": 13.51,
+        "resourceLoadDuration": 18.266,
+        "elementRenderDelay": 110.197
+      },
+      "lcpSimulatedBreakdown": {
+        "TTFB": 451.41996588861423,
+        "Load Delay": 95.52037617376664,
+        "Load Time": 129.14763796342447,
+        "Render Delay": 2028.171917640037
+      },
+      "observed": {
+        "observedFirstContentfulPaint": 147,
+        "observedLargestContentfulPaint": 147,
+        "observedDomContentLoaded": 591,
+        "observedTraceEnd": 5143,
+        "observedLastVisualChange": 709,
+        "observedSpeedIndex": 667
+      }
+    },
+    {
+      "name": "live-06-optimized",
+      "mode": "live",
+      "pair": 6,
+      "version": "optimized",
+      "score": 73,
+      "fcp": 2553.1555969370243,
+      "lcp": 2703.1555969370243,
+      "tbt": 408.04795153148643,
+      "cls": 0.00006163200694355026,
+      "speedIndex": 11078.982113211665,
+      "pageBytes": 7400353,
+      "imageBytes": 5957079,
+      "offerBytes": 380955,
+      "mainThread": 3779.7159999999903,
+      "benchmarkIndex": 1413,
+      "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "warnings": [],
+      "lcpSelector": "div#navbar-logo-row > div.flex > a.flex > img#navbar-logo-full",
+      "lcpSnippet": "<img id=\"navbar-logo-full\" src=\"/images/kamandalu-logo.png\" alt=\"Kamandalu Logo\" class=\"w-36 h-auto transition-all duration-300 logo brightness-0 invert-[1]\" fetchpriority=\"high\" loading=\"eager\">",
+      "longTaskCount": 11,
+      "longestTask": 172,
+      "lcpObservedBreakdown": {
+        "timeToFirstByte": 3.911,
+        "resourceLoadDelay": 15.031,
+        "resourceLoadDuration": 13.271,
+        "elementRenderDelay": 109.71
+      },
+      "lcpSimulatedBreakdown": {
+        "TTFB": 451.0518656456747,
+        "Load Delay": 120.76621324274112,
+        "Load Time": 41.731179540197104,
+        "Render Delay": 2089.606338508411
+      },
+      "observed": {
+        "observedFirstContentfulPaint": 142,
+        "observedLargestContentfulPaint": 142,
+        "observedDomContentLoaded": 2295,
+        "observedTraceEnd": 14431,
+        "observedLastVisualChange": 13361,
+        "observedSpeedIndex": 7142
+      }
+    },
+    {
+      "name": "live-06-original",
+      "mode": "live",
+      "pair": 6,
+      "version": "original",
+      "score": 54,
+      "fcp": 2780.36093716932,
+      "lcp": 5340.3725601852375,
+      "tbt": 536.5,
+      "cls": 0.00006163200694355026,
+      "speedIndex": 8881.25472776465,
+      "pageBytes": 9652557,
+      "imageBytes": 8224139,
+      "offerBytes": 2647779,
+      "mainThread": 3876.803999999967,
+      "benchmarkIndex": 1001.5,
+      "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "warnings": [],
+      "lcpSelector": "div#navbar-logo-row > div.flex > a.flex > img#navbar-logo-full",
+      "lcpSnippet": "<img id=\"navbar-logo-full\" src=\"/images/kamandalu-logo.png\" alt=\"Kamandalu Logo\" class=\"w-36 h-auto transition-all duration-300 logo brightness-0 invert-[1]\" fetchpriority=\"high\" loading=\"eager\">",
+      "longTaskCount": 12,
+      "longestTask": 276,
+      "lcpObservedBreakdown": {
+        "timeToFirstByte": 11.302999877929688,
+        "resourceLoadDelay": 22.844000122070312,
+        "resourceLoadDuration": 26.616,
+        "elementRenderDelay": 1196.788
+      },
+      "lcpSimulatedBreakdown": {
+        "TTFB": 451.78697905643986,
+        "Load Delay": 0,
+        "Load Time": 0,
+        "Render Delay": 4888.5855811287975
+      },
+      "observed": {
+        "observedFirstContentfulPaint": 1258,
+        "observedLargestContentfulPaint": 1258,
+        "observedDomContentLoaded": 3133,
+        "observedTraceEnd": 12402,
+        "observedLastVisualChange": 9187,
+        "observedSpeedIndex": 5510
+      }
+    },
+    {
+      "name": "live-07-original",
+      "mode": "live",
+      "pair": 7,
+      "version": "original",
+      "score": 66,
+      "fcp": 2553.7696656180888,
+      "lcp": 2703.7696656180888,
+      "tbt": 797,
+      "cls": 0,
+      "speedIndex": 7777.251617179334,
+      "pageBytes": 10083124,
+      "imageBytes": 8224081,
+      "offerBytes": 2647792,
+      "mainThread": 3847.0159999999546,
+      "benchmarkIndex": 1155.5,
+      "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "warnings": [],
+      "lcpSelector": "div#navbar-logo-row > div.flex > a.flex > img#navbar-logo-full",
+      "lcpSnippet": "<img id=\"navbar-logo-full\" src=\"/images/kamandalu-logo.png\" alt=\"Kamandalu Logo\" class=\"w-36 h-auto transition-all duration-300 logo brightness-0 invert-[1]\" fetchpriority=\"high\" loading=\"eager\">",
+      "longTaskCount": 15,
+      "longestTask": 338,
+      "lcpObservedBreakdown": {
+        "timeToFirstByte": 5.912,
+        "resourceLoadDelay": 20.576,
+        "resourceLoadDuration": 25.485,
+        "elementRenderDelay": 131.209
+      },
+      "lcpSimulatedBreakdown": {
+        "TTFB": 451.25655520602953,
+        "Load Delay": 216.17671040190447,
+        "Load Time": 99.68916259427635,
+        "Render Delay": 1936.6472374158784
+      },
+      "observed": {
+        "observedFirstContentfulPaint": 183,
+        "observedLargestContentfulPaint": 183,
+        "observedDomContentLoaded": 2005,
+        "observedTraceEnd": 7332,
+        "observedLastVisualChange": 7327,
+        "observedSpeedIndex": 4775
+      }
+    },
+    {
+      "name": "live-07-optimized",
+      "mode": "live",
+      "pair": 7,
+      "version": "optimized",
+      "score": 73,
+      "fcp": 2703.7539952731804,
+      "lcp": 2703.7539952731804,
+      "tbt": 786,
+      "cls": 0,
+      "speedIndex": 2703.7539952731804,
+      "pageBytes": 7636373,
+      "imageBytes": 5957029,
+      "offerBytes": 380977,
+      "mainThread": 4614.243999999916,
+      "benchmarkIndex": 1311.5,
+      "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "warnings": [],
+      "lcpSelector": "div#navbar-logo-row > div.flex > a.flex > img#navbar-logo-full",
+      "lcpSnippet": "<img id=\"navbar-logo-full\" src=\"/images/kamandalu-logo.png\" alt=\"Kamandalu Logo\" class=\"w-36 h-auto transition-all duration-300 logo brightness-0 invert-[1]\" fetchpriority=\"high\" loading=\"eager\">",
+      "longTaskCount": 19,
+      "longestTask": 319,
+      "lcpObservedBreakdown": {
+        "timeToFirstByte": 5.464,
+        "resourceLoadDelay": 17.676,
+        "resourceLoadDuration": 20.601,
+        "elementRenderDelay": 136.909
+      },
+      "lcpSimulatedBreakdown": {
+        "TTFB": 451.2513317577267,
+        "Load Delay": 82.98890450455463,
+        "Load Time": 120.42294301844458,
+        "Render Delay": 2049.0908159924547
+      },
+      "observed": {
+        "observedFirstContentfulPaint": 181,
+        "observedLargestContentfulPaint": 181,
+        "observedDomContentLoaded": 828,
+        "observedTraceEnd": 5396,
+        "observedLastVisualChange": 878,
+        "observedSpeedIndex": 791
+      }
+    },
+    {
+      "name": "live-08-optimized",
+      "mode": "live",
+      "pair": 8,
+      "version": "optimized",
+      "score": 73,
+      "fcp": 2404.088908957961,
+      "lcp": 2704.088908957961,
+      "tbt": 868.5,
+      "cls": 0,
+      "speedIndex": 3036.9551665525382,
+      "pageBytes": 7647637,
+      "imageBytes": 5957011,
+      "offerBytes": 380732,
+      "mainThread": 3973.7159999999294,
+      "benchmarkIndex": 1268.5,
+      "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "warnings": [],
+      "lcpSelector": "div#navbar-logo-row > div.flex > a.flex > img#navbar-logo-full",
+      "lcpSnippet": "<img id=\"navbar-logo-full\" src=\"/images/kamandalu-logo.png\" alt=\"Kamandalu Logo\" class=\"w-36 h-auto transition-all duration-300 logo brightness-0 invert-[1]\" fetchpriority=\"high\" loading=\"eager\">",
+      "longTaskCount": 18,
+      "longestTask": 280,
+      "lcpObservedBreakdown": {
+        "timeToFirstByte": 4.923,
+        "resourceLoadDelay": 14.037,
+        "resourceLoadDuration": 16.378,
+        "elementRenderDelay": 84.063
+      },
+      "lcpSimulatedBreakdown": {
+        "TTFB": 451.3629696526536,
+        "Load Delay": 215.09651008878842,
+        "Load Time": 133.84448776840532,
+        "Render Delay": 1903.7849414481136
+      },
+      "observed": {
+        "observedFirstContentfulPaint": 119,
+        "observedLargestContentfulPaint": 119,
+        "observedDomContentLoaded": 715,
+        "observedTraceEnd": 4513,
+        "observedLastVisualChange": 940,
+        "observedSpeedIndex": 919
+      }
+    },
+    {
+      "name": "live-08-original",
+      "mode": "live",
+      "pair": 8,
+      "version": "original",
+      "score": 72,
+      "fcp": 2554.600712652743,
+      "lcp": 2704.600712652743,
+      "tbt": 500.18971265274286,
+      "cls": 0,
+      "speedIndex": 7862.409837756191,
+      "pageBytes": 9658947,
+      "imageBytes": 8224121,
+      "offerBytes": 2647811,
+      "mainThread": 3595.5439999999485,
+      "benchmarkIndex": 1355,
+      "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "warnings": [],
+      "lcpSelector": "div#navbar-logo-row > div.flex > a.flex > img#navbar-logo-full",
+      "lcpSnippet": "<img id=\"navbar-logo-full\" src=\"/images/kamandalu-logo.png\" alt=\"Kamandalu Logo\" class=\"w-36 h-auto transition-all duration-300 logo brightness-0 invert-[1]\" fetchpriority=\"high\" loading=\"eager\">",
+      "longTaskCount": 18,
+      "longestTask": 226,
+      "lcpObservedBreakdown": {
+        "timeToFirstByte": 4.594,
+        "resourceLoadDelay": 15.796,
+        "resourceLoadDuration": 16.04,
+        "elementRenderDelay": 84.999
+      },
+      "lcpSimulatedBreakdown": {
+        "TTFB": 451.5335708842476,
+        "Load Delay": 240.1353927478645,
+        "Load Time": 119.7402066854479,
+        "Render Delay": 1893.191542335183
+      },
+      "observed": {
+        "observedFirstContentfulPaint": 121,
+        "observedLargestContentfulPaint": 121,
+        "observedDomContentLoaded": 1023,
+        "observedTraceEnd": 6431,
+        "observedLastVisualChange": 6430,
+        "observedSpeedIndex": 4413
+      }
+    },
+    {
+      "name": "live-09-original",
+      "mode": "live",
+      "pair": 9,
+      "version": "original",
+      "score": 66,
+      "fcp": 2554.3177610589278,
+      "lcp": 2704.3177610589278,
+      "tbt": 1019.5000000000009,
+      "cls": 0,
+      "speedIndex": 5420.201687212819,
+      "pageBytes": 10084817,
+      "imageBytes": 8234080,
+      "offerBytes": 2648056,
+      "mainThread": 4991.019999999857,
+      "benchmarkIndex": 1245.5,
+      "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "warnings": [],
+      "lcpSelector": "div#navbar-logo-row > div.flex > a.flex > img#navbar-logo-full",
+      "lcpSnippet": "<img id=\"navbar-logo-full\" src=\"/images/kamandalu-logo.png\" alt=\"Kamandalu Logo\" class=\"w-36 h-auto transition-all duration-300 logo brightness-0 invert-[1]\" fetchpriority=\"high\" loading=\"eager\">",
+      "longTaskCount": 19,
+      "longestTask": 309,
+      "lcpObservedBreakdown": {
+        "timeToFirstByte": 4.5,
+        "resourceLoadDelay": 15.206,
+        "resourceLoadDuration": 19.229,
+        "elementRenderDelay": 90.512
+      },
+      "lcpSimulatedBreakdown": {
+        "TTFB": 451.4392536863092,
+        "Load Delay": 199.1997915974393,
+        "Load Time": 162.7642152946121,
+        "Render Delay": 1890.9145004805673
+      },
+      "observed": {
+        "observedFirstContentfulPaint": 129,
+        "observedLargestContentfulPaint": 129,
+        "observedDomContentLoaded": 696,
+        "observedTraceEnd": 10557,
+        "observedLastVisualChange": 6757,
+        "observedSpeedIndex": 3057
+      }
+    },
+    {
+      "name": "live-09-optimized",
+      "mode": "live",
+      "pair": 9,
+      "version": "optimized",
+      "score": 69,
+      "fcp": 2553.265664446512,
+      "lcp": 2553.265664446512,
+      "tbt": 1220,
+      "cls": 0,
+      "speedIndex": 2553.265664446512,
+      "pageBytes": 7600855,
+      "imageBytes": 5957066,
+      "offerBytes": 380722,
+      "mainThread": 4128.02399999994,
+      "benchmarkIndex": 1402,
+      "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "warnings": [],
+      "lcpSelector": "div#navbar-logo-row > div.flex > a.flex > img#navbar-logo-full",
+      "lcpSnippet": "<img id=\"navbar-logo-full\" src=\"/images/kamandalu-logo.png\" alt=\"Kamandalu Logo\" class=\"w-36 h-auto transition-all duration-300 logo brightness-0 invert-[1]\" fetchpriority=\"high\" loading=\"eager\">",
+      "longTaskCount": 15,
+      "longestTask": 411,
+      "lcpObservedBreakdown": {
+        "timeToFirstByte": 4.008,
+        "resourceLoadDelay": 13.936,
+        "resourceLoadDuration": 20.423,
+        "elementRenderDelay": 82.258
+      },
+      "lcpSimulatedBreakdown": {
+        "TTFB": 451.088554815504,
+        "Load Delay": 185.42337926788986,
+        "Load Time": 175.60117436364953,
+        "Render Delay": 1741.1525559994684
+      },
+      "observed": {
+        "observedFirstContentfulPaint": 121,
+        "observedLargestContentfulPaint": 121,
+        "observedDomContentLoaded": 565,
+        "observedTraceEnd": 4553,
+        "observedLastVisualChange": 696,
+        "observedSpeedIndex": 620
+      }
+    },
+    {
+      "name": "live-10-optimized",
+      "mode": "live",
+      "pair": 10,
+      "version": "optimized",
+      "score": 69,
+      "fcp": 2479.3867884347783,
+      "lcp": 2704.3867884347783,
+      "tbt": 1138.533762811593,
+      "cls": 0,
+      "speedIndex": 2479.3867884347783,
+      "pageBytes": 7602119,
+      "imageBytes": 5957009,
+      "offerBytes": 380716,
+      "mainThread": 3552.0719999999346,
+      "benchmarkIndex": 1266,
+      "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "warnings": [],
+      "lcpSelector": "div#navbar-logo-row > div.flex > a.flex > img#navbar-logo-full",
+      "lcpSnippet": "<img id=\"navbar-logo-full\" src=\"/images/kamandalu-logo.png\" alt=\"Kamandalu Logo\" class=\"w-36 h-auto transition-all duration-300 logo brightness-0 invert-[1]\" fetchpriority=\"high\" loading=\"eager\">",
+      "longTaskCount": 17,
+      "longestTask": 337,
+      "lcpObservedBreakdown": {
+        "timeToFirstByte": 5.054,
+        "resourceLoadDelay": 16.037,
+        "resourceLoadDuration": 18.241,
+        "elementRenderDelay": 101.91
+      },
+      "lcpSimulatedBreakdown": {
+        "TTFB": 451.4622628115928,
+        "Load Delay": 133.50340441835164,
+        "Load Time": 168.13143709554356,
+        "Render Delay": 1951.2896841092902
+      },
+      "observed": {
+        "observedFirstContentfulPaint": 141,
+        "observedLargestContentfulPaint": 141,
+        "observedDomContentLoaded": 453,
+        "observedTraceEnd": 4672,
+        "observedLastVisualChange": 923,
+        "observedSpeedIndex": 846
+      }
+    },
+    {
+      "name": "live-10-original",
+      "mode": "live",
+      "pair": 10,
+      "version": "original",
+      "score": 75,
+      "fcp": 2554.00425,
+      "lcp": 2704.00425,
+      "tbt": 695,
+      "cls": 0,
+      "speedIndex": 2554.00425,
+      "pageBytes": 9723014,
+      "imageBytes": 8224132,
+      "offerBytes": 2648064,
+      "mainThread": 4365.647999999923,
+      "benchmarkIndex": 1304.5,
+      "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "warnings": [],
+      "lcpSelector": "div#navbar-logo-row > div.flex > a.flex > img#navbar-logo-full",
+      "lcpSnippet": "<img id=\"navbar-logo-full\" src=\"/images/kamandalu-logo.png\" alt=\"Kamandalu Logo\" class=\"w-36 h-auto transition-all duration-300 logo brightness-0 invert-[1]\" fetchpriority=\"high\" loading=\"eager\">",
+      "longTaskCount": 16,
+      "longestTask": 289,
+      "lcpObservedBreakdown": {
+        "timeToFirstByte": 4.469000122070312,
+        "resourceLoadDelay": 13.806999877929687,
+        "resourceLoadDuration": 20.076,
+        "elementRenderDelay": 111.372
+      },
+      "lcpSimulatedBreakdown": {
+        "TTFB": 451.33475,
+        "Load Delay": 123.35013141578156,
+        "Load Time": 117.94937221651878,
+        "Render Delay": 2011.3699963676995
+      },
+      "observed": {
+        "observedFirstContentfulPaint": 150,
+        "observedLargestContentfulPaint": 150,
+        "observedDomContentLoaded": 856,
+        "observedTraceEnd": 5382,
+        "observedLastVisualChange": 914,
+        "observedSpeedIndex": 481
+      }
+    },
+    {
+      "name": "blocked-01-original",
+      "mode": "blocked",
+      "pair": 1,
+      "version": "original",
+      "score": 85,
+      "fcp": 2629.2110804548993,
+      "lcp": 3154.2110804548993,
+      "tbt": 37,
+      "cls": 0,
+      "speedIndex": 5405.350414742446,
+      "pageBytes": 8512451,
+      "imageBytes": 8223872,
+      "offerBytes": 2647763,
+      "mainThread": 1547.231999999994,
+      "benchmarkIndex": 1016.5,
+      "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "warnings": [],
+      "lcpSelector": "div#navbar-logo-row > div.flex > a.flex > img#navbar-logo-full",
+      "lcpSnippet": "<img id=\"navbar-logo-full\" src=\"/images/kamandalu-logo.png\" alt=\"Kamandalu Logo\" class=\"w-36 h-auto transition-all duration-300 logo brightness-0 invert-[1]\" fetchpriority=\"high\" loading=\"eager\">",
+      "longTaskCount": 4,
+      "longestTask": 96,
+      "lcpObservedBreakdown": {
+        "timeToFirstByte": 5.627,
+        "resourceLoadDelay": 15.936,
+        "resourceLoadDuration": 19.12,
+        "elementRenderDelay": 110.983
+      },
+      "lcpSimulatedBreakdown": {
+        "TTFB": 451.4036934849663,
+        "Load Delay": 332.85447884289783,
+        "Load Time": 61.829739840187244,
+        "Render Delay": 2308.123168286848
+      },
+      "observed": {
+        "observedFirstContentfulPaint": 152,
+        "observedLargestContentfulPaint": 152,
+        "observedDomContentLoaded": 284,
+        "observedTraceEnd": 5965,
+        "observedLastVisualChange": 5961,
+        "observedSpeedIndex": 3052
+      }
+    },
+    {
+      "name": "blocked-01-optimized",
+      "mode": "blocked",
+      "pair": 1,
+      "version": "optimized",
+      "score": 87,
+      "fcp": 2782.89405,
+      "lcp": 3157.89405,
+      "tbt": 159.5596999999998,
+      "cls": 0,
+      "speedIndex": 2782.89405,
+      "pageBytes": 6170934,
+      "imageBytes": 5869626,
+      "offerBytes": 380707,
+      "mainThread": 3101.995999999999,
+      "benchmarkIndex": 528.5,
+      "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "warnings": [],
+      "lcpSelector": "div#navbar-logo-row > div.flex > a.flex > img#navbar-logo-full",
+      "lcpSnippet": "<img id=\"navbar-logo-full\" src=\"/images/kamandalu-logo.png\" alt=\"Kamandalu Logo\" class=\"w-36 h-auto transition-all duration-300 logo brightness-0 invert-[1]\" fetchpriority=\"high\" loading=\"eager\">",
+      "longTaskCount": 8,
+      "longestTask": 255,
+      "lcpObservedBreakdown": {
+        "timeToFirstByte": 10.182999877929687,
+        "resourceLoadDelay": 34.52400012207031,
+        "resourceLoadDuration": 40.804,
+        "elementRenderDelay": 212.427
+      },
+      "lcpSimulatedBreakdown": {
+        "TTFB": 452.63135,
+        "Load Delay": 236.99272783608546,
+        "Load Time": 216.72112771188824,
+        "Render Delay": 2251.548844452026
+      },
+      "observed": {
+        "observedFirstContentfulPaint": 298,
+        "observedLargestContentfulPaint": 298,
+        "observedDomContentLoaded": 717,
+        "observedTraceEnd": 5145,
+        "observedLastVisualChange": 817,
+        "observedSpeedIndex": 573
+      }
+    },
+    {
+      "name": "blocked-02-optimized",
+      "mode": "blocked",
+      "pair": 2,
+      "version": "optimized",
+      "score": 90,
+      "fcp": 2630.1543825949007,
+      "lcp": 3005.1543825949007,
+      "tbt": 14.5,
+      "cls": 0,
+      "speedIndex": 2630.1543825949007,
+      "pageBytes": 6258215,
+      "imageBytes": 5956825,
+      "offerBytes": 380963,
+      "mainThread": 1413.1119999999976,
+      "benchmarkIndex": 1325,
+      "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "warnings": [],
+      "lcpSelector": "div#navbar-logo-row > div.flex > a.flex > img#navbar-logo-full",
+      "lcpSnippet": "<img id=\"navbar-logo-full\" src=\"/images/kamandalu-logo.png\" alt=\"Kamandalu Logo\" class=\"w-36 h-auto transition-all duration-300 logo brightness-0 invert-[1]\" fetchpriority=\"high\" loading=\"eager\">",
+      "longTaskCount": 4,
+      "longestTask": 95,
+      "lcpObservedBreakdown": {
+        "timeToFirstByte": 4.695,
+        "resourceLoadDelay": 15.672,
+        "resourceLoadDuration": 21.149,
+        "elementRenderDelay": 108.836
+      },
+      "lcpSimulatedBreakdown": {
+        "TTFB": 451.71812753163357,
+        "Load Delay": 233.6918031372398,
+        "Load Time": 144.3894031960025,
+        "Render Delay": 2175.355048730025
+      },
+      "observed": {
+        "observedFirstContentfulPaint": 150,
+        "observedLargestContentfulPaint": 150,
+        "observedDomContentLoaded": 327,
+        "observedTraceEnd": 5300,
+        "observedLastVisualChange": 728,
+        "observedSpeedIndex": 431
+      }
+    },
+    {
+      "name": "blocked-02-original",
+      "mode": "blocked",
+      "pair": 2,
+      "version": "original",
+      "score": 85,
+      "fcp": 2780.454213447222,
+      "lcp": 3155.454213447222,
+      "tbt": 81,
+      "cls": 0,
+      "speedIndex": 5040.246285699224,
+      "pageBytes": 8512537,
+      "imageBytes": 8223956,
+      "offerBytes": 2647757,
+      "mainThread": 2272.3759999999897,
+      "benchmarkIndex": 1034,
+      "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "warnings": [],
+      "lcpSelector": "div#navbar-logo-row > div.flex > a.flex > img#navbar-logo-full",
+      "lcpSnippet": "<img id=\"navbar-logo-full\" src=\"/images/kamandalu-logo.png\" alt=\"Kamandalu Logo\" class=\"w-36 h-auto transition-all duration-300 logo brightness-0 invert-[1]\" fetchpriority=\"high\" loading=\"eager\">",
+      "longTaskCount": 7,
+      "longestTask": 232,
+      "lcpObservedBreakdown": {
+        "timeToFirstByte": 5.94,
+        "resourceLoadDelay": 18.248,
+        "resourceLoadDuration": 28.993,
+        "elementRenderDelay": 156.41
+      },
+      "lcpSimulatedBreakdown": {
+        "TTFB": 451.8180711490741,
+        "Load Delay": 94.38801188763267,
+        "Load Time": 254.44952959590182,
+        "Render Delay": 2354.7986008146136
+      },
+      "observed": {
+        "observedFirstContentfulPaint": 210,
+        "observedLargestContentfulPaint": 210,
+        "observedDomContentLoaded": 383,
+        "observedTraceEnd": 7090,
+        "observedLastVisualChange": 6438,
+        "observedSpeedIndex": 2765
+      }
+    },
+    {
+      "name": "blocked-03-original",
+      "mode": "blocked",
+      "pair": 3,
+      "version": "original",
+      "score": 86,
+      "fcp": 2629.1735779511155,
+      "lcp": 3154.1735779511155,
+      "tbt": 48,
+      "cls": 0,
+      "speedIndex": 5059.785629996204,
+      "pageBytes": 8512512,
+      "imageBytes": 8223932,
+      "offerBytes": 2647796,
+      "mainThread": 1696.3919999999937,
+      "benchmarkIndex": 1296,
+      "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "warnings": [],
+      "lcpSelector": "div#navbar-logo-row > div.flex > a.flex > img#navbar-logo-full",
+      "lcpSnippet": "<img id=\"navbar-logo-full\" src=\"/images/kamandalu-logo.png\" alt=\"Kamandalu Logo\" class=\"w-36 h-auto transition-all duration-300 logo brightness-0 invert-[1]\" fetchpriority=\"high\" loading=\"eager\">",
+      "longTaskCount": 3,
+      "longestTask": 98,
+      "lcpObservedBreakdown": {
+        "timeToFirstByte": 4.726,
+        "resourceLoadDelay": 17.111,
+        "resourceLoadDuration": 22.722,
+        "elementRenderDelay": 99.159
+      },
+      "lcpSimulatedBreakdown": {
+        "TTFB": 451.39119265037175,
+        "Load Delay": 325.9263300658339,
+        "Load Time": 200.6171862837292,
+        "Render Delay": 2176.238868951181
+      },
+      "observed": {
+        "observedFirstContentfulPaint": 144,
+        "observedLargestContentfulPaint": 144,
+        "observedDomContentLoaded": 350,
+        "observedTraceEnd": 7608,
+        "observedLastVisualChange": 6400,
+        "observedSpeedIndex": 2809
+      }
+    },
+    {
+      "name": "blocked-03-optimized",
+      "mode": "blocked",
+      "pair": 3,
+      "version": "optimized",
+      "score": 89,
+      "fcp": 2628.3471607088504,
+      "lcp": 3153.3471607088504,
+      "tbt": 21,
+      "cls": 0,
+      "speedIndex": 2628.3471607088504,
+      "pageBytes": 6258246,
+      "imageBytes": 5956856,
+      "offerBytes": 380753,
+      "mainThread": 1377.1519999999994,
+      "benchmarkIndex": 1244.5,
+      "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "warnings": [],
+      "lcpSelector": "div#navbar-logo-row > div.flex > a.flex > img#navbar-logo-full",
+      "lcpSnippet": "<img id=\"navbar-logo-full\" src=\"/images/kamandalu-logo.png\" alt=\"Kamandalu Logo\" class=\"w-36 h-auto transition-all duration-300 logo brightness-0 invert-[1]\" fetchpriority=\"high\" loading=\"eager\">",
+      "longTaskCount": 3,
+      "longestTask": 92,
+      "lcpObservedBreakdown": {
+        "timeToFirstByte": 5.524,
+        "resourceLoadDelay": 17.456,
+        "resourceLoadDuration": 19.481,
+        "elementRenderDelay": 110.164
+      },
+      "lcpSimulatedBreakdown": {
+        "TTFB": 451.1157202362835,
+        "Load Delay": 271.96925281324667,
+        "Load Time": 154.19118785795672,
+        "Render Delay": 2276.0709998013635
+      },
+      "observed": {
+        "observedFirstContentfulPaint": 153,
+        "observedLargestContentfulPaint": 153,
+        "observedDomContentLoaded": 379,
+        "observedTraceEnd": 4285,
+        "observedLastVisualChange": 695,
+        "observedSpeedIndex": 454
+      }
+    },
+    {
+      "name": "blocked-04-optimized",
+      "mode": "blocked",
+      "pair": 4,
+      "version": "optimized",
+      "score": 88,
+      "fcp": 2778.665852462909,
+      "lcp": 3303.665852462909,
+      "tbt": 23,
+      "cls": 0,
+      "speedIndex": 2778.665852462909,
+      "pageBytes": 6258193,
+      "imageBytes": 5956885,
+      "offerBytes": 380684,
+      "mainThread": 1505.1999999999944,
+      "benchmarkIndex": 1406,
+      "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "warnings": [],
+      "lcpSelector": "div#navbar-logo-row > div.flex > a.flex > img#navbar-logo-full",
+      "lcpSnippet": "<img id=\"navbar-logo-full\" src=\"/images/kamandalu-logo.png\" alt=\"Kamandalu Logo\" class=\"w-36 h-auto transition-all duration-300 logo brightness-0 invert-[1]\" fetchpriority=\"high\" loading=\"eager\">",
+      "longTaskCount": 3,
+      "longestTask": 102,
+      "lcpObservedBreakdown": {
+        "timeToFirstByte": 4.924,
+        "resourceLoadDelay": 16.562,
+        "resourceLoadDuration": 20.706,
+        "elementRenderDelay": 125.109
+      },
+      "lcpSimulatedBreakdown": {
+        "TTFB": 451.2219508209695,
+        "Load Delay": 229.58980517010332,
+        "Load Time": 152.3468608198582,
+        "Render Delay": 2470.5072356519777
+      },
+      "observed": {
+        "observedFirstContentfulPaint": 167,
+        "observedLargestContentfulPaint": 167,
+        "observedDomContentLoaded": 399,
+        "observedTraceEnd": 5366,
+        "observedLastVisualChange": 701,
+        "observedSpeedIndex": 446
+      }
+    },
+    {
+      "name": "blocked-04-original",
+      "mode": "blocked",
+      "pair": 4,
+      "version": "original",
+      "score": 89,
+      "fcp": 2780.847577954584,
+      "lcp": 3155.847577954584,
+      "tbt": 51,
+      "cls": 0,
+      "speedIndex": 2780.847577954584,
+      "pageBytes": 8512431,
+      "imageBytes": 8223933,
+      "offerBytes": 2648106,
+      "mainThread": 1926.9559999999915,
+      "benchmarkIndex": 1010.5,
+      "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "warnings": [],
+      "lcpSelector": "div#navbar-logo-row > div.flex > a.flex > img#navbar-logo-full",
+      "lcpSnippet": "<img id=\"navbar-logo-full\" src=\"/images/kamandalu-logo.png\" alt=\"Kamandalu Logo\" class=\"w-36 h-auto transition-all duration-300 logo brightness-0 invert-[1]\" fetchpriority=\"high\" loading=\"eager\">",
+      "longTaskCount": 4,
+      "longestTask": 186,
+      "lcpObservedBreakdown": {
+        "timeToFirstByte": 4.935,
+        "resourceLoadDelay": 16.115,
+        "resourceLoadDuration": 21.266,
+        "elementRenderDelay": 119.215
+      },
+      "lcpSimulatedBreakdown": {
+        "TTFB": 451.9491926515278,
+        "Load Delay": 238.1598505143445,
+        "Load Time": 136.62295292510555,
+        "Render Delay": 2329.115581863606
+      },
+      "observed": {
+        "observedFirstContentfulPaint": 162,
+        "observedLargestContentfulPaint": 162,
+        "observedDomContentLoaded": 387,
+        "observedTraceEnd": 4644,
+        "observedLastVisualChange": 715,
+        "observedSpeedIndex": 448
+      }
+    },
+    {
+      "name": "blocked-05-original",
+      "mode": "blocked",
+      "pair": 5,
+      "version": "original",
+      "score": 90,
+      "fcp": 2630.3409844644075,
+      "lcp": 3005.3409844644075,
+      "tbt": 17.5,
+      "cls": 0,
+      "speedIndex": 2630.3409844644075,
+      "pageBytes": 8512458,
+      "imageBytes": 8223960,
+      "offerBytes": 2648082,
+      "mainThread": 1603.4759999999956,
+      "benchmarkIndex": 1259,
+      "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "warnings": [],
+      "lcpSelector": "div#navbar-logo-row > div.flex > a.flex > img#navbar-logo-full",
+      "lcpSnippet": "<img id=\"navbar-logo-full\" src=\"/images/kamandalu-logo.png\" alt=\"Kamandalu Logo\" class=\"w-36 h-auto transition-all duration-300 logo brightness-0 invert-[1]\" fetchpriority=\"high\" loading=\"eager\">",
+      "longTaskCount": 4,
+      "longestTask": 111,
+      "lcpObservedBreakdown": {
+        "timeToFirstByte": 5.025,
+        "resourceLoadDelay": 15.879,
+        "resourceLoadDuration": 24.577,
+        "elementRenderDelay": 119.676
+      },
+      "lcpSimulatedBreakdown": {
+        "TTFB": 451.7803281548024,
+        "Load Delay": 215.8993432884297,
+        "Load Time": 159.93231687045238,
+        "Render Delay": 2177.728996150723
+      },
+      "observed": {
+        "observedFirstContentfulPaint": 165,
+        "observedLargestContentfulPaint": 165,
+        "observedDomContentLoaded": 342,
+        "observedTraceEnd": 5314,
+        "observedLastVisualChange": 402,
+        "observedSpeedIndex": 387
+      }
+    },
+    {
+      "name": "blocked-05-optimized",
+      "mode": "blocked",
+      "pair": 5,
+      "version": "optimized",
+      "score": 89,
+      "fcp": 2629.6010555390794,
+      "lcp": 3154.6010555390794,
+      "tbt": 33,
+      "cls": 0,
+      "speedIndex": 2629.6010555390794,
+      "pageBytes": 6258189,
+      "imageBytes": 5956799,
+      "offerBytes": 380724,
+      "mainThread": 1473.1159999999986,
+      "benchmarkIndex": 1343,
+      "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "warnings": [],
+      "lcpSelector": "div#navbar-logo-row > div.flex > a.flex > img#navbar-logo-full",
+      "lcpSnippet": "<img id=\"navbar-logo-full\" src=\"/images/kamandalu-logo.png\" alt=\"Kamandalu Logo\" class=\"w-36 h-auto transition-all duration-300 logo brightness-0 invert-[1]\" fetchpriority=\"high\" loading=\"eager\">",
+      "longTaskCount": 4,
+      "longestTask": 83,
+      "lcpObservedBreakdown": {
+        "timeToFirstByte": 4.145,
+        "resourceLoadDelay": 15.05,
+        "resourceLoadDuration": 19.002,
+        "elementRenderDelay": 102.278
+      },
+      "lcpSimulatedBreakdown": {
+        "TTFB": 451.533685179693,
+        "Load Delay": 264.452398670377,
+        "Load Time": 141.7914297758806,
+        "Render Delay": 2296.823541913129
+      },
+      "observed": {
+        "observedFirstContentfulPaint": 140,
+        "observedLargestContentfulPaint": 140,
+        "observedDomContentLoaded": 305,
+        "observedTraceEnd": 4823,
+        "observedLastVisualChange": 706,
+        "observedSpeedIndex": 505
+      }
+    }
+  ],
+  "traceReview": {
+    "runs": 30,
+    "mainThreadRecordedImageDecodeEvents": 0,
+    "recordedDecodeTypes": [
+      "png",
+      "jpg"
+    ],
+    "blockedTrackingScriptResponses": [],
+    "googleAdsInitiators": [
+      {
+        "run": "live-01-optimized",
+        "url": "https://www.googletagmanager.com/gtag/js?id=AW-789859065",
+        "initiatorType": "script",
+        "stack": [
+          {
+            "function": "C",
+            "url": "https://static.ads.triptease.io/index.js"
+          },
+          {
+            "function": "",
+            "url": "https://static.ads.triptease.io/index.js"
+          },
+          {
+            "function": "",
+            "url": "https://static.ads.triptease.io/index.js"
+          },
+          {
+            "function": "d",
+            "url": "https://static.ads.triptease.io/index.js"
+          }
+        ],
+        "parent": [
+          {
+            "function": "send",
+            "url": "https://onboard.triptease.io/bootstrap.js"
+          },
+          {
+            "function": "",
+            "url": "https://onboard.triptease.io/bootstrap.js"
+          },
+          {
+            "function": "o",
+            "url": "https://onboard.triptease.io/bootstrap.js"
+          }
+        ]
+      },
+      {
+        "run": "live-04-optimized",
+        "url": "https://www.googletagmanager.com/gtag/js?id=AW-17389219279",
+        "initiatorType": "script",
+        "stack": [
+          {
+            "function": "xe",
+            "url": "https://static.meta.triptease.io/index.js"
+          },
+          {
+            "function": "",
+            "url": "https://static.meta.triptease.io/index.js"
+          },
+          {
+            "function": "f",
+            "url": "https://static.meta.triptease.io/index.js"
+          }
+        ],
+        "parent": [
+          {
+            "function": "g",
+            "url": "https://static.meta.triptease.io/index.js"
+          },
+          {
+            "function": "",
+            "url": "https://static.meta.triptease.io/index.js"
+          },
+          {
+            "function": "P",
+            "url": "https://static.meta.triptease.io/index.js"
+          }
+        ]
+      },
+      {
+        "run": "live-04-optimized",
+        "url": "https://www.googletagmanager.com/gtag/js?id=AW-17391025599",
+        "initiatorType": "script",
+        "stack": [
+          {
+            "function": "nt",
+            "url": "https://www.googletagmanager.com/gtag/js?id=G-WRT2WJJ3E1"
+          },
+          {
+            "function": "cd",
+            "url": "https://www.googletagmanager.com/gtag/js?id=G-WRT2WJJ3E1"
+          },
+          {
+            "function": "Yl",
+            "url": "https://www.googletagmanager.com/gtag/js?id=G-WRT2WJJ3E1"
+          },
+          {
+            "function": "IA",
+            "url": "https://www.googletagmanager.com/gtag/js?id=G-WRT2WJJ3E1"
+          }
+        ],
+        "parent": [
+          {
+            "function": "u",
+            "url": "https://static.paidsearch.triptease.io/index.js"
+          },
+          {
+            "function": "",
+            "url": "https://static.paidsearch.triptease.io/index.js"
+          },
+          {
+            "function": "tt",
+            "url": "https://static.paidsearch.triptease.io/index.js"
+          }
+        ]
+      },
+      {
+        "run": "live-04-optimized",
+        "url": "https://www.googletagmanager.com/gtag/js?id=AW-400578053",
+        "initiatorType": "script",
+        "stack": [
+          {
+            "function": "nt",
+            "url": "https://www.googletagmanager.com/gtag/js?id=G-WRT2WJJ3E1"
+          },
+          {
+            "function": "cd",
+            "url": "https://www.googletagmanager.com/gtag/js?id=G-WRT2WJJ3E1"
+          },
+          {
+            "function": "Yl",
+            "url": "https://www.googletagmanager.com/gtag/js?id=G-WRT2WJJ3E1"
+          },
+          {
+            "function": "IA",
+            "url": "https://www.googletagmanager.com/gtag/js?id=G-WRT2WJJ3E1"
+          }
+        ],
+        "parent": [
+          {
+            "function": "u",
+            "url": "https://static.paidsearch.triptease.io/index.js"
+          },
+          {
+            "function": "",
+            "url": "https://static.paidsearch.triptease.io/index.js"
+          },
+          {
+            "function": "tt",
+            "url": "https://static.paidsearch.triptease.io/index.js"
+          }
+        ]
+      }
+    ]
+  },
+  "supplementalLcpObserver": {
+    "method": "One load per condition, actual CPU throttle 4x with Playwright routing; not comparable as absolute timings to Lighthouse simulated medians.",
+    "runs": [
+      {
+        "mode": "live",
+        "lcp": [
+          {
+            "start": 7284,
+            "render": 7284,
+            "load": 2690.399999976158,
+            "size": 12096,
+            "url": "http://127.0.0.1:4323/images/kamandalu-logo.png",
+            "element": {
+              "tag": "IMG",
+              "id": "navbar-logo-full",
+              "class": "w-36 h-auto transition-all duration-300 logo brightness-0 invert-[1]"
+            }
+          }
+        ],
+        "longTasks": [
+          {
+            "start": 507.8000000715256,
+            "duration": 548
+          },
+          {
+            "start": 1170.6000000238419,
+            "duration": 835
+          },
+          {
+            "start": 2075.399999976158,
+            "duration": 3072
+          },
+          {
+            "start": 5170.700000047684,
+            "duration": 309
+          },
+          {
+            "start": 5504.899999976158,
+            "duration": 839
+          },
+          {
+            "start": 6349,
+            "duration": 64
+          },
+          {
+            "start": 6470.100000023842,
+            "duration": 525
+          },
+          {
+            "start": 7031.700000047684,
+            "duration": 1171
+          },
+          {
+            "start": 8299.700000047684,
+            "duration": 55
+          },
+          {
+            "start": 8358.899999976158,
+            "duration": 886
+          },
+          {
+            "start": 9307.700000047684,
+            "duration": 479
+          },
+          {
+            "start": 9788.700000047684,
+            "duration": 350
+          },
+          {
+            "start": 10145.200000047684,
+            "duration": 544
+          },
+          {
+            "start": 10689.200000047684,
+            "duration": 1642
+          },
+          {
+            "start": 12359.300000071526,
+            "duration": 643
+          },
+          {
+            "start": 13351.600000023842,
+            "duration": 718
+          },
+          {
+            "start": 14079.700000047684,
+            "duration": 57
+          },
+          {
+            "start": 15296.200000047684,
+            "duration": 78
+          },
+          {
+            "start": 15519.200000047684,
+            "duration": 451
+          },
+          {
+            "start": 15997.300000071526,
+            "duration": 51
+          },
+          {
+            "start": 16460.200000047684,
+            "duration": 70
+          },
+          {
+            "start": 17416.700000047684,
+            "duration": 66
+          },
+          {
+            "start": 17633.100000023842,
+            "duration": 438
+          },
+          {
+            "start": 18084.800000071526,
+            "duration": 114
+          }
+        ],
+        "events": [
+          {
+            "type": "DOMContentLoaded",
+            "time": 5394.200000047684
+          },
+          {
+            "type": "load",
+            "time": 14203
+          }
+        ],
+        "samples": [
+          {
+            "time": 1162.2000000476837,
+            "slide": 0
+          },
+          {
+            "time": 9301.600000023842,
+            "slide": 0
+          },
+          {
+            "time": 13045.100000023842,
+            "slide": 1
+          }
+        ],
+        "viewport": {
+          "width": 412,
+          "height": 823
+        },
+        "logo": {
+          "src": "http://127.0.0.1:4323/images/kamandalu-logo.png",
+          "currentSrc": "http://127.0.0.1:4323/images/kamandalu-logo.png",
+          "loading": "eager",
+          "priority": "high",
+          "width": 144,
+          "height": 83.5625,
+          "naturalWidth": 653,
+          "naturalHeight": 379,
+          "objectFit": "fill",
+          "resource": [
+            {
+              "start": 62.200000047683716,
+              "responseEnd": 145.5,
+              "duration": 83.29999995231628,
+              "transferSize": 18255
+            }
+          ]
+        },
+        "hero": {
+          "src": "https://cdn.sanity.io/images/6go5cl4m/production/0396747df20f3b51e91c200a7c8deaf204a3f421-1920x1080.jpg",
+          "currentSrc": "https://cdn.sanity.io/images/6go5cl4m/production/0396747df20f3b51e91c200a7c8deaf204a3f421-1920x1080.jpg",
+          "loading": "eager",
+          "priority": "high",
+          "width": 412,
+          "height": 823,
+          "naturalWidth": 1920,
+          "naturalHeight": 1080,
+          "objectFit": "cover",
+          "resource": [
+            {
+              "start": 62.700000047683716,
+              "responseEnd": 616.3999999761581,
+              "duration": 553.6999999284744,
+              "transferSize": 0
+            }
+          ]
+        },
+        "hydratedIslands": 0
+      },
+      {
+        "mode": "blocked",
+        "lcp": [
+          {
+            "start": 252,
+            "render": 252,
+            "load": 164.29999995231628,
+            "size": 12096,
+            "url": "http://127.0.0.1:4323/images/kamandalu-logo.png",
+            "element": {
+              "tag": "IMG",
+              "id": "navbar-logo-full",
+              "class": "w-36 h-auto transition-all duration-300 logo brightness-0 invert-[1]"
+            }
+          }
+        ],
+        "longTasks": [
+          {
+            "start": 543.0999999046326,
+            "duration": 63
+          },
+          {
+            "start": 1555.7999999523163,
+            "duration": 290
+          },
+          {
+            "start": 1890.8999999761581,
+            "duration": 86
+          }
+        ],
+        "events": [
+          {
+            "type": "DOMContentLoaded",
+            "time": 1946
+          },
+          {
+            "type": "load",
+            "time": 3586.899999976158
+          }
+        ],
+        "samples": [
+          {
+            "time": 1088.1999999284744,
+            "slide": 0
+          },
+          {
+            "time": 5740.099999904633,
+            "slide": 0
+          },
+          {
+            "time": 12109.699999928474,
+            "slide": 1
+          }
+        ],
+        "viewport": {
+          "width": 412,
+          "height": 823
+        },
+        "logo": {
+          "src": "http://127.0.0.1:4323/images/kamandalu-logo.png",
+          "currentSrc": "http://127.0.0.1:4323/images/kamandalu-logo.png",
+          "loading": "eager",
+          "priority": "high",
+          "width": 144,
+          "height": 83.5625,
+          "naturalWidth": 653,
+          "naturalHeight": 379,
+          "objectFit": "fill",
+          "resource": [
+            {
+              "start": 58.89999997615814,
+              "responseEnd": 117.5,
+              "duration": 58.60000002384186,
+              "transferSize": 18255
+            }
+          ]
+        },
+        "hero": {
+          "src": "https://cdn.sanity.io/images/6go5cl4m/production/0396747df20f3b51e91c200a7c8deaf204a3f421-1920x1080.jpg",
+          "currentSrc": "https://cdn.sanity.io/images/6go5cl4m/production/0396747df20f3b51e91c200a7c8deaf204a3f421-1920x1080.jpg",
+          "loading": "eager",
+          "priority": "high",
+          "width": 412,
+          "height": 823,
+          "naturalWidth": 1920,
+          "naturalHeight": 1080,
+          "objectFit": "cover",
+          "resource": [
+            {
+              "start": 61.5,
+              "responseEnd": 487.5,
+              "duration": 426,
+              "transferSize": 0
+            }
+          ]
+        },
+        "hydratedIslands": 0
+      }
+    ]
+  },
+  "decisions": {
+    "retainPhase1": true,
+    "largeTbtRegressionReproduced": false,
+    "phase2": "Technically reasonable for scoped bandwidth reduction; prioritize tracking audit if the goal is score/TBT. Not implemented."
+  },
+  "rawArtifacts": ".cache/offer-investigation/"
+}

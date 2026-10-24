@@ -4,6 +4,8 @@ import Layout from '../../layouts/Base.astro';
 import client from '../../lib/sanityClient';
 import { getLocale } from '../../utils/getLocale';
 import OptimizedImage from '../../components/OptimizedImage.astro';
+import SupportingImage from '../../components/SupportingImage.astro';
+import { getSupportingImage } from '../../utils/supportingImages.js';
 import { toHTML } from '@portabletext/to-html';
 
 // Generate static paths for supported languages
@@ -34,7 +36,7 @@ function shuffleArray(array) {
 }
 
 const rawGallery = await client.fetch(`*[_type == "gallery"]{
-  image { asset->{url} },
+  image { ..., asset->{ _id, url, metadata { dimensions } } },
   imageAlt,
   category
 }`);
@@ -86,19 +88,22 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
   <!-- Gallery Grid -->
   <div id="gallery-grid" class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4">
     {galleryItems.map((gallery, i) => {
-      const thumb = gallery.image.asset.url;
-      const full = thumb;
+      const full = getSupportingImage(gallery.image, { layout: 'gallery-lightbox' });
       const alt = gallery.imageAlt?.[locale] ?? 'Gallery';
 
       return (
         <div
           class="gallery-item cursor-pointer group aspect-[4/3] overflow-hidden relative"
           data-category={gallery.category}
-          data-full={full}
+          data-full={full.src}
+          data-srcset={full.srcset}
+          data-sizes={full.sizes}
           key={`gallery-${i}`}
         >
-          <OptimizedImage
-            src={thumb}
+          <SupportingImage
+            image={gallery.image}
+            layout="gallery-thumb"
+            quality={78}
             alt={alt}
             width={800}
             height={600}
@@ -114,7 +119,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
   <div id="image-modal" class="fixed inset-0 bg-black/90 z-50 hidden flex items-center justify-center">
     <div class="relative max-w-6xl mx-auto">
       <button id="modal-close" class="absolute top-4 right-4 text-white text-2xl z-10">✕</button>
-      <img id="modal-image" src="" class="max-h-[80vh] mx-auto rounded shadow-xl" />
+      <img id="modal-image" src="" decoding="async" class="max-h-[80vh] mx-auto rounded shadow-xl" />
     </div>
   </div>
 </section>
@@ -144,6 +149,8 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
     items.forEach(item => {
       item.addEventListener("click", () => {
         const fullSrc = item.getAttribute("data-full");
+        modalImg.sizes = item.dataset.sizes ?? "";
+        modalImg.srcset = item.dataset.srcset ?? "";
         modalImg.src = fullSrc;
         modal.classList.remove("hidden");
         modal.classList.add("flex");

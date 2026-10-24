@@ -3,6 +3,7 @@ import Layout from '../../layouts/Base.astro';
 import client from '../../lib/sanityClient';
 import { getLocale } from '../../utils/getLocale';
 import OptimizedImage from '../../components/OptimizedImage.astro';
+import SupportingImage from '../../components/SupportingImage.astro';
 import { toHTML } from '@portabletext/to-html';
 
 // Generate static paths for each language
@@ -44,9 +45,7 @@ const weddingVenue = await client.fetch(`*[_type == "weddingVenue"] | order(orde
   "slug": slug.current,
   title,
   excerpt,
-  secondImage {
-    asset->{url}
-  },
+  secondImage { ..., asset->{ _id, url, metadata { dimensions } } },
   secondImageAlt
 }`);
 
@@ -140,8 +139,9 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {weddingVenue.map((data) => (
         <div class="overflow-hidden flex flex-col h-full">
-          <OptimizedImage
-            src={data.secondImage?.asset?.url ?? ''}
+          <SupportingImage
+            image={data.secondImage}
+            layout="wedding-grid"
             alt={data.secondImageAlt?.[locale] ?? ''}
             width={800}
             height={600}

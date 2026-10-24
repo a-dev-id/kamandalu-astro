@@ -4,6 +4,9 @@ import client from '../../lib/sanityClient';
 import { getLocale } from '../../utils/getLocale';
 import { translations } from '../../i18n/translations.js';
 import OptimizedImage from '../../components/OptimizedImage.astro';
+import SupportingImage from '../../components/SupportingImage.astro';
+import OfferCarouselImage from '../../components/OfferCarouselImage.astro';
+import { getHomepageHeroImageUrl } from '../../utils/homepageHeroImages.js';
 import { toHTML } from '@portabletext/to-html';
 
 import PopupBanner from '../../components/PopupBanner.astro';
@@ -37,13 +40,13 @@ const [
   culinaryDetails,       // Section details for culinary carousel
   experienceDetails      // Section details for experience carousel
 ] = await Promise.all([
-  client.fetch(`*[_type == "villa"] | order(order asc){ "slug": slug.current, title, excerpt, secondImageAlt, secondImage { asset-> { url } } }`),
-  client.fetch(`*[_type == "offer"] | order(orderNumber asc){ "slug": slug.current, title, excerpt, mainImageAlt, mainImage { asset-> { url } } }`),
-  client.fetch(`*[_type == "wellnessVenue"] | order(order asc){ "slug": slug.current, "bookingLink": coalesce(booking_link, bookingLink), title, excerpt, secondImageAlt, secondImage { asset-> { url } } }`),
-  client.fetch(`*[_type == "wellnessExperience"] | order(order asc){ "slug": slug.current, "bookingLink": coalesce(booking_link, bookingLink), title, excerpt, secondImageAlt, secondImage { asset-> { url } } }`),
-  client.fetch(`*[_type == "experienceUnique" && category=="culinaryJourney"] | order(order asc){ "slug": slug.current, "bookingLink": coalesce(booking_link, bookingLink), title, excerpt, secondImageAlt, secondImage { asset-> { url } } }`),
-  client.fetch(`*[_type == "experienceCategory" && defined(slug.current) && isActive != false] | order(order asc){ "slug": slug.current, title, excerpt, mainImageAlt, mainImage { asset-> { url } } }`),
-  client.fetch(`*[_type == "diningVenue"] | order(order asc){ "slug": slug.current, title, excerpt, secondImageAlt, secondImage { asset-> { url } } }`),
+  client.fetch(`*[_type == "villa"] | order(order asc){ "slug": slug.current, title, excerpt, secondImageAlt, secondImage { ..., asset->{ _id, url, metadata { dimensions } } } }`),
+  client.fetch(`*[_type == "offer"] | order(orderNumber asc){ "slug": slug.current, title, excerpt, mainImageAlt, mainImage { ..., asset-> { _id, url, metadata { dimensions } } } }`),
+  client.fetch(`*[_type == "wellnessVenue"] | order(order asc){ "slug": slug.current, "bookingLink": coalesce(booking_link, bookingLink), title, excerpt, secondImageAlt, secondImage { ..., asset->{ _id, url, metadata { dimensions } } } }`),
+  client.fetch(`*[_type == "wellnessExperience"] | order(order asc){ "slug": slug.current, "bookingLink": coalesce(booking_link, bookingLink), title, excerpt, secondImageAlt, secondImage { ..., asset->{ _id, url, metadata { dimensions } } } }`),
+  client.fetch(`*[_type == "experienceUnique" && category=="culinaryJourney"] | order(order asc){ "slug": slug.current, "bookingLink": coalesce(booking_link, bookingLink), title, excerpt, secondImageAlt, secondImage { ..., asset->{ _id, url, metadata { dimensions } } } }`),
+  client.fetch(`*[_type == "experienceCategory" && defined(slug.current) && isActive != false] | order(order asc){ "slug": slug.current, title, excerpt, mainImageAlt, mainImage { ..., asset->{ _id, url, metadata { dimensions } } } }`),
+  client.fetch(`*[_type == "diningVenue"] | order(order asc){ "slug": slug.current, title, excerpt, secondImageAlt, secondImage { ..., asset->{ _id, url, metadata { dimensions } } } }`),
   client.fetch(`*[_type == "homeSlider"] | order(order asc){ title, image { asset-> { url } } }`),
   // Fetching page details for the main page
   client.fetch(`*[_type == "page" && _id == "6b81d880-cd1c-4993-a985-a74eda7f419e"][0]{ title, subtitle, description, metaTitle, metaDescription, metaKeywords, mainImage { asset-> { url } } }`),
@@ -52,11 +55,11 @@ const [
   // Fetching section details for offers carousel
   client.fetch(`*[_type == "settingHome" && _id == "d005d37f-034b-4a80-9cf3-1886e310e5e3"][0]{ title, description }`),
   // Fetching section details for wellness carousel
-  client.fetch(`*[_type == "settingHome" && _id == "3e45dc06-f49d-48fc-abdc-7601afce5048"][0]{ title, description, mainImageAlt, mainImage { asset-> { url } } }`),
+  client.fetch(`*[_type == "settingHome" && _id == "3e45dc06-f49d-48fc-abdc-7601afce5048"][0]{ title, description, mainImageAlt, mainImage { ..., asset->{ _id, url, metadata { dimensions } } } }`),
   // Fetching section details for culinary carousel
-  client.fetch(`*[_type == "settingHome" && _id == "d4f9bd9f-4038-40ad-9c56-201d19869720"][0]{ title, description, mainImageAlt, mainImage { asset-> { url } } }`),
+  client.fetch(`*[_type == "settingHome" && _id == "d4f9bd9f-4038-40ad-9c56-201d19869720"][0]{ title, description, mainImageAlt, mainImage { ..., asset->{ _id, url, metadata { dimensions } } } }`),
   // Fetching section details for experience carousel
-  client.fetch(`*[_type == "settingHome" && _id == "279d6034-3f91-4da3-bf88-8a9090afc556"][0]{ title, description, mainImageAlt, mainImage { asset-> { url } } }`)
+  client.fetch(`*[_type == "settingHome" && _id == "279d6034-3f91-4da3-bf88-8a9090afc556"][0]{ title, description, mainImageAlt, mainImage { ..., asset->{ _id, url, metadata { dimensions } } } }`)
     
 ]);
 
@@ -111,6 +114,9 @@ const structuredData = locale === 'en' ? {
     },
   ],
 } : undefined;
+
+// Reuse exact originals already requested by this page's protected hero slider.
+const supportingReuseUrls = homeSliders.map(slide => slide.image?.asset?.url).filter(Boolean);
 ---
 
 <Layout {title} {description} {url} {ogImage} {keywords} {structuredData}>
@@ -121,7 +127,7 @@ const structuredData = locale === 'en' ? {
       {homeSliders.map((homeSlider, i) => (
       <div class={`carousel-slide w-full h-full absolute inset-0 transition-opacity duration-1000 ${i === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
         <OptimizedImage
-        src={homeSlider.image.asset.url}
+        src={getHomepageHeroImageUrl(homeSlider.image.asset.url)}
         alt={homeSlider.title?.[locale] ?? homeSlider.title?.en ?? ''}
         width={1600}
         height={900}
@@ -258,8 +264,10 @@ const structuredData = locale === 'en' ? {
             <div class="splide__slide transition-transform duration-500 ease-in-out" role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${villas.length}`}>
               <div class="bg-white overflow-hidden flex flex-col h-full">
                 {/* Villa Image */}
-                <OptimizedImage
-                  src={villa.secondImage?.asset?.url ?? ''}
+                <SupportingImage
+                  reuseUrls={supportingReuseUrls}
+                  image={villa.secondImage}
+                  layout="home-two"
                   alt={villa.secondImageAlt?.[locale] ?? 'Villa image'}
                   width={800}
                   height={600}
@@ -308,13 +316,9 @@ const structuredData = locale === 'en' ? {
             <div class="splide__slide transition-transform duration-500 ease-in-out" role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${offers.length}`}>
               <div class="bg-white overflow-hidden flex flex-col h-full">
                 {/* Offer Image */}
-                <OptimizedImage
-                  src={offer.mainImage.asset.url}
+                <OfferCarouselImage
+                  image={offer.mainImage}
                   alt={offer.mainImageAlt?.[locale]}
-                  width={800}
-                  height={600}
-                  loading="lazy"
-                  className="w-full h-auto aspect-[4/3] md:aspect-[3/2] transition duration-500"
                 />
                 {/* Offer Info */}
                 <div class="py-4 md:py-6 flex flex-col flex-1">
@@ -346,7 +350,7 @@ const structuredData = locale === 'en' ? {
   <!-- WELLNESS CAROUSEL SECTION -->
   <section class="container mx-auto px-4 xl:px-10 2xl:px-0 pt-24">
     {/* Section image for wellness carousel */}
-    <img src={wellnessDetails?.mainImage?.asset?.url} width="800" height="450" alt={wellnessDetails?.mainImageAlt?.[locale] ?? ''} loading="lazy" class="w-full h-auto object-cover aspect-[16/7] 2] mb-10 md:mb-20" />
+    <SupportingImage reuseUrls={supportingReuseUrls} image={wellnessDetails?.mainImage} layout="section-banner" width="800" height="450" alt={wellnessDetails?.mainImageAlt?.[locale] ?? ''} loading="lazy" className="w-full h-auto object-cover aspect-[16/7] 2] mb-10 md:mb-20" />
     {/* Section title and description */}
     <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
       <h2 class="font-title text-2xl md:text-3xl uppercase mb-4 md:mb-6 tracking-widest font-light">{wellnessDetails?.title?.[locale] ?? ''}</h2>
@@ -361,8 +365,10 @@ const structuredData = locale === 'en' ? {
             <div class="splide__slide transition-transform duration-500 ease-in-out" role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${wellnessVenue.length}`}>
               <div class="bg-white overflow-hidden flex flex-col h-full">
                 {/* Wellness venue image */}
-                <OptimizedImage
-                  src={venue.secondImage.asset.url}
+                <SupportingImage
+                  reuseUrls={supportingReuseUrls}
+                  image={venue.secondImage}
+                  layout="home-two"
                   alt={venue.secondImageAlt?.[locale]}
                   width={800}
                   height={600}
@@ -384,8 +390,10 @@ const structuredData = locale === 'en' ? {
             <div class="splide__slide transition-transform duration-500 ease-in-out" role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${wellnessExperience.length}`}>
               <div class="bg-white overflow-hidden flex flex-col h-full">
                 {/* Wellness experiences image */}
-                <OptimizedImage
-                  src={experiences.secondImage.asset.url}
+                <SupportingImage
+                  reuseUrls={supportingReuseUrls}
+                  image={experiences.secondImage}
+                  layout="home-two"
                   alt={experiences.secondImageAlt?.[locale]}
                   width={800}
                   height={600}
@@ -422,7 +430,7 @@ const structuredData = locale === 'en' ? {
   <!-- CULINARY CAROUSEL SECTION -->
   <section class="container mx-auto px-4 xl:px-10 2xl:px-0 pt-24">
     {/* Section image for culinary carousel */}
-    <img src={culinaryDetails?.mainImage?.asset?.url} width="800" height="450" alt={culinaryDetails?.mainImageAlt?.[locale] ?? ''} loading="lazy" class="w-full h-auto object-cover aspect-[16/7] 2] mb-10 md:mb-20" />
+    <SupportingImage reuseUrls={supportingReuseUrls} image={culinaryDetails?.mainImage} layout="section-banner" width="800" height="450" alt={culinaryDetails?.mainImageAlt?.[locale] ?? ''} loading="lazy" className="w-full h-auto object-cover aspect-[16/7] 2] mb-10 md:mb-20" />
     {/* Section title and description */}
     <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
       <h2 class="font-title text-2xl md:text-3xl uppercase mb-4 md:mb-6 tracking-widest font-light">{culinaryDetails?.title?.[locale] ?? ''}</h2>
@@ -437,8 +445,10 @@ const structuredData = locale === 'en' ? {
             <div class="splide__slide transition-transform duration-500 ease-in-out" role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${diningVenue.length}`}>
               <div class="bg-white overflow-hidden flex flex-col h-full">
                 {/* Dining experience image */}
-                <OptimizedImage
-                  src={dining.secondImage.asset.url}
+                <SupportingImage
+                  reuseUrls={supportingReuseUrls}
+                  image={dining.secondImage}
+                  layout="home-three"
                   alt={dining.secondImageAlt?.[locale]}
                   width={800}
                   height={600}
@@ -475,7 +485,7 @@ const structuredData = locale === 'en' ? {
   <!-- EXPERIENCE CAROUSEL SECTION -->
   <section class="container mx-auto px-4 xl:px-10 2xl:px-0 pt-24">
     <!-- Section image for experience carousel -->
-    <img src={experienceDetails?.mainImage?.asset?.url} width="800" height="450" alt={experienceDetails?.mainImageAlt?.[locale] ?? ''} loading="lazy" class="w-full h-auto object-cover aspect-[16/7] 2] mb-10 md:mb-20" />
+    <SupportingImage reuseUrls={supportingReuseUrls} image={experienceDetails?.mainImage} layout="section-banner" width="800" height="450" alt={experienceDetails?.mainImageAlt?.[locale] ?? ''} loading="lazy" className="w-full h-auto object-cover aspect-[16/7] 2] mb-10 md:mb-20" />
     <!-- Section title and description -->
     <div class="text-center px-2 sm:px-6 md:px-8 mx-auto">
       <h2 class="font-title text-2xl md:text-3xl uppercase mb-4 md:mb-6 tracking-widest font-light">{experienceDetails?.title?.[locale] ?? ''}</h2>
@@ -490,8 +500,10 @@ const structuredData = locale === 'en' ? {
             <div class="splide__slide transition-transform duration-500 ease-in-out flex h-auto" role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${experienceCategories.length}`}>
               <div class="bg-white overflow-hidden flex flex-col h-full">
                 {/* Experience image */}
-                <OptimizedImage
-                  src={category.mainImage?.asset?.url ?? ''}
+                <SupportingImage
+                  reuseUrls={supportingReuseUrls}
+                  image={category.mainImage}
+                  layout="home-three"
                   alt={category.mainImageAlt?.[locale] ?? category.title?.[locale] ?? ''}
                   width={800}
                   height={600}
@@ -715,9 +727,7 @@ const structuredData = locale === 'en' ? {
 
   <!-- Splide Carousels (Villas, Offers, Wellness, Culinary, Experience) -->
   <script>
-    // Import Splide and its CSS
-    import "@splidejs/splide/css";
-    import Splide from "@splidejs/splide";
+    // Import Splide and its CSS    import Splide from "@splidejs/splide";
 
     // --- SPLIDE CAROUSEL INITIALIZATION FOR EACH SECTION ---
     [

@@ -3,6 +3,7 @@ import Layout from '../../layouts/Base.astro';
 import client from '../../lib/sanityClient';
 import { getLocale } from '../../utils/getLocale';
 import OptimizedImage from '../../components/OptimizedImage.astro';
+import SupportingImage from '../../components/SupportingImage.astro';
 import { toHTML } from '@portabletext/to-html';
 
 // Generate static paths for each language
@@ -52,9 +53,7 @@ const wellnessExperiences = await client.fetch(`*[_type == "wellnessExperience"]
   "bookingLink": coalesce(booking_link, bookingLink),
   title,
   excerpt,
-  secondImage {
-    asset->{url}
-  },
+  secondImage { ..., asset->{ _id, url, metadata { dimensions } } },
   secondImageAlt
 }`);
 
@@ -64,9 +63,7 @@ const venues = await client.fetch(`*[_type == "wellnessVenue"] | order(order asc
   "bookingLink": coalesce(booking_link, bookingLink),
   title,
   excerpt,
-  secondImage {
-    asset->{url}
-  },
+  secondImage { ..., asset->{ _id, url, metadata { dimensions } } },
   secondImageAlt
 }`);
 
@@ -98,6 +95,9 @@ const ogImage =
   pageDetails.mainImage?.asset?.url ??
   '';
 const keywords = pageDetails.metaKeywords?.[locale] ?? '';
+
+// Reuse exact originals already requested by this page's protected hero slider.
+const supportingReuseUrls = spaHeaderSlides.map(slide => slide.image?.asset?.url).filter(Boolean);
 ---
 
 <Layout {title} {description} {url} {ogImage} {keywords}>
@@ -169,8 +169,10 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
               aria-label={`${i + 1} of ${venues.length}`}
             >
               <div class="bg-white overflow-hidden flex flex-col h-full">
-                <OptimizedImage
-                  src={data.secondImage?.asset?.url ?? ''}
+                <SupportingImage
+                  reuseUrls={supportingReuseUrls}
+                  image={data.secondImage}
+                  layout="carousel-two"
                   alt={data.secondImageAlt?.[locale] ?? ''}
                   width={800}
                   height={600}
@@ -246,8 +248,10 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
               aria-label={`${i + 1} of ${wellnessExperiences.length}`}
             >
               <div class="bg-white overflow-hidden flex flex-col h-full">
-                <OptimizedImage
-                  src={data.secondImage?.asset?.url ?? ''}
+                <SupportingImage
+                  reuseUrls={supportingReuseUrls}
+                  image={data.secondImage}
+                  layout="wide-carousel-three"
                   alt={data.secondImageAlt?.[locale] ?? ''}
                   width={800}
                   height={600}
@@ -355,9 +359,7 @@ const keywords = pageDetails.metaKeywords?.[locale] ?? '';
   </script>
 
   {/* Splide carousel initialization script */}
-  <script>
-    import "@splidejs/splide/css";
-    import Splide from "@splidejs/splide";
+  <script>    import Splide from "@splidejs/splide";
 
     [
       {

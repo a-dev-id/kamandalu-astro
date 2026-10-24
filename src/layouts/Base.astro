@@ -43,6 +43,7 @@ const serializedStructuredData = structuredData
     {serializedStructuredData && (
       <script type="application/ld+json" is:inline set:html={serializedStructuredData}></script>
     )}
+    <link rel="preload" href="/fonts/MrEavesModOTReg.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="icon" href="/images/favicon/ms-icon-144x144.png" />
     <link rel="preload" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
     <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" /></noscript>

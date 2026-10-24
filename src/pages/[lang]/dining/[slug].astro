@@ -4,6 +4,7 @@ import Layout from '../../../layouts/Base.astro';
 import client from '../../../lib/sanityClient';
 import { getLocale } from '../../../utils/getLocale';
 import OptimizedImage from '../../../components/OptimizedImage.astro';
+import SupportingImage from '../../../components/SupportingImage.astro';
 import { toHTML } from '@portabletext/to-html';
 
 // Generate static paths for each language and slug
@@ -41,9 +42,7 @@ const venue = await client.fetch(`*[_type == "diningVenue" && slug.current == $s
   metaTitle,
   metaDescription,
   metaKeywords,
-  gallery[] {
-    asset->{url}
-  },
+  gallery[] { ..., asset->{ _id, url, metadata { dimensions } } },
 }`, { slug });
 
 // Prepare dining header slider images
@@ -80,6 +79,9 @@ const ogImage =
   venue.mainImage?.asset?.url ??
   '';
 const keywords = venue.metaKeywords?.[locale] ?? '';
+
+// Reuse exact originals already requested by this page's protected hero slider.
+const supportingReuseUrls = diningDetailHeaderSlides.map(slide => slide.image?.asset?.url).filter(Boolean);
 ---
 
 <Layout {title} {description} {url} {ogImage} {keywords}>
@@ -244,8 +246,10 @@ const keywords = venue.metaKeywords?.[locale] ?? '';
                   aria-label={`${i + 1} of ${venue.gallery.length}`}
                 >
                   <div class="bg-white overflow-hidden flex flex-col h-full">
-                    <OptimizedImage
-                      src={image.asset.url}
+                    <SupportingImage
+                      reuseUrls={supportingReuseUrls}
+                      image={image}
+                      layout="dining-gallery"
                       alt={`${venue.mainImageAlt?.[locale] ?? ''} - ${i + 1}`}
                       width={800}
                       height={600}
@@ -369,9 +373,7 @@ const keywords = venue.metaKeywords?.[locale] ?? '';
   </style>
 
   {/* Splide gallery slider initialization */}
-  <script>
-    import "@splidejs/splide/css";
-    import Splide from "@splidejs/splide";
+  <script>    import Splide from "@splidejs/splide";
 
     [
       {

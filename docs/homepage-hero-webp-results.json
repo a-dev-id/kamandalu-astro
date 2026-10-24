@@ -1,0 +1,2647 @@
+{
+  "date": "2026-10-23T07:05:36.431Z",
+  "totals": {
+    "original": 2784528,
+    "webpCandidates": 2732892,
+    "active": 2741334,
+    "q95": 4957428
+  },
+  "activeSavings": 43194,
+  "activeSavingsPercent": 1.5512144248504594,
+  "images": [
+    {
+      "index": 0,
+      "name": "hero-01",
+      "title": {
+        "_type": "localeString",
+        "en": "Kamandalu Aerial View"
+      },
+      "documentId": "ed89fd43-c9de-4812-a23a-b8fdd04b2a04",
+      "order": 1,
+      "originalResolution": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.7777777777777777,
+        "height": 1080,
+        "width": 1920
+      },
+      "originalMime": "image/jpeg",
+      "authoredCrop": null,
+      "authoredHotspot": null,
+      "originalTag": "<img src=\"https://cdn.sanity.io/images/6go5cl4m/production/0396747df20f3b51e91c200a7c8deaf204a3f421-1920x1080.jpg\" alt=\"Kamandalu Aerial View\" width=\"1600\" height=\"900\" loading=\"eager\" fetchpriority=\"high\" class=\"object-cover w-full h-full\">",
+      "loading": "eager",
+      "fetchpriority": "high",
+      "cropBehavior": "Asset URL only; authored crop/hotspot are not applied by the existing renderer. CSS object-fit: cover; centered object-position.",
+      "variants": {
+        "original": {
+          "url": "https://cdn.sanity.io/images/6go5cl4m/production/0396747df20f3b51e91c200a7c8deaf204a3f421-1920x1080.jpg",
+          "file": ".cache/homepage-hero-webp/assets/hero-01-original.jpg",
+          "bytes": 374460,
+          "contentType": "image/jpeg",
+          "contentLength": "374460",
+          "contentEncoding": null,
+          "sha256": "6aba283e1f8d36c87c8bff93570faf922bfe997781d9a1c2cb38e25befa4171a"
+        },
+        "webp": {
+          "url": "https://cdn.sanity.io/images/6go5cl4m/production/0396747df20f3b51e91c200a7c8deaf204a3f421-1920x1080.jpg?fm=webp&q=81",
+          "file": ".cache/homepage-hero-webp/assets/hero-01-webp.webp",
+          "bytes": 366018,
+          "contentType": "image/webp",
+          "quality": 81,
+          "sha256": "bc18b555448c74fb552589791bcd5010b5b86a596e37be0d8644e2ab0ce4fead"
+        }
+      },
+      "quality": 81,
+      "tested": [
+        {
+          "quality": 95,
+          "bytes": 702216
+        },
+        {
+          "quality": 94,
+          "bytes": 659414
+        },
+        {
+          "quality": 93,
+          "bytes": 628820
+        },
+        {
+          "quality": 92,
+          "bytes": 593298
+        },
+        {
+          "quality": 91,
+          "bytes": 560476
+        },
+        {
+          "quality": 90,
+          "bytes": 539978
+        },
+        {
+          "quality": 89,
+          "bytes": 516784
+        },
+        {
+          "quality": 88,
+          "bytes": 493070
+        },
+        {
+          "quality": 87,
+          "bytes": 464936
+        },
+        {
+          "quality": 86,
+          "bytes": 450184
+        },
+        {
+          "quality": 85,
+          "bytes": 437052
+        },
+        {
+          "quality": 84,
+          "bytes": 416946
+        },
+        {
+          "quality": 83,
+          "bytes": 398160
+        },
+        {
+          "quality": 82,
+          "bytes": 389384
+        },
+        {
+          "quality": 81,
+          "bytes": 366018
+        }
+      ],
+      "keepOriginal": true,
+      "retentionReason": "Reuse original JPG required by supporting card; avoid duplicate download.",
+      "assessment": "Slight smoothing in dense foliage at 1:1; aerial buildings and color balance remain close. Original JPG retained in the actual page.",
+      "comparison": {
+        "index": 0,
+        "name": "hero-01",
+        "originalDimensions": [
+          1920,
+          1080
+        ],
+        "webpDimensions": [
+          1920,
+          1080
+        ],
+        "rgbMeanAbsoluteDifference": 2.773566261574074,
+        "rgbRootMeanSquareDifference": 3.7444664892127757,
+        "rgb95PercentileAbsoluteDifference": 8,
+        "maximumChannelDifference": 39,
+        "meanSignedRgbShift": [
+          -0.11345920138888889,
+          0.25678144290123456,
+          -0.19776523919753086
+        ],
+        "comparisons": {
+          "native": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp/comparison/hero-01-native-side-by-side.png",
+          "detail": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp/comparison/hero-01-detail-side-by-side.png",
+          "desktop": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp/comparison/hero-01-desktop-side-by-side.png",
+          "mobile": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp/comparison/hero-01-mobile-side-by-side.png"
+        }
+      },
+      "q95": {
+        "url": "https://cdn.sanity.io/images/6go5cl4m/production/0396747df20f3b51e91c200a7c8deaf204a3f421-1920x1080.jpg?fm=webp&q=95",
+        "file": ".cache/homepage-hero-webp-q95/assets/hero-01-webp-q95.webp",
+        "bytes": 702216,
+        "contentType": "image/webp",
+        "contentLength": "702216",
+        "contentEncoding": null,
+        "sha256": "fcafba64788f5faae01b8e24c5df8a08544bdf2658f1812aac3cb0bfd067cd07"
+      }
+    },
+    {
+      "index": 1,
+      "name": "hero-02",
+      "title": {
+        "_type": "localeString",
+        "en": "Room Details"
+      },
+      "documentId": "8e450931-4b22-4b38-a69a-52dbe2c52ef2",
+      "order": 2,
+      "originalResolution": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.7777777777777777,
+        "height": 1080,
+        "width": 1920
+      },
+      "originalMime": "image/jpeg",
+      "authoredCrop": null,
+      "authoredHotspot": null,
+      "originalTag": "<img src=\"https://cdn.sanity.io/images/6go5cl4m/production/c54ca7d9b4fce17cc4f5b6703e07df70d40f8e77-1920x1080.jpg\" alt=\"Room Details\" width=\"1600\" height=\"900\" loading=\"lazy\" fetchpriority=\"auto\" class=\"object-cover w-full h-full\">",
+      "loading": "lazy",
+      "fetchpriority": "auto",
+      "cropBehavior": "Asset URL only; authored crop/hotspot are not applied by the existing renderer. CSS object-fit: cover; centered object-position.",
+      "variants": {
+        "original": {
+          "url": "https://cdn.sanity.io/images/6go5cl4m/production/c54ca7d9b4fce17cc4f5b6703e07df70d40f8e77-1920x1080.jpg",
+          "file": ".cache/homepage-hero-webp/assets/hero-02-original.jpg",
+          "bytes": 377985,
+          "contentType": "image/jpeg",
+          "contentLength": "377985",
+          "contentEncoding": null,
+          "sha256": "27b2f16e78d595fca6dcffb09470d7c98c4e7772ead4978f79030547146eec5b"
+        },
+        "webp": {
+          "url": "https://cdn.sanity.io/images/6go5cl4m/production/c54ca7d9b4fce17cc4f5b6703e07df70d40f8e77-1920x1080.jpg?fm=webp&q=82",
+          "file": ".cache/homepage-hero-webp/assets/hero-02-webp.webp",
+          "bytes": 375798,
+          "contentType": "image/webp",
+          "quality": 82,
+          "sha256": "7645487944b9db2e0883b9b244fd56ddb2bfd725bea92dae0195de4041c7e2b4"
+        }
+      },
+      "quality": 82,
+      "tested": [
+        {
+          "quality": 95,
+          "bytes": 689410
+        },
+        {
+          "quality": 94,
+          "bytes": 657678
+        },
+        {
+          "quality": 93,
+          "bytes": 617234
+        },
+        {
+          "quality": 92,
+          "bytes": 578284
+        },
+        {
+          "quality": 91,
+          "bytes": 568132
+        },
+        {
+          "quality": 90,
+          "bytes": 533120
+        },
+        {
+          "quality": 89,
+          "bytes": 503902
+        },
+        {
+          "quality": 88,
+          "bytes": 487834
+        },
+        {
+          "quality": 87,
+          "bytes": 465852
+        },
+        {
+          "quality": 86,
+          "bytes": 440554
+        },
+        {
+          "quality": 85,
+          "bytes": 420264
+        },
+        {
+          "quality": 84,
+          "bytes": 405320
+        },
+        {
+          "quality": 83,
+          "bytes": 383764
+        },
+        {
+          "quality": 82,
+          "bytes": 375798
+        }
+      ],
+      "keepOriginal": false,
+      "retentionReason": null,
+      "assessment": "Subtle smoothing of fine leaves and curtain/fabric texture; glass, sunlight and overall color remain close.",
+      "comparison": {
+        "index": 1,
+        "name": "hero-02",
+        "originalDimensions": [
+          1920,
+          1080
+        ],
+        "webpDimensions": [
+          1920,
+          1080
+        ],
+        "rgbMeanAbsoluteDifference": 2.5426207240226337,
+        "rgbRootMeanSquareDifference": 3.577350756126098,
+        "rgb95PercentileAbsoluteDifference": 8,
+        "maximumChannelDifference": 46,
+        "meanSignedRgbShift": [
+          -0.013895640432098766,
+          0.12273051697530864,
+          -0.030668885030864197
+        ],
+        "comparisons": {
+          "native": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp/comparison/hero-02-native-side-by-side.png",
+          "detail": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp/comparison/hero-02-detail-side-by-side.png",
+          "desktop": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp/comparison/hero-02-desktop-side-by-side.png",
+          "mobile": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp/comparison/hero-02-mobile-side-by-side.png"
+        }
+      },
+      "q95": {
+        "url": "https://cdn.sanity.io/images/6go5cl4m/production/c54ca7d9b4fce17cc4f5b6703e07df70d40f8e77-1920x1080.jpg?fm=webp&q=95",
+        "file": ".cache/homepage-hero-webp-q95/assets/hero-02-webp-q95.webp",
+        "bytes": 689410,
+        "contentType": "image/webp",
+        "contentLength": "689410",
+        "contentEncoding": null,
+        "sha256": "e28ca671d50b04600a4db70ae22e479e18030b68a672b6dd78464baeb67f2892"
+      }
+    },
+    {
+      "index": 2,
+      "name": "hero-03",
+      "title": {
+        "_type": "localeString",
+        "en": "Photo by melanie"
+      },
+      "documentId": "c3f8351b-8ad4-4668-b71e-eab0c1ad1e45",
+      "order": 3,
+      "originalResolution": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.7777777777777777,
+        "height": 1080,
+        "width": 1920
+      },
+      "originalMime": "image/jpeg",
+      "authoredCrop": null,
+      "authoredHotspot": null,
+      "originalTag": "<img src=\"https://cdn.sanity.io/images/6go5cl4m/production/83344bd07865c8c9443339e6bf6014e29f140fb7-1920x1080.jpg\" alt=\"Photo by melanie\" width=\"1600\" height=\"900\" loading=\"lazy\" fetchpriority=\"auto\" class=\"object-cover w-full h-full\">",
+      "loading": "lazy",
+      "fetchpriority": "auto",
+      "cropBehavior": "Asset URL only; authored crop/hotspot are not applied by the existing renderer. CSS object-fit: cover; centered object-position.",
+      "variants": {
+        "original": {
+          "url": "https://cdn.sanity.io/images/6go5cl4m/production/83344bd07865c8c9443339e6bf6014e29f140fb7-1920x1080.jpg",
+          "file": ".cache/homepage-hero-webp/assets/hero-03-original.jpg",
+          "bytes": 221590,
+          "contentType": "image/jpeg",
+          "contentLength": "221590",
+          "contentEncoding": null,
+          "sha256": "a93bf41d46fc7a998cc8f22ea8e86f5a5562581f8d16b1805a7169f06420588c"
+        },
+        "webp": {
+          "url": "https://cdn.sanity.io/images/6go5cl4m/production/83344bd07865c8c9443339e6bf6014e29f140fb7-1920x1080.jpg?fm=webp&q=84",
+          "file": ".cache/homepage-hero-webp/assets/hero-03-webp.webp",
+          "bytes": 219094,
+          "contentType": "image/webp",
+          "quality": 84,
+          "sha256": "72a296bf09d95bbbbfa7b984c692e61d5a0fab9b084174206192d4ec0745c685"
+        }
+      },
+      "quality": 84,
+      "tested": [
+        {
+          "quality": 95,
+          "bytes": 408962
+        },
+        {
+          "quality": 94,
+          "bytes": 379186
+        },
+        {
+          "quality": 93,
+          "bytes": 350154
+        },
+        {
+          "quality": 92,
+          "bytes": 326772
+        },
+        {
+          "quality": 91,
+          "bytes": 315330
+        },
+        {
+          "quality": 90,
+          "bytes": 295980
+        },
+        {
+          "quality": 89,
+          "bytes": 281024
+        },
+        {
+          "quality": 88,
+          "bytes": 257578
+        },
+        {
+          "quality": 87,
+          "bytes": 249624
+        },
+        {
+          "quality": 86,
+          "bytes": 235046
+        },
+        {
+          "quality": 85,
+          "bytes": 229166
+        },
+        {
+          "quality": 84,
+          "bytes": 219094
+        }
+      ],
+      "keepOriginal": false,
+      "retentionReason": null,
+      "assessment": "Fine shirt texture and water ripples are slightly smoother; yellow boat and skin tones remain close.",
+      "comparison": {
+        "index": 2,
+        "name": "hero-03",
+        "originalDimensions": [
+          1920,
+          1080
+        ],
+        "webpDimensions": [
+          1920,
+          1080
+        ],
+        "rgbMeanAbsoluteDifference": 1.9883134002057614,
+        "rgbRootMeanSquareDifference": 2.828508509965367,
+        "rgb95PercentileAbsoluteDifference": 6,
+        "maximumChannelDifference": 34,
+        "meanSignedRgbShift": [
+          -0.1131201774691358,
+          0.20603636188271604,
+          -0.19385561342592592
+        ],
+        "comparisons": {
+          "native": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp/comparison/hero-03-native-side-by-side.png",
+          "detail": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp/comparison/hero-03-detail-side-by-side.png",
+          "desktop": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp/comparison/hero-03-desktop-side-by-side.png",
+          "mobile": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp/comparison/hero-03-mobile-side-by-side.png"
+        }
+      },
+      "q95": {
+        "url": "https://cdn.sanity.io/images/6go5cl4m/production/83344bd07865c8c9443339e6bf6014e29f140fb7-1920x1080.jpg?fm=webp&q=95",
+        "file": ".cache/homepage-hero-webp-q95/assets/hero-03-webp-q95.webp",
+        "bytes": 408962,
+        "contentType": "image/webp",
+        "contentLength": "408962",
+        "contentEncoding": null,
+        "sha256": "a58fcae389c97db3585df4cd4efc926db0e2b9b6b6a381bcf8e180b3f31d377e"
+      }
+    },
+    {
+      "index": 3,
+      "name": "hero-04",
+      "title": {
+        "_type": "localeString",
+        "en": "Forest Spa"
+      },
+      "documentId": "245d8d95-3e08-4882-af68-79ff887aee23",
+      "order": 4,
+      "originalResolution": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.7777777777777777,
+        "height": 1080,
+        "width": 1920
+      },
+      "originalMime": "image/jpeg",
+      "authoredCrop": null,
+      "authoredHotspot": null,
+      "originalTag": "<img src=\"https://cdn.sanity.io/images/6go5cl4m/production/9a869f427ef1412b048323061859f8b121aa4235-1920x1080.jpg\" alt=\"Forest Spa\" width=\"1600\" height=\"900\" loading=\"lazy\" fetchpriority=\"auto\" class=\"object-cover w-full h-full\">",
+      "loading": "lazy",
+      "fetchpriority": "auto",
+      "cropBehavior": "Asset URL only; authored crop/hotspot are not applied by the existing renderer. CSS object-fit: cover; centered object-position.",
+      "variants": {
+        "original": {
+          "url": "https://cdn.sanity.io/images/6go5cl4m/production/9a869f427ef1412b048323061859f8b121aa4235-1920x1080.jpg",
+          "file": ".cache/homepage-hero-webp/assets/hero-04-original.jpg",
+          "bytes": 250865,
+          "contentType": "image/jpeg",
+          "contentLength": "250865",
+          "contentEncoding": null,
+          "sha256": "6a587b1a9bd13107ebe26fad6294ce8d513f3779ead1008b7605328902fc36a1"
+        },
+        "webp": {
+          "url": "https://cdn.sanity.io/images/6go5cl4m/production/9a869f427ef1412b048323061859f8b121aa4235-1920x1080.jpg?fm=webp&q=84",
+          "file": ".cache/homepage-hero-webp/assets/hero-04-webp.webp",
+          "bytes": 239632,
+          "contentType": "image/webp",
+          "quality": 84,
+          "sha256": "f6892ed504a32c7c5a7c1088604e669459cbb55bfd8518a21ebaeb2165740d10"
+        }
+      },
+      "quality": 84,
+      "tested": [
+        {
+          "quality": 95,
+          "bytes": 430034
+        },
+        {
+          "quality": 94,
+          "bytes": 398340
+        },
+        {
+          "quality": 93,
+          "bytes": 374548
+        },
+        {
+          "quality": 92,
+          "bytes": 354510
+        },
+        {
+          "quality": 91,
+          "bytes": 340074
+        },
+        {
+          "quality": 90,
+          "bytes": 315412
+        },
+        {
+          "quality": 89,
+          "bytes": 302344
+        },
+        {
+          "quality": 88,
+          "bytes": 281522
+        },
+        {
+          "quality": 87,
+          "bytes": 270614
+        },
+        {
+          "quality": 86,
+          "bytes": 259722
+        },
+        {
+          "quality": 85,
+          "bytes": 251026
+        },
+        {
+          "quality": 84,
+          "bytes": 239632
+        }
+      ],
+      "keepOriginal": false,
+      "retentionReason": null,
+      "assessment": "Background vegetation and linen texture soften slightly; framing, skin tones and bright wall gradients remain close.",
+      "comparison": {
+        "index": 3,
+        "name": "hero-04",
+        "originalDimensions": [
+          1920,
+          1080
+        ],
+        "webpDimensions": [
+          1920,
+          1080
+        ],
+        "rgbMeanAbsoluteDifference": 2.094261188271605,
+        "rgbRootMeanSquareDifference": 3.095080693367588,
+        "rgb95PercentileAbsoluteDifference": 7,
+        "maximumChannelDifference": 35,
+        "meanSignedRgbShift": [
+          0.14637827932098765,
+          0.1193089313271605,
+          -0.020908082561728394
+        ],
+        "comparisons": {
+          "native": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp/comparison/hero-04-native-side-by-side.png",
+          "detail": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp/comparison/hero-04-detail-side-by-side.png",
+          "desktop": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp/comparison/hero-04-desktop-side-by-side.png",
+          "mobile": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp/comparison/hero-04-mobile-side-by-side.png"
+        }
+      },
+      "q95": {
+        "url": "https://cdn.sanity.io/images/6go5cl4m/production/9a869f427ef1412b048323061859f8b121aa4235-1920x1080.jpg?fm=webp&q=95",
+        "file": ".cache/homepage-hero-webp-q95/assets/hero-04-webp-q95.webp",
+        "bytes": 430034,
+        "contentType": "image/webp",
+        "contentLength": "430034",
+        "contentEncoding": null,
+        "sha256": "c1d1662fd80bef5000e7bffc88d8f06338aff31ff3ef8ccc2de077fad01b9d7c"
+      }
+    },
+    {
+      "index": 4,
+      "name": "hero-05",
+      "title": {
+        "_type": "localeString",
+        "en": "Forest Breakfast"
+      },
+      "documentId": "be49fea6-6c38-4b50-871c-48bfc894927d",
+      "order": 5,
+      "originalResolution": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.7777777777777777,
+        "height": 1080,
+        "width": 1920
+      },
+      "originalMime": "image/jpeg",
+      "authoredCrop": null,
+      "authoredHotspot": null,
+      "originalTag": "<img src=\"https://cdn.sanity.io/images/6go5cl4m/production/a055687869c2518bb9c7f378e67c3e399265c19a-1920x1080.jpg\" alt=\"Forest Breakfast\" width=\"1600\" height=\"900\" loading=\"lazy\" fetchpriority=\"auto\" class=\"object-cover w-full h-full\">",
+      "loading": "lazy",
+      "fetchpriority": "auto",
+      "cropBehavior": "Asset URL only; authored crop/hotspot are not applied by the existing renderer. CSS object-fit: cover; centered object-position.",
+      "variants": {
+        "original": {
+          "url": "https://cdn.sanity.io/images/6go5cl4m/production/a055687869c2518bb9c7f378e67c3e399265c19a-1920x1080.jpg",
+          "file": ".cache/homepage-hero-webp/assets/hero-05-original.jpg",
+          "bytes": 386110,
+          "contentType": "image/jpeg",
+          "contentLength": "386110",
+          "contentEncoding": null,
+          "sha256": "eabba9f0f6973aa08a89dd2bbdeefa9ef0b48f30cedf55d87b25af6f0da43a8b"
+        },
+        "webp": {
+          "url": "https://cdn.sanity.io/images/6go5cl4m/production/a055687869c2518bb9c7f378e67c3e399265c19a-1920x1080.jpg?fm=webp&q=82",
+          "file": ".cache/homepage-hero-webp/assets/hero-05-webp.webp",
+          "bytes": 382124,
+          "contentType": "image/webp",
+          "quality": 82,
+          "sha256": "40f5d67d3d507b80157b9269c7399916289096f713822cacf637c0b068c82cbc"
+        }
+      },
+      "quality": 82,
+      "tested": [
+        {
+          "quality": 95,
+          "bytes": 669726
+        },
+        {
+          "quality": 94,
+          "bytes": 638406
+        },
+        {
+          "quality": 93,
+          "bytes": 602898
+        },
+        {
+          "quality": 92,
+          "bytes": 572598
+        },
+        {
+          "quality": 91,
+          "bytes": 544240
+        },
+        {
+          "quality": 90,
+          "bytes": 518094
+        },
+        {
+          "quality": 89,
+          "bytes": 493376
+        },
+        {
+          "quality": 88,
+          "bytes": 476764
+        },
+        {
+          "quality": 87,
+          "bytes": 456114
+        },
+        {
+          "quality": 86,
+          "bytes": 438010
+        },
+        {
+          "quality": 85,
+          "bytes": 422108
+        },
+        {
+          "quality": 84,
+          "bytes": 408832
+        },
+        {
+          "quality": 83,
+          "bytes": 394020
+        },
+        {
+          "quality": 82,
+          "bytes": 382124
+        }
+      ],
+      "keepOriginal": false,
+      "retentionReason": null,
+      "assessment": "Fine foliage and floor grain soften slightly; highlights, table edges and overall brightness remain close.",
+      "comparison": {
+        "index": 4,
+        "name": "hero-05",
+        "originalDimensions": [
+          1920,
+          1080
+        ],
+        "webpDimensions": [
+          1920,
+          1080
+        ],
+        "rgbMeanAbsoluteDifference": 2.6493332047325104,
+        "rgbRootMeanSquareDifference": 3.788253788957034,
+        "rgb95PercentileAbsoluteDifference": 8,
+        "maximumChannelDifference": 40,
+        "meanSignedRgbShift": [
+          0.03311342592592593,
+          0.2075221836419753,
+          -0.07196662808641975
+        ],
+        "comparisons": {
+          "native": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp/comparison/hero-05-native-side-by-side.png",
+          "detail": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp/comparison/hero-05-detail-side-by-side.png",
+          "desktop": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp/comparison/hero-05-desktop-side-by-side.png",
+          "mobile": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp/comparison/hero-05-mobile-side-by-side.png"
+        }
+      },
+      "q95": {
+        "url": "https://cdn.sanity.io/images/6go5cl4m/production/a055687869c2518bb9c7f378e67c3e399265c19a-1920x1080.jpg?fm=webp&q=95",
+        "file": ".cache/homepage-hero-webp-q95/assets/hero-05-webp-q95.webp",
+        "bytes": 669726,
+        "contentType": "image/webp",
+        "contentLength": "669726",
+        "contentEncoding": null,
+        "sha256": "35d7211a30f1cafe7bfb5619ebbba9b467608dc6d09cc36c341d1c83ef9b5e7f"
+      }
+    },
+    {
+      "index": 5,
+      "name": "hero-06",
+      "title": {
+        "_type": "localeString",
+        "en": "Awana Pool"
+      },
+      "documentId": "72d04a1c-6f83-4316-8f3b-9ba58fb780c5",
+      "order": 6,
+      "originalResolution": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.7777777777777777,
+        "height": 1080,
+        "width": 1920
+      },
+      "originalMime": "image/jpeg",
+      "authoredCrop": null,
+      "authoredHotspot": null,
+      "originalTag": "<img src=\"https://cdn.sanity.io/images/6go5cl4m/production/41b98180e6d7fbf067c999e9c8f2938132071d3c-1920x1080.jpg\" alt=\"Awana Pool\" width=\"1600\" height=\"900\" loading=\"lazy\" fetchpriority=\"auto\" class=\"object-cover w-full h-full\">",
+      "loading": "lazy",
+      "fetchpriority": "auto",
+      "cropBehavior": "Asset URL only; authored crop/hotspot are not applied by the existing renderer. CSS object-fit: cover; centered object-position.",
+      "variants": {
+        "original": {
+          "url": "https://cdn.sanity.io/images/6go5cl4m/production/41b98180e6d7fbf067c999e9c8f2938132071d3c-1920x1080.jpg",
+          "file": ".cache/homepage-hero-webp/assets/hero-06-original.jpg",
+          "bytes": 550173,
+          "contentType": "image/jpeg",
+          "contentLength": "550173",
+          "contentEncoding": null,
+          "sha256": "ede3c46f6dfb62dbe1102b64e6f1711ca71431be8e4795dda99d94ccace74fb3"
+        },
+        "webp": {
+          "url": "https://cdn.sanity.io/images/6go5cl4m/production/41b98180e6d7fbf067c999e9c8f2938132071d3c-1920x1080.jpg?fm=webp&q=78",
+          "file": ".cache/homepage-hero-webp/assets/hero-06-webp.webp",
+          "bytes": 534622,
+          "contentType": "image/webp",
+          "quality": 78,
+          "sha256": "d1f91a83e145ea77f0dea8e1b930766011d0bc4a2ffadf0711baad2ed28a0b0a"
+        }
+      },
+      "quality": 78,
+      "tested": [
+        {
+          "quality": 95,
+          "bytes": 969822
+        },
+        {
+          "quality": 94,
+          "bytes": 932882
+        },
+        {
+          "quality": 93,
+          "bytes": 893736
+        },
+        {
+          "quality": 92,
+          "bytes": 854620
+        },
+        {
+          "quality": 91,
+          "bytes": 819048
+        },
+        {
+          "quality": 90,
+          "bytes": 791858
+        },
+        {
+          "quality": 89,
+          "bytes": 761124
+        },
+        {
+          "quality": 88,
+          "bytes": 725824
+        },
+        {
+          "quality": 87,
+          "bytes": 698058
+        },
+        {
+          "quality": 86,
+          "bytes": 676700
+        },
+        {
+          "quality": 85,
+          "bytes": 658948
+        },
+        {
+          "quality": 84,
+          "bytes": 641884
+        },
+        {
+          "quality": 83,
+          "bytes": 621308
+        },
+        {
+          "quality": 82,
+          "bytes": 603224
+        },
+        {
+          "quality": 81,
+          "bytes": 579342
+        },
+        {
+          "quality": 80,
+          "bytes": 568048
+        },
+        {
+          "quality": 79,
+          "bytes": 550398
+        },
+        {
+          "quality": 78,
+          "bytes": 534622
+        }
+      ],
+      "keepOriginal": false,
+      "retentionReason": null,
+      "assessment": "Most noticeable detail smoothing of the set in foliage and shadow texture at 1:1; pool color and composition remain close.",
+      "comparison": {
+        "index": 5,
+        "name": "hero-06",
+        "originalDimensions": [
+          1920,
+          1080
+        ],
+        "webpDimensions": [
+          1920,
+          1080
+        ],
+        "rgbMeanAbsoluteDifference": 3.6609669174382717,
+        "rgbRootMeanSquareDifference": 5.111413270431376,
+        "rgb95PercentileAbsoluteDifference": 11,
+        "maximumChannelDifference": 46,
+        "meanSignedRgbShift": [
+          -0.13131655092592592,
+          0.2789525462962963,
+          -0.20503231095679011
+        ],
+        "comparisons": {
+          "native": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp/comparison/hero-06-native-side-by-side.png",
+          "detail": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp/comparison/hero-06-detail-side-by-side.png",
+          "desktop": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp/comparison/hero-06-desktop-side-by-side.png",
+          "mobile": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp/comparison/hero-06-mobile-side-by-side.png"
+        }
+      },
+      "q95": {
+        "url": "https://cdn.sanity.io/images/6go5cl4m/production/41b98180e6d7fbf067c999e9c8f2938132071d3c-1920x1080.jpg?fm=webp&q=95",
+        "file": ".cache/homepage-hero-webp-q95/assets/hero-06-webp-q95.webp",
+        "bytes": 969822,
+        "contentType": "image/webp",
+        "contentLength": "969822",
+        "contentEncoding": null,
+        "sha256": "25f720b227724dd52e88c31b86e8932212370993e6b82c6862aac173c52012cb"
+      }
+    },
+    {
+      "index": 6,
+      "name": "hero-07",
+      "title": {
+        "_type": "localeString",
+        "en": "Lobby"
+      },
+      "documentId": "ddb80fd2-a99c-44f5-ac64-f7103851d14e",
+      "order": 7,
+      "originalResolution": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.7777777777777777,
+        "height": 1080,
+        "width": 1920
+      },
+      "originalMime": "image/jpeg",
+      "authoredCrop": null,
+      "authoredHotspot": null,
+      "originalTag": "<img src=\"https://cdn.sanity.io/images/6go5cl4m/production/c0e829a05fd45767cd6fe3cacbf4918694e2afa1-1920x1080.jpg\" alt=\"Lobby\" width=\"1600\" height=\"900\" loading=\"lazy\" fetchpriority=\"auto\" class=\"object-cover w-full h-full\">",
+      "loading": "lazy",
+      "fetchpriority": "auto",
+      "cropBehavior": "Asset URL only; authored crop/hotspot are not applied by the existing renderer. CSS object-fit: cover; centered object-position.",
+      "variants": {
+        "original": {
+          "url": "https://cdn.sanity.io/images/6go5cl4m/production/c0e829a05fd45767cd6fe3cacbf4918694e2afa1-1920x1080.jpg",
+          "file": ".cache/homepage-hero-webp/assets/hero-07-original.jpg",
+          "bytes": 293038,
+          "contentType": "image/jpeg",
+          "contentLength": "293038",
+          "contentEncoding": null,
+          "sha256": "0d084497cb5e7c00b7ae9219cad7d046f4b7773d4d70fac4f65cbeea4df48dff"
+        },
+        "webp": {
+          "url": "https://cdn.sanity.io/images/6go5cl4m/production/c0e829a05fd45767cd6fe3cacbf4918694e2afa1-1920x1080.jpg?fm=webp&q=84",
+          "file": ".cache/homepage-hero-webp/assets/hero-07-webp.webp",
+          "bytes": 287424,
+          "contentType": "image/webp",
+          "quality": 84,
+          "sha256": "b1f1efd511336675b69512d98a37903ec069ab6d163fe719e978fb6a8b03acc6"
+        }
+      },
+      "quality": 84,
+      "tested": [
+        {
+          "quality": 95,
+          "bytes": 500280
+        },
+        {
+          "quality": 94,
+          "bytes": 464302
+        },
+        {
+          "quality": 93,
+          "bytes": 436458
+        },
+        {
+          "quality": 92,
+          "bytes": 411240
+        },
+        {
+          "quality": 91,
+          "bytes": 392998
+        },
+        {
+          "quality": 90,
+          "bytes": 369730
+        },
+        {
+          "quality": 89,
+          "bytes": 353952
+        },
+        {
+          "quality": 88,
+          "bytes": 335316
+        },
+        {
+          "quality": 87,
+          "bytes": 319170
+        },
+        {
+          "quality": 86,
+          "bytes": 309224
+        },
+        {
+          "quality": 85,
+          "bytes": 299236
+        },
+        {
+          "quality": 84,
+          "bytes": 287424
+        }
+      ],
+      "keepOriginal": false,
+      "retentionReason": null,
+      "assessment": "Minor softening in woven furniture/sculptural detail; neutral interior tones and geometry remain close.",
+      "comparison": {
+        "index": 6,
+        "name": "hero-07",
+        "originalDimensions": [
+          1920,
+          1080
+        ],
+        "webpDimensions": [
+          1920,
+          1080
+        ],
+        "rgbMeanAbsoluteDifference": 2.18034481095679,
+        "rgbRootMeanSquareDifference": 3.06799281180079,
+        "rgb95PercentileAbsoluteDifference": 6,
+        "maximumChannelDifference": 35,
+        "meanSignedRgbShift": [
+          0.025587384259259258,
+          0.13721016589506174,
+          -0.21085455246913581
+        ],
+        "comparisons": {
+          "native": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp/comparison/hero-07-native-side-by-side.png",
+          "detail": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp/comparison/hero-07-detail-side-by-side.png",
+          "desktop": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp/comparison/hero-07-desktop-side-by-side.png",
+          "mobile": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp/comparison/hero-07-mobile-side-by-side.png"
+        }
+      },
+      "q95": {
+        "url": "https://cdn.sanity.io/images/6go5cl4m/production/c0e829a05fd45767cd6fe3cacbf4918694e2afa1-1920x1080.jpg?fm=webp&q=95",
+        "file": ".cache/homepage-hero-webp-q95/assets/hero-07-webp-q95.webp",
+        "bytes": 500280,
+        "contentType": "image/webp",
+        "contentLength": "500280",
+        "contentEncoding": null,
+        "sha256": "66fedfce10a7fffeb87756992d1215cd8ef9f573922e9a743cd587ad9f1b34fe"
+      }
+    },
+    {
+      "index": 7,
+      "name": "hero-08",
+      "title": {
+        "_type": "localeString",
+        "en": "Wedding"
+      },
+      "documentId": "18b24b2f-69ee-41d7-88bf-91796ee22f97",
+      "order": 8,
+      "originalResolution": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.7777777777777777,
+        "height": 1080,
+        "width": 1920
+      },
+      "originalMime": "image/jpeg",
+      "authoredCrop": null,
+      "authoredHotspot": null,
+      "originalTag": "<img src=\"https://cdn.sanity.io/images/6go5cl4m/production/1d7d0211061006a0ff8e9c9c0ad1b6713e73a387-1920x1080.jpg\" alt=\"Wedding\" width=\"1600\" height=\"900\" loading=\"lazy\" fetchpriority=\"auto\" class=\"object-cover w-full h-full\">",
+      "loading": "lazy",
+      "fetchpriority": "auto",
+      "cropBehavior": "Asset URL only; authored crop/hotspot are not applied by the existing renderer. CSS object-fit: cover; centered object-position.",
+      "variants": {
+        "original": {
+          "url": "https://cdn.sanity.io/images/6go5cl4m/production/1d7d0211061006a0ff8e9c9c0ad1b6713e73a387-1920x1080.jpg",
+          "file": ".cache/homepage-hero-webp/assets/hero-08-original.jpg",
+          "bytes": 330307,
+          "contentType": "image/jpeg",
+          "contentLength": "330307",
+          "contentEncoding": null,
+          "sha256": "5b194dbc2f852db547473fa17042d460c0f587e57c8820d3c972cfc651c5c661"
+        },
+        "webp": {
+          "url": "https://cdn.sanity.io/images/6go5cl4m/production/1d7d0211061006a0ff8e9c9c0ad1b6713e73a387-1920x1080.jpg?fm=webp&q=82",
+          "file": ".cache/homepage-hero-webp/assets/hero-08-webp.webp",
+          "bytes": 328180,
+          "contentType": "image/webp",
+          "quality": 82,
+          "sha256": "d697a5c0cf106153d3099c3c552bd9993ccc376d1b89b2272f888a31a5b3e3aa"
+        }
+      },
+      "quality": 82,
+      "tested": [
+        {
+          "quality": 95,
+          "bytes": 586978
+        },
+        {
+          "quality": 94,
+          "bytes": 552332
+        },
+        {
+          "quality": 93,
+          "bytes": 521920
+        },
+        {
+          "quality": 92,
+          "bytes": 492878
+        },
+        {
+          "quality": 91,
+          "bytes": 469976
+        },
+        {
+          "quality": 90,
+          "bytes": 446744
+        },
+        {
+          "quality": 89,
+          "bytes": 427444
+        },
+        {
+          "quality": 88,
+          "bytes": 410378
+        },
+        {
+          "quality": 87,
+          "bytes": 392568
+        },
+        {
+          "quality": 86,
+          "bytes": 378914
+        },
+        {
+          "quality": 85,
+          "bytes": 361842
+        },
+        {
+          "quality": 84,
+          "bytes": 349268
+        },
+        {
+          "quality": 83,
+          "bytes": 336222
+        },
+        {
+          "quality": 82,
+          "bytes": 328180
+        }
+      ],
+      "keepOriginal": false,
+      "retentionReason": null,
+      "assessment": "Fine petals, vegetation and step texture soften slightly; warm backlighting and overall composition remain close.",
+      "comparison": {
+        "index": 7,
+        "name": "hero-08",
+        "originalDimensions": [
+          1920,
+          1080
+        ],
+        "webpDimensions": [
+          1920,
+          1080
+        ],
+        "rgbMeanAbsoluteDifference": 2.3425567451131686,
+        "rgbRootMeanSquareDifference": 3.447106782656884,
+        "rgb95PercentileAbsoluteDifference": 8,
+        "maximumChannelDifference": 34,
+        "meanSignedRgbShift": [
+          0.04665846836419753,
+          0.15180796682098766,
+          -0.06612027391975309
+        ],
+        "comparisons": {
+          "native": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp/comparison/hero-08-native-side-by-side.png",
+          "detail": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp/comparison/hero-08-detail-side-by-side.png",
+          "desktop": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp/comparison/hero-08-desktop-side-by-side.png",
+          "mobile": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp/comparison/hero-08-mobile-side-by-side.png"
+        }
+      },
+      "q95": {
+        "url": "https://cdn.sanity.io/images/6go5cl4m/production/1d7d0211061006a0ff8e9c9c0ad1b6713e73a387-1920x1080.jpg?fm=webp&q=95",
+        "file": ".cache/homepage-hero-webp-q95/assets/hero-08-webp-q95.webp",
+        "bytes": 586978,
+        "contentType": "image/webp",
+        "contentLength": "586978",
+        "contentEncoding": null,
+        "sha256": "acc1556cc3a90cb25a9b612c4d1416d782ea84b568adcaeb9119ec246a39002b"
+      }
+    }
+  ],
+  "verification": {
+    "pages": 302,
+    "changedSources": [
+      "src/pages/[lang]/index.astro"
+    ],
+    "changedHeroTags": 21,
+    "retainedHeroTags": 3,
+    "unchangedOtherImages": 2586,
+    "sharedHeroAssets": [
+      {
+        "route": "en\\index.html",
+        "index": 0,
+        "originalUrl": "https://cdn.sanity.io/images/6go5cl4m/production/0396747df20f3b51e91c200a7c8deaf204a3f421-1920x1080.jpg"
+      },
+      {
+        "route": "ko\\index.html",
+        "index": 0,
+        "originalUrl": "https://cdn.sanity.io/images/6go5cl4m/production/0396747df20f3b51e91c200a7c8deaf204a3f421-1920x1080.jpg"
+      },
+      {
+        "route": "zh\\index.html",
+        "index": 0,
+        "originalUrl": "https://cdn.sanity.io/images/6go5cl4m/production/0396747df20f3b51e91c200a7c8deaf204a3f421-1920x1080.jpg"
+      }
+    ],
+    "changedAssets": [],
+    "ignoredBuildArchives": [
+      "public_html.zip"
+    ],
+    "failures": []
+  },
+  "autoplay": {
+    "first": 0,
+    "next": 1,
+    "modifiedTimer": false
+  },
+  "geometryIssues": [],
+  "beforeCaptures": [
+    {
+      "device": "desktop",
+      "index": 0,
+      "src": "https://cdn.sanity.io/images/6go5cl4m/production/0396747df20f3b51e91c200a7c8deaf204a3f421-1920x1080.jpg",
+      "naturalWidth": 1920,
+      "naturalHeight": 1080,
+      "loading": "eager",
+      "fetchpriority": "high",
+      "fit": "cover",
+      "position": "50% 50%",
+      "box": {
+        "width": 1440,
+        "height": 900
+      },
+      "opacity": "1",
+      "screenshot": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp-q95/before/screenshots/hero-01-desktop.png",
+      "network": {
+        "url": "https://cdn.sanity.io/images/6go5cl4m/production/0396747df20f3b51e91c200a7c8deaf204a3f421-1920x1080.jpg",
+        "mime": "image/jpeg",
+        "status": 200,
+        "headers": {
+          "age": "1656747",
+          "cache-tag": "dataset-6go5cl4m-production,dataset-6go5cl4m-production-asset-0396747df20f3b51e91c200a7c8deaf204a3f421,project-6go5cl4m-production",
+          "x-content-type-options": "nosniff",
+          "sanity-gateway": "k8s-gcp-as-s1-prod-ing-01",
+          "traceparent": "00-1acdddedc86ec1292ec59185a870399f-1d4487225281f76d-01",
+          "alt-svc": "h3=\":443\"; ma=2592000",
+          "date": "Sun, 04 Oct 2026 02:29:30 GMT",
+          "last-modified": "Thu, 22 Jan 2026 03:50:50 GMT",
+          "content-type": "image/jpeg",
+          "vary": "origin",
+          "x-sanity-asset-storage": "gcs-default",
+          "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+          "content-security-policy": "script-src 'none'",
+          "cache-control": "public, max-age=31536000, s-maxage=2592000",
+          "sanity-inflight-limit": "200",
+          "x-varnish-age": "0",
+          "via": "1.1 google",
+          "xkey": "dataset-6go5cl4m-production, dataset-6go5cl4m-production-asset-0396747df20f3b51e91c200a7c8deaf204a3f421, project-6go5cl4m-production",
+          "accept-ranges": "bytes",
+          "sanity-inflight-current": "0",
+          "content-length": "374460"
+        },
+        "type": "Image",
+        "encodedTransferBytes": 375285
+      }
+    },
+    {
+      "device": "desktop",
+      "index": 1,
+      "src": "https://cdn.sanity.io/images/6go5cl4m/production/c54ca7d9b4fce17cc4f5b6703e07df70d40f8e77-1920x1080.jpg",
+      "naturalWidth": 1920,
+      "naturalHeight": 1080,
+      "loading": "lazy",
+      "fetchpriority": "auto",
+      "fit": "cover",
+      "position": "50% 50%",
+      "box": {
+        "width": 1440,
+        "height": 900
+      },
+      "opacity": "1",
+      "screenshot": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp-q95/before/screenshots/hero-02-desktop.png",
+      "network": {
+        "url": "https://cdn.sanity.io/images/6go5cl4m/production/c54ca7d9b4fce17cc4f5b6703e07df70d40f8e77-1920x1080.jpg",
+        "mime": "image/jpeg",
+        "status": 200,
+        "headers": {
+          "age": "1656747",
+          "cache-tag": "dataset-6go5cl4m-production,dataset-6go5cl4m-production-asset-c54ca7d9b4fce17cc4f5b6703e07df70d40f8e77,project-6go5cl4m-production",
+          "x-content-type-options": "nosniff",
+          "sanity-gateway": "k8s-gcp-as-s1-prod-ing-01",
+          "traceparent": "00-404aa467083e72e82ec59185a87031ba-a9072c4f8b3344d4-01",
+          "alt-svc": "h3=\":443\"; ma=2592000",
+          "date": "Sun, 04 Oct 2026 02:29:31 GMT",
+          "last-modified": "Tue, 30 Jun 2026 12:05:26 GMT",
+          "content-type": "image/jpeg",
+          "vary": "origin",
+          "x-sanity-asset-storage": "gcs-default",
+          "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+          "content-security-policy": "script-src 'none'",
+          "cache-control": "public, max-age=31536000, s-maxage=2592000",
+          "sanity-inflight-limit": "200",
+          "x-varnish-age": "0",
+          "via": "1.1 google",
+          "xkey": "dataset-6go5cl4m-production, dataset-6go5cl4m-production-asset-c54ca7d9b4fce17cc4f5b6703e07df70d40f8e77, project-6go5cl4m-production",
+          "accept-ranges": "bytes",
+          "sanity-inflight-current": "0",
+          "content-length": "377985"
+        },
+        "type": "Image",
+        "encodedTransferBytes": 378476
+      }
+    },
+    {
+      "device": "desktop",
+      "index": 2,
+      "src": "https://cdn.sanity.io/images/6go5cl4m/production/83344bd07865c8c9443339e6bf6014e29f140fb7-1920x1080.jpg",
+      "naturalWidth": 1920,
+      "naturalHeight": 1080,
+      "loading": "lazy",
+      "fetchpriority": "auto",
+      "fit": "cover",
+      "position": "50% 50%",
+      "box": {
+        "width": 1440,
+        "height": 900
+      },
+      "opacity": "1",
+      "screenshot": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp-q95/before/screenshots/hero-03-desktop.png",
+      "network": {
+        "url": "https://cdn.sanity.io/images/6go5cl4m/production/83344bd07865c8c9443339e6bf6014e29f140fb7-1920x1080.jpg",
+        "mime": "image/jpeg",
+        "status": 200,
+        "headers": {
+          "age": "1877589",
+          "cache-tag": "dataset-6go5cl4m-production,dataset-6go5cl4m-production-asset-83344bd07865c8c9443339e6bf6014e29f140fb7,project-6go5cl4m-production",
+          "x-content-type-options": "nosniff",
+          "sanity-gateway": "k8s-gcp-as-s1-prod-ing-01",
+          "traceparent": "00-783d1d72c752caa7a5a33d48d7c26c76-e16e121ecf65c9b2-01",
+          "alt-svc": "h3=\":443\"; ma=2592000",
+          "date": "Thu, 01 Oct 2026 13:08:49 GMT",
+          "last-modified": "Mon, 10 Nov 2025 13:53:18 GMT",
+          "content-type": "image/jpeg",
+          "vary": "origin",
+          "x-sanity-asset-storage": "gcs-default",
+          "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+          "content-security-policy": "script-src 'none'",
+          "cache-control": "public, max-age=31536000, s-maxage=2592000",
+          "sanity-inflight-limit": "200",
+          "x-varnish-age": "0",
+          "via": "1.1 google",
+          "xkey": "dataset-6go5cl4m-production, dataset-6go5cl4m-production-asset-83344bd07865c8c9443339e6bf6014e29f140fb7, project-6go5cl4m-production",
+          "accept-ranges": "bytes",
+          "sanity-inflight-current": "0",
+          "content-length": "221590"
+        },
+        "type": "Image",
+        "encodedTransferBytes": 221996
+      }
+    },
+    {
+      "device": "desktop",
+      "index": 3,
+      "src": "https://cdn.sanity.io/images/6go5cl4m/production/9a869f427ef1412b048323061859f8b121aa4235-1920x1080.jpg",
+      "naturalWidth": 1920,
+      "naturalHeight": 1080,
+      "loading": "lazy",
+      "fetchpriority": "auto",
+      "fit": "cover",
+      "position": "50% 50%",
+      "box": {
+        "width": 1440,
+        "height": 900
+      },
+      "opacity": "1",
+      "screenshot": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp-q95/before/screenshots/hero-04-desktop.png",
+      "network": {
+        "url": "https://cdn.sanity.io/images/6go5cl4m/production/9a869f427ef1412b048323061859f8b121aa4235-1920x1080.jpg",
+        "mime": "image/jpeg",
+        "status": 200,
+        "headers": {
+          "age": "1878365",
+          "cache-tag": "dataset-6go5cl4m-production,dataset-6go5cl4m-production-asset-9a869f427ef1412b048323061859f8b121aa4235,project-6go5cl4m-production",
+          "x-content-type-options": "nosniff",
+          "sanity-gateway": "k8s-gcp-as-s1-prod-ing-01",
+          "traceparent": "00-6797af4a5fd6aee222ad2e0dff5bebb7-8e90ca1cb2ad1030-01",
+          "alt-svc": "h3=\":443\"; ma=2592000",
+          "date": "Thu, 01 Oct 2026 12:55:53 GMT",
+          "last-modified": "Mon, 10 Nov 2025 13:53:51 GMT",
+          "content-type": "image/jpeg",
+          "vary": "origin",
+          "x-sanity-asset-storage": "gcs-default",
+          "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+          "content-security-policy": "script-src 'none'",
+          "cache-control": "public, max-age=31536000, s-maxage=2592000",
+          "sanity-inflight-limit": "200",
+          "x-varnish-age": "0",
+          "via": "1.1 google",
+          "xkey": "dataset-6go5cl4m-production, dataset-6go5cl4m-production-asset-9a869f427ef1412b048323061859f8b121aa4235, project-6go5cl4m-production",
+          "accept-ranges": "bytes",
+          "sanity-inflight-current": "0",
+          "content-length": "250865"
+        },
+        "type": "Image",
+        "encodedTransferBytes": 251289
+      }
+    },
+    {
+      "device": "desktop",
+      "index": 4,
+      "src": "https://cdn.sanity.io/images/6go5cl4m/production/a055687869c2518bb9c7f378e67c3e399265c19a-1920x1080.jpg",
+      "naturalWidth": 1920,
+      "naturalHeight": 1080,
+      "loading": "lazy",
+      "fetchpriority": "auto",
+      "fit": "cover",
+      "position": "50% 50%",
+      "box": {
+        "width": 1440,
+        "height": 900
+      },
+      "opacity": "1",
+      "screenshot": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp-q95/before/screenshots/hero-05-desktop.png",
+      "network": {
+        "url": "https://cdn.sanity.io/images/6go5cl4m/production/a055687869c2518bb9c7f378e67c3e399265c19a-1920x1080.jpg",
+        "mime": "image/jpeg",
+        "status": 200,
+        "headers": {
+          "age": "1824493",
+          "cache-tag": "dataset-6go5cl4m-production,dataset-6go5cl4m-production-asset-a055687869c2518bb9c7f378e67c3e399265c19a,project-6go5cl4m-production",
+          "x-content-type-options": "nosniff",
+          "sanity-gateway": "k8s-gcp-as-s1-prod-ing-01",
+          "traceparent": "00-583ef99568ca89be8ffa4d0a1ba57e7f-5cc3ae324a291f31-01",
+          "alt-svc": "h3=\":443\"; ma=2592000",
+          "date": "Fri, 02 Oct 2026 03:53:45 GMT",
+          "last-modified": "Mon, 10 Nov 2025 13:54:18 GMT",
+          "content-type": "image/jpeg",
+          "vary": "origin",
+          "x-sanity-asset-storage": "gcs-default",
+          "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+          "content-security-policy": "script-src 'none'",
+          "cache-control": "public, max-age=31536000, s-maxage=2592000",
+          "sanity-inflight-limit": "200",
+          "x-varnish-age": "0",
+          "via": "1.1 google",
+          "xkey": "project-6go5cl4m-production",
+          "accept-ranges": "bytes",
+          "sanity-inflight-current": "0",
+          "content-length": "386110"
+        },
+        "type": "Image",
+        "encodedTransferBytes": 386551
+      }
+    },
+    {
+      "device": "desktop",
+      "index": 5,
+      "src": "https://cdn.sanity.io/images/6go5cl4m/production/41b98180e6d7fbf067c999e9c8f2938132071d3c-1920x1080.jpg",
+      "naturalWidth": 1920,
+      "naturalHeight": 1080,
+      "loading": "lazy",
+      "fetchpriority": "auto",
+      "fit": "cover",
+      "position": "50% 50%",
+      "box": {
+        "width": 1440,
+        "height": 900
+      },
+      "opacity": "1",
+      "screenshot": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp-q95/before/screenshots/hero-06-desktop.png",
+      "network": {
+        "url": "https://cdn.sanity.io/images/6go5cl4m/production/41b98180e6d7fbf067c999e9c8f2938132071d3c-1920x1080.jpg",
+        "mime": "image/jpeg",
+        "status": 200,
+        "headers": {
+          "age": "1656747",
+          "cache-tag": "dataset-6go5cl4m-production,dataset-6go5cl4m-production-asset-41b98180e6d7fbf067c999e9c8f2938132071d3c,project-6go5cl4m-production",
+          "x-content-type-options": "nosniff",
+          "sanity-gateway": "k8s-gcp-as-s1-prod-ing-01",
+          "traceparent": "00-b654708ce486ccab2ec59185a8703cd8-4ef5d1ceb98a2208-01",
+          "alt-svc": "h3=\":443\"; ma=2592000",
+          "date": "Sun, 04 Oct 2026 02:29:31 GMT",
+          "last-modified": "Mon, 10 Nov 2025 13:54:40 GMT",
+          "content-type": "image/jpeg",
+          "vary": "origin",
+          "x-sanity-asset-storage": "gcs-default",
+          "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+          "content-security-policy": "script-src 'none'",
+          "cache-control": "public, max-age=31536000, s-maxage=2592000",
+          "sanity-inflight-limit": "200",
+          "x-varnish-age": "0",
+          "via": "1.1 google",
+          "xkey": "dataset-6go5cl4m-production, dataset-6go5cl4m-production-asset-41b98180e6d7fbf067c999e9c8f2938132071d3c, project-6go5cl4m-production",
+          "accept-ranges": "bytes",
+          "sanity-inflight-current": "2",
+          "content-length": "550173"
+        },
+        "type": "Image",
+        "encodedTransferBytes": 550757
+      }
+    },
+    {
+      "device": "desktop",
+      "index": 6,
+      "src": "https://cdn.sanity.io/images/6go5cl4m/production/c0e829a05fd45767cd6fe3cacbf4918694e2afa1-1920x1080.jpg",
+      "naturalWidth": 1920,
+      "naturalHeight": 1080,
+      "loading": "lazy",
+      "fetchpriority": "auto",
+      "fit": "cover",
+      "position": "50% 50%",
+      "box": {
+        "width": 1440,
+        "height": 900
+      },
+      "opacity": "1",
+      "screenshot": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp-q95/before/screenshots/hero-07-desktop.png",
+      "network": {
+        "url": "https://cdn.sanity.io/images/6go5cl4m/production/c0e829a05fd45767cd6fe3cacbf4918694e2afa1-1920x1080.jpg",
+        "mime": "image/jpeg",
+        "status": 200,
+        "headers": {
+          "age": "1220916",
+          "cache-tag": "dataset-6go5cl4m-production,dataset-6go5cl4m-production-asset-c0e829a05fd45767cd6fe3cacbf4918694e2afa1,project-6go5cl4m-production",
+          "x-content-type-options": "nosniff",
+          "sanity-gateway": "k8s-gcp-as-s1-prod-ing-01",
+          "traceparent": "00-f9261fab2e525df66cfd3d16417ebfb6-dfb1c2b745dd66e3-01",
+          "alt-svc": "h3=\":443\"; ma=2592000",
+          "date": "Fri, 09 Oct 2026 03:33:22 GMT",
+          "last-modified": "Mon, 10 Nov 2025 13:55:07 GMT",
+          "content-type": "image/jpeg",
+          "vary": "origin",
+          "x-sanity-asset-storage": "gcs-default",
+          "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+          "content-security-policy": "script-src 'none'",
+          "cache-control": "public, max-age=31536000, s-maxage=2592000",
+          "sanity-inflight-limit": "200",
+          "x-varnish-age": "0",
+          "via": "1.1 google",
+          "xkey": "dataset-6go5cl4m-production, dataset-6go5cl4m-production-asset-c0e829a05fd45767cd6fe3cacbf4918694e2afa1, project-6go5cl4m-production",
+          "accept-ranges": "bytes",
+          "sanity-inflight-current": "0",
+          "content-length": "293038"
+        },
+        "type": "Image",
+        "encodedTransferBytes": 293480
+      }
+    },
+    {
+      "device": "desktop",
+      "index": 7,
+      "src": "https://cdn.sanity.io/images/6go5cl4m/production/1d7d0211061006a0ff8e9c9c0ad1b6713e73a387-1920x1080.jpg",
+      "naturalWidth": 1920,
+      "naturalHeight": 1080,
+      "loading": "lazy",
+      "fetchpriority": "auto",
+      "fit": "cover",
+      "position": "50% 50%",
+      "box": {
+        "width": 1440,
+        "height": 900
+      },
+      "opacity": "1",
+      "screenshot": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp-q95/before/screenshots/hero-08-desktop.png",
+      "network": {
+        "url": "https://cdn.sanity.io/images/6go5cl4m/production/1d7d0211061006a0ff8e9c9c0ad1b6713e73a387-1920x1080.jpg",
+        "mime": "image/jpeg",
+        "status": 200,
+        "headers": {
+          "age": "1208809",
+          "cache-tag": "dataset-6go5cl4m-production,dataset-6go5cl4m-production-asset-1d7d0211061006a0ff8e9c9c0ad1b6713e73a387,project-6go5cl4m-production",
+          "x-content-type-options": "nosniff",
+          "sanity-gateway": "k8s-gcp-as-s1-prod-ing-01",
+          "traceparent": "00-2a3bde1300cc4350a79e37d5d79dea07-7a073237a9c34ac5-01",
+          "alt-svc": "h3=\":443\"; ma=2592000",
+          "date": "Fri, 09 Oct 2026 06:55:09 GMT",
+          "last-modified": "Mon, 10 Nov 2025 13:55:35 GMT",
+          "content-type": "image/jpeg",
+          "vary": "origin",
+          "x-sanity-asset-storage": "gcs-default",
+          "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+          "content-security-policy": "script-src 'none'",
+          "cache-control": "public, max-age=31536000, s-maxage=2592000",
+          "sanity-inflight-limit": "200",
+          "x-varnish-age": "0",
+          "via": "1.1 google",
+          "xkey": "dataset-6go5cl4m-production, dataset-6go5cl4m-production-asset-1d7d0211061006a0ff8e9c9c0ad1b6713e73a387, project-6go5cl4m-production",
+          "accept-ranges": "bytes",
+          "sanity-inflight-current": "0",
+          "content-length": "330307"
+        },
+        "type": "Image",
+        "encodedTransferBytes": 330775
+      }
+    },
+    {
+      "device": "mobile",
+      "index": 0,
+      "src": "https://cdn.sanity.io/images/6go5cl4m/production/0396747df20f3b51e91c200a7c8deaf204a3f421-1920x1080.jpg",
+      "naturalWidth": 1920,
+      "naturalHeight": 1080,
+      "loading": "eager",
+      "fetchpriority": "high",
+      "fit": "cover",
+      "position": "50% 50%",
+      "box": {
+        "width": 390,
+        "height": 844
+      },
+      "opacity": "1",
+      "screenshot": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp-q95/before/screenshots/hero-01-mobile.png",
+      "network": {
+        "url": "https://cdn.sanity.io/images/6go5cl4m/production/0396747df20f3b51e91c200a7c8deaf204a3f421-1920x1080.jpg",
+        "mime": "image/jpeg",
+        "status": 200,
+        "headers": {
+          "age": "1656764",
+          "cache-tag": "dataset-6go5cl4m-production,dataset-6go5cl4m-production-asset-0396747df20f3b51e91c200a7c8deaf204a3f421,project-6go5cl4m-production",
+          "x-content-type-options": "nosniff",
+          "sanity-gateway": "k8s-gcp-as-s1-prod-ing-01",
+          "traceparent": "00-1acdddedc86ec1292ec59185a870399f-1d4487225281f76d-01",
+          "alt-svc": "h3=\":443\"; ma=2592000",
+          "date": "Sun, 04 Oct 2026 02:29:30 GMT",
+          "last-modified": "Thu, 22 Jan 2026 03:50:50 GMT",
+          "content-type": "image/jpeg",
+          "vary": "origin",
+          "x-sanity-asset-storage": "gcs-default",
+          "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+          "content-security-policy": "script-src 'none'",
+          "cache-control": "public, max-age=31536000, s-maxage=2592000",
+          "sanity-inflight-limit": "200",
+          "x-varnish-age": "0",
+          "via": "1.1 google",
+          "xkey": "dataset-6go5cl4m-production, dataset-6go5cl4m-production-asset-0396747df20f3b51e91c200a7c8deaf204a3f421, project-6go5cl4m-production",
+          "accept-ranges": "bytes",
+          "sanity-inflight-current": "0",
+          "content-length": "374460"
+        },
+        "type": "Image",
+        "encodedTransferBytes": 375285
+      }
+    },
+    {
+      "device": "mobile",
+      "index": 1,
+      "src": "https://cdn.sanity.io/images/6go5cl4m/production/c54ca7d9b4fce17cc4f5b6703e07df70d40f8e77-1920x1080.jpg",
+      "naturalWidth": 1920,
+      "naturalHeight": 1080,
+      "loading": "lazy",
+      "fetchpriority": "auto",
+      "fit": "cover",
+      "position": "50% 50%",
+      "box": {
+        "width": 390,
+        "height": 844
+      },
+      "opacity": "1",
+      "screenshot": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp-q95/before/screenshots/hero-02-mobile.png",
+      "network": {
+        "url": "https://cdn.sanity.io/images/6go5cl4m/production/c54ca7d9b4fce17cc4f5b6703e07df70d40f8e77-1920x1080.jpg",
+        "mime": "image/jpeg",
+        "status": 200,
+        "headers": {
+          "age": "1656763",
+          "cache-tag": "dataset-6go5cl4m-production,dataset-6go5cl4m-production-asset-c54ca7d9b4fce17cc4f5b6703e07df70d40f8e77,project-6go5cl4m-production",
+          "x-content-type-options": "nosniff",
+          "sanity-gateway": "k8s-gcp-as-s1-prod-ing-01",
+          "traceparent": "00-404aa467083e72e82ec59185a87031ba-a9072c4f8b3344d4-01",
+          "alt-svc": "h3=\":443\"; ma=2592000",
+          "date": "Sun, 04 Oct 2026 02:29:31 GMT",
+          "last-modified": "Tue, 30 Jun 2026 12:05:26 GMT",
+          "content-type": "image/jpeg",
+          "vary": "origin",
+          "x-sanity-asset-storage": "gcs-default",
+          "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+          "content-security-policy": "script-src 'none'",
+          "cache-control": "public, max-age=31536000, s-maxage=2592000",
+          "sanity-inflight-limit": "200",
+          "x-varnish-age": "0",
+          "via": "1.1 google",
+          "xkey": "dataset-6go5cl4m-production, dataset-6go5cl4m-production-asset-c54ca7d9b4fce17cc4f5b6703e07df70d40f8e77, project-6go5cl4m-production",
+          "accept-ranges": "bytes",
+          "sanity-inflight-current": "0",
+          "content-length": "377985"
+        },
+        "type": "Image",
+        "encodedTransferBytes": 378476
+      }
+    },
+    {
+      "device": "mobile",
+      "index": 2,
+      "src": "https://cdn.sanity.io/images/6go5cl4m/production/83344bd07865c8c9443339e6bf6014e29f140fb7-1920x1080.jpg",
+      "naturalWidth": 1920,
+      "naturalHeight": 1080,
+      "loading": "lazy",
+      "fetchpriority": "auto",
+      "fit": "cover",
+      "position": "50% 50%",
+      "box": {
+        "width": 390,
+        "height": 844
+      },
+      "opacity": "1",
+      "screenshot": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp-q95/before/screenshots/hero-03-mobile.png",
+      "network": {
+        "url": "https://cdn.sanity.io/images/6go5cl4m/production/83344bd07865c8c9443339e6bf6014e29f140fb7-1920x1080.jpg",
+        "mime": "image/jpeg",
+        "status": 200,
+        "headers": {
+          "age": "1877605",
+          "cache-tag": "dataset-6go5cl4m-production,dataset-6go5cl4m-production-asset-83344bd07865c8c9443339e6bf6014e29f140fb7,project-6go5cl4m-production",
+          "x-content-type-options": "nosniff",
+          "sanity-gateway": "k8s-gcp-as-s1-prod-ing-01",
+          "traceparent": "00-783d1d72c752caa7a5a33d48d7c26c76-e16e121ecf65c9b2-01",
+          "alt-svc": "h3=\":443\"; ma=2592000",
+          "date": "Thu, 01 Oct 2026 13:08:49 GMT",
+          "last-modified": "Mon, 10 Nov 2025 13:53:18 GMT",
+          "content-type": "image/jpeg",
+          "vary": "origin",
+          "x-sanity-asset-storage": "gcs-default",
+          "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+          "content-security-policy": "script-src 'none'",
+          "cache-control": "public, max-age=31536000, s-maxage=2592000",
+          "sanity-inflight-limit": "200",
+          "x-varnish-age": "0",
+          "via": "1.1 google",
+          "xkey": "dataset-6go5cl4m-production, dataset-6go5cl4m-production-asset-83344bd07865c8c9443339e6bf6014e29f140fb7, project-6go5cl4m-production",
+          "accept-ranges": "bytes",
+          "sanity-inflight-current": "0",
+          "content-length": "221590"
+        },
+        "type": "Image",
+        "encodedTransferBytes": 221995
+      }
+    },
+    {
+      "device": "mobile",
+      "index": 3,
+      "src": "https://cdn.sanity.io/images/6go5cl4m/production/9a869f427ef1412b048323061859f8b121aa4235-1920x1080.jpg",
+      "naturalWidth": 1920,
+      "naturalHeight": 1080,
+      "loading": "lazy",
+      "fetchpriority": "auto",
+      "fit": "cover",
+      "position": "50% 50%",
+      "box": {
+        "width": 390,
+        "height": 844
+      },
+      "opacity": "1",
+      "screenshot": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp-q95/before/screenshots/hero-04-mobile.png",
+      "network": {
+        "url": "https://cdn.sanity.io/images/6go5cl4m/production/9a869f427ef1412b048323061859f8b121aa4235-1920x1080.jpg",
+        "mime": "image/jpeg",
+        "status": 200,
+        "headers": {
+          "age": "1878381",
+          "cache-tag": "dataset-6go5cl4m-production,dataset-6go5cl4m-production-asset-9a869f427ef1412b048323061859f8b121aa4235,project-6go5cl4m-production",
+          "x-content-type-options": "nosniff",
+          "sanity-gateway": "k8s-gcp-as-s1-prod-ing-01",
+          "traceparent": "00-6797af4a5fd6aee222ad2e0dff5bebb7-8e90ca1cb2ad1030-01",
+          "alt-svc": "h3=\":443\"; ma=2592000",
+          "date": "Thu, 01 Oct 2026 12:55:53 GMT",
+          "last-modified": "Mon, 10 Nov 2025 13:53:51 GMT",
+          "content-type": "image/jpeg",
+          "vary": "origin",
+          "x-sanity-asset-storage": "gcs-default",
+          "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+          "content-security-policy": "script-src 'none'",
+          "cache-control": "public, max-age=31536000, s-maxage=2592000",
+          "sanity-inflight-limit": "200",
+          "x-varnish-age": "0",
+          "via": "1.1 google",
+          "xkey": "dataset-6go5cl4m-production, dataset-6go5cl4m-production-asset-9a869f427ef1412b048323061859f8b121aa4235, project-6go5cl4m-production",
+          "accept-ranges": "bytes",
+          "sanity-inflight-current": "0",
+          "content-length": "250865"
+        },
+        "type": "Image",
+        "encodedTransferBytes": 251288
+      }
+    },
+    {
+      "device": "mobile",
+      "index": 4,
+      "src": "https://cdn.sanity.io/images/6go5cl4m/production/a055687869c2518bb9c7f378e67c3e399265c19a-1920x1080.jpg",
+      "naturalWidth": 1920,
+      "naturalHeight": 1080,
+      "loading": "lazy",
+      "fetchpriority": "auto",
+      "fit": "cover",
+      "position": "50% 50%",
+      "box": {
+        "width": 390,
+        "height": 844
+      },
+      "opacity": "1",
+      "screenshot": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp-q95/before/screenshots/hero-05-mobile.png",
+      "network": {
+        "url": "https://cdn.sanity.io/images/6go5cl4m/production/a055687869c2518bb9c7f378e67c3e399265c19a-1920x1080.jpg",
+        "mime": "image/jpeg",
+        "status": 200,
+        "headers": {
+          "age": "1824509",
+          "cache-tag": "dataset-6go5cl4m-production,dataset-6go5cl4m-production-asset-a055687869c2518bb9c7f378e67c3e399265c19a,project-6go5cl4m-production",
+          "x-content-type-options": "nosniff",
+          "sanity-gateway": "k8s-gcp-as-s1-prod-ing-01",
+          "traceparent": "00-583ef99568ca89be8ffa4d0a1ba57e7f-5cc3ae324a291f31-01",
+          "alt-svc": "h3=\":443\"; ma=2592000",
+          "date": "Fri, 02 Oct 2026 03:53:45 GMT",
+          "last-modified": "Mon, 10 Nov 2025 13:54:18 GMT",
+          "content-type": "image/jpeg",
+          "vary": "origin",
+          "x-sanity-asset-storage": "gcs-default",
+          "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+          "content-security-policy": "script-src 'none'",
+          "cache-control": "public, max-age=31536000, s-maxage=2592000",
+          "sanity-inflight-limit": "200",
+          "x-varnish-age": "0",
+          "via": "1.1 google",
+          "xkey": "project-6go5cl4m-production",
+          "accept-ranges": "bytes",
+          "sanity-inflight-current": "0",
+          "content-length": "386110"
+        },
+        "type": "Image",
+        "encodedTransferBytes": 386551
+      }
+    },
+    {
+      "device": "mobile",
+      "index": 5,
+      "src": "https://cdn.sanity.io/images/6go5cl4m/production/41b98180e6d7fbf067c999e9c8f2938132071d3c-1920x1080.jpg",
+      "naturalWidth": 1920,
+      "naturalHeight": 1080,
+      "loading": "lazy",
+      "fetchpriority": "auto",
+      "fit": "cover",
+      "position": "50% 50%",
+      "box": {
+        "width": 390,
+        "height": 844
+      },
+      "opacity": "1",
+      "screenshot": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp-q95/before/screenshots/hero-06-mobile.png",
+      "network": {
+        "url": "https://cdn.sanity.io/images/6go5cl4m/production/41b98180e6d7fbf067c999e9c8f2938132071d3c-1920x1080.jpg",
+        "mime": "image/jpeg",
+        "status": 200,
+        "headers": {
+          "age": "1656763",
+          "cache-tag": "dataset-6go5cl4m-production,dataset-6go5cl4m-production-asset-41b98180e6d7fbf067c999e9c8f2938132071d3c,project-6go5cl4m-production",
+          "x-content-type-options": "nosniff",
+          "sanity-gateway": "k8s-gcp-as-s1-prod-ing-01",
+          "traceparent": "00-b654708ce486ccab2ec59185a8703cd8-4ef5d1ceb98a2208-01",
+          "alt-svc": "h3=\":443\"; ma=2592000",
+          "date": "Sun, 04 Oct 2026 02:29:31 GMT",
+          "last-modified": "Mon, 10 Nov 2025 13:54:40 GMT",
+          "content-type": "image/jpeg",
+          "vary": "origin",
+          "x-sanity-asset-storage": "gcs-default",
+          "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+          "content-security-policy": "script-src 'none'",
+          "cache-control": "public, max-age=31536000, s-maxage=2592000",
+          "sanity-inflight-limit": "200",
+          "x-varnish-age": "0",
+          "via": "1.1 google",
+          "xkey": "dataset-6go5cl4m-production, dataset-6go5cl4m-production-asset-41b98180e6d7fbf067c999e9c8f2938132071d3c, project-6go5cl4m-production",
+          "accept-ranges": "bytes",
+          "sanity-inflight-current": "2",
+          "content-length": "550173"
+        },
+        "type": "Image",
+        "encodedTransferBytes": 550764
+      }
+    },
+    {
+      "device": "mobile",
+      "index": 6,
+      "src": "https://cdn.sanity.io/images/6go5cl4m/production/c0e829a05fd45767cd6fe3cacbf4918694e2afa1-1920x1080.jpg",
+      "naturalWidth": 1920,
+      "naturalHeight": 1080,
+      "loading": "lazy",
+      "fetchpriority": "auto",
+      "fit": "cover",
+      "position": "50% 50%",
+      "box": {
+        "width": 390,
+        "height": 844
+      },
+      "opacity": "1",
+      "screenshot": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp-q95/before/screenshots/hero-07-mobile.png",
+      "network": {
+        "url": "https://cdn.sanity.io/images/6go5cl4m/production/c0e829a05fd45767cd6fe3cacbf4918694e2afa1-1920x1080.jpg",
+        "mime": "image/jpeg",
+        "status": 200,
+        "headers": {
+          "age": "1220932",
+          "cache-tag": "dataset-6go5cl4m-production,dataset-6go5cl4m-production-asset-c0e829a05fd45767cd6fe3cacbf4918694e2afa1,project-6go5cl4m-production",
+          "x-content-type-options": "nosniff",
+          "sanity-gateway": "k8s-gcp-as-s1-prod-ing-01",
+          "traceparent": "00-f9261fab2e525df66cfd3d16417ebfb6-dfb1c2b745dd66e3-01",
+          "alt-svc": "h3=\":443\"; ma=2592000",
+          "date": "Fri, 09 Oct 2026 03:33:22 GMT",
+          "last-modified": "Mon, 10 Nov 2025 13:55:07 GMT",
+          "content-type": "image/jpeg",
+          "vary": "origin",
+          "x-sanity-asset-storage": "gcs-default",
+          "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+          "content-security-policy": "script-src 'none'",
+          "cache-control": "public, max-age=31536000, s-maxage=2592000",
+          "sanity-inflight-limit": "200",
+          "x-varnish-age": "0",
+          "via": "1.1 google",
+          "xkey": "dataset-6go5cl4m-production, dataset-6go5cl4m-production-asset-c0e829a05fd45767cd6fe3cacbf4918694e2afa1, project-6go5cl4m-production",
+          "accept-ranges": "bytes",
+          "sanity-inflight-current": "0",
+          "content-length": "293038"
+        },
+        "type": "Image",
+        "encodedTransferBytes": 293480
+      }
+    },
+    {
+      "device": "mobile",
+      "index": 7,
+      "src": "https://cdn.sanity.io/images/6go5cl4m/production/1d7d0211061006a0ff8e9c9c0ad1b6713e73a387-1920x1080.jpg",
+      "naturalWidth": 1920,
+      "naturalHeight": 1080,
+      "loading": "lazy",
+      "fetchpriority": "auto",
+      "fit": "cover",
+      "position": "50% 50%",
+      "box": {
+        "width": 390,
+        "height": 844
+      },
+      "opacity": "1",
+      "screenshot": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp-q95/before/screenshots/hero-08-mobile.png",
+      "network": {
+        "url": "https://cdn.sanity.io/images/6go5cl4m/production/1d7d0211061006a0ff8e9c9c0ad1b6713e73a387-1920x1080.jpg",
+        "mime": "image/jpeg",
+        "status": 200,
+        "headers": {
+          "age": "1208825",
+          "cache-tag": "dataset-6go5cl4m-production,dataset-6go5cl4m-production-asset-1d7d0211061006a0ff8e9c9c0ad1b6713e73a387,project-6go5cl4m-production",
+          "x-content-type-options": "nosniff",
+          "sanity-gateway": "k8s-gcp-as-s1-prod-ing-01",
+          "traceparent": "00-2a3bde1300cc4350a79e37d5d79dea07-7a073237a9c34ac5-01",
+          "alt-svc": "h3=\":443\"; ma=2592000",
+          "date": "Fri, 09 Oct 2026 06:55:09 GMT",
+          "last-modified": "Mon, 10 Nov 2025 13:55:35 GMT",
+          "content-type": "image/jpeg",
+          "vary": "origin",
+          "x-sanity-asset-storage": "gcs-default",
+          "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+          "content-security-policy": "script-src 'none'",
+          "cache-control": "public, max-age=31536000, s-maxage=2592000",
+          "sanity-inflight-limit": "200",
+          "x-varnish-age": "0",
+          "via": "1.1 google",
+          "xkey": "dataset-6go5cl4m-production, dataset-6go5cl4m-production-asset-1d7d0211061006a0ff8e9c9c0ad1b6713e73a387, project-6go5cl4m-production",
+          "accept-ranges": "bytes",
+          "sanity-inflight-current": "0",
+          "content-length": "330307"
+        },
+        "type": "Image",
+        "encodedTransferBytes": 330775
+      }
+    }
+  ],
+  "afterCaptures": [
+    {
+      "device": "desktop",
+      "index": 0,
+      "src": "https://cdn.sanity.io/images/6go5cl4m/production/0396747df20f3b51e91c200a7c8deaf204a3f421-1920x1080.jpg",
+      "naturalWidth": 1920,
+      "naturalHeight": 1080,
+      "loading": "eager",
+      "fetchpriority": "high",
+      "fit": "cover",
+      "position": "50% 50%",
+      "box": {
+        "width": 1440,
+        "height": 900
+      },
+      "opacity": "1",
+      "screenshot": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp/after/screenshots/hero-01-desktop.png",
+      "network": {
+        "url": "https://cdn.sanity.io/images/6go5cl4m/production/0396747df20f3b51e91c200a7c8deaf204a3f421-1920x1080.jpg",
+        "mime": "image/jpeg",
+        "status": 200,
+        "headers": {
+          "age": "1657818",
+          "cache-tag": "dataset-6go5cl4m-production,dataset-6go5cl4m-production-asset-0396747df20f3b51e91c200a7c8deaf204a3f421,project-6go5cl4m-production",
+          "x-content-type-options": "nosniff",
+          "sanity-gateway": "k8s-gcp-as-s1-prod-ing-01",
+          "traceparent": "00-1acdddedc86ec1292ec59185a870399f-1d4487225281f76d-01",
+          "alt-svc": "h3=\":443\"; ma=2592000",
+          "date": "Sun, 04 Oct 2026 02:29:30 GMT",
+          "last-modified": "Thu, 22 Jan 2026 03:50:50 GMT",
+          "content-type": "image/jpeg",
+          "vary": "origin",
+          "x-sanity-asset-storage": "gcs-default",
+          "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+          "content-security-policy": "script-src 'none'",
+          "cache-control": "public, max-age=31536000, s-maxage=2592000",
+          "sanity-inflight-limit": "200",
+          "x-varnish-age": "0",
+          "via": "1.1 google",
+          "xkey": "dataset-6go5cl4m-production, dataset-6go5cl4m-production-asset-0396747df20f3b51e91c200a7c8deaf204a3f421, project-6go5cl4m-production",
+          "accept-ranges": "bytes",
+          "sanity-inflight-current": "0",
+          "content-length": "374460"
+        },
+        "type": "Image",
+        "encodedTransferBytes": 375284
+      }
+    },
+    {
+      "device": "desktop",
+      "index": 1,
+      "src": "https://cdn.sanity.io/images/6go5cl4m/production/c54ca7d9b4fce17cc4f5b6703e07df70d40f8e77-1920x1080.jpg?fm=webp&q=82",
+      "naturalWidth": 1920,
+      "naturalHeight": 1080,
+      "loading": "lazy",
+      "fetchpriority": "auto",
+      "fit": "cover",
+      "position": "50% 50%",
+      "box": {
+        "width": 1440,
+        "height": 900
+      },
+      "opacity": "1",
+      "screenshot": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp/after/screenshots/hero-02-desktop.png",
+      "network": {
+        "url": "https://cdn.sanity.io/images/6go5cl4m/production/c54ca7d9b4fce17cc4f5b6703e07df70d40f8e77-1920x1080.jpg?fm=webp&q=82",
+        "mime": "image/webp",
+        "status": 200,
+        "headers": {
+          "age": "545",
+          "cache-tag": "dataset-6go5cl4m-production,dataset-6go5cl4m-production-asset-c54ca7d9b4fce17cc4f5b6703e07df70d40f8e77,project-6go5cl4m-production",
+          "sanity-gateway": "k8s-gcp-as-s1-prod-ing-01",
+          "x-content-type-options": "nosniff",
+          "traceparent": "00-6479d8fbc5f5a0fdc60d05c3fcf024a8-0681349221fcb276-01",
+          "alt-svc": "h3=\":443\"; ma=2592000",
+          "date": "Fri, 23 Oct 2026 06:50:44 GMT",
+          "last-modified": "Tue, 30 Jun 2026 12:05:26 GMT",
+          "content-type": "image/webp",
+          "vary": "origin",
+          "x-sanity-asset-storage": "gcs-default",
+          "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+          "content-security-policy": "script-src 'none'",
+          "cache-control": "public, max-age=31536000, s-maxage=2592000",
+          "x-varnish-age": "0",
+          "via": "1.1 google",
+          "xkey": "dataset-6go5cl4m-production, dataset-6go5cl4m-production-asset-c54ca7d9b4fce17cc4f5b6703e07df70d40f8e77, project-6go5cl4m-production",
+          "accept-ranges": "bytes",
+          "content-length": "375798"
+        },
+        "type": "Image",
+        "encodedTransferBytes": 376282
+      }
+    },
+    {
+      "device": "desktop",
+      "index": 2,
+      "src": "https://cdn.sanity.io/images/6go5cl4m/production/83344bd07865c8c9443339e6bf6014e29f140fb7-1920x1080.jpg?fm=webp&q=84",
+      "naturalWidth": 1920,
+      "naturalHeight": 1080,
+      "loading": "lazy",
+      "fetchpriority": "auto",
+      "fit": "cover",
+      "position": "50% 50%",
+      "box": {
+        "width": 1440,
+        "height": 900
+      },
+      "opacity": "1",
+      "screenshot": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp/after/screenshots/hero-03-desktop.png",
+      "network": {
+        "url": "https://cdn.sanity.io/images/6go5cl4m/production/83344bd07865c8c9443339e6bf6014e29f140fb7-1920x1080.jpg?fm=webp&q=84",
+        "mime": "image/webp",
+        "status": 200,
+        "headers": {
+          "age": "549",
+          "cache-tag": "dataset-6go5cl4m-production,dataset-6go5cl4m-production-asset-83344bd07865c8c9443339e6bf6014e29f140fb7,project-6go5cl4m-production",
+          "sanity-gateway": "k8s-gcp-as-s1-prod-ing-01",
+          "x-content-type-options": "nosniff",
+          "traceparent": "00-a408c2570531c499c60d05c3fcf026b7-7fc40492b76eef92-01",
+          "alt-svc": "h3=\":443\"; ma=2592000",
+          "date": "Fri, 23 Oct 2026 06:50:40 GMT",
+          "last-modified": "Mon, 10 Nov 2025 13:53:18 GMT",
+          "content-type": "image/webp",
+          "vary": "origin",
+          "x-sanity-asset-storage": "gcs-default",
+          "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+          "content-security-policy": "script-src 'none'",
+          "cache-control": "public, max-age=31536000, s-maxage=2592000",
+          "x-varnish-age": "0",
+          "via": "1.1 google",
+          "xkey": "dataset-6go5cl4m-production, dataset-6go5cl4m-production-asset-83344bd07865c8c9443339e6bf6014e29f140fb7, project-6go5cl4m-production",
+          "accept-ranges": "bytes",
+          "content-length": "219094"
+        },
+        "type": "Image",
+        "encodedTransferBytes": 219506
+      }
+    },
+    {
+      "device": "desktop",
+      "index": 3,
+      "src": "https://cdn.sanity.io/images/6go5cl4m/production/9a869f427ef1412b048323061859f8b121aa4235-1920x1080.jpg?fm=webp&q=84",
+      "naturalWidth": 1920,
+      "naturalHeight": 1080,
+      "loading": "lazy",
+      "fetchpriority": "auto",
+      "fit": "cover",
+      "position": "50% 50%",
+      "box": {
+        "width": 1440,
+        "height": 900
+      },
+      "opacity": "1",
+      "screenshot": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp/after/screenshots/hero-04-desktop.png",
+      "network": {
+        "url": "https://cdn.sanity.io/images/6go5cl4m/production/9a869f427ef1412b048323061859f8b121aa4235-1920x1080.jpg?fm=webp&q=84",
+        "mime": "image/webp",
+        "status": 200,
+        "headers": {
+          "age": "539",
+          "cache-tag": "dataset-6go5cl4m-production,dataset-6go5cl4m-production-asset-9a869f427ef1412b048323061859f8b121aa4235,project-6go5cl4m-production",
+          "sanity-gateway": "k8s-gcp-as-s1-prod-ing-01",
+          "x-content-type-options": "nosniff",
+          "traceparent": "00-974cfcd04da5da47d4c03efbeaca7fdc-bbce39f788d0110c-01",
+          "alt-svc": "h3=\":443\"; ma=2592000",
+          "date": "Fri, 23 Oct 2026 06:50:50 GMT",
+          "last-modified": "Mon, 10 Nov 2025 13:53:51 GMT",
+          "content-type": "image/webp",
+          "vary": "origin",
+          "x-sanity-asset-storage": "gcs-default",
+          "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+          "content-security-policy": "script-src 'none'",
+          "cache-control": "public, max-age=31536000, s-maxage=2592000",
+          "x-varnish-age": "0",
+          "via": "1.1 google",
+          "xkey": "dataset-6go5cl4m-production, dataset-6go5cl4m-production-asset-9a869f427ef1412b048323061859f8b121aa4235, project-6go5cl4m-production",
+          "accept-ranges": "bytes",
+          "content-length": "239632"
+        },
+        "type": "Image",
+        "encodedTransferBytes": 240043
+      }
+    },
+    {
+      "device": "desktop",
+      "index": 4,
+      "src": "https://cdn.sanity.io/images/6go5cl4m/production/a055687869c2518bb9c7f378e67c3e399265c19a-1920x1080.jpg?fm=webp&q=82",
+      "naturalWidth": 1920,
+      "naturalHeight": 1080,
+      "loading": "lazy",
+      "fetchpriority": "auto",
+      "fit": "cover",
+      "position": "50% 50%",
+      "box": {
+        "width": 1440,
+        "height": 900
+      },
+      "opacity": "1",
+      "screenshot": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp/after/screenshots/hero-05-desktop.png",
+      "network": {
+        "url": "https://cdn.sanity.io/images/6go5cl4m/production/a055687869c2518bb9c7f378e67c3e399265c19a-1920x1080.jpg?fm=webp&q=82",
+        "mime": "image/webp",
+        "status": 200,
+        "headers": {
+          "age": "530",
+          "cache-tag": "dataset-6go5cl4m-production,dataset-6go5cl4m-production-asset-a055687869c2518bb9c7f378e67c3e399265c19a,project-6go5cl4m-production",
+          "sanity-gateway": "k8s-gcp-as-s1-prod-ing-01",
+          "x-content-type-options": "nosniff",
+          "traceparent": "00-05c0e94f89b50052ce8f98f61e254ddd-ce4ae866035211d9-01",
+          "alt-svc": "h3=\":443\"; ma=2592000",
+          "date": "Fri, 23 Oct 2026 06:50:59 GMT",
+          "last-modified": "Mon, 10 Nov 2025 13:54:18 GMT",
+          "content-type": "image/webp",
+          "vary": "origin",
+          "x-sanity-asset-storage": "gcs-default",
+          "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+          "content-security-policy": "script-src 'none'",
+          "cache-control": "public, max-age=31536000, s-maxage=2592000",
+          "x-varnish-age": "0",
+          "via": "1.1 google",
+          "xkey": "dataset-6go5cl4m-production, dataset-6go5cl4m-production-asset-a055687869c2518bb9c7f378e67c3e399265c19a, project-6go5cl4m-production",
+          "accept-ranges": "bytes",
+          "content-length": "382124"
+        },
+        "type": "Image",
+        "encodedTransferBytes": 382617
+      }
+    },
+    {
+      "device": "desktop",
+      "index": 5,
+      "src": "https://cdn.sanity.io/images/6go5cl4m/production/41b98180e6d7fbf067c999e9c8f2938132071d3c-1920x1080.jpg?fm=webp&q=78",
+      "naturalWidth": 1920,
+      "naturalHeight": 1080,
+      "loading": "lazy",
+      "fetchpriority": "auto",
+      "fit": "cover",
+      "position": "50% 50%",
+      "box": {
+        "width": 1440,
+        "height": 900
+      },
+      "opacity": "1",
+      "screenshot": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp/after/screenshots/hero-06-desktop.png",
+      "network": {
+        "url": "https://cdn.sanity.io/images/6go5cl4m/production/41b98180e6d7fbf067c999e9c8f2938132071d3c-1920x1080.jpg?fm=webp&q=78",
+        "mime": "image/webp",
+        "status": 200,
+        "headers": {
+          "age": "525",
+          "cache-tag": "dataset-6go5cl4m-production,dataset-6go5cl4m-production-asset-41b98180e6d7fbf067c999e9c8f2938132071d3c,project-6go5cl4m-production",
+          "sanity-gateway": "k8s-gcp-as-s1-prod-ing-01",
+          "x-content-type-options": "nosniff",
+          "traceparent": "00-1b1a2b93073a89c5898a0ae8faa0e0cf-1ab11678be533fae-01",
+          "alt-svc": "h3=\":443\"; ma=2592000",
+          "date": "Fri, 23 Oct 2026 06:51:04 GMT",
+          "last-modified": "Mon, 10 Nov 2025 13:54:40 GMT",
+          "content-type": "image/webp",
+          "vary": "origin",
+          "x-sanity-asset-storage": "gcs-default",
+          "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+          "content-security-policy": "script-src 'none'",
+          "cache-control": "public, max-age=31536000, s-maxage=2592000",
+          "x-varnish-age": "0",
+          "via": "1.1 google",
+          "xkey": "dataset-6go5cl4m-production, dataset-6go5cl4m-production-asset-41b98180e6d7fbf067c999e9c8f2938132071d3c, project-6go5cl4m-production",
+          "accept-ranges": "bytes",
+          "content-length": "534622"
+        },
+        "type": "Image",
+        "encodedTransferBytes": 535195
+      }
+    },
+    {
+      "device": "desktop",
+      "index": 6,
+      "src": "https://cdn.sanity.io/images/6go5cl4m/production/c0e829a05fd45767cd6fe3cacbf4918694e2afa1-1920x1080.jpg?fm=webp&q=84",
+      "naturalWidth": 1920,
+      "naturalHeight": 1080,
+      "loading": "lazy",
+      "fetchpriority": "auto",
+      "fit": "cover",
+      "position": "50% 50%",
+      "box": {
+        "width": 1440,
+        "height": 900
+      },
+      "opacity": "1",
+      "screenshot": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp/after/screenshots/hero-07-desktop.png",
+      "network": {
+        "url": "https://cdn.sanity.io/images/6go5cl4m/production/c0e829a05fd45767cd6fe3cacbf4918694e2afa1-1920x1080.jpg?fm=webp&q=84",
+        "mime": "image/webp",
+        "status": 200,
+        "headers": {
+          "age": "528",
+          "cache-tag": "dataset-6go5cl4m-production,dataset-6go5cl4m-production-asset-c0e829a05fd45767cd6fe3cacbf4918694e2afa1,project-6go5cl4m-production",
+          "sanity-gateway": "k8s-gcp-as-s1-prod-ing-01",
+          "x-content-type-options": "nosniff",
+          "traceparent": "00-3923942f827c81fa898a0ae8faa0e385-581a2ca1fde71b81-01",
+          "alt-svc": "h3=\":443\"; ma=2592000",
+          "date": "Fri, 23 Oct 2026 06:51:01 GMT",
+          "last-modified": "Mon, 10 Nov 2025 13:55:07 GMT",
+          "content-type": "image/webp",
+          "vary": "origin",
+          "x-sanity-asset-storage": "gcs-default",
+          "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+          "content-security-policy": "script-src 'none'",
+          "cache-control": "public, max-age=31536000, s-maxage=2592000",
+          "x-varnish-age": "0",
+          "via": "1.1 google",
+          "xkey": "dataset-6go5cl4m-production, dataset-6go5cl4m-production-asset-c0e829a05fd45767cd6fe3cacbf4918694e2afa1, project-6go5cl4m-production",
+          "accept-ranges": "bytes",
+          "content-length": "287424"
+        },
+        "type": "Image",
+        "encodedTransferBytes": 287861
+      }
+    },
+    {
+      "device": "desktop",
+      "index": 7,
+      "src": "https://cdn.sanity.io/images/6go5cl4m/production/1d7d0211061006a0ff8e9c9c0ad1b6713e73a387-1920x1080.jpg?fm=webp&q=82",
+      "naturalWidth": 1920,
+      "naturalHeight": 1080,
+      "loading": "lazy",
+      "fetchpriority": "auto",
+      "fit": "cover",
+      "position": "50% 50%",
+      "box": {
+        "width": 1440,
+        "height": 900
+      },
+      "opacity": "1",
+      "screenshot": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp/after/screenshots/hero-08-desktop.png",
+      "network": {
+        "url": "https://cdn.sanity.io/images/6go5cl4m/production/1d7d0211061006a0ff8e9c9c0ad1b6713e73a387-1920x1080.jpg?fm=webp&q=82",
+        "mime": "image/webp",
+        "status": 200,
+        "headers": {
+          "age": "517",
+          "cache-tag": "dataset-6go5cl4m-production,dataset-6go5cl4m-production-asset-1d7d0211061006a0ff8e9c9c0ad1b6713e73a387,project-6go5cl4m-production",
+          "sanity-gateway": "k8s-gcp-as-s1-prod-ing-01",
+          "x-content-type-options": "nosniff",
+          "traceparent": "00-963c694fe7a4133f70c80d2256cdcfbb-cf5b685097c5248e-01",
+          "alt-svc": "h3=\":443\"; ma=2592000",
+          "date": "Fri, 23 Oct 2026 06:51:12 GMT",
+          "last-modified": "Mon, 10 Nov 2025 13:55:35 GMT",
+          "content-type": "image/webp",
+          "vary": "origin",
+          "x-sanity-asset-storage": "gcs-default",
+          "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+          "content-security-policy": "script-src 'none'",
+          "cache-control": "public, max-age=31536000, s-maxage=2592000",
+          "x-varnish-age": "0",
+          "via": "1.1 google",
+          "xkey": "dataset-6go5cl4m-production, dataset-6go5cl4m-production-asset-1d7d0211061006a0ff8e9c9c0ad1b6713e73a387, project-6go5cl4m-production",
+          "accept-ranges": "bytes",
+          "content-length": "328180"
+        },
+        "type": "Image",
+        "encodedTransferBytes": 328644
+      }
+    },
+    {
+      "device": "mobile",
+      "index": 0,
+      "src": "https://cdn.sanity.io/images/6go5cl4m/production/0396747df20f3b51e91c200a7c8deaf204a3f421-1920x1080.jpg",
+      "naturalWidth": 1920,
+      "naturalHeight": 1080,
+      "loading": "eager",
+      "fetchpriority": "high",
+      "fit": "cover",
+      "position": "50% 50%",
+      "box": {
+        "width": 390,
+        "height": 844
+      },
+      "opacity": "1",
+      "screenshot": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp/after/screenshots/hero-01-mobile.png",
+      "network": {
+        "url": "https://cdn.sanity.io/images/6go5cl4m/production/0396747df20f3b51e91c200a7c8deaf204a3f421-1920x1080.jpg",
+        "mime": "image/jpeg",
+        "status": 200,
+        "headers": {
+          "age": "1657834",
+          "cache-tag": "dataset-6go5cl4m-production,dataset-6go5cl4m-production-asset-0396747df20f3b51e91c200a7c8deaf204a3f421,project-6go5cl4m-production",
+          "x-content-type-options": "nosniff",
+          "sanity-gateway": "k8s-gcp-as-s1-prod-ing-01",
+          "traceparent": "00-1acdddedc86ec1292ec59185a870399f-1d4487225281f76d-01",
+          "alt-svc": "h3=\":443\"; ma=2592000",
+          "date": "Sun, 04 Oct 2026 02:29:30 GMT",
+          "last-modified": "Thu, 22 Jan 2026 03:50:50 GMT",
+          "content-type": "image/jpeg",
+          "vary": "origin",
+          "x-sanity-asset-storage": "gcs-default",
+          "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+          "content-security-policy": "script-src 'none'",
+          "cache-control": "public, max-age=31536000, s-maxage=2592000",
+          "sanity-inflight-limit": "200",
+          "x-varnish-age": "0",
+          "via": "1.1 google",
+          "xkey": "dataset-6go5cl4m-production, dataset-6go5cl4m-production-asset-0396747df20f3b51e91c200a7c8deaf204a3f421, project-6go5cl4m-production",
+          "accept-ranges": "bytes",
+          "sanity-inflight-current": "0",
+          "content-length": "374460"
+        },
+        "type": "Image",
+        "encodedTransferBytes": 375285
+      }
+    },
+    {
+      "device": "mobile",
+      "index": 1,
+      "src": "https://cdn.sanity.io/images/6go5cl4m/production/c54ca7d9b4fce17cc4f5b6703e07df70d40f8e77-1920x1080.jpg?fm=webp&q=82",
+      "naturalWidth": 1920,
+      "naturalHeight": 1080,
+      "loading": "lazy",
+      "fetchpriority": "auto",
+      "fit": "cover",
+      "position": "50% 50%",
+      "box": {
+        "width": 390,
+        "height": 844
+      },
+      "opacity": "1",
+      "screenshot": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp/after/screenshots/hero-02-mobile.png",
+      "network": {
+        "url": "https://cdn.sanity.io/images/6go5cl4m/production/c54ca7d9b4fce17cc4f5b6703e07df70d40f8e77-1920x1080.jpg?fm=webp&q=82",
+        "mime": "image/webp",
+        "status": 200,
+        "headers": {
+          "age": "560",
+          "cache-tag": "dataset-6go5cl4m-production,dataset-6go5cl4m-production-asset-c54ca7d9b4fce17cc4f5b6703e07df70d40f8e77,project-6go5cl4m-production",
+          "sanity-gateway": "k8s-gcp-as-s1-prod-ing-01",
+          "x-content-type-options": "nosniff",
+          "traceparent": "00-6479d8fbc5f5a0fdc60d05c3fcf024a8-0681349221fcb276-01",
+          "alt-svc": "h3=\":443\"; ma=2592000",
+          "date": "Fri, 23 Oct 2026 06:50:44 GMT",
+          "last-modified": "Tue, 30 Jun 2026 12:05:26 GMT",
+          "content-type": "image/webp",
+          "vary": "origin",
+          "x-sanity-asset-storage": "gcs-default",
+          "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+          "content-security-policy": "script-src 'none'",
+          "cache-control": "public, max-age=31536000, s-maxage=2592000",
+          "x-varnish-age": "0",
+          "via": "1.1 google",
+          "xkey": "dataset-6go5cl4m-production, dataset-6go5cl4m-production-asset-c54ca7d9b4fce17cc4f5b6703e07df70d40f8e77, project-6go5cl4m-production",
+          "accept-ranges": "bytes",
+          "content-length": "375798"
+        },
+        "type": "Image",
+        "encodedTransferBytes": 376282
+      }
+    },
+    {
+      "device": "mobile",
+      "index": 2,
+      "src": "https://cdn.sanity.io/images/6go5cl4m/production/83344bd07865c8c9443339e6bf6014e29f140fb7-1920x1080.jpg?fm=webp&q=84",
+      "naturalWidth": 1920,
+      "naturalHeight": 1080,
+      "loading": "lazy",
+      "fetchpriority": "auto",
+      "fit": "cover",
+      "position": "50% 50%",
+      "box": {
+        "width": 390,
+        "height": 844
+      },
+      "opacity": "1",
+      "screenshot": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp/after/screenshots/hero-03-mobile.png",
+      "network": {
+        "url": "https://cdn.sanity.io/images/6go5cl4m/production/83344bd07865c8c9443339e6bf6014e29f140fb7-1920x1080.jpg?fm=webp&q=84",
+        "mime": "image/webp",
+        "status": 200,
+        "headers": {
+          "age": "564",
+          "cache-tag": "dataset-6go5cl4m-production,dataset-6go5cl4m-production-asset-83344bd07865c8c9443339e6bf6014e29f140fb7,project-6go5cl4m-production",
+          "sanity-gateway": "k8s-gcp-as-s1-prod-ing-01",
+          "x-content-type-options": "nosniff",
+          "traceparent": "00-a408c2570531c499c60d05c3fcf026b7-7fc40492b76eef92-01",
+          "alt-svc": "h3=\":443\"; ma=2592000",
+          "date": "Fri, 23 Oct 2026 06:50:40 GMT",
+          "last-modified": "Mon, 10 Nov 2025 13:53:18 GMT",
+          "content-type": "image/webp",
+          "vary": "origin",
+          "x-sanity-asset-storage": "gcs-default",
+          "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+          "content-security-policy": "script-src 'none'",
+          "cache-control": "public, max-age=31536000, s-maxage=2592000",
+          "x-varnish-age": "0",
+          "via": "1.1 google",
+          "xkey": "dataset-6go5cl4m-production, dataset-6go5cl4m-production-asset-83344bd07865c8c9443339e6bf6014e29f140fb7, project-6go5cl4m-production",
+          "accept-ranges": "bytes",
+          "content-length": "219094"
+        },
+        "type": "Image",
+        "encodedTransferBytes": 219497
+      }
+    },
+    {
+      "device": "mobile",
+      "index": 3,
+      "src": "https://cdn.sanity.io/images/6go5cl4m/production/9a869f427ef1412b048323061859f8b121aa4235-1920x1080.jpg?fm=webp&q=84",
+      "naturalWidth": 1920,
+      "naturalHeight": 1080,
+      "loading": "lazy",
+      "fetchpriority": "auto",
+      "fit": "cover",
+      "position": "50% 50%",
+      "box": {
+        "width": 390,
+        "height": 844
+      },
+      "opacity": "1",
+      "screenshot": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp/after/screenshots/hero-04-mobile.png",
+      "network": {
+        "url": "https://cdn.sanity.io/images/6go5cl4m/production/9a869f427ef1412b048323061859f8b121aa4235-1920x1080.jpg?fm=webp&q=84",
+        "mime": "image/webp",
+        "status": 200,
+        "headers": {
+          "age": "554",
+          "cache-tag": "dataset-6go5cl4m-production,dataset-6go5cl4m-production-asset-9a869f427ef1412b048323061859f8b121aa4235,project-6go5cl4m-production",
+          "sanity-gateway": "k8s-gcp-as-s1-prod-ing-01",
+          "x-content-type-options": "nosniff",
+          "traceparent": "00-974cfcd04da5da47d4c03efbeaca7fdc-bbce39f788d0110c-01",
+          "alt-svc": "h3=\":443\"; ma=2592000",
+          "date": "Fri, 23 Oct 2026 06:50:50 GMT",
+          "last-modified": "Mon, 10 Nov 2025 13:53:51 GMT",
+          "content-type": "image/webp",
+          "vary": "origin",
+          "x-sanity-asset-storage": "gcs-default",
+          "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+          "content-security-policy": "script-src 'none'",
+          "cache-control": "public, max-age=31536000, s-maxage=2592000",
+          "x-varnish-age": "0",
+          "via": "1.1 google",
+          "xkey": "dataset-6go5cl4m-production, dataset-6go5cl4m-production-asset-9a869f427ef1412b048323061859f8b121aa4235, project-6go5cl4m-production",
+          "accept-ranges": "bytes",
+          "content-length": "239632"
+        },
+        "type": "Image",
+        "encodedTransferBytes": 240052
+      }
+    },
+    {
+      "device": "mobile",
+      "index": 4,
+      "src": "https://cdn.sanity.io/images/6go5cl4m/production/a055687869c2518bb9c7f378e67c3e399265c19a-1920x1080.jpg?fm=webp&q=82",
+      "naturalWidth": 1920,
+      "naturalHeight": 1080,
+      "loading": "lazy",
+      "fetchpriority": "auto",
+      "fit": "cover",
+      "position": "50% 50%",
+      "box": {
+        "width": 390,
+        "height": 844
+      },
+      "opacity": "1",
+      "screenshot": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp/after/screenshots/hero-05-mobile.png",
+      "network": {
+        "url": "https://cdn.sanity.io/images/6go5cl4m/production/a055687869c2518bb9c7f378e67c3e399265c19a-1920x1080.jpg?fm=webp&q=82",
+        "mime": "image/webp",
+        "status": 200,
+        "headers": {
+          "age": "545",
+          "cache-tag": "dataset-6go5cl4m-production,dataset-6go5cl4m-production-asset-a055687869c2518bb9c7f378e67c3e399265c19a,project-6go5cl4m-production",
+          "sanity-gateway": "k8s-gcp-as-s1-prod-ing-01",
+          "x-content-type-options": "nosniff",
+          "traceparent": "00-05c0e94f89b50052ce8f98f61e254ddd-ce4ae866035211d9-01",
+          "alt-svc": "h3=\":443\"; ma=2592000",
+          "date": "Fri, 23 Oct 2026 06:50:59 GMT",
+          "last-modified": "Mon, 10 Nov 2025 13:54:18 GMT",
+          "content-type": "image/webp",
+          "vary": "origin",
+          "x-sanity-asset-storage": "gcs-default",
+          "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+          "content-security-policy": "script-src 'none'",
+          "cache-control": "public, max-age=31536000, s-maxage=2592000",
+          "x-varnish-age": "0",
+          "via": "1.1 google",
+          "xkey": "dataset-6go5cl4m-production, dataset-6go5cl4m-production-asset-a055687869c2518bb9c7f378e67c3e399265c19a, project-6go5cl4m-production",
+          "accept-ranges": "bytes",
+          "content-length": "382124"
+        },
+        "type": "Image",
+        "encodedTransferBytes": 382617
+      }
+    },
+    {
+      "device": "mobile",
+      "index": 5,
+      "src": "https://cdn.sanity.io/images/6go5cl4m/production/41b98180e6d7fbf067c999e9c8f2938132071d3c-1920x1080.jpg?fm=webp&q=78",
+      "naturalWidth": 1920,
+      "naturalHeight": 1080,
+      "loading": "lazy",
+      "fetchpriority": "auto",
+      "fit": "cover",
+      "position": "50% 50%",
+      "box": {
+        "width": 390,
+        "height": 844
+      },
+      "opacity": "1",
+      "screenshot": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp/after/screenshots/hero-06-mobile.png",
+      "network": {
+        "url": "https://cdn.sanity.io/images/6go5cl4m/production/41b98180e6d7fbf067c999e9c8f2938132071d3c-1920x1080.jpg?fm=webp&q=78",
+        "mime": "image/webp",
+        "status": 200,
+        "headers": {
+          "age": "540",
+          "cache-tag": "dataset-6go5cl4m-production,dataset-6go5cl4m-production-asset-41b98180e6d7fbf067c999e9c8f2938132071d3c,project-6go5cl4m-production",
+          "sanity-gateway": "k8s-gcp-as-s1-prod-ing-01",
+          "x-content-type-options": "nosniff",
+          "traceparent": "00-1b1a2b93073a89c5898a0ae8faa0e0cf-1ab11678be533fae-01",
+          "alt-svc": "h3=\":443\"; ma=2592000",
+          "date": "Fri, 23 Oct 2026 06:51:04 GMT",
+          "last-modified": "Mon, 10 Nov 2025 13:54:40 GMT",
+          "content-type": "image/webp",
+          "vary": "origin",
+          "x-sanity-asset-storage": "gcs-default",
+          "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+          "content-security-policy": "script-src 'none'",
+          "cache-control": "public, max-age=31536000, s-maxage=2592000",
+          "x-varnish-age": "0",
+          "via": "1.1 google",
+          "xkey": "dataset-6go5cl4m-production, dataset-6go5cl4m-production-asset-41b98180e6d7fbf067c999e9c8f2938132071d3c, project-6go5cl4m-production",
+          "accept-ranges": "bytes",
+          "content-length": "534622"
+        },
+        "type": "Image",
+        "encodedTransferBytes": 535195
+      }
+    },
+    {
+      "device": "mobile",
+      "index": 6,
+      "src": "https://cdn.sanity.io/images/6go5cl4m/production/c0e829a05fd45767cd6fe3cacbf4918694e2afa1-1920x1080.jpg?fm=webp&q=84",
+      "naturalWidth": 1920,
+      "naturalHeight": 1080,
+      "loading": "lazy",
+      "fetchpriority": "auto",
+      "fit": "cover",
+      "position": "50% 50%",
+      "box": {
+        "width": 390,
+        "height": 844
+      },
+      "opacity": "1",
+      "screenshot": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp/after/screenshots/hero-07-mobile.png",
+      "network": {
+        "url": "https://cdn.sanity.io/images/6go5cl4m/production/c0e829a05fd45767cd6fe3cacbf4918694e2afa1-1920x1080.jpg?fm=webp&q=84",
+        "mime": "image/webp",
+        "status": 200,
+        "headers": {
+          "age": "543",
+          "cache-tag": "dataset-6go5cl4m-production,dataset-6go5cl4m-production-asset-c0e829a05fd45767cd6fe3cacbf4918694e2afa1,project-6go5cl4m-production",
+          "sanity-gateway": "k8s-gcp-as-s1-prod-ing-01",
+          "x-content-type-options": "nosniff",
+          "traceparent": "00-3923942f827c81fa898a0ae8faa0e385-581a2ca1fde71b81-01",
+          "alt-svc": "h3=\":443\"; ma=2592000",
+          "date": "Fri, 23 Oct 2026 06:51:01 GMT",
+          "last-modified": "Mon, 10 Nov 2025 13:55:07 GMT",
+          "content-type": "image/webp",
+          "vary": "origin",
+          "x-sanity-asset-storage": "gcs-default",
+          "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+          "content-security-policy": "script-src 'none'",
+          "cache-control": "public, max-age=31536000, s-maxage=2592000",
+          "x-varnish-age": "0",
+          "via": "1.1 google",
+          "xkey": "dataset-6go5cl4m-production, dataset-6go5cl4m-production-asset-c0e829a05fd45767cd6fe3cacbf4918694e2afa1, project-6go5cl4m-production",
+          "accept-ranges": "bytes",
+          "content-length": "287424"
+        },
+        "type": "Image",
+        "encodedTransferBytes": 287861
+      }
+    },
+    {
+      "device": "mobile",
+      "index": 7,
+      "src": "https://cdn.sanity.io/images/6go5cl4m/production/1d7d0211061006a0ff8e9c9c0ad1b6713e73a387-1920x1080.jpg?fm=webp&q=82",
+      "naturalWidth": 1920,
+      "naturalHeight": 1080,
+      "loading": "lazy",
+      "fetchpriority": "auto",
+      "fit": "cover",
+      "position": "50% 50%",
+      "box": {
+        "width": 390,
+        "height": 844
+      },
+      "opacity": "1",
+      "screenshot": "C:\\Users\\Admin\\Documents\\DEV\\kmdl\\kamandalu-astro\\.cache\\homepage-hero-webp/after/screenshots/hero-08-mobile.png",
+      "network": {
+        "url": "https://cdn.sanity.io/images/6go5cl4m/production/1d7d0211061006a0ff8e9c9c0ad1b6713e73a387-1920x1080.jpg?fm=webp&q=82",
+        "mime": "image/webp",
+        "status": 200,
+        "headers": {
+          "age": "532",
+          "cache-tag": "dataset-6go5cl4m-production,dataset-6go5cl4m-production-asset-1d7d0211061006a0ff8e9c9c0ad1b6713e73a387,project-6go5cl4m-production",
+          "sanity-gateway": "k8s-gcp-as-s1-prod-ing-01",
+          "x-content-type-options": "nosniff",
+          "traceparent": "00-963c694fe7a4133f70c80d2256cdcfbb-cf5b685097c5248e-01",
+          "alt-svc": "h3=\":443\"; ma=2592000",
+          "date": "Fri, 23 Oct 2026 06:51:12 GMT",
+          "last-modified": "Mon, 10 Nov 2025 13:55:35 GMT",
+          "content-type": "image/webp",
+          "vary": "origin",
+          "x-sanity-asset-storage": "gcs-default",
+          "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+          "content-security-policy": "script-src 'none'",
+          "cache-control": "public, max-age=31536000, s-maxage=2592000",
+          "x-varnish-age": "0",
+          "via": "1.1 google",
+          "xkey": "dataset-6go5cl4m-production, dataset-6go5cl4m-production-asset-1d7d0211061006a0ff8e9c9c0ad1b6713e73a387, project-6go5cl4m-production",
+          "accept-ranges": "bytes",
+          "content-length": "328180"
+        },
+        "type": "Image",
+        "encodedTransferBytes": 328644
+      }
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,462 @@
+{
+  "date": "2026-10-23",
+  "timezone": "Asia/Singapore",
+  "url": "http://127.0.0.1:4321/en/",
+  "scope": "Homepage Offer Carousel only; no deployment or CMS mutation",
+  "environment": {
+    "lighthouse": "12.8.2",
+    "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+    "screenEmulation": {
+      "mobile": true,
+      "width": 412,
+      "height": 823,
+      "deviceScaleFactor": 1.75,
+      "disabled": false
+    },
+    "throttling": {
+      "rttMs": 150,
+      "throughputKbps": 1638.4,
+      "requestLatencyMs": 562.5,
+      "downloadThroughputKbps": 1474.5600000000002,
+      "uploadThroughputKbps": 675,
+      "cpuSlowdownMultiplier": 4
+    }
+  },
+  "medians": {
+    "before": {
+      "score": 64,
+      "lcp": 2705.625108137443,
+      "tbt": 1789.500000000001,
+      "cls": 0,
+      "pageBytes": 10087451,
+      "imageBytes": 8224102,
+      "offerBytes": 2647793
+    },
+    "after": {
+      "score": 57.99999999999999,
+      "lcp": 2714.7695851434664,
+      "tbt": 3512.499999999998,
+      "cls": 0,
+      "pageBytes": 7671874,
+      "imageBytes": 5957024,
+      "offerBytes": 380733
+    }
+  },
+  "lighthouseRuns": {
+    "before": [
+      {
+        "run": 1,
+        "score": 61,
+        "lcp": 2704.3624040515024,
+        "tbt": 1789.500000000001,
+        "cls": 0,
+        "pageBytes": 10755862,
+        "imageBytes": 8234605,
+        "warnings": [],
+        "offerBytes": 2647793
+      },
+      {
+        "run": 2,
+        "score": 60,
+        "lcp": 3006.5413340565638,
+        "tbt": 3576,
+        "cls": 0,
+        "pageBytes": 10087451,
+        "imageBytes": 8224102,
+        "warnings": [],
+        "offerBytes": 2647780
+      },
+      {
+        "run": 3,
+        "score": 68,
+        "lcp": 2705.5479184094734,
+        "tbt": 1341.5,
+        "cls": 0,
+        "pageBytes": 10087893,
+        "imageBytes": 8224087,
+        "warnings": [],
+        "offerBytes": 2647793
+      },
+      {
+        "run": 4,
+        "score": 71,
+        "lcp": 2705.625108137443,
+        "tbt": 902.4999999999991,
+        "cls": 0,
+        "pageBytes": 9910085,
+        "imageBytes": 8224081,
+        "warnings": [],
+        "offerBytes": 2647773
+      },
+      {
+        "run": 5,
+        "score": 64,
+        "lcp": 2708.3585566901124,
+        "tbt": 2177,
+        "cls": 0,
+        "pageBytes": 9658422,
+        "imageBytes": 8224166,
+        "warnings": [],
+        "offerBytes": 2648074
+      }
+    ],
+    "after": [
+      {
+        "run": 1,
+        "score": 65,
+        "lcp": 2706.272687279075,
+        "tbt": 1895,
+        "cls": 0,
+        "pageBytes": 7671874,
+        "imageBytes": 5957021,
+        "offerBytes": 380722,
+        "warnings": []
+      },
+      {
+        "run": 2,
+        "score": 33,
+        "lcp": 10647.7213,
+        "tbt": 3512.499999999998,
+        "cls": 0.00006163200694355026,
+        "pageBytes": 7602618,
+        "imageBytes": 5957024,
+        "offerBytes": 380974,
+        "warnings": []
+      },
+      {
+        "run": 3,
+        "score": 57.99999999999999,
+        "lcp": 2559.292826097615,
+        "tbt": 4828,
+        "cls": 0,
+        "pageBytes": 8474083,
+        "imageBytes": 5967591,
+        "offerBytes": 380733,
+        "warnings": []
+      },
+      {
+        "run": 4,
+        "score": 60,
+        "lcp": 2714.7695851434664,
+        "tbt": 2652,
+        "cls": 0,
+        "pageBytes": 7393598,
+        "imageBytes": 5677993,
+        "offerBytes": 380732,
+        "warnings": []
+      },
+      {
+        "run": 5,
+        "score": 55.00000000000001,
+        "lcp": 3007.7241267792083,
+        "tbt": 5305,
+        "cls": 0,
+        "pageBytes": 8292952,
+        "imageBytes": 5967589,
+        "offerBytes": 380742,
+        "warnings": []
+      }
+    ]
+  },
+  "browser": [
+    {
+      "viewport": 390,
+      "dpr": 1,
+      "cardWidth": 358,
+      "cardHeight": 268.5,
+      "beforeOffer": 2644911,
+      "afterOffer": 108074,
+      "beforeImages": 6969961,
+      "afterImages": 5247894,
+      "beforePage": 8817502,
+      "afterPage": 7723155,
+      "selectedWidths": [
+        "480"
+      ],
+      "formats": [
+        "image/avif"
+      ],
+      "sameDimensions": true,
+      "sameAlt": true,
+      "sameNavigation": true
+    },
+    {
+      "viewport": 390,
+      "dpr": 2,
+      "cardWidth": 358,
+      "cardHeight": 268.5,
+      "beforeOffer": 2646166,
+      "afterOffer": 380371,
+      "beforeImages": 7787172,
+      "afterImages": 5521380,
+      "beforePage": 9631740,
+      "afterPage": 7352261,
+      "selectedWidths": [
+        "960"
+      ],
+      "formats": [
+        "image/avif"
+      ],
+      "sameDimensions": true,
+      "sameAlt": true,
+      "sameNavigation": true
+    },
+    {
+      "viewport": 768,
+      "dpr": 1,
+      "cardWidth": 736,
+      "cardHeight": 490.65625,
+      "beforeOffer": 2644895,
+      "afterOffer": 379445,
+      "beforeImages": 7240066,
+      "afterImages": 4975970,
+      "beforePage": 9062189,
+      "afterPage": 6625294,
+      "selectedWidths": [
+        "960"
+      ],
+      "formats": [
+        "image/avif"
+      ],
+      "sameDimensions": true,
+      "sameAlt": true,
+      "sameNavigation": true
+    },
+    {
+      "viewport": 820,
+      "dpr": 2,
+      "cardWidth": 352,
+      "cardHeight": 234.65625,
+      "beforeOffer": 2646588,
+      "afterOffer": 379959,
+      "beforeImages": 7885498,
+      "afterImages": 5618401,
+      "beforePage": 9710089,
+      "afterPage": 7473532,
+      "selectedWidths": [
+        "960"
+      ],
+      "formats": [
+        "image/avif"
+      ],
+      "sameDimensions": true,
+      "sameAlt": true,
+      "sameNavigation": true
+    },
+    {
+      "viewport": 1024,
+      "dpr": 1,
+      "cardWidth": 480,
+      "cardHeight": 320,
+      "beforeOffer": 2646589,
+      "afterOffer": 192427,
+      "beforeImages": 7528047,
+      "afterImages": 5074080,
+      "beforePage": 9349852,
+      "afterPage": 7365735,
+      "selectedWidths": [
+        "640"
+      ],
+      "formats": [
+        "image/avif"
+      ],
+      "sameDimensions": true,
+      "sameAlt": true,
+      "sameNavigation": false
+    },
+    {
+      "viewport": 1280,
+      "dpr": 1,
+      "cardWidth": 378.65625,
+      "cardHeight": 252.4375,
+      "beforeOffer": 2647051,
+      "afterOffer": 107990,
+      "beforeImages": 7431312,
+      "afterImages": 4891234,
+      "beforePage": 9253334,
+      "afterPage": 7387771,
+      "selectedWidths": [
+        "480"
+      ],
+      "formats": [
+        "image/avif"
+      ],
+      "sameDimensions": true,
+      "sameAlt": true,
+      "sameNavigation": true
+    },
+    {
+      "viewport": 1366,
+      "dpr": 1,
+      "cardWidth": 378.65625,
+      "cardHeight": 252.4375,
+      "beforeOffer": 2647047,
+      "afterOffer": 109236,
+      "beforeImages": 7431357,
+      "afterImages": 4894064,
+      "beforePage": 9256894,
+      "afterPage": 7367539,
+      "selectedWidths": [
+        "480"
+      ],
+      "formats": [
+        "image/avif"
+      ],
+      "sameDimensions": true,
+      "sameAlt": true,
+      "sameNavigation": true
+    },
+    {
+      "viewport": 1440,
+      "dpr": 1,
+      "cardWidth": 357.328125,
+      "cardHeight": 238.21875,
+      "beforeOffer": 2647050,
+      "afterOffer": 107991,
+      "beforeImages": 7431874,
+      "afterImages": 4890721,
+      "beforePage": 9895783,
+      "afterPage": 6542136,
+      "selectedWidths": [
+        "480"
+      ],
+      "formats": [
+        "image/avif"
+      ],
+      "sameDimensions": true,
+      "sameAlt": true,
+      "sameNavigation": true
+    },
+    {
+      "viewport": 1440,
+      "dpr": 2,
+      "cardWidth": 357.328125,
+      "cardHeight": 238.21875,
+      "beforeOffer": 2644892,
+      "afterOffer": 380221,
+      "beforeImages": 7428145,
+      "afterImages": 5164995,
+      "beforePage": 9918243,
+      "afterPage": 7458435,
+      "selectedWidths": [
+        "960"
+      ],
+      "formats": [
+        "image/avif"
+      ],
+      "sameDimensions": true,
+      "sameAlt": true,
+      "sameNavigation": true
+    },
+    {
+      "viewport": 1920,
+      "dpr": 2,
+      "cardWidth": 469.328125,
+      "cardHeight": 312.875,
+      "beforeOffer": 2647051,
+      "afterOffer": 719076,
+      "beforeImages": 7431370,
+      "afterImages": 5503580,
+      "beforePage": 9280973,
+      "afterPage": 7795196,
+      "selectedWidths": [
+        "1280"
+      ],
+      "formats": [
+        "image/avif"
+      ],
+      "sameDimensions": true,
+      "sameAlt": true,
+      "sameNavigation": true
+    }
+  ],
+  "additionalTabletChecks": [
+    {
+      "viewport": 640,
+      "dpr": 2,
+      "cardWidth": 608,
+      "selectedWidths": [
+        "1760"
+      ],
+      "formats": [
+        "image/avif",
+        "image/webp"
+      ],
+      "offerBytes": 1435770
+    },
+    {
+      "viewport": 768,
+      "dpr": 2,
+      "cardWidth": 736,
+      "selectedWidths": [
+        "1760"
+      ],
+      "formats": [
+        "image/avif"
+      ],
+      "offerBytes": 1239831
+    }
+  ],
+  "cdnResponseBodyTotals": [
+    {
+      "width": 320,
+      "bytes": 80022
+    },
+    {
+      "width": 480,
+      "bytes": 146604
+    },
+    {
+      "width": 640,
+      "bytes": 270020
+    },
+    {
+      "width": 800,
+      "bytes": 399434
+    },
+    {
+      "width": 960,
+      "bytes": 512176
+    },
+    {
+      "width": 1280,
+      "bytes": 1020076
+    },
+    {
+      "width": 1536,
+      "bytes": 1387378
+    },
+    {
+      "width": 1760,
+      "bytes": 1734134
+    },
+    {
+      "width": 1920,
+      "bytes": 2644270
+    }
+  ],
+  "protection": {
+    "documents": 302,
+    "nonHomepageDocumentsWithUnchangedImageAttributes": 299,
+    "unchangedOtherHomepageImages": 117,
+    "changedOfferImagesAcrossThreeLocales": 21,
+    "unchangedSeoDocuments": 302
+  },
+  "navigation": {
+    "controlledComparisonPassedAt": [
+      390,
+      768,
+      1024,
+      1440
+    ],
+    "note": "Rapid-click sweep timing variance at 1024px; controlled normal-click comparison retained identical slide positions, transforms, and links."
+  },
+  "limitations": [
+    "Separate Astro/sitemap dependency updates appeared during the session; whole-page Lighthouse attribution is limited.",
+    "Live third-party scripts make Lighthouse blocking time and total page bytes variable.",
+    "Existing Astro 7 / astro-carousel Astro 5 peer-dependency mismatch remains.",
+    "Existing gallery query returns varying image order between builds.",
+    "Quality 80 is lossy; composition and layout are preserved, not pixel identity."
+  ],
+  "rawLocalArtifacts": ".cache/offer-carousel/"
+}

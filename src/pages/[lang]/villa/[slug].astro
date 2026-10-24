@@ -3,6 +3,7 @@ import Layout from '../../../layouts/Base.astro';
 import client from '../../../lib/sanityClient';
 import { getLocale } from '../../../utils/getLocale';
 import OptimizedImage from '../../../components/OptimizedImage.astro';
+import SupportingImage from '../../../components/SupportingImage.astro';
 import { toHTML } from '@portabletext/to-html';
 
 // Fetch all possible static paths for villa pages (for each language)
@@ -28,7 +29,7 @@ const villa = await client.fetch(`*[_type == "villa" && slug.current == $slug][0
     title,
     order
   },
-  villaGallery[] { asset->{url} }, villaFeatures, inVillaEntertainment,
+  villaGallery[] { ..., asset->{ _id, url, metadata { dimensions } } }, villaFeatures, inVillaEntertainment,
   complimentaries, area, maximumOccupancy, others,
   metaTitle, metaDescription, metaKeywords, buttonValue, buttonLabel,
 }`, { slug });
@@ -188,19 +189,23 @@ const keywords = villa.metaKeywords?.[locale] ?? '';
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
       <div class="grid grid-cols-2 gap-4 md:col-span-2">
         {(villa?.villaGallery ?? []).slice(0, 4).map((image, i) => (
-          <img
-            src={image.asset.url}
+          <SupportingImage
+            image={image}
+            layout="villa-thumb"
+            quality={78}
             alt={`${title} - Image ${i + 1}`}
-            class="w-full h-auto object-cover aspect-[4/3]"
+            className="w-full h-auto object-cover aspect-[4/3]"
             loading="lazy"
           />
         ))}
       </div>
       <div class="relative h-full">
-        <img
-          src={villa.villaGallery?.[4]?.asset.url ?? villa.villaGallery?.[0]?.asset.url ?? ''}
+        <SupportingImage
+          image={villa.villaGallery?.[4]?.asset?.url ? villa.villaGallery[4] : villa.villaGallery?.[0]}
+          layout="villa-preview"
+          quality={78}
           alt={`${title} - Image 5`}
-          class="w-full h-full object-cover aspect-[4/3]"
+          className="w-full h-full object-cover aspect-[4/3]"
           loading="lazy"
         />
         {/* Button to open full gallery modal */}
@@ -236,10 +241,13 @@ const keywords = villa.metaKeywords?.[locale] ?? '';
               <ul class="splide__list">
                 {(villa.villaGallery ?? []).map((image, i) => (
                   <li class="splide__slide">
-                    <img
-                      src={image.asset.url}
+                    <SupportingImage
+                      image={image}
+                      layout="villa-lightbox"
+                      width={image.asset.metadata?.dimensions?.width ?? 800}
+                      height={image.asset.metadata?.dimensions?.height ?? 600}
                       alt={`${title} - Image ${i + 1}`}
-                      class="w-full h-auto object-cover max-h-[80vh] mx-auto rounded"
+                      className="w-full h-auto object-cover max-h-[80vh] mx-auto rounded"
                       loading="lazy"
                     />
                   </li>

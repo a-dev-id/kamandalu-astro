@@ -1,0 +1,22 @@
+---
+import { getOfferCarouselImage } from '../utils/offerCarouselImages';
+
+const { image, alt = '' } = Astro.props;
+const sources = getOfferCarouselImage(image);
+const resolvedAlt = typeof alt === 'string'
+  ? alt
+  : alt && typeof alt === 'object'
+    ? alt.en ?? Object.entries(alt).find(([key, value]) => key !== '_type' && typeof value === 'string')?.[1] ?? ''
+    : '';
+---
+
+<img
+  {...sources}
+  alt={resolvedAlt}
+  width={800}
+  height={600}
+  loading="lazy"
+  decoding="async"
+  fetchpriority="auto"
+  class="object-cover w-full h-auto aspect-[4/3] md:aspect-[3/2] transition duration-500"
+/>
